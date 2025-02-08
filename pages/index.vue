@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const { data: posts } = await useAsyncData(() => queryCollection('mktcms').all())
+</script>
+
 <template>
   <!-- Navbar -->
   <header class="bg-white shadow">
@@ -28,6 +32,14 @@
       </div>
     </div>
   </section>
+
+  <!-- Mktcms Section -->
+  <h1>News</h1>
+  <ul>
+    <li v-for="post in posts" :key="post.id">
+      <NuxtLink :to="post.path">{{ post.title }}</NuxtLink>
+    </li>
+  </ul>
 
   <!-- Food Section -->
   <section id="food" class="py-16 bg-white">
