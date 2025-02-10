@@ -1,19 +1,29 @@
 import { defineContentConfig, defineCollection, z, defineCollectionSource } from '@nuxt/content'
+import { getDatabaseConnection } from './server/utils/db'
+import type { RowDataPacket } from 'mysql2'
+
+interface Content extends RowDataPacket {
+  id: number
+  title: string
+  description: string
+  date: string
+  url: string
+}
 
 const mktcmsSource = defineCollectionSource({
   getKeys: async () => {
-    const res = await fetch('https://hacker-news.firebaseio.com/v0/topstories.json')
-    const data = await res.json()
-    return data.map((key: string) => `${key}.json`)
+    const db = await getDatabaseConnection()
+    const [ids] = await db.query<Content[]>('SELECT id FROM content')
+    const keys = ids.map(({ id }) => `${id.toString()}.json`)
+    return keys
   },
   getItem: async (key: string) => {
-    const id = key.split('.')[0]
-    const res = await fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`)
-    const post = await res.json()
+    const db = await getDatabaseConnection()
+    const [content] = await db.query<Content[]>('SELECT id, title, description, date, url FROM content WHERE id = ?', [key])
+    const post = content[0] as any;
     const imgId = Math.floor(Math.random() * 2) + 1
     post.image = `/img/event${imgId}.jpg`
-    post.description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut purus eget sapien.'
-    post.date = new Date()
+
     return post
   },
 })
@@ -25,10 +35,7 @@ const mktcms = defineCollection({
     title: z.string(),
     description: z.string(),
     date: z.date(),
-    type: z.string(),
-    score: z.number(),
     url: z.string(),
-    by: z.string(),
     image: z.string(),
   }),
 })
