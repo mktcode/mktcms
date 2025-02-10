@@ -1,5 +1,7 @@
 # Angebot
 
+Das Ziel dieses Angebots ist es, dem Kunden durch Online-Marketing zu mehr Sichtbarkeit zu verhelfen und dadurch mehr Kunden zu gewinnen.
+
 Angeboten wird
 - die Registrierung einer Domain,
 - die Gestaltung und der Betrieb einer Website,
