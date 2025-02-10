@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 * {
-  @apply transition-colors duration-300;
+  @apply transition-colors duration-300 scroll-smooth;
 }
 
 .navlink {
@@ -16,4 +16,16 @@
   &:hover::after {
     width: 100%;
   }
+}
+
+button,
+.button {
+  @apply inline-block bg-rose-800 hover:bg-rose-900 text-white py-3 px-6 rounded shadow-lg cursor-pointer;
+}
+
+textarea,
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  @apply w-full p-4 bg-gray-100 rounded-lg border-gray-100 focus:outline-none border-2 focus:border-rose-800 focus:bg-gray-50 transition-colors;
 }

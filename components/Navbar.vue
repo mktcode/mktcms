@@ -16,15 +16,12 @@
       </div>
       <nav>
         <ul class="flex space-x-12">
-          <li><a href="#food" class="navlink">Yoga</a></li>
-          <li><a href="#attention" class="navlink">Achtsamkeit</a></li>
-          <li><a href="#yoga" class="navlink">Ernährung</a></li>
-          <li><a href="#om" class="navlink">Om</a></li>
+          <li><a href="#yoga" class="navlink">Über mich</a></li>
+          <li><a href="#food" class="navlink">Kurse</a></li>
+          <li><a href="#attention" class="navlink">Veranstaltungen</a></li>
+          <li><a href="#om" class="navlink">Kontakt</a></li>
         </ul>
       </nav>
-      <button class="bg-rose-800 hover:bg-rose-900 text-white py-2 px-4 rounded shadow">
-        Kontakt
-      </button>
     </div>
   </header>
 </template>

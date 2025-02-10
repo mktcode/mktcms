@@ -10,10 +10,17 @@
         <p class="mt-4 text-xl text-gray-600 max-w-3xl leading-relaxed">
           Yoga, Ernährung, Achtsamkeit und stilvolles Auftreten - Löse die Trennung zwischen Körper und Geist auf und finde über einen ganzheitlichen Ansatz zu mehr innerer Ruhe und Ausgeglichenheit.
         </p>
-        <a href="#contact"
-          class="mt-6 inline-block bg-rose-800 hover:bg-rose-900 text-white py-3 px-6 rounded shadow">
-          Jetzt kennenlernen
-        </a>
+        <div class="flex items-center mt-6 space-x-6">
+          <a href="#about" class="button">
+            Jetzt kennenlernen
+          </a>
+          <a href="tel:05414089747" class="font-bold text-3xl text-indigo-950 ml-4 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-2 opacity-40">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
+            </svg>
+            0541 40 89 747
+          </a>
+        </div>
       </div>
     </div>
   </section>
