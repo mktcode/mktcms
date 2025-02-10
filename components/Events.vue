@@ -14,7 +14,7 @@ const { data: posts } = await useAsyncData(
         Kommende Veranstaltungen
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-10">
-        <div v-for="post in posts" :key="post.id" class="bg-white shadow-lg rounded-lg overflow-hidden">
+        <div v-for="post in posts" :key="post.id" class="bg-white shadow-2xl rounded-lg overflow-hidden">
           <img :src="post.image" alt="event" class="w-full h-56 object-cover object-center">
           <div class="p-4">
             <h2 class="text-xl font-bold text-gray-800 line-clamp-1">{{ post.title }}</h2>
