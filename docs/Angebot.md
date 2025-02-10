@@ -37,6 +37,8 @@ Die vom Kunden selbst angelegten Inhalte enthalten ein eigenes Kontaktformular.
 ## E-Mail-Postfächer
 
 Es wird das E-Mail-Postfach kontakt@fayo-coach.de auf dem Server erstellt und beim Kunden vor Ort eingerichtet.
+Dazu zählt die Einrichtung auf dem Smartphone des Kunden und die Einrichtung in einem E-Mail-Programm auf dem Computer des Kunden.
+Außerdem wird eine Fußzeile in die E-Mail-Nachrichten eingefügt, die auf die Website verlinkt und rechtlich notwendige Informationen enthält.
 
 ## Social-Media-Kanäle
 
