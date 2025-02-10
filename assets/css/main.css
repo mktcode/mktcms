@@ -1,1 +1,19 @@
 @import "tailwindcss";
+
+* {
+  @apply transition-colors duration-300;
+}
+
+.navlink {
+  /* Header navlink style: nice border animation or something fresh with dark rose color, text should stay gray but maybe bit darker on hover */
+  @apply text-gray-500 hover:text-gray-800;
+
+  &::after {
+    content: "";
+    @apply bg-rose-800 block w-0 h-0.5 transition-all duration-300;
+  }
+
+  &:hover::after {
+    width: 100%;
+  }
+}

@@ -3,43 +3,10 @@ const { data: posts } = await useAsyncData(() => queryCollection('mktcms').all()
 </script>
 
 <template>
-  <!-- Navbar -->
-  <header class="bg-white shadow">
-    <div class="container mx-auto px-4 py-6 flex justify-between items-center">
-      <div class="text-2xl font-bold text-gray-800">Fayo-Coach</div>
-      <nav>
-        <ul class="flex space-x-6">
-          <li><a href="#food" class="text-gray-600 hover:text-gray-900">Food</a></li>
-          <li><a href="#attention" class="text-gray-600 hover:text-gray-900">Attention</a></li>
-          <li><a href="#yoga" class="text-gray-600 hover:text-gray-900">Yoga</a></li>
-          <li><a href="#om" class="text-gray-600 hover:text-gray-900">Om</a></li>
-          <li><a href="#contact" class="text-gray-600 hover:text-gray-900">Contact</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-
-  <!-- Hero Section -->
-  <section class="relative h-96 bg-cover bg-center" style="background-image: url('/img/default-header.jpg');">
-    <div class="absolute inset-0 bg-black/50 flex items-center">
-      <div class="container mx-auto px-4">
-        <h1 class="text-4xl md:text-6xl font-bold text-white">Embrace Your Journey</h1>
-        <p class="mt-4 text-xl text-gray-200">Food, Attention, Yoga, Om – Cultivate your inner balance.</p>
-        <a href="#contact"
-          class="mt-6 inline-block bg-yellow-500 hover:bg-yellow-600 text-white py-3 px-6 rounded shadow">
-          Get Started
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Mktcms Section -->
-  <h1>News</h1>
-  <ul>
-    <li v-for="post in posts" :key="post.id">
-      <NuxtLink :to="post.path">{{ post.title }}</NuxtLink>
-    </li>
-  </ul>
+  <div class="h-screen flex flex-col">
+    <Navbar />
+    <Hero />
+  </div>
 
   <!-- Food Section -->
   <section id="food" class="py-16 bg-white">
