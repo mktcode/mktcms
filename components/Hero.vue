@@ -8,7 +8,7 @@
       <div class="container mx-auto px-4 mt-16">
         <h1 class="text-4xl md:text-6xl font-bold text-indigo-950">Kultiviere deine innere Balance.</h1>
         <p class="mt-4 text-xl text-gray-600 max-w-3xl leading-relaxed">
-          Yoga, Ernährung, Achtsamkeit und stilvolles Auftreten - Lösen Sie die Trennung zwischen Körper und Geist auf und finde über einen ganzheitlichen Ansatz zu mehr innerer Ruhe und Ausgeglichenheit.
+          Yoga, Ernährung, Achtsamkeit und stilvolles Auftreten - Löse die Trennung zwischen Körper und Geist auf und finde über einen ganzheitlichen Ansatz zu mehr innerer Ruhe und Ausgeglichenheit.
         </p>
         <a href="#contact"
           class="mt-6 inline-block bg-rose-800 hover:bg-rose-900 text-white py-3 px-6 rounded shadow">
