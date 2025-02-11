@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
   const db = await getDatabaseConnection()
   const { limit } = await readValidatedBody(event, body => bodySchema.parse(body))
 
-  const [posts] = await db.query<Post[]>(`SELECT id, title, description, date, url FROM content ${limit ? `LIMIT ${limit}` : ''}`)
+  const [posts] = await db.query<Post[]>(`SELECT id, title, description, date, url FROM content ORDER BY date DESC ${limit ? `LIMIT ${limit}` : ''}`)
   
   return posts.map((post) => {
     return {
