@@ -1,9 +1,16 @@
 <script setup lang="ts">
-const { data: posts, refresh } = await useFetch('/api/posts/list', { method: 'POST' });
+import type { Post } from '~/types';
 
+const posts = ref<Post[]>([]);
+const category = ref('all');
 const showDeleteModal = ref(false);
 const postId = ref(0);
 const postToDelete = computed(() => posts.value?.find((post: any) => post.id === postId.value));
+
+const fetchPosts = async () => {
+  const data = await $fetch('/api/posts/list', { method: 'POST', body: { category: category.value } });
+  posts.value = data;
+};
 
 const confirmDeletePost = (id: number) => {
   showDeleteModal.value = true;
@@ -19,8 +26,10 @@ const deletePost = async () => {
   
   await $fetch('/api/posts/delete', { method: 'POST', body: { id: postToDelete.value.id } });
   showDeleteModal.value = false;
-  await refresh();
+  await fetchPosts();
 };
+
+onMounted(fetchPosts);
 </script>
 
 <template>
@@ -33,6 +42,12 @@ const deletePost = async () => {
       <NuxtLink to="/mktcms/new" class="button ml-4">Neuer Inhalt</NuxtLink>
       <NuxtLink to="/mktcms/stats" class="button ml-4">Statistiken</NuxtLink>
     </div>
+
+    <select v-model="category" @change="() => fetchPosts()" class="mt-4">
+      <option value="all">Alle Kategorien</option>
+      <option value="event">Veranstaltungen</option>
+      <option value="product">Produkte</option>
+    </select>
 
     <div class="mt-10">
       <table class="divide-y divide-gray-200 w-full">
