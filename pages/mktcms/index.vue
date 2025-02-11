@@ -31,10 +31,11 @@ const deletePost = async () => {
       </h1>
       <NuxtLink to="/" target="_blank" class="button ml-auto">Website öffnen</NuxtLink>
       <NuxtLink to="/mktcms/new" class="button ml-4">Neuer Inhalt</NuxtLink>
+      <NuxtLink to="/mktcms/stats" class="button ml-4">Statistiken</NuxtLink>
     </div>
 
     <div class="mt-10">
-      <table class="divide-y divide-gray-200">
+      <table class="divide-y divide-gray-200 w-full">
         <thead class="bg-gray-50">
           <tr>
             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">

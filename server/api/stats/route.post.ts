@@ -29,13 +29,13 @@ export default defineEventHandler(async (event) => {
   const ip = getRequestHeaders(event)['x-forwarded-for'] 
     || event.node.req.socket.remoteAddress 
     || '0.0.0.0'
-  
+
   const combinedIdString = `${ip}|${userAgent}`
 
   const hmac = crypto.createHmac('sha256', ipHashSalt)
   hmac.update(combinedIdString)
   const userId = hmac.digest('hex')
 
-  await db.query(`INSERT INTO stats (user_id, route, isMobile) VALUES (?, ?, ?)`, [userId, route, isMobile])
+  await db.query(`INSERT INTO stats (userId, route, isMobile) VALUES (?, ?, ?)`, [userId, route, isMobile])
   return { success: true }
 })
