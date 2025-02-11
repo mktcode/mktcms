@@ -11,3 +11,4 @@
 
 - Remove noindex meta tag
 - Disable Maintenance page
+- Check alt texts for images
