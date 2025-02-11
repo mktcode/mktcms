@@ -1,7 +1,5 @@
 <script setup lang="ts">
-const { data: posts } = await useAsyncData(
-  () => queryCollection('mktcms').limit(6).all(),
-);
+const { data: posts } = await useFetch('/api/posts', { method: 'POST', body: { limit: 6 } });
 </script>
 
 <template>

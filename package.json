@@ -11,14 +11,14 @@
     "db:tunnel": "ssh -i ~/.ssh/uberspace-fayo fayo@norma.uberspace.de -N -L 3306:127.0.0.1:3306"
   },
   "dependencies": {
-    "@nuxt/content": "^3.1.0",
     "@tailwindcss/vite": "^4.0.4",
     "mysql2": "^3.12.0",
     "nodemailer": "^6.10.0",
     "nuxt": "^3.15.4",
     "tailwindcss": "^4.0.4",
     "vue": "latest",
-    "vue-router": "latest"
+    "vue-router": "latest",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@types/node": "^22.13.1",
