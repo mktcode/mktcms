@@ -8,7 +8,7 @@
             Inner Balance und Lifestyle Coaching
           </h3>
           <h2 class="text-4xl md:text-6xl font-bold text-indigo-950">
-            Ganzheitliche Gesundheit
+            Gesundheit geht nur ganzheitlich.
           </h2>
           <p class="mt-8 text-xl text-gray-600 leading-relaxed">
             Möchtest du dich gesünder ernähren, ohne auf Genuss zu verzichten? Suchst du eine Ernährungsweise, die zu deinem Lebensstil passt – ob vegetarisch, vegan oder klimafreundlich? Ich unterstütze dich dabei, bewusste Entscheidungen zu treffen, die dein Wohlbefinden steigern.
