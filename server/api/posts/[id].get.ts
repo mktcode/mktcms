@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
   const db = await getDatabaseConnection()
   const { id } = await getValidatedRouterParams(event, paramsSchema.parse);
 
-  const [posts] = await db.query<Post[]>(`SELECT id, title, description, date, url FROM content WHERE id = ? LIMIT 1`, [id])
+  const [posts] = await db.query<Post[]>(`SELECT id, category, title, description, date, url FROM content WHERE id = ? LIMIT 1`, [id])
 
   if (posts.length === 0) {
     throw createError({

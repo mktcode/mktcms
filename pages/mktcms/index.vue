@@ -39,6 +39,9 @@ const deletePost = async () => {
         <thead class="bg-gray-50">
           <tr>
             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Kategorie
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Bild
             </th>
             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -60,6 +63,9 @@ const deletePost = async () => {
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
           <tr v-for="post in posts" :key="post.id">
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-900">{{ post.category }}</div>
+            </td>
             <td class="px-6 py-4 whitespace-nowrap">
               <img :src="post.image" alt="Kein Bild" class="w-30 aspect-square object-cover object-center rounded">
             </td>
