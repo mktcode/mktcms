@@ -31,6 +31,7 @@ input[type="password"],
 input[type="number"],
 input[type="tel"],
 input[type="url"],
-input[type="date"] {
+input[type="date"],
+select {
   @apply w-full p-4 bg-gray-100 rounded-lg border-gray-100 focus:outline-none border-2 focus:border-rose-800 focus:bg-gray-50 transition-colors;
 }
