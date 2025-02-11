@@ -6,10 +6,10 @@ const { data: posts } = await useFetch('/api/posts/list', { method: 'POST', body
   <div class="bg-gray-100 py-24">
     <div class="container mx-auto">
       <h3 class="text-2xl font-bold text-rose-900 mb-4">
-        Es gibt noch freie Plätze.
+        Hier findest du mich auch ohne Termin.
       </h3>
       <h2 class="text-4xl md:text-6xl font-bold text-indigo-950">
-        Kommende Veranstaltungen
+        Kommende und regelmäßige Veranstaltungen
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-10">
         <div v-for="post in posts" :key="post.id" class="bg-white shadow-2xl rounded-lg overflow-hidden">

@@ -10,7 +10,7 @@
             Beatrix Kopischke
           </span>
           <span class="block text-rose-900 italic">
-            Mehr als nur Yoga.
+            Lifestyle Coach
           </span>
         </div>
       </div>

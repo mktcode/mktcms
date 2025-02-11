@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const { data: posts } = await useFetch('/api/posts/list', { method: 'POST', body: { category: 'product', limit: 6 } });
+</script>
+
 <template>
   <section id="about" class="py-32 bg-white">
     <div class="container mx-auto px-4">
@@ -20,6 +24,17 @@
             Entdecke, wie du durch einfache, alltagstaugliche Methoden mehr Leichtigkeit in dein Leben bringst.
             Lass uns gemeinsam den Weg zu mehr Wohlbefinden gehen!
           </p>
+
+          <div class="mt-24 grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div v-for="post in posts" :key="post.id" class="flex flex-col items-center">
+              <h4 class="text-2xl font-bold text-indigo-950">
+                {{ post.title }}
+              </h4>
+              <p class="my-4 text-lg text-center text-gray-600 leading-relaxed">
+                {{ post.description }}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
