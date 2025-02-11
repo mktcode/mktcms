@@ -15,7 +15,7 @@
         <img src="/img/logo.png" alt="Beatrix Kopischke" class="h-8">
       </a>
       <ul class="flex space-x-6">
-        <li><a href="#about" class="navlink">Impressum</a></li>
+        <li><NuxtLink to="/impressum" class="navlink">Impressum</NuxtLink></li>
         <li><a href="#services" class="navlink">Datenschutz</a></li>
       </ul>
       <p>© 2025 Beatrix Kopischke - Alle Rechte vorbehalten</p>
