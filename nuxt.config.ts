@@ -17,6 +17,7 @@ export default defineNuxtConfig({
     facebookAppSecret: process.env.FACEBOOK_APP_SECRET,
     instagramAppId: process.env.INSTAGRAM_APP_ID,
     instagramAppSecret: process.env.INSTAGRAM_APP_SECRET,
+    ipHashSalt: process.env.IP_HASH_SALT,
   },
   app: {
     head: {

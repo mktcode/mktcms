@@ -29,8 +29,8 @@ const deletePost = async () => {
       <h1 class="text-3xl font-bold text-gray-900">
         Inhaltsverwaltung - Übersicht
       </h1>
-      <a href="/" target="_blank" class="button ml-auto">Website öffnen</a>
-      <a href="/mktcms/new" class="button ml-4">Neuer Inhalt</a>
+      <NuxtLink to="/" target="_blank" class="button ml-auto">Website öffnen</NuxtLink>
+      <NuxtLink to="/mktcms/new" class="button ml-4">Neuer Inhalt</NuxtLink>
     </div>
 
     <div class="mt-10">
