@@ -4,6 +4,7 @@
     <Hero />
   </div>
   <About />
+  <Prices />
   <Events />
   <Contact />
   <Footer />

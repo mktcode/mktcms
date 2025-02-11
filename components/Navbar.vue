@@ -17,7 +17,7 @@
       <nav>
         <ul class="flex space-x-12">
           <li><a href="#yoga" class="navlink">Über mich</a></li>
-          <li><a href="#food" class="navlink">Kurse</a></li>
+          <li><a href="#food" class="navlink">Coaching</a></li>
           <li><a href="#attention" class="navlink">Veranstaltungen</a></li>
           <li><a href="#om" class="navlink">Kontakt</a></li>
         </ul>
