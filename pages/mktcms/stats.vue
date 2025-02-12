@@ -1,9 +1,13 @@
 <script setup lang="ts">
+definePageMeta({
+  layout: 'mktcms',
+})
+
 const { data: stats } = await useFetch('/api/stats/list', { method: 'POST' });
 </script>
 
 <template>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+  <div>
     <div class="flex items-center">
       <h1 class="text-3xl font-bold text-gray-900">
         Statistiken

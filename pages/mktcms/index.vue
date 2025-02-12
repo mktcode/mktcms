@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import type { Post } from '~/types';
 
+definePageMeta({
+  layout: 'mktcms',
+})
+
 const posts = ref<Post[]>([]);
 const category = ref('all');
 const showDeleteModal = ref(false);
@@ -33,14 +37,13 @@ onMounted(fetchPosts);
 </script>
 
 <template>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+  <div>
     <div class="flex items-center">
       <h1 class="text-3xl font-bold text-gray-900">
         Inhaltsverwaltung - Übersicht
       </h1>
       <NuxtLink to="/" target="_blank" class="button ml-auto">Website öffnen</NuxtLink>
       <NuxtLink to="/mktcms/new" class="button ml-4">Neuer Inhalt</NuxtLink>
-      <NuxtLink to="/mktcms/stats" class="button ml-4">Statistiken</NuxtLink>
     </div>
 
     <select v-model="category" @change="() => fetchPosts()" class="mt-4">
