@@ -44,7 +44,7 @@
           <label class="block text-gray-700 mb-2" for="message">Nachricht</label>
           <textarea id="message" rows="4" placeholder="Deine Nachricht"></textarea>
         </div>
-        <button type="submit" class="w-full">
+        <button type="submit" class="button w-full">
           Nachricht senden
         </button>
       </form>
