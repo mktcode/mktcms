@@ -19,7 +19,12 @@ const { data: posts } = await useFetch('/api/posts/list', { method: 'POST', body
             <p class="text-gray-600 mt-2 line-clamp-2">{{ post.description }}</p>
             <div class="flex justify-between mt-4">
               <div class="text-4xl font-bold">35,00 €</div>
-              <a href="#" class="button">Termin vereinbaren</a>
+              <a
+                :href="`/${post.category}/${post.id}`"
+                class="button"
+              >
+                Termin vereinbaren
+              </a>
             </div>
           </div>
         </div>
