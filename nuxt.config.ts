@@ -13,10 +13,6 @@ export default defineNuxtConfig({
     smtpPort: process.env.SMTP_PORT,
     smtpUser: process.env.SMTP_USER,
     smtpPass: process.env.SMTP_PASS,
-    facebookAppId: process.env.FACEBOOK_APP_ID,
-    facebookAppSecret: process.env.FACEBOOK_APP_SECRET,
-    instagramAppId: process.env.INSTAGRAM_APP_ID,
-    instagramAppSecret: process.env.INSTAGRAM_APP_SECRET,
     ipHashSalt: process.env.IP_HASH_SALT,
     public: {
       domain: process.env.DOMAIN,
