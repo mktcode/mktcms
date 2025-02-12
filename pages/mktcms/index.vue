@@ -5,7 +5,7 @@ definePageMeta({
   layout: 'mktcms',
 })
 
-const { domain } = useRuntimeConfig();
+const { public: { domain } } = useRuntimeConfig();
 
 const posts = ref<Post[]>([]);
 const category = ref('all');

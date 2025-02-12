@@ -8,7 +8,6 @@ const domain = 'https://fayo-coach.de'
 
 export default defineNuxtConfig({
   runtimeConfig: {
-    domain: process.env.DOMAIN,
     databaseUrl: process.env.DATABASE_URL,
     smtpHost: process.env.SMTP_HOST,
     smtpPort: process.env.SMTP_PORT,
@@ -19,6 +18,9 @@ export default defineNuxtConfig({
     instagramAppId: process.env.INSTAGRAM_APP_ID,
     instagramAppSecret: process.env.INSTAGRAM_APP_SECRET,
     ipHashSalt: process.env.IP_HASH_SALT,
+    public: {
+      domain: process.env.DOMAIN,
+    }
   },
   app: {
     head: {
