@@ -8,6 +8,7 @@ const domain = 'https://fayo-coach.de'
 
 export default defineNuxtConfig({
   runtimeConfig: {
+    domain: process.env.DOMAIN,
     databaseUrl: process.env.DATABASE_URL,
     smtpHost: process.env.SMTP_HOST,
     smtpPort: process.env.SMTP_PORT,

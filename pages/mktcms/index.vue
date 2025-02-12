@@ -5,6 +5,8 @@ definePageMeta({
   layout: 'mktcms',
 })
 
+const { domain } = useRuntimeConfig();
+
 const posts = ref<Post[]>([]);
 const category = ref('all');
 const showDeleteModal = ref(false);
@@ -99,7 +101,15 @@ onMounted(fetchPosts);
               <div class="text-sm text-gray-900">{{ post.url }}</div>
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-              <a :href="`/mktcms/${post.id}`" class="text-indigo-600 hover:text-indigo-900">Bearbeiten</a>
+              <a
+                :href="`https://www.facebook.com/sharer/sharer.php?u=https://${domain}/${post.category}/${post.id}`"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-indigo-600 hover:text-indigo-900"
+              >
+                Auf Facebook teilen
+              </a>
+              <a :href="`/mktcms/${post.id}`" class="text-indigo-600 hover:text-indigo-900 ml-4">Bearbeiten</a>
               <a @click="confirmDeletePost(post.id)" class="text-red-600 hover:text-red-900 ml-4 cursor-pointer">Löschen</a>
             </td>
           </tr>
