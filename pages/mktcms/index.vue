@@ -42,7 +42,6 @@ onMounted(fetchPosts);
       <h1 class="text-3xl font-bold text-gray-900">
         Inhaltsverwaltung - Übersicht
       </h1>
-      <NuxtLink to="/" target="_blank" class="button ml-auto">Website öffnen</NuxtLink>
       <NuxtLink to="/mktcms/new" class="button ml-4">Neuer Inhalt</NuxtLink>
     </div>
 
