@@ -13,6 +13,9 @@ export default defineNuxtConfig({
     smtpPort: process.env.SMTP_PORT,
     smtpUser: process.env.SMTP_USER,
     smtpPass: process.env.SMTP_PASS,
+    smtpFrom: process.env.SMTP_FROM,
+    smtpFromName: process.env.SMTP_FROM_NAME,
+    smtpTo: process.env.SMTP_TO,
     ipHashSalt: process.env.IP_HASH_SALT,
     public: {
       domain: process.env.DOMAIN,

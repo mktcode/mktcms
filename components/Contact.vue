@@ -1,3 +1,29 @@
+<script setup lang="ts">
+const name = ref('');
+const email = ref('');
+const message = ref('');
+const isSending = ref(false);
+const showThanksMessage = ref(false);
+const showErrorMessage = ref(false);
+
+const submit = async () => {
+  isSending.value = true;
+
+  const response = await $fetch('/api/mail/send', {
+    method: 'POST',
+    body: { name: name.value, email: email.value, message: message.value },
+  });
+
+  isSending.value = false;
+
+  if (response.success) {
+    showThanksMessage.value = true;
+  } else {
+    showErrorMessage.value = true;
+  }
+}
+</script>
+
 <template>
   <section id="contact" class="py-16 bg-white relative">
     <img src="/img/contact-header.jpg" alt="Kontakt" class="w-full object-cover bg-bottom mb-8 relative z-40">
@@ -31,21 +57,38 @@
           </a>
         </div>    
       </div>
-      <form class="max-w-lg grow">
+      <div v-if="showThanksMessage">
+        <h2 class="text-3xl font-bold text-gray-800 mb-4">Vielen Dank!</h2>
+        <p class="text-xl text-gray-600 leading-relaxed">
+          Deine Nachricht wurde erfolgreich versendet. Ich werde mich in Kürze bei dir melden.
+        </p>
+      </div>
+      <div v-else-if="showErrorMessage">
+        <h2 class="text-3xl font-bold text-gray-800 mb-4">Fehler!</h2>
+        <p class="text-xl text-gray-600 leading-relaxed">
+          Beim Versenden deiner Nachricht ist ein Fehler aufgetreten. Bitte versuche es später erneut.
+        </p>
+      </div>
+      <form v-else class="max-w-lg grow" @submit.prevent="submit">
         <div class="mb-4">
           <label class="block text-gray-700 mb-2" for="name">Name</label>
-          <input id="name" type="text" placeholder="Dein Name">
+          <input id="name" type="text" placeholder="Dein Name" v-model="name">
         </div>
         <div class="mb-4">
           <label class="block text-gray-700 mb-2" for="email">E-Mail</label>
-          <input id="email" type="email" placeholder="Deine E-Mail-Adresse">
+          <input id="email" type="email" placeholder="Deine E-Mail-Adresse" v-model="email">
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2" for="phone">Telefon</label>
+          <input id="phone" type="tel" placeholder="Deine Telefonnummer">
         </div>
         <div class="mb-4">
           <label class="block text-gray-700 mb-2" for="message">Nachricht</label>
-          <textarea id="message" rows="4" placeholder="Deine Nachricht"></textarea>
+          <textarea id="message" rows="4" placeholder="Deine Nachricht" v-model="message"></textarea>
         </div>
         <button type="submit" class="button w-full">
-          Nachricht senden
+          <span v-if="isSending">Nachricht wird gesendet...</span>
+          <span v-else>Nachricht senden</span>
         </button>
       </form>
     </div>
