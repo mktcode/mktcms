@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
   const { category, limit } = await readValidatedBody(event, body => bodySchema.parse(body))
 
   const [posts] = await db.query<Post[]>(`
-    SELECT id, category, title, description, date, url 
+    SELECT id, category, title, description, date, url, image
     FROM content 
     ${category !== 'all' ? `WHERE category = ?` : ''} 
     ORDER BY date DESC 
@@ -22,11 +22,5 @@ export default defineEventHandler(async (event) => {
     category !== 'all' ? [category] : []
   );
   
-  
-  return posts.map((post) => {
-    return {
-      ...post,
-      image: `/img/event${Math.floor(Math.random() * 2) + 1}.jpg`
-    }
-  })
+  return posts
 })

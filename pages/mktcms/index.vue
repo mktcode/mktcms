@@ -14,7 +14,7 @@ const postId = ref(0);
 const postToDelete = computed(() => posts.value?.find((post: any) => post.id === postId.value));
 
 const fetchPosts = async () => {
-  const data = await $fetch('/api/posts/list', { method: 'POST', body: { category: category.value } });
+  const data = await $fetch<Post[]>('/api/posts/list', { method: 'POST', body: { category: category.value } });
   posts.value = data;
 };
 
@@ -58,10 +58,10 @@ onMounted(fetchPosts);
         <thead class="bg-gray-50">
           <tr>
             <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Kategorie
+              Bild
             </th>
             <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Bild
+              Kategorie
             </th>
             <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Titel
@@ -83,10 +83,10 @@ onMounted(fetchPosts);
         <tbody class="bg-white divide-y divide-gray-200">
           <tr v-for="post in posts" :key="post.id">
             <td class="px-3 py-2 whitespace-nowrap">
-              <div class="text-sm text-gray-900">{{ post.category }}</div>
+              <img :src="`/files/${post.image}`" alt="Kein Bild" class="w-24 aspect-video text-gray-400 bg-gray-100 items-center justify-center flex object-cover object-center rounded">
             </td>
             <td class="px-3 py-2 whitespace-nowrap">
-              <img :src="post.image" alt="Kein Bild" class="w-64 aspect-square object-cover object-center rounded">
+              <div class="text-sm text-gray-900">{{ post.category }}</div>
             </td>
             <td class="px-3 py-2 whitespace-nowrap">
               <div class="text-sm text-gray-900">{{ post.title }}</div>

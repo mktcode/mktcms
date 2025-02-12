@@ -7,6 +7,7 @@ export interface Post extends RowDataPacket {
   description: string;
   date: string;
   url: string;
+  image: string;
 }
 
 export interface Stat extends RowDataPacket {
