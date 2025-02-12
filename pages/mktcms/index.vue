@@ -83,7 +83,10 @@ onMounted(fetchPosts);
         <tbody class="bg-white divide-y divide-gray-200">
           <tr v-for="post in posts" :key="post.id">
             <td class="px-3 py-2 whitespace-nowrap">
-              <img :src="`/files/${post.image}`" alt="Kein Bild" class="w-24 aspect-video text-gray-400 bg-gray-100 items-center justify-center flex object-cover object-center rounded">
+              <img v-if="post.image" :src="`/files/${post.image}`" alt="Kein Bild" class="w-24 aspect-video object-cover object-center rounded">
+              <div v-else class="w-24 aspect-video text-gray-400 bg-gray-100 items-center justify-center flex rounded">
+                Kein Bild
+              </div>
             </td>
             <td class="px-3 py-2 whitespace-nowrap">
               <div class="text-sm text-gray-900">{{ post.category }}</div>
