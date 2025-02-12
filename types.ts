@@ -15,3 +15,10 @@ export interface Stat extends RowDataPacket {
   mobileCount: number;
   desktopCount: number;
 }
+
+export interface Referer extends RowDataPacket {
+  referer: string;
+  uniqueUsers: number;
+  mobileCount: number;
+  desktopCount: number;
+}

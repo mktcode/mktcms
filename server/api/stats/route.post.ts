@@ -16,6 +16,7 @@ function isMobileBot(userAgent: string) {
 
 export default defineEventHandler(async (event) => {
   const userAgent = getRequestHeaders(event)['user-agent'] || 'unknown'
+  const referer = getRequestHeaders(event)['referer']
   const { isBot, isMobile } = isMobileBot(userAgent)
 
   if (isBot) {
@@ -36,6 +37,6 @@ export default defineEventHandler(async (event) => {
   hmac.update(combinedIdString)
   const userId = hmac.digest('hex')
 
-  await db.query(`INSERT INTO stats (userId, route, isMobile) VALUES (?, ?, ?)`, [userId, route, isMobile])
+  await db.query(`INSERT INTO stats (userId, route, referer, isMobile) VALUES (?, ?, ?, ?)`, [userId, route, referer, isMobile])
   return { success: true }
 })
