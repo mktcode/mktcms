@@ -57,50 +57,50 @@ onMounted(fetchPosts);
       <table class="divide-y divide-gray-200 w-full">
         <thead class="bg-gray-50">
           <tr>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Kategorie
             </th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Bild
             </th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Titel
             </th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Datum
             </th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Beschreibung
             </th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               URL
             </th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Aktionen
             </th>
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
           <tr v-for="post in posts" :key="post.id">
-            <td class="px-6 py-4 whitespace-nowrap">
+            <td class="px-3 py-2 whitespace-nowrap">
               <div class="text-sm text-gray-900">{{ post.category }}</div>
             </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <img :src="post.image" alt="Kein Bild" class="w-30 aspect-square object-cover object-center rounded">
+            <td class="px-3 py-2 whitespace-nowrap">
+              <img :src="post.image" alt="Kein Bild" class="w-64 aspect-square object-cover object-center rounded">
             </td>
-            <td class="px-6 py-4 whitespace-nowrap">
+            <td class="px-3 py-2 whitespace-nowrap">
               <div class="text-sm text-gray-900">{{ post.title }}</div>
             </td>
-            <td class="px-6 py-4 whitespace-nowrap">
+            <td class="px-3 py-2 whitespace-nowrap">
               <div class="text-sm text-gray-900">{{ new Date(post.date).toLocaleDateString('de-DE') }} - {{ new Date(post.date).toTimeString().slice(0, 5) }} Uhr</div>
             </td>
-            <td class="px-6 py-4">
+            <td class="px-3 py-2">
               <div class="text-sm text-gray-900 line-clamp-1">{{ post.description }}</div>
             </td>
-            <td class="px-6 py-4 whitespace-nowrap">
+            <td class="px-3 py-2 whitespace-nowrap">
               <div class="text-sm text-gray-900">{{ post.url }}</div>
             </td>
-            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+            <td class="px-3 py-2 whitespace-nowrap text-right text-sm font-medium">
               <a
                 :href="`https://www.facebook.com/sharer/sharer.php?u=https://${domain}/${post.category}/${post.id}`"
                 target="_blank"
