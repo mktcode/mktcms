@@ -1,6 +1,6 @@
 # Mkt's CMS
 
-A simple content management system for Uberspace.
+A simple content management system for [Uberspace](https://uberspace.de).
 
 - You can't host multiple websites with this CMS. See [Mkt's CMS Admin](https://github.com/mktcode/mktcms-admin).
 - It's a Nuxt/Vue application you can take full control of in terms of design and functionality. Tailwind and other useful things included.
