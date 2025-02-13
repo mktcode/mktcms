@@ -9,7 +9,8 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "db:tunnel": "ssh -i ~/.ssh/uberspace-fayo fayo@norma.uberspace.de -N -L 3306:127.0.0.1:3306",
-    "setup": "./setup.sh"
+    "setup": "./setup.sh",
+    "u": "./uberspace.sh"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.4",
