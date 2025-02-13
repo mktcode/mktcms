@@ -89,6 +89,7 @@ rsync -avz -e "ssh -i $UBERSPACE_KEY" .output/ "$UBERSPACE_USER@$UBERSPACE_HOST:
 ### Service
 echo "Setting up service"
 
+# TODO: Set environment variables in service
 SERVICE_FILE_CONTENT="[program:$SERVICE_NAME]
 directory=/home/$UBERSPACE_USER/mktcms
 command=node server/index.mjs
