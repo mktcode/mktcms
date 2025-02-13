@@ -57,7 +57,7 @@ fi
 ### Database
 echo "Setting up database"
 
-rsync -avz -e "ssh -i $UBERSPACE_KEY" init.sql "$UBERSPACE_USER@$UBERSPACE_HOST:/home/$UBERSPACE_USER/init.sql"
+rsync -avz -e "ssh -i $UBERSPACE_KEY" init.sql "$UBERSPACE_USER@$UBERSPACE_HOST:/home/$UBERSPACE_USER/init.sql" > /dev/null
 ssh_u "mysql --defaults-file=/home/$UBERSPACE_USER/.my.cnf $UBERSPACE_USER < /home/$UBERSPACE_USER/init.sql"
 ssh_u "rm /home/$UBERSPACE_USER/init.sql"
 

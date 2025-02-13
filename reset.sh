@@ -19,9 +19,13 @@ if [ -z "$UBERSPACE_KEY" ]; then
   exit 1
 fi
 
+# Helper function to run commands on the uberspace
+ssh_u() {
+  ssh -i "$UBERSPACE_KEY" "$UBERSPACE_USER@$UBERSPACE_HOST" "$@"
+}
+
 # Ask user for confirmation
 read -p "Are you sure you want to reset the Uberspace? [y/N]" -n 1 -r
-# Move to new line
 echo
 
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then
@@ -29,10 +33,7 @@ if [[ ! $REPLY =~ ^[Yy]$ ]]; then
   exit 1
 fi
 
-# Helper function to run commands on the uberspace
-ssh_u() {
-  ssh -i "$UBERSPACE_KEY" "$UBERSPACE_USER@$UBERSPACE_HOST" "$@"
-}
+echo
 
 ### Domain and Mailbox
 
