@@ -49,6 +49,9 @@ npm run u -- web domain add example.com
 
 # Run the development server and build
 npm run dev
+
+# Destroy production
+npm run destroy
 ```
 
 When you stop the service, a maintenance page will be displayed.
