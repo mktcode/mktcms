@@ -13,11 +13,11 @@ Create a new Uberspace and add an SSH key. Then:
 ```bash
 git clone https://github.com/mktcode/mktcms.git
 cd mktcms
-cp .env.example .env.uberspace
+cp .env.example .env
 ```
 
 ```bash
-# .env.uberspace
+# .env
 UBERSPACE_USER=user
 UBERSPACE_HOST=norma.uberspace.de
 UBERSPACE_KEY=~/.ssh/ssh-key
