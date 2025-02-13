@@ -8,6 +8,8 @@ A simple content management system for [Uberspace](https://uberspace.de).
 
 ## Setup
 
+Create a new Uberspace and add an SSH key. Then:
+
 ```bash
 git clone https://github.com/mktcode/mktcms.git
 cd mktcms
