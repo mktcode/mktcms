@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+
+. .env
+
+### Check .env
+
+if [ -z "$UBERSPACE_USER" ]; then
+  echo "UBERSPACE_USER is not set"
+  exit 1
+fi
+
+if [ -z "$UBERSPACE_HOST" ]; then
+  echo "UBERSPACE_HOST is not set"
+  exit 1
+fi
+
+if [ -z "$UBERSPACE_KEY" ]; then
+  echo "UBERSPACE_KEY is not set"
+  exit 1
+fi
+
+if [ -z "$WEBSITE_DOMAIN" ]; then
+  echo "WEBSITE_DOMAIN is not set. Using default domain: $UBERSPACE_USER.uber.space"
+fi
+
+if [ -z "$WEBSITE_MAILBOX" ]; then
+  echo "WEBSITE_MAILBOX is not set. Using default mailbox: $UBERSPACE_USER@uber.space"
+fi
+
+echo "Setting up project for $UBERSPACE_USER@$UBERSPACE_HOST"
+
+# Helper function to run commands on the uberspace
+ssh_u() {
+  ssh -i "$UBERSPACE_KEY" "$UBERSPACE_USER@$UBERSPACE_HOST" "$@"
+}
+
+### Domain and Mailbox
+
+## Only if WEBSITE_DOMAIN is set
+if [ -n "$WEBSITE_DOMAIN" ]; then
+  echo "Setting up domain"
+  ssh_u "uberspace web domain add $WEBSITE_DOMAIN"
+fi
+
+## Only if WEBSITE_MAILBOX is set
+if [ -n "$WEBSITE_MAILBOX" ]; then
+  echo "Setting up mailbox"
+  ssh_u "uberspace mail user add $WEBSITE_MAILBOX"
+
+  if [ -n "$WEBSITE_DOMAIN" ]; then
+    ssh_u "uberspace mail domain add $WEBSITE_DOMAIN"
+  fi
+fi
+
+### Database
+echo "Setting up database"
+
+rsync -avz -e "ssh -i $UBERSPACE_KEY" init.sql "$UBERSPACE_USER@$UBERSPACE_HOST:/home/$UBERSPACE_USER/init.sql"
+ssh_u "mysql --defaults-file=/home/$UBERSPACE_USER/.my.cnf $UBERSPACE_USER < /home/$UBERSPACE_USER/init.sql"
+ssh_u "rm /home/$UBERSPACE_USER/init.sql"
+
+### CMS
+echo "Building project"
+
+npm run build
+ssh_u "mkdir -p ~/mktcms"
+rsync -avz -e "ssh -i $UBERSPACE_KEY" .output/ "$UBERSPACE_USER@$UBERSPACE_HOST:/home/$UBERSPACE_USER/mktcms"
+
+### Service
+echo "Setting up service"
+
+SERVICE_FILE_CONTENT="[program:$WEBSITE_DOMAIN]
+directory=/home/$UBERSPACE_USER/projects/$WEBSITE_DOMAIN
+command=node server/index.mjs
+autostart=yes
+autorestart=yes
+startsecs=10"
+ssh_u "echo \"$SERVICE_FILE_CONTENT\" > /home/$UBERSPACE_USER/etc/services.d/$WEBSITE_DOMAIN.ini"
+
+ssh_u "supervisorctl reread"
+ssh_u "supervisorctl update"
+ssh_u "supervisorctl start $WEBSITE_DOMAIN"
+
+### Service Backend
+echo "Setting up service backend"
+
+ssh_u "uberspace web backend set $WEBSITE_DOMAIN --http --port 3000"
+
+### Done!
+echo "Setup completed!"
