@@ -11,7 +11,6 @@ A simple content management system for [Uberspace](https://uberspace.de).
 ```bash
 git clone https://github.com/mktcode/mktcms.git
 cd mktcms
-npm i
 cp .env.example .env.uberspace
 ```
 
