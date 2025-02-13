@@ -1,8 +1,16 @@
 #!/usr/bin/env bash
 
-. .env
+### Check dependencies
 
-### Check .env
+command -v node >/dev/null 2>&1 || { echo >&2 "Node is required but it's not installed. Aborting."; exit 1; }
+command -v npm >/dev/null 2>&1 || { echo >&2 "NPM is required but it's not installed. Aborting."; exit 1; }
+command -v rsync >/dev/null 2>&1 || { echo >&2 "Rsync is required but it's not installed. Aborting."; exit 1; }
+command -v ssh >/dev/null 2>&1 || { echo >&2 "SSH is required but it's not installed. Aborting."; exit 1; }
+command -v openssl >/dev/null 2>&1 || { echo >&2 "OpenSSL is required but it's not installed. Aborting."; exit 1; }
+
+### Load and check .env
+
+. .env
 
 if [ -z "$UBERSPACE_USER" ]; then
   echo "UBERSPACE_USER is not set"
@@ -63,6 +71,10 @@ ssh_u "rm /home/$UBERSPACE_USER/init.sql"
 
 ### CMS
 echo "Building project"
+
+IP_HASH_SALT=$(openssl rand -base64 24 | tr -dc 'A-Za-z0-9' | head -c 32)
+echo -e "\nIP_HASH_SALT=$IP_HASH_SALT" >> .env
+
 
 npm run build > /dev/null
 
