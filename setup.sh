@@ -45,7 +45,9 @@ fi
 ## Only if WEBSITE_MAILBOX is set
 if [ -n "$WEBSITE_MAILBOX" ]; then
   echo "Setting up mailbox"
-  ssh_u "uberspace mail user add $WEBSITE_MAILBOX"
+  PASSWORD=$(openssl rand -base64 12)
+  echo "Password for $WEBSITE_MAILBOX: $PASSWORD"
+  ssh_u "uberspace mail user add $WEBSITE_MAILBOX -p $PASSWORD"
 
   if [ -n "$WEBSITE_DOMAIN" ]; then
     ssh_u "uberspace mail domain add $WEBSITE_DOMAIN"
@@ -62,9 +64,11 @@ ssh_u "rm /home/$UBERSPACE_USER/init.sql"
 ### CMS
 echo "Building project"
 
-npm run build
+npm run build > /dev/null
+
+echo "Uploading project"
 ssh_u "mkdir -p ~/mktcms"
-rsync -avz -e "ssh -i $UBERSPACE_KEY" .output/ "$UBERSPACE_USER@$UBERSPACE_HOST:/home/$UBERSPACE_USER/mktcms"
+rsync -avz -e "ssh -i $UBERSPACE_KEY" .output/ "$UBERSPACE_USER@$UBERSPACE_HOST:/home/$UBERSPACE_USER/mktcms" > /dev/null
 
 ### Service
 echo "Setting up service"
