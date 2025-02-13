@@ -86,7 +86,7 @@ rsync -avz -e "ssh -i $UBERSPACE_KEY" .output/ "$UBERSPACE_USER@$UBERSPACE_HOST:
 echo "Setting up service"
 
 SERVICE_FILE_CONTENT="[program:$WEBSITE_DOMAIN]
-directory=/home/$UBERSPACE_USER/projects/$WEBSITE_DOMAIN
+directory=/home/$UBERSPACE_USER/mktcms
 command=node server/index.mjs
 autostart=yes
 autorestart=yes
