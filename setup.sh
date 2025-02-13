@@ -29,6 +29,9 @@ fi
 
 if [ -z "$WEBSITE_DOMAIN" ]; then
   echo "WEBSITE_DOMAIN is not set. Using default domain: $UBERSPACE_USER.uber.space"
+  SERVICE_NAME="$UBERSPACE_USER.uber.space"
+else
+  SERVICE_NAME="$WEBSITE_DOMAIN"
 fi
 
 if [ -z "$WEBSITE_MAILBOX" ]; then
@@ -53,7 +56,8 @@ fi
 ## Only if WEBSITE_MAILBOX is set
 if [ -n "$WEBSITE_MAILBOX" ]; then
   echo "Setting up mailbox"
-  PASSWORD=$(openssl rand -base64 12)
+  # Generate secure password with letters and numbers
+  PASSWORD=$(openssl rand -base64 12 | tr -dc 'A-Za-z0-9' | head -c 12)
   echo "Password for $WEBSITE_MAILBOX: $PASSWORD"
   ssh_u "uberspace mail user add $WEBSITE_MAILBOX -p $PASSWORD"
 
@@ -85,13 +89,13 @@ rsync -avz -e "ssh -i $UBERSPACE_KEY" .output/ "$UBERSPACE_USER@$UBERSPACE_HOST:
 ### Service
 echo "Setting up service"
 
-SERVICE_FILE_CONTENT="[program:$WEBSITE_DOMAIN]
+SERVICE_FILE_CONTENT="[program:$SERVICE_NAME]
 directory=/home/$UBERSPACE_USER/mktcms
 command=node server/index.mjs
 autostart=yes
 autorestart=yes
 startsecs=10"
-ssh_u "echo \"$SERVICE_FILE_CONTENT\" > /home/$UBERSPACE_USER/etc/services.d/$WEBSITE_DOMAIN.ini"
+ssh_u "echo \"$SERVICE_FILE_CONTENT\" > /home/$UBERSPACE_USER/etc/services.d/$SERVICE_NAME.ini"
 
 ssh_u "supervisorctl reread"
 ssh_u "supervisorctl update"
@@ -99,7 +103,7 @@ ssh_u "supervisorctl update"
 ### Service Backend
 echo "Setting up service backend"
 
-ssh_u "uberspace web backend set $WEBSITE_DOMAIN --http --port 3000"
+ssh_u "uberspace web backend set $SERVICE_NAME --http --port 3000"
 
 ### Done!
 echo "Setup completed!"

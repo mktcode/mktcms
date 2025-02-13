@@ -19,6 +19,12 @@ if [ -z "$UBERSPACE_KEY" ]; then
   exit 1
 fi
 
+if [ -z "$WEBSITE_DOMAIN" ]; then
+  SERVICE_NAME="$UBERSPACE_USER.uber.space"
+else
+  SERVICE_NAME="$WEBSITE_DOMAIN"
+fi
+
 # Helper function to run commands on the uberspace
 ssh_u() {
   ssh -i "$UBERSPACE_KEY" "$UBERSPACE_USER@$UBERSPACE_HOST" "$@"
@@ -34,6 +40,19 @@ if [[ ! $REPLY =~ ^[Yy]$ ]]; then
 fi
 
 echo
+
+### Service
+echo "Removing service"
+
+ssh_u "supervisorctl stop $SERVICE_NAME"
+ssh_u "rm /home/$UBERSPACE_USER/etc/services.d/$SERVICE_NAME.ini"
+ssh_u "supervisorctl reread"
+ssh_u "supervisorctl update"
+
+### Service Backend
+echo "Removing service backend"
+
+ssh_u "uberspace web backend del $SERVICE_NAME"
 
 ### Domain and Mailbox
 
@@ -58,19 +77,6 @@ ssh_u "mysql --defaults-file=/home/$UBERSPACE_USER/.my.cnf -e 'CREATE DATABASE I
 echo "Removing project"
 
 ssh_u "rm -rf /home/$UBERSPACE_USER/mktcms"
-
-### Service
-echo "Removing service"
-
-ssh_u "supervisorctl stop $WEBSITE_DOMAIN"
-ssh_u "rm /home/$UBERSPACE_USER/etc/services.d/$WEBSITE_DOMAIN.ini"
-ssh_u "supervisorctl reread"
-ssh_u "supervisorctl update"
-
-### Service Backend
-echo "Removing service backend"
-
-ssh_u "uberspace web backend del $WEBSITE_DOMAIN"
 
 ### Done!
 echo "Reset completed!"
