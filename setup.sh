@@ -95,7 +95,6 @@ ssh_u "echo \"$SERVICE_FILE_CONTENT\" > /home/$UBERSPACE_USER/etc/services.d/$WE
 
 ssh_u "supervisorctl reread"
 ssh_u "supervisorctl update"
-ssh_u "supervisorctl start $WEBSITE_DOMAIN"
 
 ### Service Backend
 echo "Setting up service backend"
