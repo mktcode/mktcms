@@ -24,7 +24,7 @@ UBERSPACE_KEY=~/.ssh/ssh-key
 
 # Optional
 WEBSITE_DOMAIN=example.com # Default: user.uber.space
-WEBSITE_EMAIL=info@example.com # Default: user@uber.space
+WEBSITE_MAILBOX=info@example.com # Default: user@uber.space
 ```
 
 ```bash
