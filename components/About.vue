@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { data: posts } = await useFetch('/api/posts/list', { method: 'POST', body: { category: 'product', limit: 6 } });
+const { content: products } = await useContent('product', 3);
 </script>
 
 <template>
@@ -26,12 +26,12 @@ const { data: posts } = await useFetch('/api/posts/list', { method: 'POST', body
           </p>
 
           <div class="mt-24 grid grid-cols-1 md:grid-cols-3 gap-12">
-            <div v-for="post in posts" :key="post.id" class="flex flex-col items-center">
+            <div v-for="product in products" :key="product.id" class="flex flex-col items-center">
               <h4 class="text-2xl font-bold text-indigo-950">
-                {{ post.title }}
+                {{ product.title }}
               </h4>
               <p class="my-4 text-lg text-center text-gray-600 leading-relaxed">
-                {{ post.description }}
+                {{ product.description }}
               </p>
             </div>
           </div>
