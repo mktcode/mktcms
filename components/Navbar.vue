@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const { content: products } = await useContent('product', 3);
+</script>
+
 <template>
   <header class="bg-white shadow">
     <div class="container mx-auto px-4 py-6 flex justify-between items-center">
@@ -16,10 +20,17 @@
       </div>
       <nav>
         <ul class="flex space-x-12">
-          <li><a href="#yoga" class="navlink">Über mich</a></li>
-          <li><a href="#food" class="navlink">Coaching</a></li>
-          <li><a href="#attention" class="navlink">Veranstaltungen</a></li>
-          <li><a href="#om" class="navlink">Kontakt</a></li>
+          <li>
+            <NuxtLink to="/#about" class="navlink">Über mich</NuxtLink>
+          </li>
+          <li v-for="product in products" :key="product.id">
+            <NuxtLink :to="`/${product.category}/${product.id}`" class="navlink">
+              {{ product.title }}
+            </NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/#contact" class="navlink">Kontakt</NuxtLink>
+          </li>
         </ul>
       </nav>
     </div>
