@@ -24,7 +24,7 @@ const { content: products } = await useContent('product', 3);
             <NuxtLink to="/#about" class="navlink">Über mich</NuxtLink>
           </li>
           <li v-for="product in products" :key="product.id">
-            <NuxtLink :to="`/${product.category}/${product.id}`" class="navlink">
+            <NuxtLink :to="`/content/${product.id}`" class="navlink">
               {{ product.title }}
             </NuxtLink>
           </li>

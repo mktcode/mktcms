@@ -34,7 +34,7 @@ const submit = async () => {
       <div>
         <h2 class="text-3xl font-bold text-gray-800 mb-4">Kontakt</h2>
         <p class="text-xl text-gray-600 leading-relaxed">
-          Du hast Fragen zu meinen Angeboten oder möchtest einen Termin vereinbaren? Schreib mir einfach eine Nachricht oder ruf mich an.
+          Du hast Fragen zu meinen Angeboten oder möchtest einen Termin vereinbaren? Schreib mir einfach eine Nachricht oder ruf an.
         </p>
         <div class="flex flex-col space-y-4 mt-8">
           <span class="flex items-start space-x-10 text-xl text-gray-600">

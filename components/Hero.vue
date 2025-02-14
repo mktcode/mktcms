@@ -11,13 +11,13 @@
     </div>
     <div class="absolute z-50 inset-0 flex items-start">
       <div class="container mx-auto px-4 mt-16">
-        <h1 class="text-4xl md:text-6xl font-bold text-indigo-950">Kultiviere deine innere Balance.</h1>
+        <h1 class="text-4xl md:text-6xl font-bold text-indigo-950">Finde deine innere Balance.</h1>
         <p class="mt-4 text-xl text-gray-600 max-w-3xl leading-relaxed">
           Yoga, Ernährung, Achtsamkeit und stilvolles Auftreten - Löse die Trennung zwischen Körper und Geist auf und finde über einen ganzheitlichen Ansatz zu mehr innerer Ruhe und Ausgeglichenheit.
         </p>
         <div class="flex items-center mt-6 space-x-6">
-          <a href="#about" class="button">
-            Jetzt kennenlernen
+          <a href="#contact" class="button">
+            Jetzt Termin vereinbaren
           </a>
           <a href="tel:05414089747" class="font-bold text-3xl text-indigo-950 ml-4 flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-2 opacity-40">
