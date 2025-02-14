@@ -6,8 +6,11 @@ definePageMeta({
 const category = ref('');
 const title = ref('');
 const description = ref('');
-const date = ref('');
+const date = ref<string | null>(null);
 const url = ref('');
+const image = ref<string | null>(null);
+
+const showFileExplorer = ref(false);
 
 const createPost = async () => {
   await $fetch('/api/posts/create', {
@@ -18,6 +21,7 @@ const createPost = async () => {
       description: description.value,
       date: date.value,
       url: url.value,
+      image: image.value,
     },
   });
   navigateTo('/mktcms');
@@ -35,6 +39,15 @@ const createPost = async () => {
 
     <div class="mt-10">
       <form @submit.prevent="createPost" class="space-y-8">
+        <div>
+          <label for="image" class="block text-sm font-medium text-gray-700">Bild</label>
+          <div class="mt-1 flex items-center">
+            <img v-if="image" :src="`/files/${image}`" alt="Kein Bild" class="w-20 h-20 object-cover object-center rounded-lg" />
+            <button @click="showFileExplorer = true" type="button" class="button ml-4">Bild wählen</button>
+            <button v-if="image" @click="image = null" type="button" class="button ml-4">Bild entfernen</button>
+          </div>
+        </div>
+
         <div>
           <label for="category" class="block text-sm font-medium text-gray-700">Kategorie</label>
           <select v-model="category" name="category" id="category">
@@ -66,5 +79,12 @@ const createPost = async () => {
         <button type="submit" class="button">Speichern</button>
       </form>
     </div>
+
+    <MktcmsFileExplorer
+      :show="showFileExplorer"
+      :extensions="['webp']"
+      @select="image = $event"
+      @close="showFileExplorer = false"
+    />
   </div>
 </template>
