@@ -12,15 +12,17 @@ export default defineEventHandler(async (event) => {
   const db = await getDatabaseConnection()
   const { category, limit } = await readValidatedBody(event, body => bodySchema.parse(body))
 
-  const query = db
+  let query = db
     .selectFrom('content')
     .select(['id', 'category', 'title', 'description', 'date', 'url', 'image'])
-    .orderBy('date', 'desc')
-    .limit(limit)
   
   if (category !== 'all') {
-    query.where('category', '=', category)
+    query = query.where('category', '=', category)
   }
+
+  query = query
+    .orderBy('date', 'desc')
+    .limit(limit)
 
   const posts = await query.execute()
   
