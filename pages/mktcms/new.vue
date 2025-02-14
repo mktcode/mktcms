@@ -3,7 +3,9 @@ definePageMeta({
   layout: 'mktcms',
 })
 
-const category = ref('');
+const { categories } = await useCategories();
+
+const categoryIds = ref<number[]>([]);
 const title = ref('');
 const description = ref('');
 const date = ref<string | null>(null);
@@ -16,7 +18,7 @@ const createPost = async () => {
   await $fetch('/api/posts/create', {
     method: 'POST',
     body: {
-      category: category.value,
+      categories: categoryIds.value,
       title: title.value,
       description: description.value,
       date: date.value,
@@ -49,11 +51,13 @@ const createPost = async () => {
         </div>
 
         <div>
-          <label for="category" class="block text-sm font-medium text-gray-700">Kategorie</label>
-          <select v-model="category" name="category" id="category">
-            <option value="event">Veranstaltung</option>
-            <option value="product">Produkt</option>
-          </select>
+          <label for="categories" class="block text-sm font-medium text-gray-700">Kategorien</label>
+          <div class="mt-1">
+            <div v-for="category in categories" :key="category.id">
+              <input type="checkbox" :id="category.name" :value="category.id" v-model="categoryIds">
+              <label :for="category.name" class="ml-2">{{ category.label }}</label>
+            </div>
+          </div>
         </div>
 
         <div>

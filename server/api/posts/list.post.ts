@@ -1,30 +1,41 @@
 import { z } from "zod";
 
 const bodySchema = z.object({
-  category: z.string().default('all'),
+  categories: z.array(z.number()).default([]),
   limit: z.number().default(999)
 }).default({
-  category: 'all',
+  categories: [],
   limit: 999
 })
 
 export default defineEventHandler(async (event) => {
   const db = await getDatabaseConnection()
-  const { category, limit } = await readValidatedBody(event, body => bodySchema.parse(body))
+  const { categories, limit } = await readValidatedBody(event, body => bodySchema.parse(body))
 
-  let query = db
-    .selectFrom('content')
-    .select(['id', 'category', 'title', 'description', 'date', 'url', 'image'])
-  
-  if (category !== 'all') {
-    query = query.where('category', '=', category)
-  }
-
-  query = query
+  const query = db
+    .selectFrom('contents')
+    .select([
+      'id',
+      'title',
+      'description',
+      'date',
+      'url',
+      'image',
+    ])
+    .where('contents.id', 'in', db.selectFrom('contentCategories').select('contentId').where('contentCategories.categoryId', 'in', categories))
     .orderBy('date', 'desc')
     .limit(limit)
 
-  const posts = await query.execute()
+  const contents = await query.execute()
+
+  const contentsWithCategories = await Promise.all(contents.map(async content => {
+    const categories = await db.selectFrom('categories')
+      .select(['id', 'name', 'label'])
+      .where('categories.id', 'in', db.selectFrom('contentCategories').select('categoryId').where('contentCategories.contentId', '=', content.id))
+      .execute()
+
+    return { ...content, categories }
+  }))
   
-  return posts
+  return contentsWithCategories
 })

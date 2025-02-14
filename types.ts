@@ -6,20 +6,43 @@ import type {
   Updateable,
 } from 'kysely';
 
-export interface ContentTable {
+
+// Content
+export interface ContentsTable {
   id: Generated<number>
-  category: string
   title: string
   description: string
   date: ColumnType<string, string, string> | null
   url: string
   image: string | null
 }
+export type Content = Selectable<ContentsTable>
+export type NewContent = Insertable<ContentsTable>
+export type ContentUpdate = Updateable<ContentsTable>
+export type ContentWithCategories = Content & {
+  categories: Category[]
+}
 
-export type Content = Selectable<ContentTable>
-export type NewContent = Insertable<ContentTable>
-export type ContentUpdate = Updateable<ContentTable>
+// Category
+export interface CategoriesTable {
+  id: Generated<number>
+  name: string
+  label: string
+}
+export type Category = Selectable<CategoriesTable>
+export type NewCategory = Insertable<CategoriesTable>
+export type CategoryUpdate = Updateable<CategoriesTable>
 
+// ContentCategory
+export interface ContentCategoriesTable {
+  id: Generated<number>
+  contentId: number
+  categoryId: number
+}
+export type ContentCategory = Selectable<ContentCategoriesTable>
+export type NewContentCategory = Insertable<ContentCategoriesTable>
+
+// Stats
 export interface StatsTable {
   id: Generated<number>
   userId: string
@@ -28,11 +51,12 @@ export interface StatsTable {
   isMobile: number
   timestamp: ColumnType<Date, never, never>
 }
-
 export type Stat = Selectable<StatsTable>
 export type NewStat = Insertable<StatsTable>
 
 export interface Database {
-  content: ContentTable
+  contents: ContentsTable
+  categories: CategoriesTable
+  contentCategories: ContentCategoriesTable
   stats: StatsTable
 }

@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
   const db = await getDatabaseConnection()
   const { id } = await readValidatedBody(event, body => bodySchema.parse(body))
 
-  await db.deleteFrom('content').where('id', '=', id).execute()
+  await db.deleteFrom('contents').where('id', '=', id).execute()
 
   return { success: true }
 })

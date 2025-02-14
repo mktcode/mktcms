@@ -20,7 +20,7 @@ const { data: posts } = await useFetch('/api/posts/list', { method: 'POST', body
             <div class="flex justify-end items-center mt-4 space-x-6">
               <div class="text-4xl font-bold">35,00 €</div>
               <a
-                :href="`/${post.category}/${post.id}`"
+                :href="`/content/${post.id}`"
                 class="button"
               >
                 Termin vereinbaren

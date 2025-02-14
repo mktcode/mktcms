@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Content } from '~/types';
+import type { ContentWithCategories } from '~/types';
 
 definePageMeta({
   layout: 'mktcms',
@@ -9,18 +9,16 @@ definePageMeta({
 })
 
 const route = useRoute();
-const { data: post } = await useFetch<Content>(`/api/posts/${route.params.id}`);
-const { data: files } = await useFetch('/api/files/list', {
-  method: 'POST',
-  body: { extensions: ['webp'] },
-})
+const { data: content } = await useFetch<ContentWithCategories>(`/api/posts/${route.params.id}`);
 
-const category = ref(post.value?.category);
-const title = ref(post.value?.title);
-const description = ref(post.value?.description);
-const date = ref(post.value?.date ?? null);
-const url = ref(post.value?.url);
-const image = ref(post.value?.image ?? null);
+const { categories } = await useCategories();
+
+const categoryIds = ref<number[]>(content.value?.categories.map((category) => category.id) ?? []);
+const title = ref(content.value?.title);
+const description = ref(content.value?.description);
+const date = ref(content.value?.date ?? null);
+const url = ref(content.value?.url);
+const image = ref(content.value?.image ?? null);
 
 const showFileExplorer = ref(false);
 
@@ -29,7 +27,7 @@ const createPost = async () => {
     method: 'POST',
     body: {
       id: route.params.id,
-      category: category.value,
+      categories: categoryIds.value,
       title: title.value,
       description: description.value,
       date: date.value,
@@ -63,10 +61,12 @@ const createPost = async () => {
 
         <div>
           <label for="category" class="block text-sm font-medium text-gray-700">Kategorie</label>
-          <select v-model="category" name="category" id="category">
-            <option value="event">Veranstaltung</option>
-            <option value="product">Produkt</option>
-          </select>
+          <div class="mt-1">
+            <div v-for="category in categories" :key="category.id">
+              <input type="checkbox" :id="category.name" :value="category.id" v-model="categoryIds">
+              <label :for="category.name" class="ml-2">{{ category.label }}</label>
+            </div>
+          </div>
         </div>
 
         <div>

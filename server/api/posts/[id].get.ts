@@ -8,8 +8,8 @@ export default defineEventHandler(async (event) => {
   const db = await getDatabaseConnection()
   const { id } = await getValidatedRouterParams(event, paramsSchema.parse);
 
-  const post = await db.selectFrom('content')
-    .select(['id', 'category', 'title', 'description', 'date', 'url', 'image'])
+  const content = await db.selectFrom('contents')
+    .select(['id', 'title', 'description', 'date', 'url', 'image'])
     .where('id', '=', Number(id))
     .limit(1)
     .execute()
@@ -23,5 +23,10 @@ export default defineEventHandler(async (event) => {
       return posts[0]
     })
   
-  return post
+  const categories = await db.selectFrom('categories')
+    .select(['id', 'name', 'label'])
+    .where('categories.id', 'in', db.selectFrom('contentCategories').select('categoryId').where('contentCategories.contentId', '=', content.id))
+    .execute()
+  
+  return { ...content, categories }
 })

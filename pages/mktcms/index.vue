@@ -1,20 +1,35 @@
 <script setup lang="ts">
-import type { Content } from '~/types';
+import type { Category, ContentWithCategories } from '~/types';
 
 definePageMeta({
   layout: 'mktcms',
 })
 
 const { public: { domain } } = useRuntimeConfig();
+const { categories, refreshCategories } = await useCategories();
 
-const posts = ref<Content[]>([]);
-const category = ref('all');
+const selectedCategories = ref<number[]>(categories.value?.map((category: Category) => category.id) || []);
+const showNewCategoryModal = ref(false);
+const newCategoryLabel = ref('');
+const posts = ref<ContentWithCategories[]>([]);
 const showDeleteModal = ref(false);
 const postId = ref(0);
 const postToDelete = computed(() => posts.value?.find((post: any) => post.id === postId.value));
 
+const createCategory = async () => {
+  if (!newCategoryLabel.value) return;
+  
+  const newCategoryName = newCategoryLabel.value.toLowerCase().replace(/ /g, '-');
+
+  await $fetch('/api/categories/create', { method: 'POST', body: { name: newCategoryName, label: newCategoryLabel.value } });
+  showNewCategoryModal.value = false;
+  await refreshCategories();
+};
+
 const fetchPosts = async () => {
-  const data = await $fetch('/api/posts/list', { method: 'POST', body: { category: category.value } });
+  const data = await $fetch('/api/posts/list', { method: 'POST', body: {
+    categories: selectedCategories.value.length ? selectedCategories.value : [],
+  }});
   posts.value = data;
 };
 
@@ -45,13 +60,17 @@ onMounted(fetchPosts);
         Inhaltsverwaltung - Übersicht
       </h1>
       <NuxtLink to="/mktcms/new" class="button ml-4">Neuer Inhalt</NuxtLink>
+      <button @click="showNewCategoryModal = true" class="button ml-4">
+        Neue Kategorie
+      </button>
     </div>
 
-    <select v-model="category" @change="() => fetchPosts()" class="mt-4">
-      <option value="all">Alle Kategorien</option>
-      <option value="event">Veranstaltungen</option>
-      <option value="product">Produkte</option>
-    </select>
+    <div class="mt-4">
+      <div v-for="category in categories" :key="category.id" class="flex items-center space-x-4">
+        <input type="checkbox" :id="category.name" :value="category.id" v-model="selectedCategories" @change="fetchPosts">
+        <label :for="category.name">{{ category.label }}</label>
+      </div>
+    </div>
 
     <div class="mt-10">
       <table class="divide-y divide-gray-200 w-full">
@@ -75,7 +94,7 @@ onMounted(fetchPosts);
             <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               URL
             </th>
-            <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th scope="col" class="px-3 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
               Aktionen
             </th>
           </tr>
@@ -89,7 +108,9 @@ onMounted(fetchPosts);
               </div>
             </td>
             <td class="px-3 py-2 whitespace-nowrap">
-              <div class="text-sm text-gray-900">{{ post.category }}</div>
+              <div class="text-sm text-gray-900">
+                {{ post.categories.map((category: Category) => category.label).join(', ') }}
+              </div>
             </td>
             <td class="px-3 py-2 whitespace-nowrap">
               <div class="text-sm text-gray-900">{{ post.title }}</div>
@@ -107,7 +128,7 @@ onMounted(fetchPosts);
             </td>
             <td class="px-3 py-2 whitespace-nowrap text-right text-sm font-medium">
               <a
-                :href="`https://www.facebook.com/sharer/sharer.php?u=https://${domain}/${post.category}/${post.id}`"
+                :href="`https://www.facebook.com/sharer/sharer.php?u=https://${domain}/content/${post.id}`"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="text-indigo-600 hover:text-indigo-900"
@@ -141,7 +162,7 @@ onMounted(fetchPosts);
           <h4 class="text-2xl mt-2">
             {{ postToDelete.title }}
           </h4>
-          <img :src="`/files/${postToDelete.image}`" alt="event" class="w-full h-56 object-cover object-center rounded">
+          <img v-if="postToDelete.image" :src="`/files/${postToDelete.image}`" alt="event" class="w-full h-56 object-cover object-center rounded">
           <p class="text-gray-400">
             {{ postToDelete.date ? new Date(postToDelete.date).toLocaleDateString('de-DE') : 'Kein Datum' }}
           </p>
@@ -150,6 +171,35 @@ onMounted(fetchPosts);
               Löschen
             </button>
             <button @click="closeDeleteModal" type="button" class="button">
+              Abbrechen
+            </button>
+          </div>
+        </div>
+      </div>
+    </MktcmsModal>
+
+    <MktcmsModal v-if="showNewCategoryModal" @close="showNewCategoryModal = false">
+      <div class="sm:flex sm:items-start">
+        <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
+          <svg class="h-6 w-6 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+          <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
+            Neue Kategorie
+          </h3>
+          <div class="mt-2">
+            <p class="text-sm text-gray-500">
+              Geben Sie den Namen der neuen Kategorie ein.
+            </p>
+          </div>
+          <input v-model="newCategoryLabel" type="text" class="input" placeholder="Name" />
+          <div class="mt-4 flex justify-center space-x-6">
+            <button @click="createCategory" type="button" class="button">
+              Speichern
+            </button>
+            <button @click="showNewCategoryModal = false" type="button" class="button">
               Abbrechen
             </button>
           </div>
