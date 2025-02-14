@@ -3,20 +3,28 @@ import { Stat } from "~/types";
 export default defineEventHandler(async () => {
   const db = await getDatabaseConnection();
 
-  const [stats] = await db.query<Stat[]>(
-    `SELECT 
-      route, 
-      COUNT(DISTINCT userId) AS uniqueUsers, 
-      SUM(CASE WHEN isMobile = 1 THEN 1 ELSE 0 END) AS mobileCount,
-      SUM(CASE WHEN isMobile = 0 THEN 1 ELSE 0 END) AS desktopCount
-    FROM stats
-    GROUP BY route
-    ORDER BY route ASC`
-  );
+  // CREATE TABLE IF NOT EXISTS stats (
+  //   id INTEGER PRIMARY KEY AUTOINCREMENT,
+  //   userId TEXT NOT NULL,
+  //   route TEXT NOT NULL,
+  //   referer TEXT,
+  //   isMobile INTEGER NOT NULL,
+  //   timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  // );
 
-  return stats.map((stat) => ({
+  const stats = await db
+    .selectFrom('stats')
+    .select(({ fn }) => [
+      'route',
+      fn.count<number>('userId').as('count'),
+      fn.sum<number>('isMobile').as('mobileCount'),
+    ])
+    .groupBy('route')
+    .orderBy('count', 'desc')
+    .execute()
+
+  return stats.map(stat => ({
     ...stat,
-    mobileCount: Number(stat.mobileCount),
-    desktopCount: Number(stat.desktopCount),
-  }));
+    desktopCount: stat.count - stat.mobileCount,
+  }))
 });

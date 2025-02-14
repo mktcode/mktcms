@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Post } from '~/types';
+import type { Content } from '~/types';
 
 definePageMeta({
   layout: 'mktcms',
@@ -9,7 +9,7 @@ definePageMeta({
 })
 
 const route = useRoute();
-const { data: post } = await useFetch<Post>(`/api/posts/${route.params.id}`);
+const { data: post } = await useFetch<Content>(`/api/posts/${route.params.id}`);
 const { data: files } = await useFetch('/api/files/list', {
   method: 'POST',
   body: { extensions: ['webp'] },

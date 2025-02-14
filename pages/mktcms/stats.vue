@@ -28,35 +28,17 @@ const { data: referers } = await useFetch('/api/stats/referers', { method: 'POST
               Seite
             </th>
             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Desktop
-            </th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Mobil
-            </th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Gesamt
-            </th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Unteschiedliche Geräte
             </th>
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
-          <tr v-for="referer in referers" :key="referer.referer">
+          <tr v-for="(referer, index) in referers" :key="index">
             <td class="px-6 py-4 whitespace-nowrap">
               <div class="text-sm text-gray-900">{{ referer.referer }}</div>
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
-              <div class="text-sm text-gray-900">{{ referer.desktopCount }}</div>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <div class="text-sm text-gray-900">{{ referer.mobileCount }}</div>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <div class="text-sm text-gray-900">{{ (referer.mobileCount + referer.desktopCount) }}</div>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <div class="text-sm text-gray-900">{{ referer.uniqueUsers }}</div>
+              <div class="text-sm text-gray-900">{{ referer.count }}</div>
             </td>
           </tr>
         </tbody>
@@ -102,7 +84,7 @@ const { data: referers } = await useFetch('/api/stats/referers', { method: 'POST
               <div class="text-sm text-gray-900">{{ (stat.mobileCount + stat.desktopCount) }}</div>
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
-              <div class="text-sm text-gray-900">{{ stat.uniqueUsers }}</div>
+              <div class="text-sm text-gray-900">{{ stat.count }}</div>
             </td>
           </tr>
         </tbody>

@@ -7,8 +7,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "db:tunnel": "ssh -i ~/.ssh/uberspace-fayo fayo@norma.uberspace.de -N -L 3306:127.0.0.1:3306",
+    "postinstall": "nuxt prepare && ./init-dev-db.sh",
     "setup": "./setup.sh",
     "destroy": "./destroy.sh",
     "u": "./uberspace.sh"
@@ -16,8 +15,10 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.0.4",
     "archiver": "^7.0.1",
+    "better-sqlite3": "^11.8.1",
     "is-mobile": "^5.0.0",
     "isbot": "^5.1.22",
+    "kysely": "^0.27.5",
     "mysql2": "^3.12.0",
     "nodemailer": "^6.10.0",
     "nuxt": "^3.15.4",
@@ -30,6 +31,7 @@
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.16",
     "@types/archiver": "^6.0.3",
+    "@types/better-sqlite3": "^7.6.12",
     "@types/node": "^22.13.1",
     "@types/nodemailer": "^6.4.17"
   }

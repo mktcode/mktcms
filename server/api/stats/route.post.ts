@@ -37,6 +37,6 @@ export default defineEventHandler(async (event) => {
   hmac.update(combinedIdString)
   const userId = hmac.digest('hex')
 
-  await db.query(`INSERT INTO stats (userId, route, referer, isMobile) VALUES (?, ?, ?, ?)`, [userId, route, referer, isMobile])
+  await db.insertInto('stats').values({ userId, route, referer, isMobile: Number(isMobile) }).execute()
   return { success: true }
 })

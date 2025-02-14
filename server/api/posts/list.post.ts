@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { Post } from "~/types";
 
 const bodySchema = z.object({
   category: z.string().default('all'),
@@ -13,14 +12,17 @@ export default defineEventHandler(async (event) => {
   const db = await getDatabaseConnection()
   const { category, limit } = await readValidatedBody(event, body => bodySchema.parse(body))
 
-  const [posts] = await db.query<Post[]>(`
-    SELECT id, category, title, description, date, url, image
-    FROM content 
-    ${category !== 'all' ? `WHERE category = ?` : ''} 
-    ORDER BY date DESC 
-    ${limit ? `LIMIT ${limit}` : ''}`,
-    category !== 'all' ? [category] : []
-  );
+  const query = db
+    .selectFrom('content')
+    .select(['id', 'category', 'title', 'description', 'date', 'url', 'image'])
+    .orderBy('date', 'desc')
+    .limit(limit)
+  
+  if (category !== 'all') {
+    query.where('category', '=', category)
+  }
+
+  const posts = await query.execute()
   
   return posts
 })

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Post } from '~/types';
+import type { Content } from '~/types';
 
 definePageMeta({
   layout: 'mktcms',
@@ -7,14 +7,14 @@ definePageMeta({
 
 const { public: { domain } } = useRuntimeConfig();
 
-const posts = ref<Post[]>([]);
+const posts = ref<Content[]>([]);
 const category = ref('all');
 const showDeleteModal = ref(false);
 const postId = ref(0);
 const postToDelete = computed(() => posts.value?.find((post: any) => post.id === postId.value));
 
 const fetchPosts = async () => {
-  const data = await $fetch<Post[]>('/api/posts/list', { method: 'POST', body: { category: category.value } });
+  const data = await $fetch('/api/posts/list', { method: 'POST', body: { category: category.value } });
   posts.value = data;
 };
 
@@ -95,7 +95,9 @@ onMounted(fetchPosts);
               <div class="text-sm text-gray-900">{{ post.title }}</div>
             </td>
             <td class="px-3 py-2 whitespace-nowrap">
-              <div class="text-sm text-gray-900">{{ new Date(post.date).toLocaleDateString('de-DE') }} - {{ new Date(post.date).toTimeString().slice(0, 5) }} Uhr</div>
+              <div class="text-sm text-gray-900">
+                {{ post.date ? new Date(post.date).toLocaleDateString('de-DE') : 'Kein Datum' }}
+              </div>
             </td>
             <td class="px-3 py-2">
               <div class="text-sm text-gray-900 line-clamp-1">{{ post.description }}</div>
@@ -139,9 +141,9 @@ onMounted(fetchPosts);
           <h4 class="text-2xl mt-2">
             {{ postToDelete.title }}
           </h4>
-          <img :src="postToDelete.image" alt="event" class="w-full h-56 object-cover object-center rounded">
+          <img :src="`/files/${postToDelete.image}`" alt="event" class="w-full h-56 object-cover object-center rounded">
           <p class="text-gray-400">
-            {{ new Date(postToDelete.date).toLocaleDateString('de-DE') }} - {{ new Date(postToDelete.date).toTimeString().slice(0, 5) }} Uhr
+            {{ postToDelete.date ? new Date(postToDelete.date).toLocaleDateString('de-DE') : 'Kein Datum' }}
           </p>
           <div class="mt-4 flex justify-center space-x-6">
             <button @click="deletePost" type="button" class="button">

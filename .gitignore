@@ -25,3 +25,4 @@ logs
 
 # Mktcms
 public/files
+development.sqlite
