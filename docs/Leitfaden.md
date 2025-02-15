@@ -133,12 +133,11 @@ Die Bedienung des CMS ist sehr leicht und intuitiv. Sie sehen nur das, was Sie a
 Das CMS selbst ist kostenlos. Es ist freie Software, die von jedem, der sich damit auskennt, installiert und betrieben werden kann. (Ich freue mich über Spenden.)
 Unvermeidbare Kosten entstehen durch die Domainregistrierung, Hosting bzw. Speicherplatz und ggf. die Google Ads Kampagnen.
 
-**Meine Preise: **
+**Meine Preise:**
 
-| Leistung | einmalig | monatlich | jährlich |
+| Leistung | einmalig | monatlich (jährlich) |
 | --- | --- | --- |
-| Betrieb des CMS, mit einer .de-Domain und E-Mail-Postfächern | 25 € | 25 € | 250 € |
-| 10 GB zusätzlicher Speicherplatz | 5 € | 5 € | 50 € |
-| Beratung und Support | - | 100 € | 1000 € |
-| Gestaltung von Website und Visitenkarten | 500 € | - | - |
-| Gesamtkonzept und Umsetzung | 1000 € | - | - |
+| Betrieb des CMS, mit einer .de-Domain und E-Mail-Postfächern | - | 25 € (300 €) |
+| 10 GB zusätzlicher Speicherplatz | - | 5 € (60 €) |
+| Gestaltung Web und Visitenkarte | 300 € | - | - |
+| Gesamtkonzept, Umsetzung, dauerhafte Betratung | 1500 € | 75 € (900 €) |
