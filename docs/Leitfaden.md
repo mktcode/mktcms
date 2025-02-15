@@ -140,4 +140,4 @@ Unvermeidbare Kosten entstehen durch die Domainregistrierung, Hosting bzw. Speic
 | Betrieb des CMS, mit einer .de-Domain und E-Mail-Postfächern | - | 25 € (300 €) |
 | 10 GB zusätzlicher Speicherplatz (die enthaltenen 10 GB reichen meist) | - | 5 € (60 €) |
 | Gestaltung Web und Visitenkarte | 300 € | - | - |
-| Gesamtkonzept, Umsetzung, dauerhafte Betratung | 1500 € | 75 € (900 €) |
+| Gesamtkonzept, Umsetzung, dauerhafte Betratung (inkl. CMS) | 1500 € | 75 € (900 €) |
