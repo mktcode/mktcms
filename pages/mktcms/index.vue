@@ -65,10 +65,20 @@ onMounted(fetchPosts);
       </button>
     </div>
 
-    <div class="mt-4">
-      <div v-for="category in categories" :key="category.id" class="flex items-center space-x-4">
-        <input type="checkbox" :id="category.name" :value="category.id" v-model="selectedCategories" @change="fetchPosts">
-        <label :for="category.name">{{ category.label }}</label>
+    <div class="mt-4 space-y-2">
+      <div v-for="category in categories" :key="category.id" class="flex items-center justify-between space-x-4 text-xl max-w-sm">
+        <div>
+          <input type="checkbox" :id="category.name" :value="category.id" v-model="selectedCategories" @change="fetchPosts">
+          <label :for="category.name" class="ml-2">{{ category.label }}</label>
+        </div>
+        <NuxtLink :to="`/mktcms/category/${category.id}`" class="text-sm flex items-center space-x-1 rounded px-2 py-1 bg-green-100 text-green-600 hover:bg-green-200">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+          </svg>
+          <span>
+            Neu
+          </span>
+        </NuxtLink>
       </div>
     </div>
 

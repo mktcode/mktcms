@@ -43,10 +43,12 @@ const createPost = async () => {
       <form @submit.prevent="createPost" class="space-y-8">
         <div>
           <label for="image" class="block text-sm font-medium text-gray-700">Bild</label>
-          <div class="mt-1 flex items-center">
-            <img v-if="image" :src="`/files/${image}`" alt="Kein Bild" class="w-20 h-20 object-cover object-center rounded-lg" />
-            <button @click="showFileExplorer = true" type="button" class="button ml-4">Bild wählen</button>
-            <button v-if="image" @click="image = null" type="button" class="button ml-4">Bild entfernen</button>
+          <div class="mt-1 flex flex-col items-start">
+            <img v-if="image" :src="`/files/${image}`" alt="Kein Bild" class="w-96 aspect-video object-cover object-center rounded-lg mb-2" />
+            <div>
+              <button @click="showFileExplorer = true" type="button" class="button">Bild wählen</button>
+              <button v-if="image" @click="image = null" type="button" class="button ml-4">Bild entfernen</button>
+            </div>
           </div>
         </div>
 
@@ -67,7 +69,18 @@ const createPost = async () => {
 
         <div>
           <label for="description" class="block text-sm font-medium text-gray-700">Beschreibung</label>
-          <textarea v-model="description" name="description" id="description" rows="3" />
+          <div class="bg-gray-100 p-2 rounded-t-lg mt-1 text-lg flex space-x-1">
+            <button class="size-10 rounded-lg bg-gray-200 aspect-square flex items-center justify-center hover:bg-gray-300 cursor-pointer" @click="description += ' **Fett** '">
+              <strong>B</strong>
+            </button>
+            <button class="size-10 rounded-lg bg-gray-200 aspect-square flex items-center justify-center hover:bg-gray-300 cursor-pointer" @click="description += ' **Fett** '">
+              <italic>I</italic>
+            </button>
+            <button class="size-10 rounded-lg bg-gray-200 aspect-square flex items-center justify-center hover:bg-gray-300 cursor-pointer" @click="description += ' **Fett** '">
+              <u>U</u>
+            </button>
+          </div>
+          <textarea v-model="description" name="description" id="description" rows="10" class="!rounded-t-none"></textarea>
         </div>
 
         <div>
@@ -78,6 +91,13 @@ const createPost = async () => {
         <div>
           <label for="url" class="block text-sm font-medium text-gray-700">URL</label>
           <input v-model="url" type="text" name="url" id="url">
+        </div>
+
+        <div>
+          <label for="url" class="block text-sm font-medium text-gray-700">Buchungen</label>
+          <button class="button">
+            Verfügbarkeit einstellen
+          </button>
         </div>
 
         <button type="submit" class="button">Speichern</button>
