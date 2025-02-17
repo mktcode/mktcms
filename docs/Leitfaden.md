@@ -41,7 +41,7 @@ Es können auch aktuelle Veranstaltungen, Angebote und Neuigkeiten veröffentlic
 Bewertungen sind ein wichtiger Faktor für die Sichtbarkeit des Unternehmensprofils und die Entscheidung der Kunden.
 Es ist wichtig, dass Kunden dazu ermutigt werden, Bewertungen zu hinterlassen.
 Das kann durch eine Aufforderung auf der Website, in der Signatur der E-Mail oder im persönlichen Gespräch geschehen.
-Negative Bewertungen dürfen nicht ignoriert werden, sondern müssen klräend beantwortet werden.
+Negative Bewertungen dürfen nicht ignoriert werden, sondern müssen klärend beantwortet werden.
 
 ### Ads
 
@@ -122,6 +122,7 @@ In meinem CMS können Sie damit anfangen, Ihre Domain auf ein Profil weiterzulei
 Sie verbinden sich dann mit Google und Facebook und müssen nun Ihre Kontaktdaten und Öffnungzeiten nur noch an einer Stelle pflegen.
 Impressum, Datenschutzerklärung und ggf. AGB werden anhand eines kurzen Fragebogens automatisch generiert und ebenfalls auf den Plattformen synchronisiert bzw. verlinkt.
 Bilder, Logo, Slogan, Profiltexte, Veranstaltungen und Angebote können ebenfalls über das CMS gepflegt werden - Einheitlich oder individuell für jede Plattform.
+Ihre Google Bewertungen finden Sie auch hier und können direkt darauf antworten.
 
 Sie können über das CMS auch beliebig viele E-Mail-Adressen unter Ihrer Domain anlegen (als Weiterleitung oder eigenes Postfach) und
 das integrierte E-Mail-Programm nutzen. (Keine Einrichtung von Outlook oder Thunderbird etc. notwendig.)
@@ -137,6 +138,7 @@ dezentem Hinweis auf die Google Bewertungen. Weitere Unterseiten mit spezifische
 Diese können frei angelegt werden, um das Unternehmen besser vorzustellen, Themen zu vertiefen und weitere Informationen bereitzustellen.
 Mit einem individuellen Kontaktformular eignen sich Unterseiten aber auch besonders als Ziel für Google Ads Kampagnen und Social Media Posts,
 um zeitlich begrenzte oder dauerhafte Angebote zu bewerben.
+Diese Angebotsseiten oder "Landigpages" sollten dabei ALLE relevanten informationen enthalten, die der Kunde braucht, um eine Kaufentscheidung zu treffen, am besten in einer kurzen Variante oben und einer ausführlichen Variante unten.
 
 Die Integration von Stripe als Zahlungsdienstleister macht aus Ihrer Website einen vollwertigen Onlineshop, wenn Sie das möchten.
 Impressum, Datenschutzerklärung und AGB werden dann automatisch angepasst.
