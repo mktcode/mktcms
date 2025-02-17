@@ -21,7 +21,7 @@ if (!content.value) {
 <template>
   <div class="h-screen flex flex-col">
     <Navbar />
-    <PostHero v-if="content" :title="content.title" :description="content.description" button="Mehr erfahren" />
+    <PageHero v-if="content" :title="content.title" :description="content.description" button="Mehr erfahren" />
   </div>
   <section class="py-32 bg-white">
     <div class="container mx-auto px-4">
