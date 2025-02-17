@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { data: posts } = await useFetch('/api/posts/list', { method: 'POST', body: { category: 'event', limit: 8 } });
+const { data: posts } = await useFetch('/api/content/list', { method: 'POST', body: { category: 'event', limit: 8 } });
 </script>
 
 <template>

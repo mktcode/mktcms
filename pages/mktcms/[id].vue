@@ -9,7 +9,7 @@ definePageMeta({
 })
 
 const route = useRoute();
-const { data: content } = await useFetch<ContentWithCategories>(`/api/posts/${route.params.id}`);
+const { data: content } = await useFetch<ContentWithCategories>(`/api/content/${route.params.id}`);
 
 const { categories } = await useCategories();
 
@@ -23,7 +23,7 @@ const image = ref(content.value?.image ?? null);
 const showFileExplorer = ref(false);
 
 const createPost = async () => {
-  await $fetch('/api/posts/update', {
+  await $fetch('/api/content/update', {
     method: 'POST',
     body: {
       id: route.params.id,

@@ -8,7 +8,7 @@ definePageMeta({
 })
 
 const route = useRoute();
-const { data: post } = await useFetch<Post>(`/api/posts/${route.params.id}`);
+const { data: post } = await useFetch<Post>(`/api/content/${route.params.id}`);
 
 if (!post.value) {
   throw createError({

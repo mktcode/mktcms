@@ -15,7 +15,7 @@ const image = ref<string | null>(null);
 const showFileExplorer = ref(false);
 
 const createPost = async () => {
-  await $fetch('/api/posts/create', {
+  await $fetch('/api/content/create', {
     method: 'POST',
     body: {
       categories: categoryIds.value,

@@ -27,7 +27,7 @@ const createCategory = async () => {
 };
 
 const fetchPosts = async () => {
-  const data = await $fetch('/api/posts/list', { method: 'POST', body: {
+  const data = await $fetch('/api/content/list', { method: 'POST', body: {
     categories: selectedCategories.value.length ? selectedCategories.value : [],
   }});
   posts.value = data;
@@ -45,7 +45,7 @@ const closeDeleteModal = () => {
 const deletePost = async () => {
   if (!postToDelete.value) return;
   
-  await $fetch('/api/posts/delete', { method: 'POST', body: { id: postToDelete.value.id } });
+  await $fetch('/api/content/delete', { method: 'POST', body: { id: postToDelete.value.id } });
   showDeleteModal.value = false;
   await fetchPosts();
 };
