@@ -49,11 +49,23 @@ Das Unternehmensprofil kann durch Google Ads Kampagnen beworben werden.
 Die Kosten sind abhängig vom Wettbewerb aber Sie zahlen nur, wenn jemand auf die Anzeige klickt.
 In Kombination mit dem Unternehmensprofil ergeben sich hier viele Möglichkeiten, zielgerichtete Werbung zu schalten.
 
+## Angebot und Nachfrage mit Keywords zusammenbringen
+
+Die richtigen Suchbegriffe und Keywords sind entscheidend für den Erfolg der Google Ads Kampagnen.
+Es gilt herauszufinden, wonach die Zielgruppe sucht und wie das eigene Angebot darauf abgestimmt werden kann.
+
+Die Nachfrage stellt sich nicht nur als konkrete Suchanfrage für ein Angebot dar, sondern auch als Bedürfnis oder Problem, das gelöst werden soll.
+Werbung sollte daher aus sicht des Kunden formuliert werden, anstatt Fachbegriffe zu verwenden bzw. das Angebot direkt zu beschreiben.
+
+Wonach sucht die Zielgruppe? Sucht sie nach "Yoga-Coach" und "Ernährungsberatung" oder nach "Stress im Alltag" und "gesünder leben tipps"?
+
 ### Lokale Dienstleistungen
 
 Für bestimmte Branchen rund um Haus und Hof (Klempner, Dachdecker, Elektriker, etc.) gibt es spezielle Google Ads Kampagnen, die auf lokale Dienstleistungen abzielen.
 Hier können auch Terminbuchungen direkt aus der Anzeige heraus getätigt werden.
 Kostenbeispiel: Ein Dachdecker zahlt 30 - 45 € für 5 Anfragen im Monat. Man zahlt nur für tatsächliche Anfragen, nicht für Klicks auf die Anzeige.
+
+Gesucht wird hier tendenziell über konkrete Begriffe wie "Dachdecker in der Nähe" oder "Dach reparieren lassen".
 
 ## Social Media
 
