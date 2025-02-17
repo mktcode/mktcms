@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Post } from '~/types';
+import { type Content } from '~/types';
 
 definePageMeta({
   validate: async (route) => {
@@ -8,9 +8,9 @@ definePageMeta({
 })
 
 const route = useRoute();
-const { data: post } = await useFetch<Post>(`/api/content/${route.params.id}`);
+const { data: content } = await useFetch<Content>(`/api/content/${route.params.id}`);
 
-if (!post.value) {
+if (!content.value) {
   throw createError({
     statusCode: 404,
     statusMessage: 'Seite nicht gefunden',
@@ -21,12 +21,12 @@ if (!post.value) {
 <template>
   <div class="h-screen flex flex-col">
     <Navbar />
-    <PostHero v-if="post" :title="post.title" :description="post.description" button="Mehr erfahren" />
+    <PostHero v-if="content" :title="content.title" :description="content.description" button="Mehr erfahren" />
   </div>
   <section class="py-32 bg-white">
     <div class="container mx-auto px-4">
       <p class="mt-8 text-xl text-gray-600 leading-relaxed">
-        {{ post?.description }}
+        {{ content?.description }}
       </p>
     </div>
   </section>
