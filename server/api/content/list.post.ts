@@ -12,7 +12,6 @@ export default defineEventHandler(async (event) => {
   const db = await getDatabaseConnection()
   const { categories, limit } = await readValidatedBody(event, body => bodySchema.parse(body))
 
-  console.log("categories", categories)
   const query = db
     .selectFrom('contents')
     .select([
