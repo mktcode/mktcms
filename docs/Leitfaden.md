@@ -1,4 +1,4 @@
-# Leitfaden
+# Leitfaden: Online-Werbung für kleine Unternehmen
 
 # Ziel und Identität
 
