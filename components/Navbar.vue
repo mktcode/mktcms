@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { content: products } = await useContent('product', 3);
+const { content: menuItems } = await useContent([3], 3);
 </script>
 
 <template>
@@ -23,9 +23,9 @@ const { content: products } = await useContent('product', 3);
           <li>
             <NuxtLink to="/#about" class="navlink">Über mich</NuxtLink>
           </li>
-          <li v-for="product in products" :key="product.id">
-            <NuxtLink :to="`/content/${product.id}`" class="navlink">
-              {{ product.title }}
+          <li v-for="item in menuItems" :key="item.id">
+            <NuxtLink :to="`/content/${item.id}`" class="navlink">
+              {{ item.title }}
             </NuxtLink>
           </li>
           <li>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { content: products } = await useContent('product', 3);
+const { content: products } = await useContent([1], 3);
 </script>
 
 <template>
