@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
   const db = await getDatabaseConnection()
   const { categories, limit } = await readValidatedBody(event, body => bodySchema.parse(body))
 
-  const query = db
+  let query = db
     .selectFrom('contents')
     .select([
       'id',
@@ -23,9 +23,12 @@ export default defineEventHandler(async (event) => {
       'url',
       'image',
     ])
-    .where('contents.id', 'in', db.selectFrom('contentCategories').select('contentId').where('contentCategories.categoryId', 'in', categories))
     .orderBy('date', 'desc')
     .limit(limit)
+  
+  if (categories.length) {
+    query = query.where('contents.id', 'in', db.selectFrom('contentCategories').select('contentId').where('contentCategories.categoryId', 'in', categories))
+  }
 
   const contents = await query.execute()
 

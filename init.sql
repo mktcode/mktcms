@@ -38,6 +38,7 @@ INSERT INTO categories (id, name, label) VALUES (1, 'menu', 'Menü');
 INSERT INTO categories (id, name, label) VALUES (2, 'topics', 'Themen');
 INSERT INTO categories (id, name, label) VALUES (3, 'products', 'Produkte');
 INSERT INTO categories (id, name, label) VALUES (4, 'events', 'Veranstaltungen');
+INSERT INTO categories (id, name, label) VALUES (5, 'general', 'Allgemein');
 
 -- Hero
 INSERT INTO contents (id, title, subtitle, description, date, url, image) VALUES (
@@ -49,6 +50,7 @@ INSERT INTO contents (id, title, subtitle, description, date, url, image) VALUES
   '#contact',
   'header-placeholder.jpg'
 );
+INSERT INTO contentCategories (contentId, categoryId) VALUES (1, 5);
 
 -- About
 INSERT INTO contents (id, title, subtitle, description, date, url, image) VALUES (
@@ -61,6 +63,7 @@ INSERT INTO contents (id, title, subtitle, description, date, url, image) VALUES
   null,
   'profil-placeholder.jpg'
 );
+INSERT INTO contentCategories (contentId, categoryId) VALUES (2, 5);
 
 -- Topics
 INSERT INTO contents (id, title, subtitle, description, date, url, image) VALUES (
@@ -127,7 +130,7 @@ INSERT INTO contents (id, title, subtitle, description, date, url, image) VALUES
   'https://google.com',
   'header-placeholder.jpg'
 );
-INSERT INTO contentCategories (contentId, categoryId) VALUES (3, 3);
+INSERT INTO contentCategories (contentId, categoryId) VALUES (8, 3);
 
 INSERT INTO contents (id, title, subtitle, description, date, url, image) VALUES (
   9,
@@ -138,4 +141,4 @@ INSERT INTO contents (id, title, subtitle, description, date, url, image) VALUES
   'https://google.com',
   'header-placeholder.jpg'
 );
-INSERT INTO contentCategories (contentId, categoryId) VALUES (4, 4);
+INSERT INTO contentCategories (contentId, categoryId) VALUES (9, 4);
