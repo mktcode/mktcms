@@ -19,7 +19,7 @@ defineProps<{
           {{ description }}
         </p>
         <div class="flex items-center mt-6 space-x-6">
-          <a href="#about" class="button">
+          <a href="#contact" class="button">
             {{ button }}
           </a>
           <a href="tel:05414089747" class="font-bold text-3xl text-indigo-950 ml-4 flex items-center">
