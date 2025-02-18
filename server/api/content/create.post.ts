@@ -9,11 +9,17 @@ const bodySchema = z.object({
   categories: z.array(z.number())
 })
 
+function slugFromTitle(title: string) {
+  return title.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+}
+
 export default defineEventHandler(async (event) => {
   const db = await getDatabaseConnection()
   const { categories, title, description, date, url, image } = await readValidatedBody(event, body => bodySchema.parse(body))
 
-  const result = await db.insertInto('contents').values({ title, description, date, url, image }).returning('id').executeTakeFirstOrThrow()
+  const slug = slugFromTitle(title)
+
+  const result = await db.insertInto('contents').values({ title, slug, description, date, url, image }).returning('id').executeTakeFirstOrThrow()
   
   await db.deleteFrom('contentCategories').where('contentId', '=', result.id).execute()
   await db.insertInto('contentCategories').values(categories.map(categoryId => ({ contentId: result.id, categoryId }))).execute()

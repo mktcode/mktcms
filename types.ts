@@ -11,6 +11,7 @@ import type {
 export interface ContentsTable {
   id: Generated<number>
   title: string
+  slug: string
   subtitle: string | null
   description: string | null
   date: ColumnType<string, string, string> | null

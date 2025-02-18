@@ -1,9 +1,9 @@
 <script setup lang="ts">
-defineProps({
-  title: String,
-  description: String,
-  button: String,
-})
+defineProps<{
+  title: string,
+  description: string | null,
+  button: string
+}>()
 </script>
 
 <template>
@@ -15,7 +15,7 @@ defineProps({
     <div class="absolute z-50 inset-0 flex items-start">
       <div class="container mx-auto px-4 mt-16">
         <h1 class="text-4xl md:text-6xl font-bold text-indigo-950">{{ title }}</h1>
-        <p class="mt-4 text-xl text-gray-600 max-w-3xl leading-relaxed">
+        <p v-if="description" class="mt-4 text-xl text-gray-600 max-w-3xl leading-relaxed">
           {{ description }}
         </p>
         <div class="flex items-center mt-6 space-x-6">

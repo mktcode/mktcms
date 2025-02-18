@@ -38,9 +38,12 @@ if (!about) {
           <h4 class="text-2xl font-bold text-indigo-950">
             {{ product.title }}
           </h4>
-          <p class="my-4 text-lg text-center text-gray-600 leading-relaxed line-clamp-6">
+          <p class="my-4 text-lg text-center text-gray-600 leading-relaxed line-clamp-5">
             {{ product.description }}
           </p>
+          <NuxtLink :to="`/${product.categories[0].name}/${product.slug}`" class="text-rose-900 font-bold px-4 py-2 border border-rose-100 rounded-2xl hover:bg-rose-900 hover:border-rose-900 hover:text-white transition-colors duration-300 ease-in-out">
+            Mehr erfahren
+          </NuxtLink>
         </div>
       </div>
     </div>

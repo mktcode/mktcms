@@ -1,16 +1,10 @@
 <script setup lang="ts">
-import { type Content } from '~/types';
-
-definePageMeta({
-  validate: async (route) => {
-    return typeof route.params.id === 'string' && /^\d+$/.test(route.params.id)
-  }
-})
-
 const route = useRoute();
-const { data: content } = await useFetch<Content>(`/api/content/${route.params.id}`);
+const id = Array.isArray(route.params.id) ? route.params.id[0] : route.params.id;
+const category = Array.isArray(route.params.category) ? route.params.category[0] : route.params.category;
+const content = await useContentById(id);
 
-if (!content.value) {
+if (!content || content.categories.some((c) => c.name !== category)) {
   throw createError({
     statusCode: 404,
     statusMessage: 'Seite nicht gefunden',
@@ -21,7 +15,7 @@ if (!content.value) {
 <template>
   <div class="h-screen flex flex-col">
     <Navbar />
-    <PageHero v-if="content" :title="content.title" :description="content.description" button="Mehr erfahren" />
+    <PageHero v-if="content" :title="content.title" :description="content.description" button="Jetzt Termin vereinbaren" />
   </div>
   <section class="py-32 bg-white">
     <div class="container mx-auto px-4">

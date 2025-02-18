@@ -20,7 +20,7 @@ const posts = await useContent([3], 3);
             <div class="flex justify-end items-center mt-4 space-x-6">
               <div class="text-4xl font-bold">35,00 €</div>
               <a
-                :href="`/content/${post.id}`"
+                :href="`/${post.categories[0].name}/${post.slug}`"
                 class="button"
               >
                 Termin vereinbaren
