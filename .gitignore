@@ -24,5 +24,8 @@ logs
 !.env.example
 
 # Mktcms
-public/files
+public/files/*
+!public/files/.gitkeep
+!public/files/profil-placeholder.jpg
+!public/files/header-placeholder.jpg
 development.sqlite

@@ -17,6 +17,7 @@ export default defineEventHandler(async (event) => {
     .select([
       'id',
       'title',
+      'subtitle',
       'description',
       'date',
       'url',

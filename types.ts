@@ -11,9 +11,10 @@ import type {
 export interface ContentsTable {
   id: Generated<number>
   title: string
-  description: string
+  subtitle: string | null
+  description: string | null
   date: ColumnType<string, string, string> | null
-  url: string
+  url: string | null
   image: string | null
 }
 export type Content = Selectable<ContentsTable>

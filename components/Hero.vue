@@ -1,5 +1,16 @@
+<script setup lang="ts">
+const hero = await useContentById(1);
+
+if (!hero) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Hero content not found'
+  });
+}
+</script>
+
 <template>
-  <section class="grow relative bg-cover bg-left-bottom" style="background-image: url('/img/header6.jpg');">
+  <section class="grow relative bg-cover bg-left-bottom" :style="`background-image: url('/files/${hero.image}');`">
     <div class="bg-white h-96 lg:h-64 2xl:h-44 3xl:h-32 z-40 relative" />
     <div class="relative z-30">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="z-50 absolute">

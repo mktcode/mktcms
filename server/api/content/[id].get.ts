@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
   const { id } = await getValidatedRouterParams(event, paramsSchema.parse);
 
   const content = await db.selectFrom('contents')
-    .select(['id', 'title', 'description', 'date', 'url', 'image'])
+    .select(['id', 'title', 'subtitle', 'description', 'date', 'url', 'image'])
     .where('id', '=', Number(id))
     .limit(1)
     .execute()
