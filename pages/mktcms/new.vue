@@ -3,9 +3,13 @@ definePageMeta({
   layout: 'mktcms',
 })
 
+const route = useRoute();
+const categoryId = Array.isArray(route.query.category) ? route.query.category[0] : route.query.category;
+const defaultCategories = categoryId ? [parseInt(categoryId)] : [];
+
 const { categories } = await useCategories();
 
-const categoryIds = ref<number[]>([]);
+const categoryIds = ref<number[]>(defaultCategories);
 const title = ref('');
 const description = ref('');
 const date = ref<string | null>(null);
