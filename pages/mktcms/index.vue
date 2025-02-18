@@ -15,6 +15,7 @@ const posts = ref<ContentWithCategories[]>([]);
 const showDeleteModal = ref(false);
 const postId = ref(0);
 const postToDelete = computed(() => posts.value?.find((post: any) => post.id === postId.value));
+const undeletableContent = ref<number[]>([1, 2]);
 
 const createCategory = async () => {
   if (!newCategoryLabel.value) return;
@@ -146,7 +147,14 @@ onMounted(fetchPosts);
                 Auf Facebook teilen
               </a>
               <a :href="`/mktcms/${post.id}`" class="text-indigo-600 hover:text-indigo-900 ml-4">Bearbeiten</a>
-              <a @click="confirmDeletePost(post.id)" class="text-red-600 hover:text-red-900 ml-4 cursor-pointer">Löschen</a>
+              <a
+                v-if="!undeletableContent.includes(post.id)"
+                @click="confirmDeletePost(post.id)"
+                class="text-red-600 hover:text-red-900 ml-4 cursor-pointer"
+              >
+                Löschen
+              </a>
+              <span v-else class="text-gray-400 ml-4">Nicht löschbar</span>
             </td>
           </tr>
         </tbody>
