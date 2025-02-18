@@ -13,8 +13,6 @@ const { data: referers } = await useFetch('/api/stats/referers', { method: 'POST
       <h1 class="text-3xl font-bold text-gray-900">
         Statistiken
       </h1>
-      <NuxtLink to="/" target="_blank" class="button ml-auto">Website öffnen</NuxtLink>
-      <NuxtLink to="/mktcms" class="button ml-4">Inhalte</NuxtLink>
     </div>
 
     <div class="mt-10">
