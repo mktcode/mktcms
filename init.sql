@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS stats (
 -- Categories
 INSERT INTO categories (id, name, label) VALUES (1, 'menu', 'Menü');
 INSERT INTO categories (id, name, label) VALUES (2, 'themen', 'Themen');
-INSERT INTO categories (id, name, label) VALUES (3, 'angebot', 'angebot');
+INSERT INTO categories (id, name, label) VALUES (3, 'angebot', 'Angebot');
 INSERT INTO categories (id, name, label) VALUES (4, 'events', 'Veranstaltungen');
 INSERT INTO categories (id, name, label) VALUES (5, 'general', 'Allgemein');
 
