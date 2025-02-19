@@ -5,7 +5,7 @@
         <div class="flex items-baseline space-x-4">
           <NuxtLink
             to="/mktcms"
-            class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white flex items-center space-x-2"
+            class="navlink"
             active-class="bg-gray-900 text-white"
           >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
@@ -15,7 +15,7 @@
           </NuxtLink>
           <NuxtLink
             to="/mktcms/calendar"
-            class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white flex items-center space-x-2"
+            class="navlink"
             active-class="bg-gray-900 text-white"
           >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
@@ -25,7 +25,7 @@
           </NuxtLink>
           <NuxtLink
             to="/mktcms/files"
-            class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white flex items-center space-x-2"
+            class="navlink"
             active-class="bg-gray-900 text-white"
           >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
@@ -37,7 +37,7 @@
           </NuxtLink>
           <NuxtLink
             to="/mktcms/stats"
-            class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white flex items-center space-x-2"
+            class="navlink"
             active-class="bg-gray-900 text-white"
           >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
@@ -50,7 +50,7 @@
           </NuxtLink>
           <NuxtLink
             to="/mktcms/backup"
-            class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white flex items-center space-x-2"
+            class="navlink"
             active-class="bg-gray-900 text-white"
           >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
@@ -62,7 +62,7 @@
           </NuxtLink>
           <NuxtLink
             to="/mktcms/stats"
-            class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white flex items-center space-x-2"
+            class="navlink"
             active-class="bg-gray-900 text-white"
           >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
