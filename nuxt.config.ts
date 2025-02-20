@@ -7,6 +7,7 @@ const keywords = 'Yoga, Ernährung, Achtsamkeit, Lifestyle, Coaching, Osnabrück
 const domain = 'https://fayo-coach.de'
 
 export default defineNuxtConfig({
+  devtools: { enabled: true },
   runtimeConfig: {
     databaseUrl: process.env.DATABASE_URL,
     smtpHost: process.env.SMTP_HOST,
