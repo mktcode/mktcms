@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import type { ContentWithCategories } from '~/types';
 
+useHead({
+  meta: [
+    { name: 'robots', content: 'noindex, nofollow' },
+  ],
+});
+
 definePageMeta({
   layout: 'mktcms',
   validate: async (route) => {

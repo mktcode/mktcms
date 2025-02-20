@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import type { Category, ContentWithCategories } from '~/types';
+useHead({
+  meta: [
+    { name: 'robots', content: 'noindex, nofollow' },
+  ],
+});
 
 definePageMeta({
   layout: 'mktcms',

@@ -37,7 +37,6 @@ export default defineNuxtConfig({
         { hid: 'og:image:height', property: 'og:image:height', content: '630' },
         { hid: 'og:url', property: 'og:url', content: domain },
         { hid: 'og:type', property: 'og:type', content: 'website' },
-        { name: 'robots', content: 'noindex, nofollow' },
       ]
     }
   },
