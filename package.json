@@ -5,9 +5,10 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
+    "dev:reset": "rm development.sqlite && ./init-dev-db.sh",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare && ./init-dev-db.sh",
+    "postinstall": "nuxt prepare",
     "setup": "./setup.sh",
     "destroy": "./destroy.sh",
     "u": "./uberspace.sh"
