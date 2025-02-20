@@ -174,7 +174,7 @@ onMounted(fetchPosts);
               >
                 Auf Facebook teilen
               </a>
-              <a :href="`/mktcms/${post.id}`" class="text-indigo-600 hover:text-indigo-900 ml-4">Bearbeiten</a>
+              <a :href="`/mktcms/content/${post.id}`" class="text-indigo-600 hover:text-indigo-900 ml-4">Bearbeiten</a>
               <a
                 v-if="!undeletableContent.includes(post.id)"
                 @click="confirmDeletePost(post.id)"
