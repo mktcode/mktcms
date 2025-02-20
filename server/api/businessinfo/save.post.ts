@@ -12,6 +12,13 @@ const bodySchema = z.object({
 
 export default defineEventHandler(async (event) => {
   await requireUserSession(event)
+
+  if (await denies(event, manageWebsite)) {
+    throw createError({
+      statusCode: 403,
+      statusMessage: "Forbidden",
+    })
+  }
   
   const db = await getDatabaseConnection()
   const { name, street, city, zip, phone, email, taxId } = await readValidatedBody(event, body => bodySchema.parse(body))

@@ -1,5 +1,6 @@
 declare module '#auth-utils' {
   interface User {
+    googleId: string
     picture: string
   }
 

@@ -4,7 +4,10 @@ export default defineOAuthGoogleEventHandler({
   },
   async onSuccess(event, { user, tokens }) {
     await setUserSession(event, {
-      user,
+      user: {
+        ...user,
+        googleId: user.sub,
+      },
       secure: {
         token: tokens.access_token,
       }
