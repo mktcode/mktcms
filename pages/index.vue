@@ -1,11 +1,7 @@
+<script setup lang="ts">
+const sectionComponents = await useSections();
+</script>
+
 <template>
-  <div class="h-screen flex flex-col">
-    <Navbar />
-    <Hero />
-  </div>
-  <About />
-  <Prices />
-  <Events />
-  <Contact />
-  <Footer />
+  <component :is="section" v-for="(section, index) in sectionComponents" :key="index" />
 </template>
