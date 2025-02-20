@@ -1,16 +1,9 @@
 import { Stat } from "~/types";
 
-export default defineEventHandler(async () => {
-  const db = await getDatabaseConnection();
+export default defineEventHandler(async (event) => {
+  await requireUserSession(event)
 
-  // CREATE TABLE IF NOT EXISTS stats (
-  //   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  //   userId TEXT NOT NULL,
-  //   route TEXT NOT NULL,
-  //   referer TEXT,
-  //   isMobile INTEGER NOT NULL,
-  //   timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-  // );
+  const db = await getDatabaseConnection();
 
   const stats = await db
     .selectFrom('stats')

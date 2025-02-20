@@ -8,6 +8,8 @@ const bodySchema = z.object({
 })
 
 export default defineEventHandler(async (event) => {
+  await requireUserSession(event)
+  
   const { extensions } = await readValidatedBody(event, body => bodySchema.parse(body))
 
   const files = await readdir('public/files');

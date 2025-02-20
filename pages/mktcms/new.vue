@@ -1,6 +1,12 @@
 <script setup lang="ts">
 definePageMeta({
   layout: 'mktcms',
+  middleware() {
+    const { loggedIn } = useUserSession()
+    if (!loggedIn.value) {
+      return navigateTo('/mktcms/login')
+    }
+  },
 })
 
 const route = useRoute();
@@ -78,7 +84,7 @@ const createPost = async () => {
               <strong>B</strong>
             </button>
             <button class="size-10 rounded-lg bg-gray-200 aspect-square flex items-center justify-center hover:bg-gray-300 cursor-pointer" @click="description += ' **Fett** '">
-              <italic>I</italic>
+              <span class="italic">I</span>
             </button>
             <button class="size-10 rounded-lg bg-gray-200 aspect-square flex items-center justify-center hover:bg-gray-300 cursor-pointer" @click="description += ' **Fett** '">
               <u>U</u>

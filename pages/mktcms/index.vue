@@ -3,6 +3,12 @@ import type { Category, ContentWithCategories } from '~/types';
 
 definePageMeta({
   layout: 'mktcms',
+  middleware() {
+    const { loggedIn } = useUserSession()
+    if (!loggedIn.value) {
+      return navigateTo('/mktcms/login')
+    }
+  },
 })
 
 const { public: { domain } } = useRuntimeConfig();

@@ -5,6 +5,8 @@ const bodySchema = z.object({
 })
 
 export default defineEventHandler(async (event) => {
+  await requireUserSession(event)
+  
   const db = await getDatabaseConnection()
   const { id } = await readValidatedBody(event, body => bodySchema.parse(body))
 

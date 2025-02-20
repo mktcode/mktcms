@@ -1,6 +1,12 @@
 <script setup lang="ts">
 definePageMeta({
   layout: 'mktcms',
+  middleware() {
+    const { loggedIn } = useUserSession()
+    if (!loggedIn.value) {
+      return navigateTo('/mktcms/login')
+    }
+  },
 })
 
 const { data: stats } = await useFetch('/api/stats/list', { method: 'POST' });

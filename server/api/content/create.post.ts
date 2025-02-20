@@ -14,6 +14,8 @@ function slugFromTitle(title: string) {
 }
 
 export default defineEventHandler(async (event) => {
+  await requireUserSession(event)
+  
   const db = await getDatabaseConnection()
   const { categories, title, description, date, url, image } = await readValidatedBody(event, body => bodySchema.parse(body))
 

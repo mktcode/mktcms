@@ -48,4 +48,7 @@ export default defineNuxtConfig({
       tailwindcss(),
     ],
   },
+  modules: [
+    'nuxt-auth-utils',
+  ],
 })

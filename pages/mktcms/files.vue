@@ -1,6 +1,12 @@
 <script setup lang="ts">
 definePageMeta({
   layout: 'mktcms',
+  middleware() {
+    const { loggedIn } = useUserSession()
+    if (!loggedIn.value) {
+      return navigateTo('/mktcms/login')
+    }
+  },
 })
 
 const fileInput = ref<HTMLInputElement | null>(null)

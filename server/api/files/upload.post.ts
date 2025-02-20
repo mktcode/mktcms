@@ -2,6 +2,8 @@ import { mkdir, writeFile } from 'fs/promises';
 import sharp from 'sharp';
 
 export default defineEventHandler(async (event) => {
+  await requireUserSession(event)
+  
   const files = await readMultipartFormData(event);
 
   if (!files) {

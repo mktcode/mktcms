@@ -84,6 +84,12 @@
               Website öffnen
             </span>
           </NuxtLink>
+          <AuthState v-slot="{ loggedIn, user, clear }">
+            <button v-if="loggedIn" @click="() => { clear(); navigateTo('/mktcms/login') }" class="button text-sm">
+              <img v-if="user" :src="user.picture" class="rounded-full w-5 h-5 mr-2" />
+              Logout
+            </button>
+          </AuthState>
         </div>
       </div>
     </nav>

@@ -5,7 +5,13 @@ definePageMeta({
   layout: 'mktcms',
   validate: async (route) => {
     return typeof route.params.id === 'string' && /^\d+$/.test(route.params.id)
-  }
+  },
+  middleware() {
+    const { loggedIn } = useUserSession()
+    if (!loggedIn.value) {
+      return navigateTo('/mktcms/login')
+    }
+  },
 })
 
 const route = useRoute();

@@ -1,6 +1,8 @@
 import archiver from "archiver";
 
 export default defineEventHandler(async (event) => {
+  await requireUserSession(event)
+  
   const archive = archiver('zip', { zlib: { level: 9 } });
   archive.on("error", function (err) {
     throw err;
