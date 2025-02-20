@@ -30,6 +30,18 @@ CREATE TABLE IF NOT EXISTS stats (
   timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- businessinfo
+CREATE TABLE IF NOT EXISTS businessinfo (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  street TEXT NOT NULL,
+  zip TEXT NOT NULL,
+  city TEXT NOT NULL,
+  phone TEXT NOT NULL,
+  email TEXT NOT NULL,
+  taxId TEXT NOT NULL
+);
+
 --
 -- Seed
 --

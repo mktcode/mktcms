@@ -1,3 +1,14 @@
+<script setup lang="ts">
+const businessinfo = await $fetch('/api/businessinfo')
+
+if (!businessinfo) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Businessinfo not found',
+  })
+}
+</script>
+
 <template>
   <div>
     <Navbar />
@@ -5,12 +16,13 @@
       <h1 class="text-4xl md:text-6xl font-bold text-indigo-950">Impressum</h1>
       <div class="prose mt-8">
         <p>
-          Markus Kottländer<br>
-          Gertrudenstraße 23a<br>
-          49074 Osnabrück<br>
+          {{ businessinfo.name }}<br>
+          {{ businessinfo.street }}<br>
+          {{ businessinfo.zip }} {{ businessinfo.city }}<br>
           <br>
-          Telefon: <a href="tel:+4917670864627" class="not-prose">+49 176 70 86 46 27</a><br>
-          E-Mail: <a href="mailto:kontakt@markus-kottlaender.de" class="not-prose">kontakt@markus-kottlaender.de</a>
+          Telefon: <a :href="`tel:${businessinfo.phone}`" class="not-prose">{{ businessinfo.phone }}</a><br>
+          E-Mail: <a :href="`mailto:${businessinfo.email}`" class="not-prose">{{ businessinfo.email }}</a><br>
+          Umsatzsteuer-ID: {{ businessinfo.taxId }}
         </p>
         
         <h2>EU-Streitschlichtung</h2>

@@ -56,9 +56,25 @@ export interface StatsTable {
 export type Stat = Selectable<StatsTable>
 export type NewStat = Insertable<StatsTable>
 
+// Businessinfo
+export interface BusinessinfoTable {
+  id: Generated<number>
+  name: string
+  street: string
+  city: string
+  zip: string
+  phone: string
+  email: string
+  taxId: string
+}
+export type Businessinfo = Selectable<BusinessinfoTable>
+export type NewBusinessinfo = Insertable<BusinessinfoTable>
+export type BusinessinfoUpdate = Updateable<BusinessinfoTable>
+
 export interface Database {
   contents: ContentsTable
   categories: CategoriesTable
   contentCategories: ContentCategoriesTable
   stats: StatsTable
+  businessinfo: BusinessinfoTable
 }
