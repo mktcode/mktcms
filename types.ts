@@ -71,10 +71,21 @@ export type Businessinfo = Selectable<BusinessinfoTable>
 export type NewBusinessinfo = Insertable<BusinessinfoTable>
 export type BusinessinfoUpdate = Updateable<BusinessinfoTable>
 
+// Theme
+export interface ThemeTable {
+  id: Generated<number>
+  primaryColor: string
+  primaryColorHover: string
+}
+export type Theme = Selectable<ThemeTable>
+export type NewTheme = Insertable<ThemeTable>
+export type ThemeUpdate = Updateable<ThemeTable>
+
 export interface Database {
   contents: ContentsTable
   categories: CategoriesTable
   contentCategories: ContentCategoriesTable
   stats: StatsTable
   businessinfo: BusinessinfoTable
+  theme: ThemeTable
 }

@@ -30,7 +30,6 @@ CREATE TABLE IF NOT EXISTS stats (
   timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- businessinfo
 CREATE TABLE IF NOT EXISTS businessinfo (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL,
@@ -40,6 +39,12 @@ CREATE TABLE IF NOT EXISTS businessinfo (
   phone TEXT NOT NULL,
   email TEXT NOT NULL,
   taxId TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS theme (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  primaryColor TEXT NOT NULL,
+  primaryColorHover TEXT NOT NULL
 );
 
 --
@@ -164,3 +169,6 @@ INSERT INTO contents (id, title, slug, subtitle, description, date, url, image) 
   'header-placeholder.jpg'
 );
 INSERT INTO contentCategories (contentId, categoryId) VALUES (9, 4);
+
+-- Theme
+INSERT INTO theme (id, primaryColor, primaryColorHover) VALUES (1, '#8b0836', '#b6325e');
