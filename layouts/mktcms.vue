@@ -71,7 +71,7 @@
             </span>
           </NuxtLink>
           <NuxtLink
-            to="/mktcms/stats"
+            to="/mktcms/support"
             class="navlink"
             active-class="bg-gray-900 text-white"
           >
