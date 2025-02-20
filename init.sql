@@ -47,6 +47,14 @@ CREATE TABLE IF NOT EXISTS theme (
   primaryColorHover TEXT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS sections (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  component TEXT NOT NULL,
+  contentId INTEGER,
+  categoryId INTEGER
+);
+
 --
 -- Seed
 --
@@ -172,3 +180,11 @@ INSERT INTO contentCategories (contentId, categoryId) VALUES (9, 4);
 
 -- Theme
 INSERT INTO theme (id, primaryColor, primaryColorHover) VALUES (1, '#8b0836', '#b6325e');
+
+-- Sections
+INSERT INTO sections (id, name, component, contentId, categoryId) VALUES (1, 'Header', 'Header', 1, null);
+INSERT INTO sections (id, name, component, contentId, categoryId) VALUES (2, 'About', 'About', 2, null);
+INSERT INTO sections (id, name, component, contentId, categoryId) VALUES (3, 'Prices', 'Prices', null, 3);
+INSERT INTO sections (id, name, component, contentId, categoryId) VALUES (4, 'Events', 'Events', null, 4);
+INSERT INTO sections (id, name, component, contentId, categoryId) VALUES (5, 'Contact', 'Contact', null, null);
+INSERT INTO sections (id, name, component, contentId, categoryId) VALUES (6, 'Footer', 'Footer', null, null);
