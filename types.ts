@@ -88,6 +88,7 @@ export interface SectionsTable {
   component: string
   contentId: number
   categoryId: number
+  orderIndex: number
 }
 export type Section = Selectable<SectionsTable>
 export type NewSection = Insertable<SectionsTable>

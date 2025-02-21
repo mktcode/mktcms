@@ -8,7 +8,9 @@ export default defineEventHandler(async (event) => {
       'component',
       'contentId',
       'categoryId',
+      'orderIndex',
     ])
+    .orderBy('orderIndex', 'asc')
 
   const sections = await query.execute()
   

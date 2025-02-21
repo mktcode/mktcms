@@ -52,7 +52,8 @@ CREATE TABLE IF NOT EXISTS sections (
   name TEXT NOT NULL,
   component TEXT NOT NULL,
   contentId INTEGER,
-  categoryId INTEGER
+  categoryId INTEGER,
+  orderIndex INTEGER DEFAULT 0
 );
 
 --
@@ -218,9 +219,9 @@ INSERT INTO contentCategories (contentId, categoryId) VALUES (12, 4);
 INSERT INTO theme (id, primaryColor, primaryColorHover) VALUES (1, '#8b0836', '#b6325e');
 
 -- Sections
-INSERT INTO sections (id, name, component, contentId, categoryId) VALUES (1, 'Header', 'Header', 1, null);
-INSERT INTO sections (id, name, component, contentId, categoryId) VALUES (2, 'About', 'About', 2, null);
-INSERT INTO sections (id, name, component, contentId, categoryId) VALUES (3, 'Prices', 'Prices', null, 3);
-INSERT INTO sections (id, name, component, contentId, categoryId) VALUES (4, 'Events', 'Events', null, 4);
-INSERT INTO sections (id, name, component, contentId, categoryId) VALUES (5, 'Contact', 'Contact', null, null);
-INSERT INTO sections (id, name, component, contentId, categoryId) VALUES (6, 'Footer', 'Footer', null, null);
+INSERT INTO sections (id, name, component, contentId, categoryId, orderIndex) VALUES (1, 'Header', 'Header', 1, null, 1);
+INSERT INTO sections (id, name, component, contentId, categoryId, orderIndex) VALUES (2, 'About', 'About', 2, null, 2);
+INSERT INTO sections (id, name, component, contentId, categoryId, orderIndex) VALUES (3, 'Prices', 'Prices', null, 3, 3);
+INSERT INTO sections (id, name, component, contentId, categoryId, orderIndex) VALUES (4, 'Events', 'Events', null, 4, 4);
+INSERT INTO sections (id, name, component, contentId, categoryId, orderIndex) VALUES (5, 'Contact', 'Contact', null, null, 5);
+INSERT INTO sections (id, name, component, contentId, categoryId, orderIndex) VALUES (6, 'Footer', 'Footer', null, null, 6);
