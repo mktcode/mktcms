@@ -1,12 +1,5 @@
 <script setup lang="ts">
-const businessinfo = await $fetch('/api/businessinfo')
-
-if (!businessinfo) {
-  throw createError({
-    statusCode: 404,
-    statusMessage: 'Businessinfo not found',
-  })
-}
+const { data: businessinfo } = await useFetch('/api/businessinfo')
 </script>
 
 <template>
@@ -15,7 +8,7 @@ if (!businessinfo) {
     <div class="container mx-auto px-4 mt-16">
       <h1 class="text-4xl md:text-6xl font-bold text-indigo-950">Impressum</h1>
       <div class="prose mt-8">
-        <p>
+        <p v-if="businessinfo">
           {{ businessinfo.name }}<br>
           {{ businessinfo.street }}<br>
           {{ businessinfo.zip }} {{ businessinfo.city }}<br>
