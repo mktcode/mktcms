@@ -11,7 +11,7 @@ if (!businessinfo) {
 
 <template>
   <div>
-    <Navbar />
+    <WebsiteNavbar />
     <div class="container mx-auto px-4 mt-16">
       <h1 class="text-4xl md:text-6xl font-bold text-indigo-950">Impressum</h1>
       <div class="prose mt-8">
@@ -41,6 +41,6 @@ if (!businessinfo) {
         </p>
       </div>
     </div>
-    <Footer />
+    <WebsiteSectionFooter />
   </div>
 </template>
