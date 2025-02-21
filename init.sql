@@ -168,6 +168,30 @@ INSERT INTO contentCategories (contentId, categoryId) VALUES (8, 3);
 
 INSERT INTO contents (id, title, slug, subtitle, description, date, url, image) VALUES (
   9,
+  'Ernährungsberatung',
+  'ernaehrungsberatung',
+  null,
+  'Eine Stunde individuelle Ernährungsberatung. In einem persönlichen Gespräch erarbeiten wir eine Strategie für deine Ernährung, die zu deinem Lebensstil passt.',
+  null,
+  'https://google.com',
+  'header-placeholder.jpg'
+);
+INSERT INTO contentCategories (contentId, categoryId) VALUES (9, 3);
+
+INSERT INTO contents (id, title, slug, subtitle, description, date, url, image) VALUES (
+  10,
+  'Stilberatung',
+  'stilberatung',
+  null,
+  'Eine Stunde individuelle Stilberatung. In einem persönlichen Gespräch erarbeiten wir gemeinsam, wie du durch die richtige Kleidung und Accessoires deine Persönlichkeit unterstreichst und deinen individuellen Stil findest.',
+  null,
+  'https://google.com',
+  'header-placeholder.jpg'
+);
+INSERT INTO contentCategories (contentId, categoryId) VALUES (10, 3);
+
+INSERT INTO contents (id, title, slug, subtitle, description, date, url, image) VALUES (
+  11,
   'Yoga am Mittwoch',
   'yoga-am-mittwoch',
   null,
@@ -176,7 +200,19 @@ INSERT INTO contents (id, title, slug, subtitle, description, date, url, image) 
   'https://google.com',
   'header-placeholder.jpg'
 );
-INSERT INTO contentCategories (contentId, categoryId) VALUES (9, 4);
+INSERT INTO contentCategories (contentId, categoryId) VALUES (11, 4);
+
+INSERT INTO contents (id, title, slug, subtitle, description, date, url, image) VALUES (
+  12,
+  'Fayo Retreat',
+  'fayo-retreat',
+  null,
+  'Jeden zweiten Donnerstag von 18:00 bis 19:30 Uhr finden Sie mich in der Schreibwerkstatt und können an meinen Workshops teilnehmen.',
+  null,
+  'https://google.com',
+  'header-placeholder.jpg'
+);
+INSERT INTO contentCategories (contentId, categoryId) VALUES (12, 4);
 
 -- Theme
 INSERT INTO theme (id, primaryColor, primaryColorHover) VALUES (1, '#8b0836', '#b6325e');
