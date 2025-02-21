@@ -14,8 +14,8 @@ if (!content || content.categories.some((c) => c.name !== category)) {
 
 <template>
   <div class="h-screen flex flex-col">
-    <Navbar />
-    <PageHero v-if="content" :title="content.title" :description="content.description" button="Jetzt Termin vereinbaren" />
+    <WebsiteNavbar />
+    <WebsitePageHero v-if="content" :title="content.title" :description="content.description" button="Jetzt Termin vereinbaren" />
   </div>
   <section class="py-32 bg-white">
     <div class="container mx-auto px-4">
@@ -24,6 +24,6 @@ if (!content || content.categories.some((c) => c.name !== category)) {
       </p>
     </div>
   </section>
-  <Contact />
-  <Footer />
+  <WebsiteSectionContact />
+  <WebsiteSectionFooter />
 </template>
