@@ -81,9 +81,21 @@ export type Theme = Selectable<ThemeTable>
 export type NewTheme = Insertable<ThemeTable>
 export type ThemeUpdate = Updateable<ThemeTable>
 
+// Page
+export interface PagesTable {
+  id: Generated<number>
+  title: string
+  slug: string
+  type: string
+}
+export type Page = Selectable<PagesTable>
+export type NewPage = Insertable<PagesTable>
+export type PageUpdate = Updateable<PagesTable>
+
 // Section
 export interface SectionsTable {
   id: Generated<number>
+  pageId: number
   name: string
   component: string
   contentId: number
@@ -101,5 +113,6 @@ export interface Database {
   stats: StatsTable
   businessinfo: BusinessinfoTable
   theme: ThemeTable
+  pages: PagesTable
   sections: SectionsTable
 }
