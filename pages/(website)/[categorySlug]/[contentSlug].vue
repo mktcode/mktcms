@@ -1,10 +1,10 @@
 <script setup lang="ts">
 const route = useRoute();
-const id = Array.isArray(route.params.id) ? route.params.id[0] : route.params.id;
-const category = Array.isArray(route.params.category) ? route.params.category[0] : route.params.category;
-const content = await useContentById(id);
+const contentSlug = Array.isArray(route.params.contentSlug) ? route.params.contentSlug[0] : route.params.contentSlug;
+const categorySlug = Array.isArray(route.params.categorySlug) ? route.params.categorySlug[0] : route.params.categorySlug;
+const content = await useContentById(contentSlug);
 
-if (!content || content.categories.some((c) => c.name !== category)) {
+if (!content || content.categories.some((c) => c.name !== categorySlug)) {
   throw createError({
     statusCode: 404,
     statusMessage: 'Seite nicht gefunden',

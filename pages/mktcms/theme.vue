@@ -19,7 +19,8 @@ const theme = await useTheme()
 const primaryColor = ref(theme.primaryColor)
 const primaryColorHover = ref(theme.primaryColorHover)
 
-const { data: sections, refresh } = await useFetch('/api/sections/list', { method: 'POST' });
+const { data: pages, refresh: refreshPages } = await useFetch('/api/pages/list', { method: 'POST' });
+const { data: sections, refresh: refreshSections } = await useFetch('/api/sections/list', { method: 'POST' });
 
 const save = async () => {
   await useFetch('/api/theme/save', {
@@ -39,7 +40,7 @@ const moveSection = async (id: number, direction: 'up' | 'down') => {
       direction,
     },
   })
-  refresh()
+  refreshSections()
 }
 </script>
 
@@ -66,8 +67,59 @@ const moveSection = async (id: number, direction: 'up' | 'down') => {
     </div>
 
     <h1 class="text-3xl font-bold mb-4 mt-10">
-      Sektionen
+      Seiten
     </h1>
+    <p class="text-gray-500">
+      Ihre Website besteht aus Seiten und Seiten bestehen aus Sektionen. Es gibt zwei Arten von Seiten und eine Vielzahl von unterschiedlichen Sektionen.
+    </p>
+    <h2 class="text-2xl font-bold mb-4 mt-6">
+      Statische Seiten
+    </h2>
+    <p class="text-gray-500">
+      Statische Seiten haben eine feste Adresse und zeigen Sektionen mit festgelegten Inhalten an. Die Startseite ist z.B. eine solche statische Seite.
+      Sie ist immer unter <span class="italic">ihre-domain.de</span> zu erreichen und zeigt die Inhalte an, die dafür konfiguriert wurden.
+      Sie könnten auch eine Seite über Ihre Unternehmensgeschichte anlegen, die dann immer unter <span class="italic">ihre-domain.de/geschichte</span> erreichbar ist.
+    </p>
+
+    <h2 class="text-2xl font-bold mb-4 mt-6">
+      Dynamische Seiten
+    </h2>
+    <p class="text-gray-500">
+      Die Inhalte einer dynamischen Seite können über die Adresse gesteuert werden.
+      Sie könnten z.B. unter <span class="italic">ihre-domain.de/angebote/&lt;angebotsname&gt;</span> verschiedene Angebote anzeigen,
+      ohne für jedes eine eigene Seite anlegen zu müssen. Sie müssen nur in den Einstellungen einer Inhaltskategorie die Optionen "Übersichtsseite" und "Detailseiten" aktivieren.
+    </p>
+
+    <div class="mt-10" v-if="pages">
+      <table class="divide-y divide-gray-200 w-full">
+        <thead class="bg-gray-50">
+          <tr>
+            <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Title
+            </th>
+            <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Typ
+            </th>
+            <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Adresse
+            </th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <tr v-for="(page, index) in pages" :key="page.id">
+            <td class="px-3 py-2 whitespace-nowrap">
+              {{ page.title }}
+            </td>
+            <td class="px-3 py-2 whitespace-nowrap">
+              {{ page.type }}
+            </td>
+            <td class="px-3 py-2 whitespace-nowrap">
+              {{ page.slug }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <div class="mt-10" v-if="sections">
       <table class="divide-y divide-gray-200 w-full">
