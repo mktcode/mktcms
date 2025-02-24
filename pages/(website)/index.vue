@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const page = await $fetch('/api/pages/1');
+const page = await $fetch('/api/pages/home');
 const sections = await $fetch('/api/sections/list', { method: 'POST', body: { pageId: page.id } });
 const sectionsWithComponent = sections.map((section) => {
   return {
