@@ -17,7 +17,6 @@ definePageMeta({
 
 const businessinfo = await $fetch('/api/businessinfo')
 const privacyPolicy = false
-const pages = await $fetch('/api/pages/list', { method: 'POST' })
 </script>
 
 <template>
@@ -79,34 +78,6 @@ const pages = await $fetch('/api/pages/list', { method: 'POST' })
               <path stroke-linecap="round" stroke-linejoin="round" d="M8.242 5.992h12m-12 6.003H20.24m-12 5.999h12M4.117 7.495v-3.75H2.99m1.125 3.75H2.99m1.125 0H5.24m-1.92 2.577a1.125 1.125 0 1 1 1.591 1.59l-1.83 1.83h2.16M2.99 15.745h1.125a1.125 1.125 0 0 1 0 2.25H3.74m0-.002h.375a1.125 1.125 0 0 1 0 2.25H2.99" />
             </svg>
             <span>Fragebogen ausfüllen</span>
-          </NuxtLink>
-        </template>
-      </MktcmsOverviewCard>
-
-      <MktcmsOverviewCard title="Startseite" :enabled="pages && pages.length > 0">
-        <template #content-enabled>
-          Deine Startseite ist online. Füge nach Belieben weitere Seiten und Inhalte hinzu.
-        </template>
-        <template #content-disabled>
-          Deine Website hat noch keine Startseite. Erstelle eine Startseite, um deine Website zu veröffentlichen.
-        </template>
-        <template #buttons-enabled>
-          <NuxtLink to="/" class="button light" target="_blank">
-            <span>Startseite ansehen</span>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 opacity-50">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-            </svg>
-          </NuxtLink>
-          <NuxtLink to="/mktcms/theme" class="button light">
-            <span>Seiten bearbeiten</span>
-          </NuxtLink>
-        </template>
-        <template #buttons-disabled>
-          <NuxtLink to="/mktcms/pages" class="button ml-auto mt-4">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 opacity-50">
-              <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-            </svg>
-            <span>Startseite erstellen</span>
           </NuxtLink>
         </template>
       </MktcmsOverviewCard>
