@@ -1,5 +1,8 @@
 <script setup lang="ts">
-const sections = await $fetch('/api/sections/list', { method: 'POST' });
+const route = useRoute();
+const categorySlug = Array.isArray(route.params.categorySlug) ? route.params.categorySlug[0] : route.params.categorySlug;
+
+const sections = await $fetch('/api/sections/list', { method: 'POST', body: { categoryId: categorySlug } });
 const sectionComponents = sections.map((section) => defineAsyncComponent(() => import(`~/components/website/section/${section.component}.vue`)));
 </script>
 
