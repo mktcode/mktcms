@@ -71,7 +71,7 @@ INSERT INTO contents (id, title, slug, subtitle, description, date, url, image) 
   'Dieser Inhalt ist nur ein Platzhalter und kann gelöscht bzw. bearbeitet werden.',
   '2020-01-01',
   'https://www.google.com',
-  'https://picsum.photos/600/400'
+  'header-placeholder.jpg'
 );
 
 
