@@ -1,32 +1,45 @@
 import { z } from "zod";
 
 const bodySchema = z.object({
-  pageSlug: z.string().default(''),
-  type: z.enum(['static', 'dynamic']).default('static'),
+  route: z.string().nullable(),
+  categoryId: z.number().nullable(),
+  isDetailsPage: z.boolean().nullable(),
+}).default({
+  route: null,
+  categoryId: null,
+  isDetailsPage: false,
 })
 
 export default defineEventHandler(async (event) => {
   const db = await getDatabaseConnection()
-  const { pageSlug, type } = await readValidatedBody(event, body => bodySchema.parse(body))
+  const { route, categoryId, isDetailsPage } = await readValidatedBody(event, body => bodySchema.parse(body))
 
-  const page = await db
-    .selectFrom('pages')
-    .select('id')
-    .where('slug', '=', pageSlug)
-    .where('type', '=', type)
-    .executeTakeFirstOrThrow()
-
-  const query = db
+  let query = db
     .selectFrom('sections')
     .select([
       'id',
       'name',
-      'component',
-      'contentId',
+      'route',
       'categoryId',
+      'isDetailsPage',
+      'component',
       'orderIndex',
     ])
-    .where('pageId', '=', page.id)
+  
+  if (route === null) {
+    query = query.where('route', 'is', null)
+  } else {
+    query = query.where('route', '=', route)
+  }
+
+  if (categoryId === null) {
+    query = query.where('categoryId', 'is', null)
+  } else {
+    query = query.where('categoryId', '=', categoryId)
+  }
+  
+  query = query
+    .where('isDetailsPage', '=', Number(isDetailsPage))
     .orderBy('orderIndex', 'asc')
 
   const sections = await query.execute()
