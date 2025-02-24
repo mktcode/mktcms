@@ -34,7 +34,7 @@
             <span>Inhalte</span>
           </NuxtLink>
           <NuxtLink
-            to="/mktcms/theme"
+            to="/mktcms/layout"
             class="navlink"
             active-class="bg-gray-900 text-white"
           >
