@@ -1,6 +1,12 @@
 <script setup lang="ts">
-const about = await useContentById(2);
-const products = await useContent([2], 6);
+import type { ContentWithCategories } from '~/types';
+
+const props = defineProps<{
+  contentId: number;
+}>();
+
+const about = await useContentById(props.contentId);
+const products: ContentWithCategories[] = [];
 
 if (!about) {
   throw createError({
