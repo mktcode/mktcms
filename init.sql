@@ -47,13 +47,17 @@ CREATE TABLE IF NOT EXISTS theme (
   primaryColorHover TEXT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS pages (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  title TEXT,
+  route TEXT
+);
+
 CREATE TABLE IF NOT EXISTS sections (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  name TEXT NOT NULL,
-  route TEXT,
+  pageId INTEGER,
   categoryId INTEGER,
   contentId INTEGER,
-  isDetailsPage INTEGER DEFAULT 0,
   component TEXT NOT NULL,
   orderIndex INTEGER DEFAULT 0
 );
@@ -61,6 +65,12 @@ CREATE TABLE IF NOT EXISTS sections (
 --
 -- Seed
 --
+
+-- Theme
+INSERT INTO theme (id, primaryColor, primaryColorHover) VALUES (1, '#8b0836', '#b6325e');
+
+-- Categories
+INSERT INTO categories (id, name, label) VALUES (1, 'products', 'Produkte');
 
 -- Content
 INSERT INTO contents (id, title, slug, subtitle, description, date, url, image) VALUES (
@@ -74,25 +84,20 @@ INSERT INTO contents (id, title, slug, subtitle, description, date, url, image) 
   'header-placeholder.jpg'
 );
 
-
--- Categories
-INSERT INTO categories (id, name, label) VALUES (1, 'products', 'Produkte');
-INSERT INTO categories (id, name, label) VALUES (2, 'news', 'Neuigkeiten');
-
--- Theme
-INSERT INTO theme (id, primaryColor, primaryColorHover) VALUES (1, '#8b0836', '#b6325e');
+-- Pages
+INSERT INTO pages (id, title, route) VALUES (1, 'Startseite', null);
+INSERT INTO pages (id, title, route) VALUES (2, 'Info', 'info');
+INSERT INTO pages (id, title, route) VALUES (3, 'Produktdetails', 'produkte/?');
 
 -- Sections - Home
-INSERT INTO sections (id, name, route, categoryId, isDetailsPage, component, orderIndex) VALUES (1, 'Header', null, null, 0, 'Header', 0);
-INSERT INTO sections (id, name, route, categoryId, isDetailsPage, component, orderIndex) VALUES (2, 'About', null, null, 0, 'About', 1);
-INSERT INTO sections (id, name, route, categoryId, isDetailsPage, component, orderIndex) VALUES (3, 'Footer', null, null, 0, 'Footer', 2);
+INSERT INTO sections (id, pageId, categoryId, contentId, component, orderIndex) VALUES (1, 1, null, 1, 'Header', 0);
 
--- Sections - Product Overview
-INSERT INTO sections (id, name, route, categoryId, isDetailsPage, component, orderIndex) VALUES (4, 'Header', null, 1, 0, 'Header', 0);
-INSERT INTO sections (id, name, route, categoryId, isDetailsPage, component, orderIndex) VALUES (5, 'ProductList', null, 1, 0, 'Prices', 1);
-INSERT INTO sections (id, name, route, categoryId, isDetailsPage, component, orderIndex) VALUES (6, 'Footer', null, 1, 0, 'Footer', 2);
+-- Sections - Info
+INSERT INTO sections (id, pageId, categoryId, contentId, component, orderIndex) VALUES (2, 2, null, 1, 'Header', 0);
+INSERT INTO sections (id, pageId, categoryId, contentId, component, orderIndex) VALUES (3, 2, null, 1, 'Content', 1);
+INSERT INTO sections (id, pageId, categoryId, contentId, component, orderIndex) VALUES (4, 2, null, null, 'Footer', 2);
 
--- Sections - Product Details
-INSERT INTO sections (id, name, route, categoryId, isDetailsPage, component, orderIndex) VALUES (7, 'Header', null, 1, 1, 'Header', 0);
-INSERT INTO sections (id, name, route, categoryId, isDetailsPage, component, orderIndex) VALUES (8, 'ProductDetails', null, 1, 1, 'Content', 1);
-INSERT INTO sections (id, name, route, categoryId, isDetailsPage, component, orderIndex) VALUES (9, 'Footer', null, 1, 1, 'Footer', 2);
+-- Sections - Productdetails
+INSERT INTO sections (id, pageId, categoryId, contentId, component, orderIndex) VALUES (5, 3, null, 1, 'Header', 0);
+INSERT INTO sections (id, pageId, categoryId, contentId, component, orderIndex) VALUES (6, 3, null, null, 'Content', 1);
+INSERT INTO sections (id, pageId, categoryId, contentId, component, orderIndex) VALUES (7, 3, null, null, 'Footer', 2);

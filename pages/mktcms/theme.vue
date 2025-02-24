@@ -19,8 +19,6 @@ const theme = await useTheme()
 const primaryColor = ref(theme.primaryColor)
 const primaryColorHover = ref(theme.primaryColorHover)
 
-const { categories } = await useCategories()
-
 const save = async () => {
   await useFetch('/api/theme/save', {
     method: 'POST',
@@ -30,6 +28,8 @@ const save = async () => {
     },
   })
 }
+
+const pages = await $fetch('/api/pages/list', { method: 'POST' })
 </script>
 
 <template>
@@ -54,24 +54,11 @@ const save = async () => {
       </button>
     </div>
 
-    <h1 class="text-3xl font-bold mb-4 mt-10">
-      Startseite
-    </h1>
-    <MktcmsSections :route="null" :category-id="null" :is-details-page="false" />
-
-    <h1 class="text-3xl font-bold mb-4 mt-10">
-      Kategorien
-    </h1>
-    <div v-for="category in categories" :key="category.id">
-      <h2 class="text-2xl font-bold mb-4">
-        {{ category.label }} - Listenansicht
-      </h2>
-      <MktcmsSections :category-id="category.id" />
-
-      <h2 class="text-2xl font-bold mt-6 mb-4">
-        {{ category.label }} - Detailansicht
-      </h2>
-      <MktcmsSections :category-id="category.id" :is-details-page="true" />
-    </div>
+    <template v-for="page in pages">
+      <h1 class="text-3xl font-bold mb-4 mt-10">
+        {{ page.title }}
+      </h1>
+      <MktcmsSections :pageId="page.id" />
+    </template>
   </div>
 </template>

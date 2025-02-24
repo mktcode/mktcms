@@ -1,12 +1,30 @@
 <script setup lang="ts">
+const props = defineProps<{
+  contentId: number | null;
+}>();
+
+let contentId: number | string | null = props.contentId;
+
 const route = useRoute();
-const contentSlug = Array.isArray(route.params.contentSlug) ? route.params.contentSlug[0] : route.params.contentSlug;
-const content = await useContentById(contentSlug);
+
+if (!contentId) {
+  const contentSlug = Array.isArray(route.params.pageSlug) ? route.params.pageSlug : [route.params.pageSlug];
+  contentId = contentSlug.pop() || null;
+
+  if (!contentId) {
+    throw createError({
+      statusCode: 404,
+      statusMessage: 'Content not found'
+    });
+  }
+}
+
+const content = await useContentById(contentId);
 
 if (!content) {
   throw createError({
     statusCode: 404,
-    statusMessage: 'Content not found'
+    statusMessage: 'About content not found'
   });
 }
 </script>

@@ -1,15 +1,9 @@
 <script setup lang="ts">
 import type { Section } from '~/types';
 
-const props = withDefaults(defineProps<{
-  route?: string | null
-  categoryId?: number | null
-  isDetailsPage?: boolean
-}>(), {
-  route: null,
-  categoryId: null,
-  isDetailsPage: false,
-})
+const props = defineProps<{
+  pageId: number
+}>()
 
 const sections = ref<Section[]>([])
 const showNewSectionModal = ref(false)
@@ -26,9 +20,7 @@ const fetchSections = async () => {
   sections.value = await $fetch('/api/sections/list', {
     method: 'POST',
     body: {
-      route: props.route,
-      categoryId: props.categoryId,
-      isDetailsPage: props.isDetailsPage,
+      pageId: props.pageId,
     },
   });
 }
@@ -39,11 +31,9 @@ const createSection = async () => {
   await $fetch('/api/sections/create', {
     method: 'POST',
     body: {
-      name: newSectionName.value,
+      pageId: props.pageId,
       component: newSectionComponent.value,
-      route: props.route,
-      categoryId: props.categoryId,
-      isDetailsPage: props.isDetailsPage,
+      orderIndex: sections.value.length,
     },
   })
   showNewSectionModal.value = false
@@ -56,9 +46,6 @@ const moveSection = async (id: number, direction: 'up' | 'down') => {
     body: {
       id,
       direction,
-      route: props.route,
-      categoryId: props.categoryId,
-      isDetailsPage: props.isDetailsPage,
     },
   })
   await fetchSections()
@@ -91,7 +78,7 @@ const connectContent = async (contentId: number) => {
 </script>
 
 <template>
-  <div class="mt-10" :key="`${props.route}-${props.categoryId}-${props.isDetailsPage}`">
+  <div class="mt-10">
     <button class="button" @click="showNewSectionModal = true">
       Neue Sektion erstellen
     </button>
@@ -135,7 +122,7 @@ const connectContent = async (contentId: number) => {
             </div>
           </td>
           <td class="px-3 py-2 whitespace-nowrap">
-            {{ section.name }}
+            {{ section.component }}
           </td>
           <td v-if="section.contentId">
             {{ contentList.find((content) => content.id === section.contentId)?.title }}
@@ -190,6 +177,7 @@ const connectContent = async (contentId: number) => {
       <select v-model="newSectionComponent" class="input mt-2">
         <option>Header</option>
         <option>About</option>
+        <option>ContentGrid</option>
         <option>Footer</option>
       </select>
       <div class="flex justify-end mt-4">
@@ -205,7 +193,7 @@ const connectContent = async (contentId: number) => {
     <MktcmsModal v-if="showDeleteModal && sectionToDelete">
       <h1>Sektion löschen</h1>
       <p>
-        Möchtest du die Sektion "{{ sectionToDelete.name }}" wirklich löschen?
+        Möchtest du die Sektion "{{ sectionToDelete.component }}" wirklich löschen?
       </p>
       <div class="flex justify-end mt-4">
         <button class="button" @click="showDeleteModal = false">

@@ -1,49 +1,26 @@
 import { z } from "zod";
 
 const bodySchema = z.object({
-  route: z.string().nullable(),
-  categoryId: z.number().nullable(),
-  isDetailsPage: z.boolean().nullable(),
-}).default({
-  route: null,
-  categoryId: null,
-  isDetailsPage: false,
+  pageId: z.number(),
 })
 
 export default defineEventHandler(async (event) => {
   const db = await getDatabaseConnection()
-  const { route, categoryId, isDetailsPage } = await readValidatedBody(event, body => bodySchema.parse(body))
+  const { pageId } = await readValidatedBody(event, body => bodySchema.parse(body))
 
-  let query = db
+  const sections = await db
     .selectFrom('sections')
     .select([
       'id',
-      'name',
-      'route',
+      'pageId',
       'categoryId',
       'contentId',
-      'isDetailsPage',
       'component',
       'orderIndex',
     ])
-  
-  if (route === null) {
-    query = query.where('route', 'is', null)
-  } else {
-    query = query.where('route', '=', route)
-  }
-
-  if (categoryId === null) {
-    query = query.where('categoryId', 'is', null)
-  } else {
-    query = query.where('categoryId', '=', categoryId)
-  }
-  
-  query = query
-    .where('isDetailsPage', '=', Number(isDetailsPage))
+    .where('pageId', '=', pageId)
     .orderBy('orderIndex', 'asc')
-
-  const sections = await query.execute()
+    .execute()
   
   return sections
 })
