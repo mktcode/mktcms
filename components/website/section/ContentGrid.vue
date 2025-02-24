@@ -11,7 +11,7 @@ const items = await useContent([props.categoryId], 6);
     <div class="container mx-auto px-4">
       <div
         v-if="items.length"
-        class="mt-24 flex flex-wrap items-start justify-center gap-12"
+        class="flex flex-wrap items-start justify-center gap-12"
       >
         <div v-for="product in items" :key="product.id" class="flex flex-col items-center max-w-md">
           <h4 class="text-2xl font-bold text-indigo-950">
