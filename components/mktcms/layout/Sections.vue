@@ -12,11 +12,14 @@ const newSectionComponent = ref('Header')
 const showDeleteModal = ref(false)
 const sectionToDelete = ref<Section | null>(null)
 const showConnectContentModal = ref(false)
+const showConnectCategoryModal = ref(false)
 const sectionToConnectContent = ref<Section | null>(null)
+const sectionToConnectCategory = ref<Section | null>(null)
 const showNewContentModal = ref(false)
 const newContentTitle = ref('')
 
 const contentList = await $fetch('/api/content/list', { method: 'POST' })
+const categoryList = await $fetch('/api/categories/list', { method: 'POST' })
 
 const fetchSections = async () => {
   sections.value = await $fetch('/api/sections/list', {
@@ -89,6 +92,20 @@ const connectContent = async (contentId: number) => {
   showConnectContentModal.value = false
   await fetchSections()
 }
+
+const connectCategory = async (categoryId: number) => {
+  if (!sectionToConnectCategory.value) return
+
+  await $fetch('/api/sections/update', {
+    method: 'POST',
+    body: {
+      id: sectionToConnectCategory.value.id,
+      categoryId,
+    },
+  })
+  showConnectCategoryModal.value = false
+  await fetchSections()
+}
 </script>
 
 <template>
@@ -144,6 +161,12 @@ const connectContent = async (contentId: number) => {
               Inhalt verknüpfen
             </button>
           </td>
+          <td v-else-if="section.categoryId">
+            {{ categoryList.find((category) => category.id === section.categoryId)?.name }}
+            <button class="button light" @click="sectionToConnectCategory = section; showConnectCategoryModal = true">
+              Kategorie verknüpfen
+            </button>
+          </td>
           <td v-else>
             <button class="button light" @click="sectionToConnectContent = section; showConnectContentModal = true">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 mr-2">
@@ -153,6 +176,9 @@ const connectContent = async (contentId: number) => {
             </button>
             <button class="button light" @click="showNewContentModal = true; sectionToConnectContent = section">
               Inhalt erstellen
+            </button>
+            <button class="button light" @click="sectionToConnectCategory = section; showConnectCategoryModal = true">
+              Kategorie verknüpfen
             </button>
           </td>
           <td>
@@ -201,6 +227,25 @@ const connectContent = async (contentId: number) => {
       </table>
     </MktcmsModal>
 
+    <MktcmsModal v-if="showConnectCategoryModal">
+      <h1>Kategorie verknüpfen</h1>
+      <p>
+        Wähle eine Kategorie, deren Inhalt in dieser Sektion angezeigt werden soll.
+      </p>
+      <table>
+        <tbody>
+          <tr v-for="category in categoryList" :key="category.id">
+            <td>{{ category.name }}</td>
+            <td>
+              <button class="button light" @click="connectCategory(category.id)">
+                Verknüpfen
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </MktcmsModal>
+
     <MktcmsModal v-if="showNewSectionModal">
       <h1>Neue Sektion erstellen</h1>
       <p>
@@ -210,7 +255,9 @@ const connectContent = async (contentId: number) => {
       <select v-model="newSectionComponent" class="input mt-2">
         <option>Header</option>
         <option>About</option>
+        <option>Content</option>
         <option>ContentGrid</option>
+        <option>Contact</option>
         <option>Footer</option>
       </select>
       <div class="flex justify-end mt-4">

@@ -2,7 +2,8 @@ import { z } from "zod";
 
 const bodySchema = z.object({
   id: z.number(),
-  contentId: z.number(),
+  contentId: z.number().nullable().optional(),
+  categoryId: z.number().nullable().optional(),
 })
 
 export default defineEventHandler(async (event) => {
@@ -16,7 +17,13 @@ export default defineEventHandler(async (event) => {
   }
   
   const db = await getDatabaseConnection()
-  const { id, contentId } = await readValidatedBody(event, body => bodySchema.parse(body))
+  const { id, contentId, categoryId } = await readValidatedBody(event, body => bodySchema.parse(body))
 
-  await db.updateTable('sections').set({ contentId }).where('id', '=', id).execute()
+  if (categoryId) {
+    await db.updateTable('sections').set({ categoryId }).where('id', '=', id).execute()
+  } else if (contentId) {
+    await db.updateTable('sections').set({ contentId }).where('id', '=', id).execute()
+  }
+
+  return { success: true }
 })

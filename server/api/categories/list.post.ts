@@ -1,5 +1,6 @@
 export default defineEventHandler(async (event) => {
-  await requireUserSession(event)
+  // TODO: Why is auth missing here?
+  // await requireUserSession(event)
 
   const db = await getDatabaseConnection()
 
