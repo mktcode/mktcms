@@ -12,6 +12,11 @@ const props = withDefaults(defineProps<{
 })
 
 const sections = ref<Section[]>([])
+const showNewSectionModal = ref(false)
+const newSectionName = ref('')
+const newSectionComponent = ref('Header')
+const showDeleteModal = ref(false)
+const sectionToDelete = ref<Section | null>(null)
 
 const fetchSections = async () => {
   sections.value = await $fetch('/api/sections/list', {
@@ -26,6 +31,21 @@ const fetchSections = async () => {
 
 onMounted(fetchSections)
 
+const createSection = async () => {
+  await $fetch('/api/sections/create', {
+    method: 'POST',
+    body: {
+      name: newSectionName.value,
+      component: newSectionComponent.value,
+      route: props.route,
+      categoryId: props.categoryId,
+      isDetailsPage: props.isDetailsPage,
+    },
+  })
+  showNewSectionModal.value = false
+  await fetchSections()
+}
+
 const moveSection = async (id: number, direction: 'up' | 'down') => {
   await $fetch('/api/sections/move', {
     method: 'POST',
@@ -39,10 +59,24 @@ const moveSection = async (id: number, direction: 'up' | 'down') => {
   })
   await fetchSections()
 }
+
+const deleteSection = async () => {
+  if (!sectionToDelete.value) return
+
+  await $fetch('/api/sections/delete', {
+    method: 'POST',
+    body: { id: sectionToDelete.value.id },
+  })
+  showDeleteModal.value = false
+  await fetchSections()
+}
 </script>
 
 <template>
   <div class="mt-10" :key="`${props.route}-${props.categoryId}-${props.isDetailsPage}`">
+    <button class="button" @click="showNewSectionModal = true">
+      Neue Sektion erstellen
+    </button>
     <table class="divide-y divide-gray-200 w-full">
       <thead class="bg-gray-50">
         <tr>
@@ -55,6 +89,7 @@ const moveSection = async (id: number, direction: 'up' | 'down') => {
           <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             Inhalte
           </th>
+          <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" />
         </tr>
       </thead>
       <tbody class="bg-white divide-y divide-gray-200" v-if="sections">
@@ -92,8 +127,51 @@ const moveSection = async (id: number, direction: 'up' | 'down') => {
               Inhalt erstellen
             </button>
           </td>
+          <td>
+            <button class="button light" @click="showDeleteModal = true; sectionToDelete = section">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
+
+    <MktcmsModal v-if="showNewSectionModal">
+      <h1>Neue Sektion erstellen</h1>
+      <p>
+        Hier kannst du eine neue Sektion erstellen.
+      </p>
+      <input v-model="newSectionName" type="text" class="input" placeholder="Name" />
+      <select v-model="newSectionComponent" class="input mt-2">
+        <option>Header</option>
+        <option>About</option>
+        <option>Footer</option>
+      </select>
+      <div class="flex justify-end mt-4">
+        <button class="button" @click="showNewSectionModal = false">
+          Abbrechen
+        </button>
+        <button class="button" @click="createSection">
+          Erstellen
+        </button>
+      </div>
+    </MktcmsModal>
+
+    <MktcmsModal v-if="showDeleteModal && sectionToDelete">
+      <h1>Sektion löschen</h1>
+      <p>
+        Möchtest du die Sektion "{{ sectionToDelete.name }}" wirklich löschen?
+      </p>
+      <div class="flex justify-end mt-4">
+        <button class="button" @click="showDeleteModal = false">
+          Abbrechen
+        </button>
+        <button class="button" @click="deleteSection">
+          Löschen
+        </button>
+      </div>
+    </MktcmsModal>
   </div>
 </template>
