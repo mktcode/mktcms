@@ -6,6 +6,7 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "dev:reset": "rm development.sqlite && ./init-dev-db.sh",
+    "dev:seed": "./seed-dev-db.sh",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "setup": "./setup.sh",
