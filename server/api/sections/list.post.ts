@@ -21,6 +21,7 @@ export default defineEventHandler(async (event) => {
       'name',
       'route',
       'categoryId',
+      'contentId',
       'isDetailsPage',
       'component',
       'orderIndex',

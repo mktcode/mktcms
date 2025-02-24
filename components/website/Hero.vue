@@ -1,5 +1,9 @@
 <script setup lang="ts">
-const hero = await useContentById(1);
+const props = defineProps<{
+  contentId: number;
+}>();
+
+const hero = await useContentById(props.contentId);
 
 if (!hero) {
   throw createError({
@@ -22,9 +26,11 @@ if (!hero) {
     </div>
     <div class="absolute z-50 inset-0 flex items-start">
       <div class="container mx-auto px-4 mt-16">
-        <h1 class="text-4xl md:text-6xl font-bold text-indigo-950">Finde deine innere Balance.</h1>
+        <h1 class="text-4xl md:text-6xl font-bold text-indigo-950">
+          {{ hero.title }}
+        </h1>
         <p class="mt-4 text-xl text-gray-600 max-w-3xl leading-relaxed">
-          Yoga, Ernährung, Achtsamkeit und stilvolles Auftreten - Löse die Trennung zwischen Körper und Geist auf und finde über einen ganzheitlichen Ansatz zu mehr innerer Ruhe und Ausgeglichenheit.
+          {{ hero.description }}
         </p>
         <div class="flex items-center mt-6 space-x-6">
           <a href="#contact" class="button">

@@ -17,6 +17,10 @@ const newSectionName = ref('')
 const newSectionComponent = ref('Header')
 const showDeleteModal = ref(false)
 const sectionToDelete = ref<Section | null>(null)
+const showConnectContentModal = ref(false)
+const sectionToConnectContent = ref<Section | null>(null)
+
+const contentList = await $fetch('/api/content/list', { method: 'POST' })
 
 const fetchSections = async () => {
   sections.value = await $fetch('/api/sections/list', {
@@ -70,6 +74,20 @@ const deleteSection = async () => {
   showDeleteModal.value = false
   await fetchSections()
 }
+
+const connectContent = async (contentId: number) => {
+  if (!sectionToConnectContent.value) return
+
+  await $fetch('/api/sections/update', {
+    method: 'POST',
+    body: {
+      id: sectionToConnectContent.value.id,
+      contentId,
+    },
+  })
+  showConnectContentModal.value = false
+  await fetchSections()
+}
 </script>
 
 <template>
@@ -119,12 +137,18 @@ const deleteSection = async () => {
           <td class="px-3 py-2 whitespace-nowrap">
             {{ section.name }}
           </td>
-          <td>
-            <button class="button light">
+          <td v-if="section.contentId">
+            {{ contentList.find((content) => content.id === section.contentId)?.title }}
+            <button class="button light" @click="sectionToConnectContent = section; showConnectContentModal = true">
+              Inhalt verknüpfen
+            </button>
+          </td>
+          <td v-else>
+            <button class="button light" @click="sectionToConnectContent = section; showConnectContentModal = true">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 mr-2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
               </svg>
-              Inhalt erstellen
+              Inhalt verknüpfen
             </button>
           </td>
           <td>
@@ -137,6 +161,25 @@ const deleteSection = async () => {
         </tr>
       </tbody>
     </table>
+
+    <MktcmsModal v-if="showConnectContentModal">
+      <h1>Inhalt verknüpfen</h1>
+      <p>
+        Wähle einen Inhalt, der in dieser Sektion angezeigt werden soll.
+      </p>
+      <table>
+        <tbody>
+          <tr v-for="content in contentList" :key="content.id">
+            <td>{{ content.title }}</td>
+            <td>
+              <button class="button light" @click="connectContent(content.id)">
+                Verknüpfen
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </MktcmsModal>
 
     <MktcmsModal v-if="showNewSectionModal">
       <h1>Neue Sektion erstellen</h1>
