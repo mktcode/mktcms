@@ -1,11 +1,8 @@
 import { z } from "zod";
 
 const bodySchema = z.object({
-  name: z.string(),
+  pageId: z.number(),
   component: z.string(),
-  route: z.string().nullable(),
-  categoryId: z.number().nullable(),
-  isDetailsPage: z.boolean(),
 })
 
 export default defineEventHandler(async (event) => {
@@ -19,15 +16,18 @@ export default defineEventHandler(async (event) => {
   }
   
   const db = await getDatabaseConnection()
-  const { name, component, route, categoryId, isDetailsPage } = await readValidatedBody(event, body => bodySchema.parse(body))
+  const { pageId, component } = await readValidatedBody(event, body => bodySchema.parse(body))
 
   await db.insertInto('sections').values({
-    name,
+    pageId,
     component,
-    route,
-    categoryId,
-    isDetailsPage: Number(isDetailsPage),
-    orderIndex: 0,
+    orderIndex: await db
+      .selectFrom('sections')
+      .select('orderIndex')
+      .where('pageId', '=', pageId)
+      .orderBy('orderIndex', 'desc')
+      .executeTakeFirst()
+      .then(section => section ? section.orderIndex + 1 : 0),
   }).execute()
 
   return { success: true }

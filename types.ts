@@ -85,7 +85,7 @@ export type ThemeUpdate = Updateable<ThemeTable>
 export interface PagesTable {
   id: Generated<number>
   title: string
-  route: string
+  route: string | null
 }
 export type Page = Selectable<PagesTable>
 export type NewPage = Insertable<PagesTable>
