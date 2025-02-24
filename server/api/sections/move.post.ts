@@ -2,7 +2,10 @@ import { z } from "zod";
 
 const bodySchema = z.object({
   id: z.number(),
-  direction: z.enum(['up', 'down'])
+  direction: z.enum(['up', 'down']),
+  route: z.string().nullable(),
+  categoryId: z.number().nullable(),
+  isDetailsPage: z.boolean().nullable(),
 })
 
 export default defineEventHandler(async (event) => {
@@ -15,7 +18,7 @@ export default defineEventHandler(async (event) => {
     })
   }
   
-  const { id, direction } = await readValidatedBody(event, body => bodySchema.parse(body))
+  const { id, direction, route, categoryId, isDetailsPage } = await readValidatedBody(event, body => bodySchema.parse(body))
 
   const db = await getDatabaseConnection()
 
@@ -25,12 +28,28 @@ export default defineEventHandler(async (event) => {
     .where('id', '=', id)
     .executeTakeFirstOrThrow()
   
-  const otherSection = await db
+  let otherSectionQuery = db
     .selectFrom('sections')
     .select(['id', 'orderIndex'])
+  
+    if (route === null) {
+      otherSectionQuery = otherSectionQuery.where('route', 'is', null)
+    } else {
+      otherSectionQuery = otherSectionQuery.where('route', '=', route)
+    }
+  
+    if (categoryId === null) {
+      otherSectionQuery = otherSectionQuery.where('categoryId', 'is', null)
+    } else {
+      otherSectionQuery = otherSectionQuery.where('categoryId', '=', categoryId)
+    }
+  
+  otherSectionQuery = otherSectionQuery
+    .where('isDetailsPage', '=', Number(isDetailsPage))
     .where('orderIndex', direction === 'up' ? '<' : '>', section.orderIndex)
     .orderBy('orderIndex', direction === 'up' ? 'desc' : 'asc')
-    .executeTakeFirst()
+  
+  const otherSection = await otherSectionQuery.executeTakeFirst()
   
   if (!otherSection) {
     return { success: true }
