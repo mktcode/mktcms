@@ -13,6 +13,8 @@ const showDeleteModal = ref(false)
 const sectionToDelete = ref<Section | null>(null)
 const showConnectContentModal = ref(false)
 const sectionToConnectContent = ref<Section | null>(null)
+const showNewContentModal = ref(false)
+const newContentTitle = ref('')
 
 const contentList = await $fetch('/api/content/list', { method: 'POST' })
 
@@ -26,6 +28,18 @@ const fetchSections = async () => {
 }
 
 onMounted(fetchSections)
+
+const createContent = async () => {
+  const content = await $fetch('/api/content/create', {
+    method: 'POST',
+    body: {
+      title: newContentTitle.value,
+    },
+  });
+  await connectContent(content.id)
+  showNewContentModal.value = false
+  await fetchSections()
+};
 
 const createSection = async () => {
   await $fetch('/api/sections/create', {
@@ -64,7 +78,7 @@ const deleteSection = async () => {
 
 const connectContent = async (contentId: number) => {
   if (!sectionToConnectContent.value) return
-
+  
   await $fetch('/api/sections/update', {
     method: 'POST',
     body: {
@@ -137,6 +151,9 @@ const connectContent = async (contentId: number) => {
               </svg>
               Inhalt verknüpfen
             </button>
+            <button class="button light" @click="showNewContentModal = true; sectionToConnectContent = section">
+              Inhalt erstellen
+            </button>
           </td>
           <td>
             <button class="button light" @click="showDeleteModal = true; sectionToDelete = section">
@@ -148,6 +165,22 @@ const connectContent = async (contentId: number) => {
         </tr>
       </tbody>
     </table>
+
+    <MktcmsModal v-if="showNewContentModal">
+      <h1>Inhalt erstellen</h1>
+      <p>
+        Hier kannst du einen neuen Inhalt erstellen.
+      </p>
+      <input v-model="newContentTitle" type="text" class="input" placeholder="Titel" />
+      <div class="flex justify-end mt-4">
+        <button class="button" @click="showNewContentModal = false">
+          Abbrechen
+        </button>
+        <button class="button" @click="createContent">
+          Erstellen
+        </button>
+      </div>
+    </MktcmsModal>
 
     <MktcmsModal v-if="showConnectContentModal">
       <h1>Inhalt verknüpfen</h1>

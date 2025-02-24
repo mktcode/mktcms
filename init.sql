@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS contents (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   title TEXT NOT NULL,
-  slug TEXT,
+  slug TEXT NOT NULL,
   subtitle TEXT,
   description TEXT,
   date TIMESTAMP,
