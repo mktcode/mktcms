@@ -6,6 +6,7 @@
 - Other meta tags (title, description, og:tags, etc.)
 - Favicon
 - enable Maintenance page
+- Optimize image sizes and alt texts
 
 # Deployment
 
