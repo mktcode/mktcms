@@ -6,17 +6,19 @@ import { Database } from '~/types'
 let connection: Kysely<Database> | null = null
 
 export async function getDatabaseConnection() {
+  const { databaseUrl } = useRuntimeConfig()
+
   if (connection) {
     return connection
   }
 
   if (process.env.NODE_ENV === 'production') {
     connection = new Kysely({
-      dialect: new MysqlDialect({ pool: mysql.createPool({ uri: process.env.DATABASE_URL }) }),
+      dialect: new MysqlDialect({ pool: mysql.createPool({ uri: databaseUrl }) }),
     })
   } else {
     connection = new Kysely({
-      dialect: new SqliteDialect({ database: new BetterSqlite3(process.env.SQLITE_DB_PATH || './development.sqlite') }),
+      dialect: new MysqlDialect({ pool: mysql.createPool({ uri: databaseUrl + '_dev' }) }),
     })
   }
 

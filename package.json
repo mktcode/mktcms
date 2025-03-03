@@ -8,7 +8,7 @@
     "dev:reset": "rm -f development.sqlite && ./init-dev-db.sh",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "deploy": "rsync -avz -e 'ssh -i ~/.ssh/uberspace' .output/ mktcode@alnilam.uberspace.de:/home/mktcode/projects/cms.markus-kottlaender.de && ssh -i ~/.ssh/uberspace mktcode@alnilam.uberspace.de 'supervisorctl restart cms.markus-kottlaender.de'",
+    "deploy": "rsync -avz -e 'ssh -i ~/.ssh/uberspace-mktcode' .output/ mktcode@alnilam.uberspace.de:/home/mktcode/projects/cms.markus-kottlaender.de && ssh -i ~/.ssh/uberspace-mktcode mktcode@alnilam.uberspace.de 'supervisorctl restart cms.markus-kottlaender.de'",
     "bd": "npm run build && npm run deploy"
   },
   "dependencies": {
