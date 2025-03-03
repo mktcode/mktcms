@@ -12,9 +12,16 @@ export default defineNuxtConfig({
     smtpFromName: process.env.SMTP_FROM_NAME,
     smtpTo: process.env.SMTP_TO,
     ipHashSalt: process.env.IP_HASH_SALT,
-    public: {
-      domain: process.env.DOMAIN,
-    }
+    oauth: {
+      google: {
+        clientId: process.env.OAUTH_GOOGLE_CLIENT_ID,
+        clientSecret: process.env.OAUTH_GOOGLE_CLIENT_SECRET,
+        redirectURL: process.env.OAUTH_GOOGLE_REDIRECT_URL,
+      },
+    },
+    session: {
+      password: process.env.SESSION_PASSWORD || '',
+    },
   },
   app: {
     head: {
