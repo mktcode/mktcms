@@ -1,10 +1,4 @@
 <script setup lang="ts">
-useHead({
-  meta: [
-    { name: 'robots', content: 'noindex, nofollow' },
-  ],
-});
-
 definePageMeta({
   middleware() {
     const { loggedIn } = useUserSession()

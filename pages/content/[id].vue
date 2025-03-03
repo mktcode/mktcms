@@ -1,12 +1,6 @@
 <script setup lang="ts">
 import type { ContentWithCategories } from '~/types';
 
-useHead({
-  meta: [
-    { name: 'robots', content: 'noindex, nofollow' },
-  ],
-});
-
 definePageMeta({
   validate: async (route) => {
     return typeof route.params.id === 'string' && /^\d+$/.test(route.params.id)
