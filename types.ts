@@ -6,10 +6,20 @@ import type {
   Updateable,
 } from 'kysely';
 
+// Project
+export interface ProjectsTable {
+  id: Generated<number>
+  name: string
+  googleManagerId: string
+}
+export type Project = Selectable<ProjectsTable>
+export type NewProject = Insertable<ProjectsTable>
+export type ProjectUpdate = Updateable<ProjectsTable>
 
 // Content
 export interface ContentsTable {
   id: Generated<number>
+  projectId: number
   title: string
   subtitle: string | null
   description: string | null
@@ -27,6 +37,7 @@ export type ContentWithCategories = Content & {
 // Category
 export interface CategoriesTable {
   id: Generated<number>
+  projectId: number
   name: string
   label: string
 }
@@ -46,6 +57,7 @@ export type NewContentCategory = Insertable<ContentCategoriesTable>
 // Stats
 export interface StatsTable {
   id: Generated<number>
+  projectId: number
   userId: string
   route: string
   referer: string | null
@@ -58,6 +70,7 @@ export type NewStat = Insertable<StatsTable>
 // Businessinfo
 export interface BusinessinfoTable {
   id: Generated<number>
+  projectId: number
   name: string
   street: string
   city: string
