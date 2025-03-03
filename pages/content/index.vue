@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { Category, ContentWithCategories } from '~/types';
 
-const { public: { domain } } = useRuntimeConfig();
 const { categories, refreshCategories } = await useCategories();
 
 const selectedCategories = ref<number[]>(categories.value?.map((category: Category) => category.id) || []);
@@ -150,14 +149,6 @@ onMounted(fetchPosts);
               <div class="text-sm text-gray-900">{{ post.url }}</div>
             </td>
             <td class="px-3 py-2 whitespace-nowrap text-right text-sm font-medium">
-              <a
-                :href="`https://www.facebook.com/sharer/sharer.php?u=https://${domain}/content/${post.id}`"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="text-indigo-600 hover:text-indigo-900"
-              >
-                Auf Facebook teilen
-              </a>
               <a :href="`/content/${post.id}`" class="text-indigo-600 hover:text-indigo-900 ml-4">Bearbeiten</a>
               <a
                 v-if="!undeletableContent.includes(post.id)"
