@@ -84,6 +84,7 @@ export type NewBusinessinfo = Insertable<BusinessinfoTable>
 export type BusinessinfoUpdate = Updateable<BusinessinfoTable>
 
 export interface Database {
+  projects: ProjectsTable
   contents: ContentsTable
   categories: CategoriesTable
   contentCategories: ContentCategoriesTable
