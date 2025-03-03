@@ -1,13 +1,4 @@
 <script setup lang="ts">
-definePageMeta({
-  middleware() {
-    const { loggedIn } = useUserSession()
-    if (!loggedIn.value) {
-      return navigateTo('/login')
-    }
-  },
-})
-
 const fileInput = ref<HTMLInputElement | null>(null)
 
 const { data: files, refresh } = await useFetch('/api/files/list', {

@@ -1,13 +1,4 @@
 <script setup lang="ts">
-definePageMeta({
-  middleware() {
-    const { loggedIn } = useUserSession()
-    if (!loggedIn.value) {
-      return navigateTo('/login')
-    }
-  },
-})
-
 const route = useRoute();
 const categoryId = Array.isArray(route.query.category) ? route.query.category[0] : route.query.category;
 const defaultCategories = categoryId ? [parseInt(categoryId)] : [];

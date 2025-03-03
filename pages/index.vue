@@ -1,13 +1,4 @@
 <script setup lang="ts">
-definePageMeta({
-  middleware() {
-    const { loggedIn } = useUserSession()
-    if (!loggedIn.value) {
-      return navigateTo('/login')
-    }
-  },
-})
-
 const businessinfo = await $fetch('/api/businessinfo')
 const privacyPolicy = false
 </script>

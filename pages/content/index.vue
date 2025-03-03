@@ -1,15 +1,6 @@
 <script setup lang="ts">
 import type { Category, ContentWithCategories } from '~/types';
 
-definePageMeta({
-  middleware() {
-    const { loggedIn } = useUserSession()
-    if (!loggedIn.value) {
-      return navigateTo('/login')
-    }
-  },
-})
-
 const { public: { domain } } = useRuntimeConfig();
 const { categories, refreshCategories } = await useCategories();
 

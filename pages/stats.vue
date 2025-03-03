@@ -1,13 +1,4 @@
 <script setup lang="ts">
-definePageMeta({
-  middleware() {
-    const { loggedIn } = useUserSession()
-    if (!loggedIn.value) {
-      return navigateTo('/login')
-    }
-  },
-})
-
 const { data: stats } = await useFetch('/api/stats/list', { method: 'POST' });
 const { data: referers } = await useFetch('/api/stats/referers', { method: 'POST' });
 </script>
