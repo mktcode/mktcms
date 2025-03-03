@@ -4,10 +4,12 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "nuxt dev --dotenv .env.local",
     "dev:reset": "rm -f development.sqlite && ./init-dev-db.sh",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "deploy": "rsync -avz -e 'ssh -i ~/.ssh/uberspace' .output/ mktcode@alnilam.uberspace.de:/home/mktcode/projects/cms.markus-kottlaender.de && ssh -i ~/.ssh/uberspace mktcode@alnilam.uberspace.de 'supervisorctl restart cms.markus-kottlaender.de'",
+    "bd": "npm run build && npm run deploy"
   },
   "dependencies": {
     "@googleapis/mybusinessbusinessinformation": "^4.0.9",
