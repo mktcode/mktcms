@@ -26,6 +26,4 @@ logs
 # Mktcms
 public/files/*
 !public/files/.gitkeep
-!public/files/profil-placeholder.webp
-!public/files/header-placeholder.webp
 development.sqlite

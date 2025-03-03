@@ -1,5 +1,4 @@
 import { z } from "zod";
-import slugify from "~/utils/slugify";
 
 const bodySchema = z.object({
   title: z.string(),
@@ -16,9 +15,7 @@ export default defineEventHandler(async (event) => {
   const db = await getDatabaseConnection()
   const { categories, title, description, date, url, image } = await readValidatedBody(event, body => bodySchema.parse(body))
 
-  const slug = slugify(title)
-
-  const result = await db.insertInto('contents').values({ title, slug, description, date, url, image }).returning('id').executeTakeFirstOrThrow()
+  const result = await db.insertInto('contents').values({ title, description, date, url, image }).returning('id').executeTakeFirstOrThrow()
   
   if (categories && categories.length > 0) {
     await db.insertInto('contentCategories').values(categories.map(categoryId => ({ contentId: result.id, categoryId }))).execute()

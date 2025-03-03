@@ -11,7 +11,6 @@ import type {
 export interface ContentsTable {
   id: Generated<number>
   title: string
-  slug: string
   subtitle: string | null
   description: string | null
   date: ColumnType<string, string, string> | null
@@ -71,46 +70,10 @@ export type Businessinfo = Selectable<BusinessinfoTable>
 export type NewBusinessinfo = Insertable<BusinessinfoTable>
 export type BusinessinfoUpdate = Updateable<BusinessinfoTable>
 
-// Theme
-export interface ThemeTable {
-  id: Generated<number>
-  primaryColor: string
-  primaryColorHover: string
-}
-export type Theme = Selectable<ThemeTable>
-export type NewTheme = Insertable<ThemeTable>
-export type ThemeUpdate = Updateable<ThemeTable>
-
-// Pages
-export interface PagesTable {
-  id: Generated<number>
-  title: string
-  route: string | null
-}
-export type Page = Selectable<PagesTable>
-export type NewPage = Insertable<PagesTable>
-export type PageUpdate = Updateable<PagesTable>
-
-// Section
-export interface SectionsTable {
-  id: Generated<number>
-  pageId: number
-  categoryId: number | null
-  contentId: number | null
-  component: string
-  orderIndex: number
-}
-export type Section = Selectable<SectionsTable>
-export type NewSection = Insertable<SectionsTable>
-export type SectionUpdate = Updateable<SectionsTable>
-
 export interface Database {
   contents: ContentsTable
   categories: CategoriesTable
   contentCategories: ContentCategoriesTable
   stats: StatsTable
   businessinfo: BusinessinfoTable
-  theme: ThemeTable
-  pages: PagesTable
-  sections: SectionsTable
 }

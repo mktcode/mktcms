@@ -1,7 +1,6 @@
 CREATE TABLE IF NOT EXISTS contents (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   title TEXT NOT NULL,
-  slug TEXT NOT NULL,
   subtitle TEXT,
   description TEXT,
   date TIMESTAMP,
@@ -39,25 +38,4 @@ CREATE TABLE IF NOT EXISTS businessinfo (
   phone TEXT NOT NULL,
   email TEXT NOT NULL,
   taxId TEXT NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS theme (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  primaryColor TEXT NOT NULL,
-  primaryColorHover TEXT NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS pages (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  title TEXT NOT NULL,
-  route TEXT
-);
-
-CREATE TABLE IF NOT EXISTS sections (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  pageId INTEGER,
-  categoryId INTEGER,
-  contentId INTEGER,
-  component TEXT NOT NULL,
-  orderIndex INTEGER DEFAULT 0
 );

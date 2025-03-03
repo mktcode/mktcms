@@ -10,10 +10,7 @@ export default defineEventHandler(async (event) => {
 
   const content = await db.selectFrom('contents')
     .select(['id', 'title', 'subtitle', 'description', 'date', 'url', 'image'])
-    .where((eb) => eb.or([
-      eb('id', '=', Number(id)),
-      eb('slug', '=', id)
-    ]))
+    .where('id', '=', Number(id))
     .limit(1)
     .execute()
     .then(posts => {
