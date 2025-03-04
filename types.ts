@@ -10,6 +10,7 @@ import type {
 export interface ProjectsTable {
   id: Generated<number>
   name: string
+  domain: string
   googleManagerId: string
 }
 export type Project = Selectable<ProjectsTable>
