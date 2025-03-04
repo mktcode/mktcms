@@ -2,7 +2,7 @@
   <div class="min-h-full">
     <nav class="bg-gray-800">
       <div class="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
-        <div class="flex items-baseline space-x-4">
+        <div class="flex items-baseline gap-4">
           <NuxtLink
             to="/"
             class="navlink"

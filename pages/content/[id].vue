@@ -48,7 +48,7 @@ const createPost = async () => {
     </div>
 
     <div class="mt-10">
-      <form @submit.prevent="createPost" class="space-y-8">
+      <form @submit.prevent="createPost" class="gap-8">
         <div>
           <label for="image" class="block text-sm font-medium text-gray-700">Bild</label>
           <div class="mt-1 flex items-center">

@@ -40,7 +40,7 @@ const createPost = async () => {
     </div>
 
     <div class="mt-10">
-      <form @submit.prevent="createPost" class="space-y-8">
+      <form @submit.prevent="createPost" class="gap-8">
         <div>
           <label for="image" class="block text-sm font-medium text-gray-700">Bild</label>
           <div class="mt-1 flex flex-col items-start">
@@ -69,7 +69,7 @@ const createPost = async () => {
 
         <div>
           <label for="description" class="block text-sm font-medium text-gray-700">Beschreibung</label>
-          <div class="bg-gray-100 p-2 rounded-t-lg mt-1 text-lg flex space-x-1">
+          <div class="bg-gray-100 p-2 rounded-t-lg mt-1 text-lg flex gap-1">
             <button class="size-10 rounded-lg bg-gray-200 aspect-square flex items-center justify-center hover:bg-gray-300 cursor-pointer" @click="description += ' **Fett** '">
               <strong>B</strong>
             </button>

@@ -6,7 +6,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="flex space-x-4 border border-gray-200 rounded-lg p-4">
+  <div class="flex gap-4 border border-gray-200 rounded-lg p-4">
     <div>
       <svg v-if="enabled" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-10 text-green-600">
         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -23,7 +23,7 @@ defineProps<{
         <slot name="content-enabled" v-if="enabled" />
         <slot name="content-disabled" v-else />
       </p>
-      <div class="flex ml-auto mt-4 space-x-2">
+      <div class="flex ml-auto mt-4 gap-2">
         <slot name="buttons-enabled" v-if="enabled" />
         <slot name="buttons-disabled" v-else />
       </div>

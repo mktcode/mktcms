@@ -10,7 +10,7 @@ const handleError = () => clearError({ redirect: '/' })
 
 <template>
   <NuxtLayout name="default">
-    <div class="flex flex-col items-center justify-center h-screen space-y-4">
+    <div class="flex flex-col items-center justify-center h-screen gap-4">
       <img src="~/assets/img/mktcms.png" alt="Error" class="w-3xs" />
       <h2 class="text-2xl text-center">
         Ups! Ein Fehler ist aufgetreten.

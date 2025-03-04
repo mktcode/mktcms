@@ -55,7 +55,7 @@ onMounted(fetchPosts);
       <h1 class="text-3xl font-bold text-gray-900">
         Inhaltsverwaltung - Übersicht
       </h1>
-      <div class="ml-auto flex items-center space-x-2">
+      <div class="ml-auto flex items-center gap-2">
         <NuxtLink to="/content/new" class="button">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 mr-2 opacity-50">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z" />
@@ -77,13 +77,13 @@ onMounted(fetchPosts);
       </div>
     </div>
 
-    <div class="mt-4 space-y-2">
-      <div v-for="category in categories" :key="category.id" class="flex items-center justify-between space-x-4 text-xl max-w-sm">
+    <div class="mt-4 gap-2">
+      <div v-for="category in categories" :key="category.id" class="flex items-center justify-between gap-4 text-xl max-w-sm">
         <div>
           <input type="checkbox" :id="category.name" :value="category.id" v-model="selectedCategories" @change="fetchPosts">
           <label :for="category.name" class="ml-2">{{ category.label }}</label>
         </div>
-        <NuxtLink :to="`/new?category=${category.id}`" class="text-sm flex items-center space-x-1 rounded px-2 py-1 bg-green-100 text-green-600 hover:bg-green-200">
+        <NuxtLink :to="`/new?category=${category.id}`" class="text-sm flex items-center gap-1 rounded px-2 py-1 bg-green-100 text-green-600 hover:bg-green-200">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
           </svg>
@@ -187,7 +187,7 @@ onMounted(fetchPosts);
           <p class="text-gray-400">
             {{ postToDelete.date ? new Date(postToDelete.date).toLocaleDateString('de-DE') : 'Kein Datum' }}
           </p>
-          <div class="mt-4 flex justify-center space-x-6">
+          <div class="mt-4 flex justify-center gap-6">
             <button @click="deletePost" type="button" class="button">
               Löschen
             </button>
@@ -216,7 +216,7 @@ onMounted(fetchPosts);
             </p>
           </div>
           <input v-model="newCategoryLabel" type="text" class="input" placeholder="Name" />
-          <div class="mt-4 flex justify-center space-x-6">
+          <div class="mt-4 flex justify-center gap-6">
             <button @click="createCategory" type="button" class="button">
               Speichern
             </button>

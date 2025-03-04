@@ -7,7 +7,7 @@ definePageMeta({
 <template>
   <div class="max-w-xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
     <img src="~/assets/img/mktcms.png" alt="Error" class="w-32 mx-auto mb-12" />
-    <a href="/auth/google" class="border border-gray-300 rounded-md p-4 text-xl font-medium text-gray-700 hover:bg-gray-50 flex items-center justify-between space-x-4">
+    <a href="/auth/google" class="border border-gray-300 rounded-md p-4 text-xl font-medium text-gray-700 hover:bg-gray-50 flex items-center justify-between gap-4">
       <img src="~/assets/img/google.svg" class="size-8" />
       Mit Google anmelden
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 opacity-50">
