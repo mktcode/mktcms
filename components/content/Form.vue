@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Content } from '~/types';
+import Editor from '../Editor.vue';
 
 const props = defineProps<{
   content?: Content;
@@ -39,7 +40,7 @@ const submit = async () => {
     </div>
 
     <div class="mt-10">
-      <form @submit.prevent="submit" class="gap-8">
+      <form @submit.prevent="submit" class="flex flex-col gap-4">
         <div>
           <label for="title" class="block text-sm font-medium text-gray-700">Titel</label>
           <input v-model="title" type="text" name="title" id="title">
@@ -47,7 +48,9 @@ const submit = async () => {
 
         <div>
           <label for="description" class="block text-sm font-medium text-gray-700">Beschreibung</label>
-          <textarea v-model="description" name="description" id="description" rows="3" />
+          <ClientOnly>
+            <Editor v-model="description" />
+          </ClientOnly>
         </div>
 
         <div>

@@ -64,7 +64,7 @@ onMounted(fetchPosts);
               </div>
             </td>
             <td class="px-3 py-2">
-              <div class="text-sm text-gray-900 line-clamp-1">{{ post.description }}</div>
+              <div class="text-sm text-gray-900 prose prose-sm" v-html="post.description" />
             </td>
             <td class="px-3 py-2 whitespace-nowrap">
               <div class="text-sm text-gray-900">{{ post.url }}</div>

@@ -32,3 +32,11 @@ select {
 label {
   @apply block font-medium text-gray-700 mb-1;
 }
+
+ol {
+  @apply list-decimal;
+}
+
+ul {
+  @apply list-disc;
+}
