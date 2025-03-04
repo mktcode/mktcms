@@ -9,9 +9,11 @@ const props = defineProps<{
 const contents = ref<Content[]>([]);
 
 const fetchPosts = async () => {
-  const data = await $fetch('/api/content/list', { method: 'POST', body: {
-    projectId: props.project.id,
-  }});
+  const data = await $fetch('/api/content/list', {
+    query: {
+      projectId: props.project.id,
+    }
+  });
   contents.value = data;
 };
 
