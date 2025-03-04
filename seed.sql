@@ -1,6 +1,3 @@
--- Categories
-INSERT INTO categories (id, name, label) VALUES (1, 'products', 'Produkte');
-
 -- Content
 INSERT INTO contents (id, title, subtitle, description, date, url, image) VALUES (
   1,
@@ -21,4 +18,3 @@ INSERT INTO contents (id, title, subtitle, description, date, url, image) VALUES
   'https://www.google.com',
   'header-placeholder.jpg'
 );
-INSERT INTO contentCategories (id, contentId, categoryId) VALUES (1, 2, 1);
