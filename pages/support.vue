@@ -1,25 +1,17 @@
 <template>
   <div>
     <h1 class="text-3xl font-bold mb-4">
-      Support
+      Hilfe
     </h1>
 
     <div class="flex flex-col gap-4">
       <div class="flex flex-col gap-2">
         <h2 class="text-xl font-bold">
-          Kontakt
-        </h2>
-        <p>
-          Bei Fragen oder Problemen wenden Sie sich bitte an unseren Support.
-        </p>
-      </div>
-
-      <div class="flex flex-col gap-2">
-        <h2 class="text-xl font-bold">
           Telefon
         </h2>
         <p>
-          +49 123 456 789
+          <span class="font-bold">Mo - Fr: 9-17 Uhr</span><br />
+          0176 70 86 46 27
         </p>
       </div>
 
@@ -29,7 +21,7 @@
         </h2>
         <p>
           <a href="mailto:kontakt@markus-kottlaender.de">
-            kontakt@markus-kottlaender.de
+            hilfe@markus-kottlaender.de
           </a>
         </p>
       </div>
