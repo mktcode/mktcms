@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import type { Content, Project } from '~/types';
+import ListItem from './ListItem.vue';
 
 const props = defineProps<{
   project: Project;
 }>();
 
-const posts = ref<Content[]>([]);
+const contents = ref<Content[]>([]);
 
 const fetchPosts = async () => {
   const data = await $fetch('/api/content/list', { method: 'POST', body: {
     projectId: props.project.id,
   }});
-  posts.value = data;
+  contents.value = data;
 };
 
 onMounted(fetchPosts);
@@ -47,32 +48,8 @@ onMounted(fetchPosts);
             <th scope="col" class="px-3 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider" />
           </tr>
         </thead>
-        <tbody class="bg-white divide-y divide-gray-200">
-          <tr v-for="post in posts" :key="post.id">
-            <td class="px-3 py-2 whitespace-nowrap">
-              <img v-if="post.image" :src="`/files/${post.image}`" alt="Kein Bild" class="w-24 aspect-video object-cover object-center rounded">
-              <div v-else class="w-24 aspect-video text-gray-400 bg-gray-100 items-center justify-center flex rounded">
-                Kein Bild
-              </div>
-            </td>
-            <td class="px-3 py-2 whitespace-nowrap">
-              <div class="text-sm text-gray-900">{{ post.title }}</div>
-            </td>
-            <td class="px-3 py-2 whitespace-nowrap">
-              <div class="text-sm text-gray-900">
-                {{ post.date ? new Date(post.date).toLocaleDateString('de-DE') : 'Kein Datum' }}
-              </div>
-            </td>
-            <td class="px-3 py-2">
-              <div class="text-sm text-gray-900 prose prose-sm" v-html="post.description" />
-            </td>
-            <td class="px-3 py-2 whitespace-nowrap">
-              <div class="text-sm text-gray-900">{{ post.url }}</div>
-            </td>
-            <td class="px-3 py-2 whitespace-nowrap text-right text-sm font-medium">
-              <a :href="`/content/${post.id}`" class="text-indigo-600 hover:text-indigo-900 ml-4">Bearbeiten</a>
-            </td>
-          </tr>
+        <tbody>
+          <ListItem v-for="content in contents" :key="content.id" :project="project" :content="content" />
         </tbody>
       </table>
     </div>
