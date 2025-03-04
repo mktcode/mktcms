@@ -29,23 +29,17 @@ onMounted(fetchPosts);
     </div>
 
     <div class="mt-10">
-      <table class="divide-y divide-gray-200 w-full">
-        <thead class="bg-gray-50">
+      <table class="w-full">
+        <thead>
           <tr>
-            <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Bild
-            </th>
             <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Titel
             </th>
             <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Datum
+              Bild
             </th>
             <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Beschreibung
-            </th>
-            <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              URL
             </th>
             <th scope="col" class="px-3 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider" />
           </tr>
