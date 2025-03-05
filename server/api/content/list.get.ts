@@ -23,6 +23,7 @@ export default defineEventHandler(async (event) => {
   }
 
   const contents = await query
+    .orderBy('orderIndex', 'asc')
     .orderBy('date', 'desc')
     .limit(Number(limit) || 999)
     .execute()
