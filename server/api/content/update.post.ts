@@ -4,6 +4,7 @@ const bodySchema = z.object({
   id: z.number(),
   parentId: z.number().optional(),
   title: z.string(),
+  subtitle: z.string().nullable().optional(),
   description: z.string().nullable().optional(),
   date: z.string().nullable().optional(),
   url: z.string().nullable().optional(),
@@ -11,7 +12,7 @@ const bodySchema = z.object({
 })
 
 export default defineEventHandler(async (event) => {
-  const { id, parentId, title, description, date, url, image } = await readValidatedBody(event, body => bodySchema.parse(body))
+  const { id, parentId, title, subtitle, description, url, image } = await readValidatedBody(event, body => bodySchema.parse(body))
 
   const db = await getDatabaseConnection()
   const content = await db.selectFrom('contents')
@@ -42,5 +43,5 @@ export default defineEventHandler(async (event) => {
     }
   }
   
-  await db.updateTable('contents').set({ parentId, title, description, date, url, image }).where('id', '=', id).execute()
+  await db.updateTable('contents').set({ parentId, title, subtitle, description, url, image }).where('id', '=', id).execute()
 })

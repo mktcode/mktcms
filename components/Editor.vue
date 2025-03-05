@@ -16,7 +16,7 @@ const editor = useEditor({
   ],
   editorProps: {
     attributes: {
-      class: 'prose prose-sm focus:outline-none',
+      class: 'rounded-lg p-3 bg-gray-100 prose prose-sm focus:outline-none max-w-full focus:ring focus:ring-blue-400 focus:bg-gray-50',
     },
   },
   content: model.value || "<p>Beschreibung. 🎉</p>",
@@ -128,7 +128,7 @@ function click(editor: Editor) {
         </svg>
       </EditorButton>
     </div>
-    <div class="mt-2 rounded-lg p-3 bg-gray-100">
+    <div class="mt-2">
       <EditorContent :editor="editor" />
     </div>
   </div>

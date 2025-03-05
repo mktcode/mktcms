@@ -18,6 +18,7 @@ const updatePost = async (update: ContentUpdate) => {
     body: {
       id: contentId,
       title: update.title,
+      subtitle: update.subtitle,
       description: update.description,
       date: update.date,
       url: update.url,
