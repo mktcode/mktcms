@@ -28,6 +28,7 @@ export interface ContentsTable {
   date: ColumnType<string, string, string> | null
   url: string | null
   image: string | null
+  orderIndex: number
 }
 export type Content = Selectable<ContentsTable>
 export type NewContent = Insertable<ContentsTable>

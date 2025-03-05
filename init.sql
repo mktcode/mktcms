@@ -14,5 +14,6 @@ CREATE TABLE IF NOT EXISTS contents (
   description TEXT,
   date TIMESTAMP,
   url TEXT,
-  image TEXT
+  image TEXT,
+  orderIndex INTEGER NOT NULL DEFAULT 0,
 );
