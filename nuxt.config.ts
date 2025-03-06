@@ -30,7 +30,10 @@ export default defineNuxtConfig({
         { name: 'robots', content: 'noindex, nofollow' },
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0' },
-      ]
+      ],
+      link: [
+        { rel: 'icon', href: '/favicon.png', type: 'image/png' },
+      ],
     }
   },
   compatibilityDate: '2024-11-01',
