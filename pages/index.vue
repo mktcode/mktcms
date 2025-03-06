@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ArrowsPointingOutIcon, CheckIcon, IdentificationIcon, MapPinIcon } from '@heroicons/vue/24/outline'
+import { PlannerTarget } from '#components';
+import { ArrowsPointingOutIcon, CheckIcon, IdentificationIcon, MapPinIcon, MegaphoneIcon, PhotoIcon } from '@heroicons/vue/24/outline'
 
 const logo = ref<string>('');
 const logoWidth = ref<number>(100);
@@ -55,8 +56,55 @@ const ctyTypes = [
       Hier kannst du deine unternehmerische Hauptbotschaft bearbeiten.
       Der Platz ist begrenzt auf die typische Größe eines Smartphone-Bildschirms.
       Das hilft dir dabei, dich auf das Wesentliche zu konzentrieren und platformübergreifend (Online-Anzeigen, Visitenkarten, etc.) einheitliche Botschaften zu senden.
-      Auf spezielle Angebote kannst du danach eingehen.
+      Auf spezielle Angebote kannst du weiter unten eingehen.
     </p>
+
+    <h2 class="text-2xl font-bold text-gray-900 mb-4">
+      Domain und E-Mail
+    </h2>
+
+    <p class="text-lg text-gray-700 mb-8">
+      Vielleicht hast du schon eine Domain registriert, brauchst aber noch E-Mail-Postfächer, vielleicht beides.
+      Vielleicht nutzt du auch schon ein kostenloses E-Mail-Postfach, aber möchtest eine professionelle Domain.
+      Wenn du schon versorgt bist, super! Dann musst du später nur eine kleine Einstellung bei deinem Domain-Anbieter vornehmen.
+    </p>
+
+    <div class="flex gap-4 mb-8">
+      <button class="button">
+        <CheckIcon class="size-5 opacity-50" />
+        Ich brauche beides.
+      </button>
+      <button class="button light">
+        Ich bin versorgt.
+      </button>
+    </div>
+
+    <h2 class="text-2xl font-bold text-gray-900 mb-4">
+      Ihr Unternehmen
+    </h2>
+
+    <label for="logo" class="block text-sm font-medium text-gray-700">
+      Bilder
+    </label>
+    <div class="text-sm text-gray-500 mb-3">
+      Dein Logo, ein Bild von dir oder deinem Team, ein Bild von deinem Laden oder deinen Produkten.
+      Am besten professionelle Bilder in hoher Auflösung.
+    </div>
+    <div class="bg-gray-50 rounded-lg border border-gray-100 flex items-center justify-center h-48 mb-3">
+      <div class="text-center">
+        <PhotoIcon class="h-12 w-12 text-gray-300 mx-auto" />
+        <div class="text-sm text-gray-400">
+          Bilder hier ablegen oder klicken
+        </div>
+      </div>
+    </div>
+
+
+    <div class="flex gap-4 mb-8">
+      <div class="rounded-lg overflow-hidden">
+        <img src="~/assets/img/default-header.jpg" alt="Header" class="w-24 aspect-video object-cover" />
+      </div>
+    </div>
 
     <div class="flex gap-4">
       <form class="space-y-4 w-1/2">
@@ -208,7 +256,7 @@ const ctyTypes = [
           </label>
           <div class="text-sm text-gray-500 mb-3">
             Wonach suchen potentielle Kunden, die genau dein Angebot brauchen?
-            Wonach würdest du selber suchen?
+            Wonach würdest du selber suchen? Sei spezifisch.
           </div>
           <input
             type="text"
@@ -284,12 +332,104 @@ const ctyTypes = [
               Visitenkarte
             </button>
             <button class="button light w-full">
+              <MegaphoneIcon class="size-5 opacity-50" />
+              <div>Anzeige</div>
+              <div class="ml-auto">
+                128 <span class="text-blue-950">Aufrufe für:</span>
+              </div>
+              <div>
+                35 €
+              </div>
+            </button>
+            <button class="button light w-full">
               <MapPinIcon class="size-5 opacity-50" />
               Google Unternehmensprofil
             </button>
           </div>
         </div>
       </div>
+    </div>
+
+    <h1 class="text-3xl font-bold text-gray-900 mb-4 mt-24">
+      Anzeigen
+    </h1>
+
+    <p class="text-lg text-gray-700 mb-8">
+      Es geht hier nicht darum, jedes einzelne Produkt zu bewerben. Treffe eine Auswahl von speziellen Angeboten, die du hervorheben möchtest.
+    </p>
+    <PlannerTarget />
+
+    <div class="mt-24 flex gap-12">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900 mb-4">
+          Bestätigen und Bezahlen
+        </h1>
+    
+        <p class="text-lg text-gray-700 mb-8">
+          Hier sind nochmal die einzelnen Posten aufgelistet. Wenn alles passt, kannst du hier bezahlen. Du kannst natürlich monatlich kündigen.
+        </p>
+      </div>
+      <div>
+        <table class="w-full prose prose-sky min-w-lg">
+          <thead>
+            <tr>
+              <th class="text-left">Posten</th>
+              <th class="text-right">Preis pro Monat</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left">Domain und E-Mail</td>
+              <td class="text-right">5 €</td>
+            </tr>
+            <tr>
+              <td class="text-left">
+                Hauptseite
+                <div class="text-xs font-bold leading-none text-gray-400">Landingpage</div>
+              </td>
+              <td class="text-right">12 €</td>
+            </tr>
+            <tr>
+              <td class="text-left">
+                Angebot: Software zum halben Preis
+                <div class="text-xs font-bold leading-none text-gray-400">Landingpage</div>
+              </td>
+              <td class="text-right">6 €</td>
+            </tr>
+            <tr>
+              <td class="text-left">
+                Shop
+                <div class="text-xs font-bold leading-none text-gray-400">WordPress</div>
+              </td>
+              <td class="text-right">
+                50 €
+              </td>
+            </tr>
+            <tr>
+              <td class="text-left">KI-Assistent</td>
+              <td class="text-right">25 €</td>
+            </tr>
+            <tr>
+              <td class="text-left">Änderungshotline</td>
+              <td class="text-right">34 €</td>
+            </tr>
+            <tr>
+              <td class="text-left font-bold text-2xl">
+                Summe
+              </td>
+              <td class="text-right font-bold text-2xl">
+                132 €
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="button w-full mt-4">
+          Bestätigen und Bezahlen
+        </button>
+      </div>
+    </div>
+
+    <div>
     </div>
   </div>
 </template>
