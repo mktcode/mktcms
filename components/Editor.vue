@@ -34,6 +34,22 @@ function click(editor: Editor) {
   <div v-if="editor">
     <div class="rounded-lg border border-gray-300 p-1 flex gap-1">
       <EditorButton
+        @click="click(editor).undo().run()"
+        :isActive="editor.can().undo()"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+        </svg>
+      </EditorButton>
+      <EditorButton
+        @click="click(editor).redo().run()"
+        :isActive="editor.can().redo()"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m15 15 6-6m0 0-6-6m6 6H9a6 6 0 0 0 0 12h3" />
+        </svg>
+      </EditorButton>
+      <EditorButton
         @click="click(editor).toggleHeading({ level: 1 }).run()"
         :isActive="editor.isActive('heading', { level: 1 })"
       >
@@ -133,3 +149,12 @@ function click(editor: Editor) {
     </div>
   </div>
 </template>
+
+<style>
+.tiptap {
+  border: 1px solid #e2e8f0;
+  p {
+    margin: 0;
+  }
+}
+</style>
