@@ -17,6 +17,20 @@ export type Project = Selectable<ProjectsTable>
 export type NewProject = Insertable<ProjectsTable>
 export type ProjectUpdate = Updateable<ProjectsTable>
 
+// Project Info
+export interface ProjectInfoTable {
+  id: number
+  projectId: number
+  logo: string | null
+  phone: string | null
+  email: string | null
+  title: string
+  subtitle: string | null
+  slogan: string | null
+  description: string | null
+  ctaType: number
+}
+
 // Content
 export interface ContentsTable {
   id: Generated<number>
