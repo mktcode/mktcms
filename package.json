@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev --dotenv .env.local",
+    "dev": "nuxt dev --host --dotenv .env.local",
     "dev:reset": "rm -f development.sqlite && ./init-dev-db.sh",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
