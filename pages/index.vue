@@ -265,6 +265,71 @@ const ctyTypes = [
             class="input"
           />
         </div>
+
+        <div>
+          <label for="keywords" class="block text-sm font-medium text-gray-700">
+            Social Media
+          </label>
+          <div class="text-sm text-gray-500 mb-3">
+            Nutzt du bereits Social Media? Wenn ja, welche Plattformen bzw. was kannst du dir vorstellen?
+          </div>
+          <div class="flex gap-4 my-4">
+            <button class="button">
+              <CheckIcon class="size-5 opacity-50" />
+              Damit hätte ich am liebsten gar nichts zu tun.
+            </button>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <input
+              type="text"
+              id="facebook"
+              class="input"
+              placeholder="Facebook"
+            />
+            <input
+              type="text"
+              id="instagram"
+              class="input"
+              placeholder="Instagram"
+            />
+            <input
+              type="text"
+              id="twitter"
+              class="input"
+              placeholder="Twitter"
+            />
+            <input
+              type="text"
+              id="linkedin"
+              class="input"
+              placeholder="LinkedIn"
+            />
+            <input
+              type="text"
+              id="xing"
+              class="input"
+              placeholder="Xing"
+            />
+            <input
+              type="text"
+              id="youtube"
+              class="input"
+              placeholder="YouTube"
+            />
+            <input
+              type="text"
+              id="tiktok"
+              class="input"
+              placeholder="TikTok"
+            />
+            <input
+              type="text"
+              id="pinterest"
+              class="input"
+              placeholder="Pinterest"
+            />
+          </div>
+        </div>
       </form>
       <div class="max-w-sm mx-auto">
         <div class="border-8 border-gray-200 rounded-2xl overflow-hidden">
@@ -385,25 +450,14 @@ const ctyTypes = [
             <tr>
               <td class="text-left">
                 Hauptseite
-                <div class="text-xs font-bold leading-none text-gray-400">Landingpage</div>
               </td>
               <td class="text-right">12 €</td>
             </tr>
             <tr>
               <td class="text-left">
                 Angebot: Software zum halben Preis
-                <div class="text-xs font-bold leading-none text-gray-400">Landingpage</div>
               </td>
               <td class="text-right">6 €</td>
-            </tr>
-            <tr>
-              <td class="text-left">
-                Shop
-                <div class="text-xs font-bold leading-none text-gray-400">WordPress</div>
-              </td>
-              <td class="text-right">
-                50 €
-              </td>
             </tr>
             <tr>
               <td class="text-left">KI-Assistent</td>
