@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { PhoneIcon } from '@heroicons/vue/24/outline'
+import { EnvelopeIcon, PhoneIcon } from '@heroicons/vue/24/outline'
 
 const {
   logoWidth,
   title,
   subtitle,
+  email,
+  phone,
   slogan,
   description,
 } = usePlanner()
@@ -30,10 +32,18 @@ const {
         <div class="text-2xl font-bold">
           {{ slogan }}
         </div>
-        <div class="flex gap-2 items-center">
-          <PhoneIcon class="size-5 text-gray-400" />
-          <div class="text-xl text-gray-600">
-            0123 456789
+        <div class="flex flex-col gap-1">
+          <div class="flex gap-2 items-center" v-if="phone">
+            <PhoneIcon class="size-4 text-gray-400" />
+            <div class="text-sm text-gray-600">
+              {{ phone }}
+            </div>
+          </div>
+          <div class="flex gap-2 items-center" v-if="email">
+            <EnvelopeIcon class="size-4 text-gray-400" />
+            <div class="text-sm text-gray-600">
+              {{ email }}
+            </div>
           </div>
         </div>
       </div>

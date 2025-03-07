@@ -11,14 +11,11 @@ const { targets, addTarget } = usePlanner()
     </h1>
 
     <p class="text-lg text-gray-700 mb-8">
-      <span class="italic">Form follows function.</span> Bevor wir uns an die Ausgestaltung der Details machen, sollte zunächst ein einheitliches Verständnis über dein Unternehmen hergestellt werden und darüber, wie du deine Kunden ansprechen möchtest.
-    </p>
-
-    <p class="text-lg text-gray-700 mb-8">
-      Hier kannst du deine unternehmerische Hauptbotschaft bearbeiten und spezielle Anzeigen planen.
-      Der Platz ist begrenzt auf die typische Größe eines Smartphone-Bildschirms.
-      Das hilft dir dabei, dich auf das Wesentliche zu konzentrieren und platformübergreifend (Online-Anzeigen, Visitenkarten, etc.) einheitliche Botschaften zu senden.
-      Es wird nichts direkt veröffentlicht, sondern dient nur zur Planung und Konzentration.
+      <span class="italic">Form follows function.</span>
+      Hier baust du keine Website, sondern konzentrierst dich auf deine unternehmerische Botschaft und dein Angebot.
+      Der Platz dafür ist begrenzt auf die typische Größe eines Smartphone-Bildschirms.
+      Das hilft dir dabei, dich auf das Wesentliche zu konzentrieren und platformübergreifend (Website, Online-Anzeigen, Visitenkarten, etc.) einheitliche Botschaften zu senden.
+      Der Rest geht dann fast wie von selbst.
     </p>
 
     <h2 class="text-2xl font-bold text-gray-900 mb-4">
@@ -26,9 +23,8 @@ const { targets, addTarget } = usePlanner()
     </h2>
 
     <p class="text-lg text-gray-700 mb-8">
-      Vielleicht hast du schon eine Domain registriert, brauchst aber noch E-Mail-Postfächer, vielleicht beides.
-      Vielleicht nutzt du auch schon ein kostenloses E-Mail-Postfach, aber möchtest eine professionelle Domain.
-      Wenn du schon versorgt bist, super! Dann musst du später nur eine kleine Einstellung bei deinem Domain-Anbieter vornehmen.
+      Wenn du bereits eine Domain und ein Postfach hast, gib sie hier ein. Wenn nicht, gib einfach deine Wunsch-Domain ein. Wir kümmern uns später um die Registrierung.
+      Das Inhaltliche ist erstmal wichtiger und es beeinflusst vielleicht auch die Wahl der Domain.
     </p>
 
     <PlannerDomain />
