@@ -12,7 +12,7 @@
       </p>
     </div>
     <div>
-      <table class="w-full prose prose-sky min-w-lg">
+      <table class="w-full prose min-w-lg">
         <thead>
           <tr>
             <th class="text-left">Posten</th>
@@ -54,9 +54,6 @@
           </tr>
         </tbody>
       </table>
-      <button class="button w-full mt-4">
-        Anfrage abschicken
-      </button>
     </div>
   </div>
 </template>
