@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CheckIcon, PhotoIcon } from '@heroicons/vue/24/outline'
+import { PhotoIcon } from '@heroicons/vue/24/outline'
 
 const { targets, addTarget } = usePlanner()
 </script>
@@ -31,15 +31,7 @@ const { targets, addTarget } = usePlanner()
       Wenn du schon versorgt bist, super! Dann musst du später nur eine kleine Einstellung bei deinem Domain-Anbieter vornehmen.
     </p>
 
-    <div class="flex gap-4 mb-8">
-      <button class="button">
-        <CheckIcon class="size-5 opacity-50" />
-        Ich brauche beides.
-      </button>
-      <button class="button light">
-        Ich bin versorgt.
-      </button>
-    </div>
+    <PlannerDomain />
 
     <h2 class="text-2xl font-bold text-gray-900 mb-4">
       Texte und Bilder
