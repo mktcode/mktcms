@@ -1,14 +1,5 @@
 import type { RouterConfig } from '@nuxt/schema'
-
-async function loadData(hostname: string, pathname: string) {
-  if (hostname === 'localhost') {
-    return null;
-  }
-
-  return {
-    title: 'My website at ' + hostname + pathname,
-  }
-}
+import { loadData } from '~/server/utils/loadData';
 
 export default {
   routes: async (_routes) => {

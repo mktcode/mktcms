@@ -3,19 +3,11 @@ definePageMeta({
   layout: 'landingpage',
 })
 
-async function loadData(hostname: string, pathname: string) {
-  if (hostname === 'localhost') {
-    return null;
-  }
-
-  return {
-    title: 'My Add at ' + hostname + ' for ' + pathname,
-  }
-}
-
 const route = useRoute()
+const hostname = Array.isArray(route.params.hostname) ? route.params.hostname[0] : route.params.hostname
+const target = Array.isArray(route.params.target) ? route.params.target[0] : route.params.target
 
-const data = await loadData(route.params.hostname as string, route.params.target as string)
+const data = await $fetch(`/api/data/${hostname}/${target}`)
 
 if (!data) {
   throw createError({

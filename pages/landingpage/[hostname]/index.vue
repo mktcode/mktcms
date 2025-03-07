@@ -3,19 +3,9 @@ definePageMeta({
   layout: 'landingpage',
 })
 
-async function loadData(hostname: string) {
-  if (hostname === 'localhost') {
-    return null;
-  }
-
-  return {
-    title: 'My website at ' + hostname,
-  }
-}
-
 const route = useRoute()
-
-const data = await loadData(route.params.hostname as string)
+const hostname = Array.isArray(route.params.hostname) ? route.params.hostname[0] : route.params.hostname
+const data = await $fetch(`/api/data/${hostname}`)
 
 if (!data) {
   throw createError({
