@@ -5,10 +5,14 @@ export type Target = {
   description: string;
   ctaType: number;
   phone: string;
+  domain: string
   email: string;
   link: string;
   keywords: string;
 }
+
+const googleEmailProviders = ['gmail.com', 'googlemail.com'];
+const knownEmailProviders = ['web.de', 'gmx.de', 'yahoo.de', 'outlook.de', 'hotmail.de', 't-online.de', 'freenet.de', 'arcor.de', 'aol.com', 'icloud.com', 'me.com', 'mac.com', 'live.de', 'live.com', 'msn.com'];
 
 export default function usePlanner() {
   const logo = useState('logo', () => '');
@@ -19,7 +23,14 @@ export default function usePlanner() {
   const description = useState('description', () => 'Ich biete Softwareentwicklung und Beratung bei Online-Projekten an.');
   const ctaType = useState('ctaType', () => 0);
   const phone = useState('phone', () => '');
+  const domain = useState('domain', () => '');
   const email = useState('email', () => '');
+  const emailIsGmail = computed(() => {
+    return googleEmailProviders.includes(email.value.split('@')[1]);
+  });
+  const emailIsKnown = computed(() => {
+    return knownEmailProviders.includes(email.value.split('@')[1]);
+  });
   const link = useState('link', () => '');
   const keywords = useState('keywords', () => '');
 
@@ -64,6 +75,7 @@ export default function usePlanner() {
       description: description.value,
       ctaType: ctaType.value,
       phone: phone.value,
+      domain: domain.value,
       email: email.value,
       link: link.value,
       keywords: keywords.value,
@@ -79,7 +91,10 @@ export default function usePlanner() {
     description,
     ctaType,
     phone,
+    domain,
     email,
+    emailIsGmail,
+    emailIsKnown,
     link,
     keywords,
     showCtaButton,
