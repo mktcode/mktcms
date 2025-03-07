@@ -169,7 +169,7 @@ const { targets, ctaTypes } = usePlanner()
         />
       </div>
     </form>
-    <div class="max-w-sm mx-auto">
+    <div class="max-w-sm mx-auto mb-auto sticky top-28">
       <PlannerTargetPreview :target="targets[targetIndex]" />
       <div class="mt-4">
         <div class="flex flex-col gap-2">

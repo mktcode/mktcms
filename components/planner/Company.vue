@@ -244,7 +244,7 @@ const {
         </div>
       </div>
     </form>
-    <div class="max-w-sm mx-auto">
+    <div class="max-w-sm mx-auto mb-auto sticky top-28">
       <div class="border-8 border-gray-200 rounded-2xl overflow-hidden">
         <img src="~/assets/img/default-header.jpg" alt="Header" class="w-full aspect-video object-cover" />
         <div class="p-6">
