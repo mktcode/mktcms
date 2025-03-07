@@ -30,7 +30,7 @@ const { targets, addTarget } = usePlanner()
     <PlannerDomain />
 
     <h2 class="text-2xl font-bold text-gray-900 mb-4">
-      Texte und Bilder
+      Inhalte
     </h2>
 
     <label for="logo" class="block text-sm font-medium text-gray-700">
