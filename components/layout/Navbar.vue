@@ -15,7 +15,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <nav class="bg-gray-800 sticky top-0 z-40">
+  <nav class="bg-gray-800 sticky top-0 z-[60]">
     <div class="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
       <div class="flex items-baseline gap-4">
         <NuxtLink

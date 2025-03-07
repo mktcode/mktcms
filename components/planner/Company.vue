@@ -14,7 +14,7 @@ const {
   link,
   keywords,
   showCtaButton,
-  ctyTypes,
+  ctaTypes,
 } = usePlanner()
 </script>
 
@@ -118,7 +118,7 @@ const {
           class="input"
         >
           <option
-            v-for="type in ctyTypes"
+            v-for="type in ctaTypes"
             :key="type.id"
             :value="type.id"
           >

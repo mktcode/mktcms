@@ -1,46 +1,27 @@
 <script setup lang="ts">
 import { ArrowsPointingOutIcon, CheckIcon, MapPinIcon, MegaphoneIcon } from '@heroicons/vue/24/outline'
 
-const title = ref<string>('Markus Kottländer');
-const subtitle = ref<string>('Software und Internet');
-const slogan = ref<string>('Ein Programmierer zum anfassen!');
-const description = ref<string>('Ich biete Softwareentwicklung und Beratung bei Online-Projekten an.');
-const ctaType = ref<number>(0);
-const phone = ref<string>('');
-const email = ref<string>('');
-const link = ref<string>('');
-const keywords = ref<string>('');
+const props = defineProps<{
+  targetIndex: number
+}>()
+
+const { targets, ctaTypes } = usePlanner()
 
 const showCtaButton = computed(() => {
-  if (ctaType.value === 0 && phone.value) {
+  if (targets.value[props.targetIndex].ctaType === 0 && targets.value[props.targetIndex].phone) {
     return true;
   }
 
-  if (ctaType.value === 1 && email.value) {
+  if (targets.value[props.targetIndex].ctaType === 1 && targets.value[props.targetIndex].email) {
     return true;
   }
 
-  if (ctaType.value === 2 && link.value) {
+  if (targets.value[props.targetIndex].ctaType === 2 && targets.value[props.targetIndex].link) {
     return true;
   }
 
   return false;
 });
-
-const ctyTypes = [
-  {
-    id: 0,
-    name: 'per Telefon',
-  },
-  {
-    id: 1,
-    name: 'per E-Mail',
-  },
-  {
-    id: 2,
-    name: 'Auf folgender Website',
-  }
-]
 </script>
 
 <template>
@@ -56,7 +37,7 @@ const ctyTypes = [
         <input
           type="text"
           id="title"
-          v-model="title"
+          v-model="targets[targetIndex].title"
           class="input"
         />
       </div>
@@ -71,7 +52,7 @@ const ctyTypes = [
         <input
           type="text"
           id="subtitle"
-          v-model="subtitle"
+          v-model="targets[targetIndex].subtitle"
           class="input"
         />
       </div>
@@ -86,7 +67,7 @@ const ctyTypes = [
         <input
           type="text"
           id="slogan"
-          v-model="slogan"
+          v-model="targets[targetIndex].slogan"
           class="input"
         />
       </div>
@@ -100,7 +81,7 @@ const ctyTypes = [
         </div>
         <textarea
           id="description"
-          v-model="description"
+          v-model="targets[targetIndex].description"
           class="input"
         ></textarea>
       </div>
@@ -114,11 +95,11 @@ const ctyTypes = [
         </div>
         <select
           id="ctaType"
-          v-model="ctaType"
+          v-model="targets[targetIndex].ctaType"
           class="input"
         >
           <option
-            v-for="type in ctyTypes"
+            v-for="type in ctaTypes"
             :key="type.id"
             :value="type.id"
           >
@@ -127,38 +108,38 @@ const ctyTypes = [
         </select>
       </div>
 
-      <div v-if="ctaType === 0">
+      <div v-if="targets[targetIndex].ctaType === 0">
         <label for="phone" class="block text-sm font-medium text-gray-700">
           Telefon
         </label>
         <input
           type="text"
           id="phone"
-          v-model="phone"
+          v-model="targets[targetIndex].phone"
           class="input"
         />
       </div>
 
-      <div v-if="ctaType === 1">
+      <div v-if="targets[targetIndex].ctaType === 1">
         <label for="email" class="block text-sm font-medium text-gray-700">
           E-Mail
         </label>
         <input
           type="text"
           id="email"
-          v-model="email"
+          v-model="targets[targetIndex].email"
           class="input"
         />
       </div>
 
-      <div v-if="ctaType === 2">
+      <div v-if="targets[targetIndex].ctaType === 2">
         <label for="link" class="block text-sm font-medium text-gray-700">
           Website
         </label>
         <input
           type="text"
           id="link"
-          v-model="link"
+          v-model="targets[targetIndex].link"
           class="input"
         />
       </div>
@@ -174,7 +155,7 @@ const ctyTypes = [
         <input
           type="text"
           id="keywords"
-          v-model="keywords"
+          v-model="targets[targetIndex].keywords"
           class="input"
         />
       </div>
@@ -189,39 +170,39 @@ const ctyTypes = [
             </div>
             <div>
               <div class="font-bold">
-                {{ title }}
+                {{ targets[targetIndex].title }}
               </div>
               <div>
-                {{ subtitle }}
+                {{ targets[targetIndex].subtitle }}
               </div>
             </div>
           </div>
           <div class="mt-8 text-4xl font-bold">
-            {{  slogan }}
+            {{  targets[targetIndex].slogan }}
           </div>
           <div class="mt-4 text-lg text-gray-700">
-            {{ description }}
+            {{ targets[targetIndex].description }}
           </div>
           <div v-if="showCtaButton" class="mt-8">
-            <div v-if="ctaType === 0">
-              <a :href="`tel:${phone}`" class="button">
+            <div v-if="targets[targetIndex].ctaType === 0">
+              <a :href="`tel:${targets[targetIndex].phone}`" class="button">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 opacity-50">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
                 </svg>
-                {{ phone }}
+                {{ targets[targetIndex].phone }}
               </a>
             </div>
-            <div v-if="ctaType === 1">
-              <a :href="`mailto:${email}`" class="button">
+            <div v-if="targets[targetIndex].ctaType === 1">
+              <a :href="`mailto:${targets[targetIndex].email}`" class="button">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 opacity-50">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
                 </svg>
-                {{ email }}
+                {{ targets[targetIndex].email }}
               </a>
             </div>
-            <div v-if="ctaType === 2">
-              <a :href="link" class="button">
-                {{ link }}
+            <div v-if="targets[targetIndex].ctaType === 2">
+              <a :href="targets[targetIndex].link" class="button">
+                {{ targets[targetIndex].link }}
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 opacity-50 ml-auto">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
                 </svg>

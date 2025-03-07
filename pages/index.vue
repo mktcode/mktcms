@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { CheckIcon, PhotoIcon } from '@heroicons/vue/24/outline'
+
+const { targets, addTarget } = usePlanner()
 </script>
 
 <template>
@@ -75,7 +77,13 @@ import { CheckIcon, PhotoIcon } from '@heroicons/vue/24/outline'
       Es geht hier nicht darum, jedes einzelne Produkt zu bewerben. Treffe eine Auswahl von speziellen Angeboten, die du hervorheben möchtest.
     </p>
 
-    <PlannerTarget />
+    <div class="flex flex-col gap-12 mb-8">
+      <PlannerTarget v-for="(target, index) in targets" :key="index" :targetIndex="index" />
+    </div>
+
+    <button class="button" @click="addTarget">
+      Anzeige hinzufügen
+    </button>
 
     <h1 class="text-3xl font-bold text-gray-900 mb-4 mt-24">
       Druckdaten

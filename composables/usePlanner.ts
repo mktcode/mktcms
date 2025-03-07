@@ -1,3 +1,15 @@
+export type Target = {
+  title: string;
+  subtitle: string;
+  slogan: string;
+  description: string;
+  ctaType: number;
+  phone: string;
+  email: string;
+  link: string;
+  keywords: string;
+}
+
 export default function usePlanner() {
   const logo = useState('logo', () => '');
   const logoWidth = useState('logoWidth', () => 100);
@@ -10,7 +22,9 @@ export default function usePlanner() {
   const email = useState('email', () => '');
   const link = useState('link', () => '');
   const keywords = useState('keywords', () => '');
-  
+
+  const targets = useState<Target[]>('targets', () => []);
+
   const showCtaButton = computed(() => {
     if (ctaType.value === 0 && phone.value) {
       return true;
@@ -27,7 +41,7 @@ export default function usePlanner() {
     return false;
   });
 
-  const ctyTypes = [
+  const ctaTypes = [
     {
       id: 0,
       name: 'per Telefon',
@@ -42,6 +56,20 @@ export default function usePlanner() {
     }
   ]
 
+  function addTarget() {
+    targets.value.push({
+      title: title.value,
+      subtitle: subtitle.value,
+      slogan: slogan.value,
+      description: description.value,
+      ctaType: ctaType.value,
+      phone: phone.value,
+      email: email.value,
+      link: link.value,
+      keywords: keywords.value,
+    });
+  }
+
   return {
     logo,
     logoWidth,
@@ -55,6 +83,8 @@ export default function usePlanner() {
     link,
     keywords,
     showCtaButton,
-    ctyTypes
+    ctaTypes,
+    targets,
+    addTarget,
   }
 }
