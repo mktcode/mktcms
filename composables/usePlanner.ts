@@ -3,12 +3,14 @@ export type Target = {
   subtitle: string;
   slogan: string;
   description: string;
+  benefits: string[];
   ctaType: number;
   phone: string;
   domain: string
   email: string;
   link: string;
   keywords: string;
+  color: string;
 }
 
 const googleEmailProviders = ['gmail.com', 'googlemail.com'];
@@ -21,6 +23,7 @@ export default function usePlanner() {
   const subtitle = useState('subtitle', () => 'Software und Internet');
   const slogan = useState('slogan', () => 'Ein Programmierer zum anfassen!');
   const description = useState('description', () => 'Ich biete Softwareentwicklung und Beratung bei Online-Projekten an.');
+  const benefits = useState<string[]>('benefits', () => []);
   const ctaType = useState('ctaType', () => 0);
   const phone = useState('phone', () => '');
   const domain = useState('domain', () => '');
@@ -73,12 +76,14 @@ export default function usePlanner() {
       subtitle: subtitle.value,
       slogan: slogan.value,
       description: description.value,
+      benefits: benefits.value,
       ctaType: ctaType.value,
       phone: phone.value,
       domain: domain.value,
       email: email.value,
       link: link.value,
       keywords: keywords.value,
+      color: '#000000',
     });
   }
 
