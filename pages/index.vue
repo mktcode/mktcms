@@ -5,14 +5,18 @@ import { CheckIcon, PhotoIcon } from '@heroicons/vue/24/outline'
 <template>
   <div>
     <h1 class="text-3xl font-bold text-gray-900 mb-4">
-      Willkommen
+      Dein Unternehmen
     </h1>
 
     <p class="text-lg text-gray-700 mb-8">
-      Hier kannst du deine unternehmerische Hauptbotschaft bearbeiten.
+      <span class="italic">Form follows function.</span> Bevor wir uns an die Ausgestaltung der Details machen, sollte zunächst ein einheitliches Verständnis über dein Unternehmen hergestellt werden und darüber, wie du deine Kunden ansprechen möchtest.
+    </p>
+
+    <p class="text-lg text-gray-700 mb-8">
+      Hier kannst du deine unternehmerische Hauptbotschaft bearbeiten und spezielle Anzeigen planen.
       Der Platz ist begrenzt auf die typische Größe eines Smartphone-Bildschirms.
       Das hilft dir dabei, dich auf das Wesentliche zu konzentrieren und platformübergreifend (Online-Anzeigen, Visitenkarten, etc.) einheitliche Botschaften zu senden.
-      Auf spezielle Angebote kannst du weiter unten eingehen.
+      Es wird nichts direkt veröffentlicht, sondern dient nur zur Planung und Konzentration.
     </p>
 
     <h2 class="text-2xl font-bold text-gray-900 mb-4">
@@ -36,7 +40,7 @@ import { CheckIcon, PhotoIcon } from '@heroicons/vue/24/outline'
     </div>
 
     <h2 class="text-2xl font-bold text-gray-900 mb-4">
-      Ihr Unternehmen
+      Texte und Bilder
     </h2>
 
     <label for="logo" class="block text-sm font-medium text-gray-700">
@@ -77,16 +81,22 @@ import { CheckIcon, PhotoIcon } from '@heroicons/vue/24/outline'
       Druckdaten
     </h1>
 
-    <h2 class="text-2xl font-bold text-gray-900 mb-4">
-      Visitenkarte
-    </h2>
-
     <p class="text-lg text-gray-700 mb-8">
       Drucken Sie Ihre Inhalte auf Flyer und Visitenkarten. Die Vorschau unten dient nur zur Orientierung.
       Die Druckdaten werden später von Hand optimiert und durch Sie final abgenommen.
     </p>
 
+    <h2 class="text-2xl font-bold text-gray-900 mb-4">
+      Visitenkarte
+    </h2>
+
     <PlannerVcard />
+
+    <h2 class="text-2xl font-bold text-gray-900 mb-4 mt-24">
+      Flyer
+    </h2>
+
+    <PlannerFlyer />
 
     <PlannerOrder />
   </div>

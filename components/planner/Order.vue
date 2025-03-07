@@ -2,11 +2,13 @@
   <div class="mt-24 flex gap-12">
     <div>
       <h1 class="text-3xl font-bold text-gray-900 mb-4">
-        Bestätigen und Bezahlen
+        Kostenvoranschlag
       </h1>
   
       <p class="text-lg text-gray-700 mb-8">
-        Hier sind nochmal die einzelnen Posten aufgelistet. Wenn alles passt, kannst du hier bezahlen. Du kannst natürlich monatlich kündigen.
+        Hier sind nochmal die einzelnen Posten aufgelistet.
+        Durch das schalten von Anzeigen bei Google und Facebook entstehen zusätzliche Kosten.
+        Du kannst alles monatlich kündigen.
       </p>
     </div>
     <div>
@@ -53,7 +55,7 @@
         </tbody>
       </table>
       <button class="button w-full mt-4">
-        Bestätigen und Bezahlen
+        Anfrage abschicken
       </button>
     </div>
   </div>

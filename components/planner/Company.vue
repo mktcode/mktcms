@@ -333,10 +333,6 @@ const ctyTypes = [
             Vollbild
           </button>
           <button class="button light w-full">
-            <IdentificationIcon class="size-5 opacity-50" />
-            Visitenkarte
-          </button>
-          <button class="button light w-full">
             <MegaphoneIcon class="size-5 opacity-50" />
             <div>Anzeige</div>
             <div class="ml-auto">
