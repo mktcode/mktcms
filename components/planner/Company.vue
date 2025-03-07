@@ -301,10 +301,12 @@ const {
             <CheckIcon class="size-5 opacity-50" />
             Speichern
           </button>
-          <button class="button light w-full">
-            <ArrowsPointingOutIcon class="size-5 opacity-50" />
-            Vollbild
-          </button>
+          <NuxtLink to="/landingpage/mywebsite">
+            <button class="button light w-full">
+              <ArrowsPointingOutIcon class="size-5 opacity-50" />
+              Vollbild
+            </button>
+          </NuxtLink>
           <button class="button light w-full">
             <MegaphoneIcon class="size-5 opacity-50" />
             <div>Anzeige</div>
