@@ -27,7 +27,7 @@ const showCtaButton = computed(() => {
 </script>
 
 <template>
-  <div class="border-8 border-gray-200 rounded-2xl overflow-hidden target-preview">
+  <div class="border-8 border-gray-200 rounded-2xl overflow-x-hidden overflow-y-scroll target-preview aspect-9/16">
     <img src="~/assets/img/default-header.jpg" alt="Header" class="w-full aspect-video object-cover" />
     <div class="p-6">
       <div class="flex items-center gap-4">
@@ -83,6 +83,37 @@ const showCtaButton = computed(() => {
           </a>
         </div>
       </div>
+    </div>
+    <div class="bg-gray-50" v-if="target.contactEmail">
+      <form class="p-6 flex flex-col gap-4">
+        <h1 v-if="target.contactTitle" class="text-2xl font-bold text-gray-900">
+          {{ target.contactTitle }}
+        </h1>
+        <p v-if="target.contactDescription" class="text-lg text-gray-700">
+          {{ target.contactDescription }}
+        </p>
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-700">
+            Name
+          </label>
+          <input type="text" id="name" class="input" />
+        </div>
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700">
+            E-Mail
+          </label>
+          <input type="email" id="email" class="input" />
+        </div>
+        <div>
+          <label for="message" class="block text-sm font-medium text-gray-700">
+            Nachricht
+          </label>
+          <textarea id="message" class="input" rows="4"></textarea>
+        </div>
+        <button class="button w-full mt-4">
+          Absenden
+        </button>
+      </form>
     </div>
   </div>
 </template>

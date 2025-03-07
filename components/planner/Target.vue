@@ -178,15 +178,38 @@ const { targets, ctaTypes } = usePlanner()
       </div>
 
       <div>
-        <label for="contactform" class="block text-sm font-medium text-gray-700">
+        <label for="contactEmail" class="block text-sm font-medium text-gray-700">
           E-Mail
         </label>
         <input
           type="text"
-          id="keywords"
-          v-model="targets[targetIndex].keywords"
+          id="contactEmail"
+          v-model="targets[targetIndex].contactEmail"
           class="input"
         />
+      </div>
+
+      <div>
+        <label for="contactTitle" class="block text-sm font-medium text-gray-700">
+          Titel
+        </label>
+        <input
+          type="text"
+          id="contactTitle"
+          v-model="targets[targetIndex].contactTitle"
+          class="input"
+        />
+      </div>
+
+      <div>
+        <label for="contactDescription" class="block text-sm font-medium text-gray-700">
+          Beschreibung
+        </label>
+        <textarea
+          id="contactDescription"
+          v-model="targets[targetIndex].contactDescription"
+          class="input"
+        ></textarea>
       </div>
     </form>
     <div class="max-w-sm mx-auto mb-auto sticky top-28">

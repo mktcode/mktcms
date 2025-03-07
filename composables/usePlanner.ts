@@ -11,6 +11,9 @@ export type Target = {
   link: string;
   keywords: string;
   color: string;
+  contactEmail: string;
+  contactTitle: string;
+  contactDescription: string;
 }
 
 const googleEmailProviders = ['gmail.com', 'googlemail.com'];
@@ -84,6 +87,9 @@ export default function usePlanner() {
       link: link.value,
       keywords: keywords.value,
       color: '#000000',
+      contactEmail: '',
+      contactTitle: '',
+      contactDescription: '',
     });
   }
 
