@@ -168,6 +168,26 @@ const { targets, ctaTypes } = usePlanner()
           class="input"
         />
       </div>
+
+      <h3 class="text-xl text-gray-900 mb-1">
+        Kontaktformular
+      </h3>
+
+      <div class="text-sm text-gray-500 mb-3">
+        Soll ein Kontaktformular angezeigt werden? Wenn ja, an welche E-Mail-Adresse sollen die Anfragen geschickt werden und was soll in der E-Mail stehen?
+      </div>
+
+      <div>
+        <label for="contactform" class="block text-sm font-medium text-gray-700">
+          E-Mail
+        </label>
+        <input
+          type="text"
+          id="keywords"
+          v-model="targets[targetIndex].keywords"
+          class="input"
+        />
+      </div>
     </form>
     <div class="max-w-sm mx-auto mb-auto sticky top-28">
       <PlannerTargetPreview :target="targets[targetIndex]" />
