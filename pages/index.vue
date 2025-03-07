@@ -19,12 +19,28 @@ const { targets, addTarget } = usePlanner()
     </p>
 
     <h2 class="text-2xl font-bold text-gray-900 mb-4">
+      Nimm dir Zeit
+    </h2>
+
+    <p class="text-lg text-gray-700 mb-8">
+      Es geht darum, den Kern deines Angebots zu formulieren und die Kommunikation mit potentiellen Kunden "auf Linie" zu bringen.
+      Das ist nicht einfach. Du solltest also nicht schnell durch die Formulare huschen, sondern dir Zeit nehmen.
+      Du brauchst hier auch gar nichts kaufen. Kostenlos kannst du auch einfach ein bisschen "brainstormen".
+    </p>
+
+    <h2 class="text-2xl font-bold text-gray-900 mb-4">
+      Anschrift
+    </h2>
+
+    <PlannerAddress />
+
+    <h2 class="text-2xl font-bold text-gray-900 mb-4">
       Domain und E-Mail
     </h2>
 
     <p class="text-lg text-gray-700 mb-8">
       Wenn du bereits eine Domain und ein Postfach hast, gib sie hier ein. Wenn nicht, gib einfach deine Wunsch-Domain ein. Wir kümmern uns später um die Registrierung.
-      Das Inhaltliche ist erstmal wichtiger und es beeinflusst vielleicht auch die Wahl der Domain.
+      Das Inhaltliche ist erstmal wichtiger und es beeinflusst vielleicht auch noch die Wahl der Domain.
     </p>
 
     <PlannerDomain />
