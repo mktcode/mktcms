@@ -57,9 +57,9 @@ const { targets, addTarget } = usePlanner()
 
     <PlannerCompany />
 
-    <h1 class="text-3xl font-bold text-gray-900 mb-4 mt-24">
+    <h2 class="text-2xl font-bold text-gray-900 mb-4 mt-24">
       Anzeigen
-    </h1>
+    </h2>
 
     <p class="text-lg text-gray-700 mb-8">
       Es geht hier nicht darum, jedes einzelne Produkt zu bewerben. Treffe eine Auswahl von speziellen Angeboten, die du hervorheben möchtest.
