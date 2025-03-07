@@ -1,48 +1,21 @@
 <script setup lang="ts">
-import { ArrowsPointingOutIcon, CheckIcon, IdentificationIcon, MapPinIcon, MegaphoneIcon } from '@heroicons/vue/24/outline'
+import { ArrowsPointingOutIcon, CheckIcon, MapPinIcon, MegaphoneIcon } from '@heroicons/vue/24/outline'
 
-const logo = ref<string>('');
-const logoWidth = ref<number>(100);
-const title = ref<string>('Markus Kottländer');
-const subtitle = ref<string>('Software und Internet');
-const slogan = ref<string>('Ein Programmierer zum anfassen!');
-const description = ref<string>('Ich biete Softwareentwicklung und Beratung bei Online-Projekten an.');
-const ctaType = ref<number>(0);
-const phone = ref<string>('');
-const email = ref<string>('');
-const link = ref<string>('');
-const keywords = ref<string>('');
-
-const showCtaButton = computed(() => {
-  if (ctaType.value === 0 && phone.value) {
-    return true;
-  }
-
-  if (ctaType.value === 1 && email.value) {
-    return true;
-  }
-
-  if (ctaType.value === 2 && link.value) {
-    return true;
-  }
-
-  return false;
-});
-
-const ctyTypes = [
-  {
-    id: 0,
-    name: 'per Telefon',
-  },
-  {
-    id: 1,
-    name: 'per E-Mail',
-  },
-  {
-    id: 2,
-    name: 'Auf folgender Website',
-  }
-]
+const {
+  logo,
+  logoWidth,
+  title,
+  subtitle,
+  slogan,
+  description,
+  ctaType,
+  phone,
+  email,
+  link,
+  keywords,
+  showCtaButton,
+  ctyTypes,
+} = usePlanner()
 </script>
 
 <template>

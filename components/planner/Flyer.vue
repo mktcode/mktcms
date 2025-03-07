@@ -1,5 +1,13 @@
 <script setup lang="ts">
 import { PhoneIcon } from '@heroicons/vue/24/outline'
+
+const {
+  logoWidth,
+  title,
+  subtitle,
+  slogan,
+  description,
+} = usePlanner()
 </script>
 
 <template>
@@ -13,18 +21,18 @@ import { PhoneIcon } from '@heroicons/vue/24/outline'
           </div>
           <div>
             <div class="font-bold">
-              Marketing CMS
+              {{ title }}
             </div>
             <div>
-              Das Marketing-Tool für KMU
+              {{ subtitle }}
             </div>
           </div>
         </div>
         <div class="mt-8 text-3xl font-bold">
-          Dein Slogan
+          {{ slogan }}
         </div>
         <div class="mt-1 text-lg text-gray-700">
-          Deine Beschreibung
+          {{ description }}
         </div>
         <div class="mt-8 flex gap-2 items-center">
           <PhoneIcon class="size-5 text-gray-400" />
