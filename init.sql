@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS projects (
   name TEXT NOT NULL,
   domain TEXT NOT NULL,
   googleManagerId TEXT NOT NULL,
+  password TEXT NOT NULL,
 );
 
 CREATE TABLE IF NOT EXISTS project_info (
