@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS projects (
   domain TEXT NOT NULL,
   googleManagerId TEXT NOT NULL,
   password TEXT NOT NULL,
+  isOnline BOOLEAN NOT NULL DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS project_info (
