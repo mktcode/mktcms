@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS projects (
   id INTEGER PRIMARY KEY AUTO_INCREMENT,
   name TEXT NOT NULL,
   domain TEXT NOT NULL,
-  googleManagerId TEXT NOT NULL,
+  googleManagerId TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS project_info (
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS project_info (
   subtitle TEXT,
   slogan TEXT,
   description TEXT,
-  ctaType INTEGER NOT NULL DEFAULT 0,
+  ctaType INTEGER NOT NULL DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS contents (
@@ -28,5 +28,5 @@ CREATE TABLE IF NOT EXISTS contents (
   date TIMESTAMP,
   url TEXT,
   image TEXT,
-  orderIndex INTEGER NOT NULL DEFAULT 0,
+  orderIndex INTEGER NOT NULL DEFAULT 0
 );
