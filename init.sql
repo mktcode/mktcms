@@ -2,7 +2,9 @@ CREATE TABLE IF NOT EXISTS projects (
   id INTEGER PRIMARY KEY AUTO_INCREMENT,
   name TEXT NOT NULL,
   domain TEXT NOT NULL,
-  googleManagerId TEXT NOT NULL
+  googleManagerId TEXT NOT NULL,
+  password TEXT NOT NULL,
+  isOnline BOOLEAN NOT NULL DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS project_info (

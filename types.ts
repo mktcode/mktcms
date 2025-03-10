@@ -12,6 +12,8 @@ export interface ProjectsTable {
   name: string
   domain: string
   googleManagerId: string
+  password: string
+  isOnline: boolean
 }
 export type Project = Selectable<ProjectsTable>
 export type NewProject = Insertable<ProjectsTable>
