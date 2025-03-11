@@ -13,7 +13,8 @@ const {
 
 <template>
   <div class="flex">
-    <div class="shadow-xl max-w-md bg-white -rotate-2 flex flex-col gap-4 justify-between aspect-[4.1/5.8] w-full z-40 hover:shadow-2xl hover:scale-105 hover:rotate-0">
+    <div class="shadow-xl max-w-md bg-white -rotate-2 flex flex-col gap-4 justify-between aspect-[4.1/5.8] w-full z-40 hover:shadow-2xl hover:scale-105 hover:rotate-0 transition-all">
+      <div class="absolute inset-0 z-0 bg-gradient-to-bl from-transparent to-gray-400/10 opacity-100 group-hover:opacity-0 transition-all" />
       <img src="~/assets/img/default-header.jpg" alt="Header" class="w-full aspect-video object-cover" />
       <div class="p-6 flex-1">
         <div class="flex items-center gap-4">
@@ -45,7 +46,7 @@ const {
     </div>
     <div
       v-for="(target, index) in targets" :key="index"
-      class="-ml-32 shadow-xl max-w-md bg-white flex flex-col gap-4 justify-between aspect-[4.1/5.8] w-full hover:shadow-2xl hover:scale-105 hover:rotate-0 hover:z-50"
+      class="-ml-32 shadow-xl max-w-md bg-white flex flex-col gap-4 justify-between aspect-[4.1/5.8] w-full hover:shadow-2xl hover:scale-105 hover:rotate-0 hover:z-50 transition-all"
       :class="{
         'rotate-2': index % 2 === 0,
         '-rotate-2': index % 2 !== 0,
@@ -54,7 +55,8 @@ const {
         'z-10': index == 2,
       }"
     >
-    <img src="~/assets/img/default-header.jpg" alt="Header" class="w-full aspect-video object-cover" />
+      <div class="absolute inset-0 z-0 bg-gradient-to-bl from-transparent to-gray-400/10 opacity-100 group-hover:opacity-0 transition-all" />
+      <img src="~/assets/img/default-header.jpg" alt="Header" class="w-full aspect-video object-cover" />
       <div class="p-6 flex-1">
         <div class="flex items-center gap-4">
           <div>

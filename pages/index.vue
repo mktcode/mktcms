@@ -49,28 +49,6 @@ const { targets, addTarget } = usePlanner()
       Inhalte
     </h2>
 
-    <label for="logo" class="block text-sm font-medium text-gray-700">
-      Bilder
-    </label>
-    <div class="text-sm text-gray-500 mb-3">
-      Dein Logo, ein Bild von dir oder deinem Team, ein Bild von deinem Laden oder deinen Produkten.
-      Am besten professionelle Bilder in hoher Auflösung.
-    </div>
-    <div class="bg-gray-50 rounded-lg border border-gray-100 flex items-center justify-center h-48 mb-3">
-      <div class="text-center">
-        <PhotoIcon class="h-12 w-12 text-gray-300 mx-auto" />
-        <div class="text-sm text-gray-400">
-          Bilder hier ablegen oder klicken
-        </div>
-      </div>
-    </div>
-
-    <div class="flex gap-4 mb-8">
-      <div class="rounded-lg overflow-hidden">
-        <img src="~/assets/img/default-header.jpg" alt="Header" class="w-24 aspect-video object-cover" />
-      </div>
-    </div>
-
     <PlannerCompany />
 
     <h2 class="text-2xl font-bold text-gray-900 mb-4 mt-24">
@@ -85,9 +63,9 @@ const { targets, addTarget } = usePlanner()
       <PlannerTarget v-for="(target, index) in targets" :key="index" :targetIndex="index" />
     </div>
 
-    <button class="button" @click="addTarget">
+    <UButton @click="addTarget" size="xl">
       Anzeige hinzufügen
-    </button>
+    </UButton>
 
     <h1 class="text-3xl font-bold text-gray-900 mb-4 mt-24">
       Druckdaten

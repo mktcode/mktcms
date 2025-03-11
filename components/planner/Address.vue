@@ -4,32 +4,24 @@
 
 <template>
   <div class="flex flex-col gap-4 mb-8">
-    <div>
-      <label for="companyName" class="block text-sm font-medium text-gray-700">
-        Firmenname
-      </label>
-      <input type="text" id="companyName" class="input" />
-    </div>
+    <UFormField label="Firmenname" name="companyName" required>
+      <UInput class="w-full" size="xl" />
+    </UFormField>
 
-    <div>
-      <label for="street" class="block text-sm font-medium text-gray-700">
-        Straße
-      </label>
-      <input type="text" id="street" class="input" />
-    </div>
+    <UFormField label="Straße" name="street" required>
+      <UInput class="w-full" size="xl" />
+    </UFormField>
 
     <div class="flex w-full gap-4">
-      <div class="w-1/4">
-        <label for="zip" class="block text-sm font-medium text-gray-700">
-          PLZ
-        </label>
-        <input type="text" id="zip" class="input" />
+      <div>
+        <UFormField label="PLZ" name="zip" required>
+          <UInput class="w-full" size="xl" />
+        </UFormField>
       </div>
       <div class="flex-grow">
-        <label for="city" class="block text-sm font-medium text-gray-700">
-          Ort
-        </label>
-        <input type="text" id="city" class="input" />
+        <UFormField label="Ort" name="city" required>
+          <UInput class="w-full" size="xl" />
+        </UFormField>
       </div>
     </div>
   </div>

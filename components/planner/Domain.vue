@@ -3,8 +3,12 @@
 
 <template>
   <div class="flex gap-4 mb-8 items-center">
-    <input type="text" class="flex-1 min-w-xs rounded-lg border border-gray-100 p-2 w-full" placeholder="kontakt" />
+    <UFormField label="E-Mail" name="email" help="Nur der Name vor dem @.">
+      <UInput class="w-full" size="xl" placeholder="kontakt" />
+    </UFormField>
     <span class="text-xl">@</span>
-    <input type="text" class="grow rounded-lg border border-gray-100 p-2 w-full" placeholder="beispiel.de" />
+    <UFormField label="Domain" name="domain" help="Ihre (Wunsch-) Domain ohne www." class="flex-1 max-w-sm">
+      <UInput class="w-full" size="xl" placeholder="ihre-domain.de" />
+    </UFormField>
   </div>
 </template>

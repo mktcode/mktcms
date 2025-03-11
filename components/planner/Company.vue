@@ -23,100 +23,35 @@ const {
     <form class="space-y-4 w-1/2">
       <div class="flex items-center gap-4">
         <div class="flex-1">
-          <label for="logo" class="block text-sm font-medium text-gray-700">
-            Logo
-          </label>
-          <input
-            type="text"
-            id="logo"
-            v-model="logo"
-            class="input"
-          />
+          <UFormField label="Logo" name="logo" help="Ihr Logo, am besten in Druckqualität.">
+            <UInput type="file" class="w-full" size="xl" />
+          </UFormField>
         </div>
         <div>
-          <label for="logoWidth" class="block text-sm font-medium text-gray-700">
-            Logo Breite
-          </label>
-          <input
-            type="number"
-            id="logoWidth"
-            v-model="logoWidth"
-            class="input"
-          />
+          <UFormField label="Logo Breite" name="logoWidth" help="Die Breite Ihres Logos in Pixel.">
+            <UInputNumber v-model="logoWidth" class="w-full" size="xl" />
+          </UFormField>
         </div>
       </div>
 
-      <div>
-        <label for="title" class="block text-sm font-medium text-gray-700">
-          Titel
-        </label>
-        <div class="text-sm text-gray-500 mb-3">
-          Hier gibt es nicht viel Interpretationsspielraum. Dein Name oder der Name deines Unternehmens.
-        </div>
-        <input
-          type="text"
-          id="title"
-          v-model="title"
-          class="input"
-        />
-      </div>
+      <UFormField label="Titel" name="title" help="Hier gibt es nicht viel Interpretationsspielraum. Dein Name oder der Name deines Unternehmens.">
+        <UInput v-model="title" class="w-full" size="xl" />
+      </UFormField>
 
-      <div>
-        <label for="subtitle" class="block text-sm font-medium text-gray-700">
-          Untertitel
-        </label>
-        <div class="text-sm text-gray-500 mb-3">
-          Was du machst, in ein paar Worten.
-        </div>
-        <input
-          type="text"
-          id="subtitle"
-          v-model="subtitle"
-          class="input"
-        />
-      </div>
+      <UFormField label="Untertitel" name="subtitle" help="Was du machst, in ein paar Worten.">
+        <UInput v-model="subtitle" class="w-full" size="xl" />
+      </UFormField>
 
-      <div>
-        <label for="slogan" class="block text-sm font-medium text-gray-700">
-          Slogan
-        </label>
-        <div class="text-sm text-gray-500 mb-3">
-          Ein kurzer, prägnanter Satz, der deine Hauptbotschaft zusammenfasst.
-        </div>
-        <input
-          type="text"
-          id="slogan"
-          v-model="slogan"
-          class="input"
-        />
-      </div>
+      <UFormField label="Slogan" name="slogan" help="Ein kurzer, prägnanter Satz, der deine Hauptbotschaft zusammenfasst.">
+        <UInput v-model="slogan" class="w-full" size="xl" />
+      </UFormField>
 
-      <div>
-        <label for="description" class="block text-sm font-medium text-gray-700">
-          Beschreibung
-        </label>
-        <div class="text-sm text-gray-500 mb-3">
-          Zwei bis drei Sätze, die erklären, was du machst und warum das für Kunden wichtig ist.
-        </div>
-        <textarea
-          id="description"
-          v-model="description"
-          class="input"
-        ></textarea>
-      </div>
+      <UFormField label="Beschreibung" name="description" help="Zwei bis drei Sätze, die erklären, was du machst und warum das für Kunden wichtig ist.">
+        <UTextarea v-model="description" class="w-full" size="xl" />
+      </UFormField>
 
-      <div>
-        <label for="ctaType" class="block text-sm font-medium text-gray-700">
-          Call to Action
-        </label>
-        <div class="text-sm text-gray-500 mb-3">
-          Wie sollen Kunden Kontakt aufnehmen?
-        </div>
-        <select
-          id="ctaType"
-          v-model="ctaType"
-          class="input"
-        >
+      <UFormField label="Call to Action" name="ctaType" help="Wie sollen Kunden Kontakt aufnehmen?">
+        <USelect v-model="ctaType" class="w-full" size="xl">
           <option
             v-for="type in ctaTypes"
             :key="type.id"
@@ -124,60 +59,24 @@ const {
           >
             {{ type.name }}
           </option>
-        </select>
-      </div>
+        </USelect>
+      </UFormField>
 
-      <div v-if="ctaType === 0">
-        <label for="phone" class="block text-sm font-medium text-gray-700">
-          Telefon
-        </label>
-        <input
-          type="text"
-          id="phone"
-          v-model="phone"
-          class="input"
-        />
-      </div>
+      <UFormField v-if="ctaType === 0" label="Telefon" name="phone" help="Deine Telefonnummer, unter der Kunden dich erreichen können.">
+        <UInput v-model="phone" class="w-full" size="xl" />
+      </UFormField>
 
-      <div v-if="ctaType === 1">
-        <label for="email" class="block text-sm font-medium text-gray-700">
-          E-Mail
-        </label>
-        <input
-          type="text"
-          id="email"
-          v-model="email"
-          class="input"
-        />
-      </div>
+      <UFormField v-if="ctaType === 1" label="E-Mail" name="email" help="Deine E-Mail-Adresse, unter der Kunden dich erreichen können.">
+        <UInput v-model="email" class="w-full" size="xl" />
+      </UFormField>
 
-      <div v-if="ctaType === 2">
-        <label for="link" class="block text-sm font-medium text-gray-700">
-          Website
-        </label>
-        <input
-          type="text"
-          id="link"
-          v-model="link"
-          class="input"
-        />
-      </div>
+      <UFormField v-if="ctaType === 2" label="Website" name="link" help="Die URL deiner Website.">
+        <UInput v-model="link" class="w-full" size="xl" />
+      </UFormField>
 
-      <div>
-        <label for="keywords" class="block text-sm font-medium text-gray-700">
-          Suchbegriffe
-        </label>
-        <div class="text-sm text-gray-500 mb-3">
-          Wonach suchen potentielle Kunden, die genau dein Angebot brauchen?
-          Wonach würdest du selber suchen? Sei spezifisch.
-        </div>
-        <input
-          type="text"
-          id="keywords"
-          v-model="keywords"
-          class="input"
-        />
-      </div>
+      <UFormField label="Suchbegriffe" name="keywords" help="Wonach suchen potentielle Kunden, die genau dein Angebot brauchen? Wonach würdest du selber suchen? Sei spezifisch.">
+        <UInput v-model="keywords" class="w-full" size="xl" />
+      </UFormField>
 
       <div>
         <label for="keywords" class="block text-sm font-medium text-gray-700">
@@ -187,60 +86,17 @@ const {
           Nutzt du bereits Social Media? Wenn ja, welche Plattformen bzw. was kannst du dir vorstellen?
         </div>
         <div class="flex gap-4 my-4">
-          <button class="button">
-            <CheckIcon class="size-5 opacity-50" />
-            Ich nutze kein Social Media
-          </button>
+          <USwitch label="Ich nutze kein Social Media" />
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <input
-            type="text"
-            id="facebook"
-            class="input"
-            placeholder="Facebook"
-          />
-          <input
-            type="text"
-            id="instagram"
-            class="input"
-            placeholder="Instagram"
-          />
-          <input
-            type="text"
-            id="twitter"
-            class="input"
-            placeholder="Twitter"
-          />
-          <input
-            type="text"
-            id="linkedin"
-            class="input"
-            placeholder="LinkedIn"
-          />
-          <input
-            type="text"
-            id="xing"
-            class="input"
-            placeholder="Xing"
-          />
-          <input
-            type="text"
-            id="youtube"
-            class="input"
-            placeholder="YouTube"
-          />
-          <input
-            type="text"
-            id="tiktok"
-            class="input"
-            placeholder="TikTok"
-          />
-          <input
-            type="text"
-            id="pinterest"
-            class="input"
-            placeholder="Pinterest"
-          />
+          <UInput type="text" id="facebook" placeholder="Facebook" />
+          <UInput type="text" id="instagram" placeholder="Instagram" />
+          <UInput type="text" id="twitter" placeholder="Twitter" />
+          <UInput type="text" id="linkedin" placeholder="LinkedIn" />
+          <UInput type="text" id="xing" placeholder="Xing" />
+          <UInput type="text" id="youtube" placeholder="YouTube" />
+          <UInput type="text" id="tiktok" placeholder="TikTok" />
+          <UInput type="text" id="pinterest" placeholder="Pinterest" />
         </div>
       </div>
     </form>
@@ -297,30 +153,24 @@ const {
       </div>
       <div class="mt-4">
         <div class="flex flex-col gap-2">
-          <button class="button w-full">
-            <CheckIcon class="size-5 opacity-50" />
+          <UButton icon="i-heroicons-check" size="xl">
             Speichern
-          </button>
-          <NuxtLink to="/landingpage/mywebsite">
-            <button class="button light w-full">
-              <ArrowsPointingOutIcon class="size-5 opacity-50" />
-              Vollbild
-            </button>
-          </NuxtLink>
-          <button class="button light w-full">
-            <MegaphoneIcon class="size-5 opacity-50" />
-            <div>Anzeige</div>
-            <div class="ml-auto">
+          </UButton>
+          <UButton variant="ghost" to="/landingpage/mywebsite" icon="i-heroicons-arrows-pointing-out">
+            Vollbild
+          </UButton>
+          <UButton variant="ghost" icon="i-heroicons-megaphone">
+            Anzeige
+            <span class="ml-auto">
               128 <span class="text-blue-950">Aufrufe für:</span>
-            </div>
-            <div>
+            </span>
+            <span>
               35 €
-            </div>
-          </button>
-          <button class="button light w-full">
-            <MapPinIcon class="size-5 opacity-50" />
+            </span>
+          </UButton>
+          <UButton variant="ghost" icon="i-heroicons-map-pin">
             Google Unternehmensprofil
-          </button>
+          </UButton>
         </div>
       </div>
     </div>
