@@ -5,6 +5,7 @@ import type {
   Selectable,
   Updateable,
 } from 'kysely';
+import { z } from 'zod';
 
 // Project
 export interface ProjectsTable {
@@ -33,6 +34,40 @@ export interface ProjectInfoTable {
   ctaType: number
 }
 
+export interface CustomersTable {
+  id: Generated<number>
+  projectId: number
+  name: string
+  address: string
+  zip: string
+  city: string
+  phone: string | null
+  email: string | null
+}
+export type Customer = Selectable<CustomersTable>
+export type NewCustomer = Insertable<CustomersTable>
+export type CustomerUpdate = Updateable<CustomersTable>
+export const CustomerFormSchema = z.object({
+  id: z.number().optional(),
+  projectId: z.number(),
+  name: z.string().min(1, 'Ein Name wird benötigt'),
+  address: z.string().min(1, 'Eine Adresse wird benötigt'),
+  zip: z.string().min(1, 'Eine Postleitzahl wird benötigt'),
+  city: z.string().min(1, 'Ein Ort wird benötigt'),
+  phone: z.string().optional(),
+  email: z.string().email().optional(),
+})
+
+export interface InvoicesTable {
+  id: Generated<number>
+  customerId: number
+  date: ColumnType<string, string, string>
+  items: string
+}
+export type Invoice = Selectable<InvoicesTable>
+export type NewInvoice = Insertable<InvoicesTable>
+export type InvoiceUpdate = Updateable<InvoicesTable>
+
 // Content
 export interface ContentsTable {
   id: Generated<number>
@@ -53,4 +88,6 @@ export type ContentUpdate = Updateable<ContentsTable>
 export interface Database {
   projects: ProjectsTable
   contents: ContentsTable
+  customers: CustomersTable
+  invoices: InvoicesTable
 }
