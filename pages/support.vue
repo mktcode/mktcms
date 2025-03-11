@@ -21,7 +21,7 @@
         </h2>
         <p>
           <a href="mailto:kontakt@markus-kottlaender.de">
-            hilfe@markus-kottlaender.de
+            kontakt@markus-kottlaender.de
           </a>
         </p>
       </div>
