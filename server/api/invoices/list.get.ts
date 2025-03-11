@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
   const invoices = await db
     .selectFrom('invoices')
     .innerJoin('customers', 'customers.id', 'invoices.customerId')
-    .select(['invoices.id', 'invoices.customerId', 'invoices.date'])
+    .select(['invoices.id', 'invoices.customerId', 'customers.name as customerName', 'invoices.date'])
     .where('customers.projectId', '=', Number(projectId))
     .limit(limit ? Number(limit) : 9999999)
     .execute()

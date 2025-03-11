@@ -31,7 +31,7 @@ const columns: TableColumn<Invoice>[] = [
     cell: ({ row }) => `${row.getValue('id')}`
   },
   {
-    accessorKey: 'customerId',
+    accessorKey: 'customerName',
     header: 'Kunde'
   },
   {
