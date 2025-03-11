@@ -1,12 +1,9 @@
-@import "tailwindcss";
+@import "tailwindcss" theme(static);
 @plugin "@tailwindcss/typography";
-
-* {
-  @apply transition-all duration-300;
-}
+@import "@nuxt/ui";
 
 .button {
-  @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer flex items-center gap-2;
+  @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer flex items-center gap-2 transition-all;
 
   &.light {
     @apply bg-blue-50 text-blue-500 hover:bg-blue-100;
@@ -14,7 +11,7 @@
 }
 
 .navlink {
-  @apply rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white flex items-center gap-2;
+  @apply rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white flex items-center gap-2 transition-all;
 }
 
 textarea,
@@ -27,7 +24,7 @@ input[type="url"],
 input[type="date"],
 input[type="datetime-local"],
 select {
-  @apply w-full p-4 bg-gray-100 rounded-lg border-gray-100 focus:outline-none border focus:border-blue-400 focus:bg-gray-50 transition-colors;
+  @apply w-full p-4 bg-gray-100 rounded-lg border-gray-100 focus:outline-none border focus:border-blue-400 focus:bg-gray-50 transition-all;
 }
 
 label {
