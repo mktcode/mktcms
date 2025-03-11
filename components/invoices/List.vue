@@ -1,22 +1,22 @@
 <script setup lang="ts">
 import { resolveComponent } from 'vue';
 import type { DropdownMenuItem, TableColumn } from '@nuxt/ui';
-import type { Customer, Project } from '~/types';
+import type { Invoice, Project } from '~/types';
 
 const props = defineProps<{
   project: Project;
 }>();
 
-const customers = ref<Customer[]>([]);
+const invoices = ref<Invoice[]>([]);
 const toast = useToast();
 
 const fetchPosts = async () => {
-  const data = await $fetch('/api/customers/list', {
+  const data = await $fetch('/api/invoices/list', {
     query: {
       projectId: props.project.id,
     }
   });
-  customers.value = data;
+  invoices.value = data;
 };
 
 onMounted(fetchPosts);
@@ -24,43 +24,35 @@ onMounted(fetchPosts);
 const UButton = resolveComponent('UButton')
 const UDropdownMenu = resolveComponent('UDropdownMenu')
 
-const columns: TableColumn<Customer>[] = [
+const columns: TableColumn<Invoice>[] = [
   {
     accessorKey: 'id',
-    header: 'Kdnr.',
+    header: 'Rnr.',
     cell: ({ row }) => `${row.getValue('id')}`
   },
   {
-    accessorKey: 'name',
-    header: 'Name'
+    accessorKey: 'customerId',
+    header: 'Kunde'
   },
   {
-    accessorKey: 'address',
-    header: 'Adresse'
-  },
-  {
-    accessorKey: 'phone',
-    header: 'Telefon'
-  },
-  {
-    accessorKey: 'email',
-    header: 'Email'
+    accessorKey: 'date',
+    header: 'Datum'
   },
   {
     id: 'actions',
   }
 ]
 
-function getDropdownActions(content: Customer): DropdownMenuItem[][] {
+function getDropdownActions(content: Invoice): DropdownMenuItem[][] {
   return [
     [
       {
-        label: 'Kundennummer kopieren',
+        label: 'Als PDF herunterladen',
         icon: 'i-lucide-copy',
         onSelect: () => {
           navigator.clipboard.writeText(content.id.toString())
           toast.add({
-            title: 'Kundennummer kopiert',
+            title: 'PDF wird heruntergeladen',
             color: 'success',
             icon: 'i-lucide-circle-check'
           })
@@ -71,16 +63,16 @@ function getDropdownActions(content: Customer): DropdownMenuItem[][] {
       {
         label: 'Bearbeiten',
         icon: 'i-lucide-edit',
-        href: `/kunden/${content.id}`
+        href: `/rechnungen/${content.id}`
       },
       {
         label: 'Löschen',
         icon: 'i-lucide-trash',
         color: 'error',
         onSelect: () => {
-          customers.value = customers.value.filter((c) => c.id !== content.id)
+          invoices.value = invoices.value.filter((c) => c.id !== content.id)
           toast.add({
-            title: 'Kunde gelöscht',
+            title: 'Rechnung gelöscht',
             color: 'success',
             icon: 'i-lucide-circle-check'
           })
@@ -94,21 +86,15 @@ function getDropdownActions(content: Customer): DropdownMenuItem[][] {
 <template>
   <div>
     <div class="flex">
-      <UButton color="success" class="ml-auto" icon="i-lucide-plus" to="/kunden/neu">
-        Neuer Kunde
+      <UButton color="success" class="ml-auto" icon="i-lucide-plus" to="/rechnungen/neu">
+        Neue Rechnung
       </UButton>
     </div>
     <UTable
-      :data="customers"
+      :data="invoices"
       :columns="columns"
       class="flex-1"
     >
-      <template #address-cell="{ row }">
-        <div>
-          <div>{{ row.original.address }}</div>
-          <div>{{ row.original.zip }} {{ row.original.city }}</div>
-        </div>
-      </template>
       <template #actions-cell="{ row }">
         <div class="text-right">
           <UDropdownMenu :items="getDropdownActions(row.original)">

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NuxtLink } from '#components';
-import { NewspaperIcon, UserGroupIcon } from '@heroicons/vue/24/outline';
+import { DocumentCurrencyEuroIcon, NewspaperIcon, UserGroupIcon } from '@heroicons/vue/24/outline';
 import type { Project } from '~/types';
 
 const currentProject = ref<Project | null>(null);
@@ -43,6 +43,14 @@ onMounted(async () => {
         >
           <UserGroupIcon class="size-5 opacity-50" />
           <span>Kunden</span>
+        </NuxtLink>
+        <NuxtLink
+          to="/rechnungen"
+          class="navlink"
+          active-class="bg-gray-900 text-white"
+        >
+          <DocumentCurrencyEuroIcon class="size-5 opacity-50" />
+          <span>Rechnungen</span>
         </NuxtLink>
         <NuxtLink
           to="/support"

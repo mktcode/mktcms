@@ -1,0 +1,84 @@
+<script setup lang="ts">
+import z from 'zod'
+import type { FormSubmitEvent } from '@nuxt/ui'
+import { InvoiceFormSchema as schema, type Customer, type Invoice, type Project } from '~/types'
+import { CalendarDate, DateFormatter, getLocalTimeZone } from '@internationalized/date'
+
+const props = defineProps<{
+  project: Project
+  invoice?: Invoice
+}>()
+
+type Schema = z.output<typeof schema>
+
+const state = reactive<Partial<Schema>>({
+  id: props.invoice?.id,
+  customerId: props.invoice?.customerId,
+  date: props.invoice?.date,
+  items: [],
+})
+const dateModel = shallowRef(new CalendarDate(2025, 1, 10))
+
+const toast = useToast()
+const isSaving = ref(false)
+const customers = ref<Customer[]>([])
+
+const fetchPosts = async () => {
+  const data = await $fetch('/api/customers/list', {
+    query: {
+      projectId: props.project.id,
+    }
+  });
+  customers.value = data;
+};
+onMounted(fetchPosts);
+
+const df = new DateFormatter('de-DE', {
+  dateStyle: 'medium'
+})
+
+async function onSubmit(event: FormSubmitEvent<Schema>) {
+  isSaving.value = true
+  await $fetch('/api/invoices/upsert', {
+    method: 'POST',
+    body: event.data,
+  })
+  isSaving.value = false
+  navigateTo('/rechnungen')
+  toast.add({ title: 'Erfolg.', description: 'Rechnung wurde gespeichert.', color: 'success' })
+}
+</script>
+
+<template>
+  <UForm :schema="schema" :state="state" class="flex flex-col gap-4" @submit="onSubmit">
+    <UFormField label="Kunde" name="customerId" size="xl">
+      <USelectMenu
+        v-model="state.customerId"
+        value-key="id"
+        label-key="name"
+        :items="customers"
+        size="xl"
+        class="w-48"
+      />
+    </UFormField>
+
+    {{ state.date }}
+
+    <UFormField label="Datum" name="date" size="xl">
+      <UPopover>
+        <UButton color="neutral" variant="outline" icon="i-lucide-calendar" size="xl">
+          {{ dateModel ? df.format(dateModel.toDate(getLocalTimeZone())) : 'Wähle ein Datum' }}
+        </UButton>
+  
+        <template #content>
+          <UCalendar v-model="dateModel" class="p-2" @update:model-value="state.date = dateModel?.toString()" />
+        </template>
+      </UPopover>
+    </UFormField>
+
+    <UButton :loading="isSaving" type="submit" color="primary" icon="i-heroicons-check" size="xl">
+      Speichern
+    </UButton>
+  </UForm>
+</template>
+

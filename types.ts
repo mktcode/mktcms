@@ -34,6 +34,7 @@ export interface ProjectInfoTable {
   ctaType: number
 }
 
+// Customers
 export interface CustomersTable {
   id: Generated<number>
   projectId: number
@@ -58,15 +59,32 @@ export const CustomerFormSchema = z.object({
   email: z.string().email().optional(),
 })
 
+// Invoices
 export interface InvoicesTable {
   id: Generated<number>
   customerId: number
   date: ColumnType<string, string, string>
-  items: string
 }
 export type Invoice = Selectable<InvoicesTable>
 export type NewInvoice = Insertable<InvoicesTable>
 export type InvoiceUpdate = Updateable<InvoicesTable>
+export const InvoiceFormSchema = z.object({
+  id: z.number().optional(),
+  customerId: z.number(),
+  date: z.string(),
+  items: z.array(z.number()),
+})
+
+export interface InvoiceItemsTable {
+  id: Generated<number>
+  title: string
+  description: string | null
+  price: number
+  unit: string | null
+}
+export type InvoiceItem = Selectable<InvoiceItemsTable>
+export type NewInvoiceItem = Insertable<InvoiceItemsTable>
+export type InvoiceItemUpdate = Updateable<InvoiceItemsTable>
 
 // Content
 export interface ContentsTable {
@@ -90,4 +108,5 @@ export interface Database {
   contents: ContentsTable
   customers: CustomersTable
   invoices: InvoicesTable
+  invoiceItems: InvoiceItemsTable
 }
