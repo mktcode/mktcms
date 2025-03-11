@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { NuxtLink } from '#components';
+import { NewspaperIcon, UserGroupIcon } from '@heroicons/vue/24/outline';
 import type { Project } from '~/types';
 
 const currentProject = ref<Project | null>(null);
@@ -32,10 +33,16 @@ onMounted(async () => {
           class="navlink"
           active-class="bg-gray-900 text-white"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z" />
-          </svg>
+          <NewspaperIcon class="size-5 opacity-50" />
           <span>Inhalte</span>
+        </NuxtLink>
+        <NuxtLink
+          to="/kunden"
+          class="navlink"
+          active-class="bg-gray-900 text-white"
+        >
+          <UserGroupIcon class="size-5 opacity-50" />
+          <span>Kunden</span>
         </NuxtLink>
         <NuxtLink
           to="/support"
@@ -60,10 +67,10 @@ onMounted(async () => {
           </span>
         </NuxtLink>
         <AuthState v-slot="{ loggedIn, user, clear }">
-          <button v-if="loggedIn" @click="() => { clear(); navigateTo('/login') }" class="button text-sm">
+          <UButton v-if="loggedIn" @click="() => { clear(); navigateTo('/login') }">
             <img v-if="user" :src="user.picture" class="rounded-full w-5 h-5 mr-2" />
             Logout
-          </button>
+          </UButton>
         </AuthState>
       </div>
     </div>

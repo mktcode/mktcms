@@ -16,9 +16,9 @@ const emit = defineEmits<{
 }>()
 
 const title = ref(props.content?.title ?? 'Neuer Inhalt')
-const subtitle = ref(props.content?.subtitle ?? null)
-const description = ref(props.content?.description ?? null)
-const url = ref(props.content?.url ?? null)
+const subtitle = ref(props.content?.subtitle ?? '')
+const description = ref(props.content?.description ?? '')
+const url = ref(props.content?.url ?? '')
 
 const showMore = ref(false);
 
@@ -34,24 +34,24 @@ const submit = async () => {
 
 <template>
   <div>
-    <div class="flex items-center">
+    <div class="flex flex-col">
+      <UButton to="/content" icon="i-heroicons-arrow-left" variant="ghost" class="mr-auto mb-2">
+        Zurück
+      </UButton>
       <h1 class="text-3xl font-bold text-gray-900">
         Inhalt bearbeiten
       </h1>
-      <NuxtLink to="/content" class="button ml-auto">Zurück</NuxtLink>
     </div>
 
     <div class="mt-10">
       <form @submit.prevent="submit" class="flex flex-col gap-4">
-        <div>
-          <label for="title" class="block text-sm font-medium text-gray-700">Titel</label>
-          <input v-model="title" type="text" name="title" id="title" class="text-lg font-bold">
-        </div>
+        <UFormField label="Titel">
+          <UInput placeholder="Neuer Inhalt" v-model="title" size="xl" />
+        </UFormField>
 
-        <div>
-          <label for="subtitle" class="block text-sm font-medium text-gray-700">Untertitel</label>
-          <input v-model="subtitle" type="text" name="subtitle" id="subtitle" class="font-semibold text-gray-600">
-        </div>
+        <UFormField label="Untertitel">
+          <UInput placeholder="Untertitel" v-model="subtitle" size="xl" />
+        </UFormField>
 
         <div>
           <label for="description" class="block text-sm font-medium text-gray-700">Beschreibung</label>
@@ -60,30 +60,26 @@ const submit = async () => {
           </ClientOnly>
         </div>
 
-        <button @click="showMore = !showMore" type="button" class="button light">
+        <UButton @click="showMore = !showMore" type="button" variant="ghost">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" :class="{ 'transform rotate-180': showMore }">
             <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
           </svg>
 
           <template v-if="showMore">Erweiterte Optionen ausblenden</template>
           <template v-else>Erweiterte Optionen einblenden</template>
-        </button>
+        </UButton>
 
         <Transition name="fade">
           <div v-if="showMore" class="flex flex-col gap-4">
-            <div>
-              <label for="url" class="block text-sm font-medium text-gray-700">URL</label>
-              <input v-model="url" type="text" name="url" id="url">
-            </div>
+            <UFormField label="URL">
+              <UInput placeholder="URL" v-model="url" size="xl" />
+            </UFormField>
           </div>
         </Transition>
 
-        <button type="submit" class="button">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 opacity-50">
-            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-          </svg>
+        <UButton type="submit" class="button" icon="i-heroicons-check" size="xl">
           Website aktualisieren
-        </button>
+        </UButton>
       </form>
     </div>
   </div>

@@ -2,33 +2,8 @@
 @plugin "@tailwindcss/typography";
 @import "@nuxt/ui";
 
-.button {
-  @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer flex items-center gap-2 transition-all;
-
-  &.light {
-    @apply bg-blue-50 text-blue-500 hover:bg-blue-100;
-  }
-}
-
 .navlink {
   @apply rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white flex items-center gap-2 transition-all;
-}
-
-textarea,
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="number"],
-input[type="tel"],
-input[type="url"],
-input[type="date"],
-input[type="datetime-local"],
-select {
-  @apply w-full p-4 bg-gray-100 rounded-lg border-gray-100 focus:outline-none border focus:border-blue-400 focus:bg-gray-50 transition-all;
-}
-
-label {
-  @apply block font-medium text-gray-700 mb-1;
 }
 
 ol {
