@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Content, Project } from '~/types';
-import ListItem from './ListItem.vue';
 
 const props = defineProps<{
   project: Project;
@@ -45,7 +44,7 @@ onMounted(fetchPosts);
           </tr>
         </thead>
         <tbody>
-          <ListItem v-for="content in contents" :key="content.id" :project="project" :content="content" />
+          <ContentListItem v-for="content in contents" :key="content.id" :project="project" :content="content" />
         </tbody>
       </table>
     </div>
