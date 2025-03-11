@@ -2,6 +2,7 @@
 import { resolveComponent } from 'vue';
 import type { DropdownMenuItem, TableColumn } from '@nuxt/ui';
 import type { Invoice, Project } from '~/types';
+import { PDFDocument, StandardFonts, rgb } from 'pdf-lib'
 
 const props = defineProps<{
   project: Project;
@@ -49,14 +50,7 @@ function getDropdownActions(content: Invoice): DropdownMenuItem[][] {
       {
         label: 'Als PDF herunterladen',
         icon: 'i-lucide-copy',
-        onSelect: () => {
-          navigator.clipboard.writeText(content.id.toString())
-          toast.add({
-            title: 'PDF wird heruntergeladen',
-            color: 'success',
-            icon: 'i-lucide-circle-check'
-          })
-        },
+        onSelect: () => generatePDF(content),
       }
     ],
     [
@@ -80,6 +74,33 @@ function getDropdownActions(content: Invoice): DropdownMenuItem[][] {
       }
     ]
   ]
+}
+
+const generatePDF = async (invoice: Invoice) => {
+  const pdfDoc = await PDFDocument.create()
+  const helveticaFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold)
+
+  const page = pdfDoc.addPage()
+  const { height } = page.getSize()
+  const fontSize = 30
+  page.drawText('Rechnung', {
+    x: 50,
+    y: height - 4 * fontSize,
+    size: fontSize,
+    font: helveticaFont,
+  })
+  page.drawText(`Rechnungsnummer: ${invoice.id}`, {
+    x: 50,
+    y: height - 5 * fontSize,
+    size: fontSize / 2,
+    font: helveticaFont,
+  })
+
+  const pdfBytes = await pdfDoc.save()
+
+  const blob = new Blob([pdfBytes], { type: 'application/pdf' })
+  const url = URL.createObjectURL(blob)
+  window.open(url)
 }
 </script>
 
