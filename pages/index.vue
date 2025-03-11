@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { PhotoIcon } from '@heroicons/vue/24/outline'
-
 const { targets, addTarget } = usePlanner()
 </script>
 
