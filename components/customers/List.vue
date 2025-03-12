@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { resolveComponent } from 'vue';
 import type { DropdownMenuItem, TableColumn } from '@nuxt/ui';
 import type { Customer } from '~/types';
 
@@ -12,9 +11,6 @@ const fetchPosts = async () => {
 };
 
 onMounted(fetchPosts);
-
-const UButton = resolveComponent('UButton')
-const UDropdownMenu = resolveComponent('UDropdownMenu')
 
 const columns: TableColumn<Customer>[] = [
   {
@@ -84,30 +80,23 @@ function getDropdownActions(content: Customer): DropdownMenuItem[][] {
 </script>
 
 <template>
-  <div>
-    <div class="flex p-3">
-      <UButton color="success" class="ml-auto" icon="i-lucide-plus" to="/buchhaltung/kunden/neu">
-        Neuer Kunde
-      </UButton>
-    </div>
-    <UTable
-      :data="customers"
-      :columns="columns"
-      class="flex-1"
-    >
-      <template #address-cell="{ row }">
-        <div>
-          <div>{{ row.original.address }}</div>
-          <div>{{ row.original.zip }} {{ row.original.city }}</div>
-        </div>
-      </template>
-      <template #actions-cell="{ row }">
-        <div class="text-right">
-          <UDropdownMenu :items="getDropdownActions(row.original)">
-            <UButton icon="i-lucide-ellipsis-vertical" color="neutral" variant="ghost" />
-          </UDropdownMenu>
-        </div>
-      </template>
-    </UTable>
-  </div>
+  <UTable
+    :data="customers"
+    :columns="columns"
+    class="flex-1"
+  >
+    <template #address-cell="{ row }">
+      <div>
+        <div>{{ row.original.address }}</div>
+        <div>{{ row.original.zip }} {{ row.original.city }}</div>
+      </div>
+    </template>
+    <template #actions-cell="{ row }">
+      <div class="text-right">
+        <UDropdownMenu :items="getDropdownActions(row.original)">
+          <UButton icon="i-lucide-ellipsis-vertical" color="neutral" variant="ghost" />
+        </UDropdownMenu>
+      </div>
+    </template>
+  </UTable>
 </template>
