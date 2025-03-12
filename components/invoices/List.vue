@@ -86,8 +86,8 @@ function getDropdownActions(content: Invoice): DropdownMenuItem[][] {
 
 <template>
   <div>
-    <div class="flex">
-      <UButton color="success" class="ml-auto" icon="i-lucide-plus" to="/rechnungen/neu">
+    <div class="flex p-3">
+      <UButton color="success" class="ml-auto" icon="i-lucide-plus" to="/buchhaltung/rechnungen/eingehend/neu">
         Neue Rechnung
       </UButton>
     </div>

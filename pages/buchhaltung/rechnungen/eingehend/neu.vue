@@ -3,6 +3,8 @@
     <template #navbar2>
       <LayoutNavbarAccounting />
     </template>
-    <InvoicesForm />
+    <div class="p-6">
+      <InvoicesForm />
+    </div>
   </NuxtLayout>
 </template>
