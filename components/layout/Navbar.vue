@@ -25,7 +25,6 @@ const items = ref([
     },
     {
       label: 'Website öffnen',
-      icon: 'i-heroicons-arrow-top-right-on-square',
       to: `https://${user.value?.domain}`,
       target: '_blank',
     },
