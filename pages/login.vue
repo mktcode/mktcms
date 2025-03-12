@@ -1,9 +1,3 @@
-<script setup lang="ts">
-definePageMeta({
-  layout: 'login',
-})
-</script>
-
 <template>
   <div class="max-w-xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
     <img src="~/assets/img/mktcms.png" alt="Error" class="w-32 mx-auto mb-12" />

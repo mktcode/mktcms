@@ -1,7 +1,49 @@
 <script setup lang="ts">
-import { NuxtLink } from '#components';
-import { DocumentCurrencyEuroIcon, NewspaperIcon, UserGroupIcon } from '@heroicons/vue/24/outline';
 import type { Project } from '~/types';
+
+const { clear } = useUserSession();
+
+const websiteButton = ref({
+  label: 'Website öffnen',
+  icon: 'i-heroicons-arrow-top-right-on-square',
+  to: '',
+  target: '_blank',
+})
+
+const items = ref([
+  [
+    {
+      icon: 'i-heroicons-home',
+      to: '/',
+    },
+    {
+      label: 'Inhalte',
+      icon: 'i-heroicons-newspaper',
+      to: '/inhalte',
+    },
+    {
+      label: 'Buchhaltung',
+      icon: 'i-heroicons-scale',
+      to: '/buchhaltung',
+    }
+  ],
+  [
+    {
+      icon: 'i-heroicons-question-mark-circle',
+      to: '/hilfe',
+    },
+    websiteButton.value,
+    {
+      slot: 'auth',
+      label: 'Abmelden',
+      icon: 'i-heroicons-arrow-right-start-on-rectangle',
+      onSelect: () => {
+        clear();
+        navigateTo('/login');
+      }
+    }
+  ]
+]);
 
 const currentProject = ref<Project | null>(null);
 
@@ -12,75 +54,17 @@ onMounted(async () => {
   }
   
   currentProject.value = projects[0];
+  websiteButton.value.to = `https://${currentProject.value.domain}`;
 })
 </script>
 
 <template>
-  <nav class="bg-gray-800 sticky top-0 z-[60]">
-    <div class="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
-      <div class="flex items-baseline gap-4">
-        <NuxtLink
-          to="/"
-          class="navlink"
-          active-class="bg-gray-900 text-white"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-          </svg>
-        </NuxtLink>
-        <NuxtLink
-          to="/content"
-          class="navlink"
-          active-class="bg-gray-900 text-white"
-        >
-          <NewspaperIcon class="size-5 opacity-50" />
-          <span>Inhalte</span>
-        </NuxtLink>
-        <NuxtLink
-          to="/kunden"
-          class="navlink"
-          active-class="bg-gray-900 text-white"
-        >
-          <UserGroupIcon class="size-5 opacity-50" />
-          <span>Kunden</span>
-        </NuxtLink>
-        <NuxtLink
-          to="/rechnungen"
-          class="navlink"
-          active-class="bg-gray-900 text-white"
-        >
-          <DocumentCurrencyEuroIcon class="size-5 opacity-50" />
-          <span>Rechnungen</span>
-        </NuxtLink>
-        <NuxtLink
-          to="/support"
-          class="ml-auto navlink"
-          active-class="bg-gray-900 text-white"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
-          </svg>
-        </NuxtLink>
-        <NuxtLink
-          v-if="currentProject"
-          :to="`https://${currentProject.domain}`"
-          target="_blank"
-          class="navlink"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-          </svg>
-          <span>
-            Website öffnen
-          </span>
-        </NuxtLink>
-        <AuthState v-slot="{ loggedIn, user, clear }">
-          <UButton v-if="loggedIn" @click="() => { clear(); navigateTo('/login') }">
-            <img v-if="user" :src="user.picture" class="rounded-full w-5 h-5 mr-2" />
-            Logout
-          </UButton>
-        </AuthState>
-      </div>
-    </div>
+  <nav class="bg-white sticky top-0 z-[60] border-b border-gray-200">
+    <UNavigationMenu
+      color="primary"
+      variant="pill"
+      :items="items"
+      class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
+    />
   </nav>
 </template>

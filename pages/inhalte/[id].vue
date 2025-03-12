@@ -29,8 +29,8 @@ const updatePost = async (update: ContentUpdate) => {
 </script>
 
 <template>
-  <div>
+  <NuxtLayout name="default">
     <ContentForm v-if="content" :content="content" @submit="updatePost" />
     <div v-else>Inhalt nicht gefunden</div>
-  </div>
+  </NuxtLayout>
 </template>

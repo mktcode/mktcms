@@ -14,10 +14,13 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div>
-    <InvoicesForm v-if="currentProject" :project="currentProject" />
+  <NuxtLayout name="default">
+    <template #navbar2>
+      <LayoutNavbarAccounting />
+    </template>
+    <InvoicesList v-if="currentProject" :project="currentProject" />
     <div v-else>
       Kein Projekt
     </div>
-  </div>
+  </NuxtLayout>
 </template>

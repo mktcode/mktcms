@@ -3,7 +3,7 @@ const { targets, addTarget } = usePlanner()
 </script>
 
 <template>
-  <div>
+  <NuxtLayout name="default">
     <h1 class="text-3xl font-bold text-gray-900 mb-4">
       Dein Unternehmen
     </h1>
@@ -87,5 +87,5 @@ const { targets, addTarget } = usePlanner()
     <PlannerFlyer />
 
     <PlannerOrder />
-  </div>
+  </NuxtLayout>
 </template>

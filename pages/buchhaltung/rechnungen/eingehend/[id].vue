@@ -28,8 +28,11 @@ definePageMeta({
 </script>
 
 <template>
-  <div>
+  <NuxtLayout name="default">
+    <template #navbar2>
+      <LayoutNavbarAccounting />
+    </template>
     <InvoicesForm v-if="currentProject && invoice" :project="currentProject" :invoice="invoice"/>
     <div v-else>Rechnung nicht gefunden</div>
-  </div>
+  </NuxtLayout>
 </template>

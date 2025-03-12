@@ -4,9 +4,7 @@ import { de } from '@nuxt/ui/locale'
 
 <template>
   <UApp :locale="de">
-    <NuxtLayout>
-      <NuxtRouteAnnouncer />
-      <NuxtPage />
-    </NuxtLayout>
+    <NuxtRouteAnnouncer />
+    <NuxtPage />
   </UApp>
 </template>
