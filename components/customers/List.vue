@@ -93,8 +93,8 @@ function getDropdownActions(content: Customer): DropdownMenuItem[][] {
 
 <template>
   <div>
-    <div class="flex">
-      <UButton color="success" class="ml-auto" icon="i-lucide-plus" to="/kunden/neu">
+    <div class="flex p-3">
+      <UButton color="success" class="ml-auto" icon="i-lucide-plus" to="/buchhaltung/kunden/neu">
         Neuer Kunde
       </UButton>
     </div>

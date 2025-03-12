@@ -1,10 +1,10 @@
 <template>
-  <div class="min-h-full">
+  <div class="min-h-screen flex flex-col bg-gray-50">
     <LayoutNavbar />
     <slot name="navbar2" />
     
-    <main>
-      <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+    <main class="grow mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="bg-white border-x border-gray-200">
         <slot />
       </div>
     </main>

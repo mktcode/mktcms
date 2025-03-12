@@ -18,9 +18,11 @@ onMounted(async () => {
     <template #navbar2>
       <LayoutNavbarAccounting />
     </template>
-    <CustomersForm v-if="currentProject" :project="currentProject" />
-    <div v-else>
-      Kein Projekt
+    <div class="p-6">
+      <CustomersForm v-if="currentProject" :project="currentProject" />
+      <div v-else>
+        Kein Projekt
+      </div>
     </div>
   </NuxtLayout>
 </template>

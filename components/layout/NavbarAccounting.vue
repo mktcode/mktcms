@@ -23,7 +23,7 @@ const items = ref([
     },
     {
       label: 'Posten',
-      icon: 'i-lucide-box',
+      icon: 'i-heroicons-list-bullet',
       to: '/buchhaltung/rechnungen/posten',
     }
   ],
@@ -31,7 +31,7 @@ const items = ref([
 </script>
 
 <template>
-  <div class="border-b border-gray-200">
+  <div class="bg-white border-b border-gray-200">
     <UNavigationMenu color="primary" variant="pill" :items="items" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" />
   </div>
 </template>
