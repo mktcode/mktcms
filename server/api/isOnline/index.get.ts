@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-const paramsSchema = z.object({
-  projectId: z.string()
+const querySchema = z.object({
+  userId: z.string()
 })
 
 export default defineEventHandler(async (event) => {
@@ -12,18 +12,18 @@ export default defineEventHandler(async (event) => {
     'Access-Control-Max-Age': '86400',
   })
 
-  const { projectId } = await getValidatedRouterParams(event, paramsSchema.parse);
+  const { userId } = await getValidatedQuery(event, querySchema.parse);
 
   const db = await getDatabaseConnection()
-  const project = await db.selectFrom('projects')
+  const user = await db.selectFrom('users')
     .select(['isOnline'])
-    .where('id', '=', Number(projectId))
+    .where('id', '=', Number(userId))
     .limit(1)
     .executeTakeFirst()
 
-  if (!project) {
+  if (!user) {
     return false
   }
 
-  return project.isOnline
+  return user.isOnline
 })

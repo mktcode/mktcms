@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
-import { CustomerFormSchema as schema, type Customer, type User } from '~/types'
+import { customerFormSchema as schema, type Customer } from '~/types'
 
 const props = defineProps<{
   customer?: Customer

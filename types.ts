@@ -34,9 +34,8 @@ export interface CustomersTable {
 export type Customer = Selectable<CustomersTable>
 export type NewCustomer = Insertable<CustomersTable>
 export type CustomerUpdate = Updateable<CustomersTable>
-export const CustomerFormSchema = z.object({
+export const customerFormSchema = z.object({
   id: z.number().optional(),
-  userId: z.number(),
   name: z.string().min(1, 'Ein Name wird benötigt'),
   address: z.string().min(1, 'Eine Adresse wird benötigt'),
   zip: z.string().min(1, 'Eine Postleitzahl wird benötigt'),
