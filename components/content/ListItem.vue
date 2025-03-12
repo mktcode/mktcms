@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Content, User } from '~/types';
+import type { Content } from '~/types';
 
 const props = defineProps<{
   content: Content;
@@ -40,5 +40,5 @@ onMounted(fetchChildren);
       </UButton>
     </td>
   </tr>
-  <ListItem v-for="child in children" :key="child.id" :content="child" />
+  <ContentListItem v-for="child in children" :key="child.id" :content="child" />
 </template>
