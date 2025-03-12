@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <NuxtLayout name="default">
     <h1 class="text-3xl font-bold mb-4">
       Hilfe
     </h1>
@@ -26,5 +26,5 @@
         </p>
       </div>
     </div>
-  </div>
+  </NuxtLayout>
 </template>
