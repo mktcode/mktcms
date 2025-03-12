@@ -7,8 +7,8 @@ import type {
 } from 'kysely';
 import { z } from 'zod';
 
-// Project
-export interface ProjectsTable {
+// Users
+export interface UsersTable {
   id: Generated<number>
   name: string
   domain: string
@@ -16,28 +16,14 @@ export interface ProjectsTable {
   password: string
   isOnline: boolean
 }
-export type Project = Selectable<ProjectsTable>
-export type NewProject = Insertable<ProjectsTable>
-export type ProjectUpdate = Updateable<ProjectsTable>
-
-// Project Info
-export interface ProjectInfoTable {
-  id: number
-  projectId: number
-  logo: string | null
-  phone: string | null
-  email: string | null
-  title: string
-  subtitle: string | null
-  slogan: string | null
-  description: string | null
-  ctaType: number
-}
+export type User = Selectable<UsersTable>
+export type NewUser = Insertable<UsersTable>
+export type UserUpdate = Updateable<UsersTable>
 
 // Customers
 export interface CustomersTable {
   id: Generated<number>
-  projectId: number
+  userId: number
   name: string
   address: string
   zip: string
@@ -50,7 +36,7 @@ export type NewCustomer = Insertable<CustomersTable>
 export type CustomerUpdate = Updateable<CustomersTable>
 export const CustomerFormSchema = z.object({
   id: z.number().optional(),
-  projectId: z.number(),
+  userId: z.number(),
   name: z.string().min(1, 'Ein Name wird benötigt'),
   address: z.string().min(1, 'Eine Adresse wird benötigt'),
   zip: z.string().min(1, 'Eine Postleitzahl wird benötigt'),
@@ -89,7 +75,7 @@ export type InvoiceItemUpdate = Updateable<InvoiceItemsTable>
 // Content
 export interface ContentsTable {
   id: Generated<number>
-  projectId: number
+  userId: number
   parentId: number | null
   title: string
   subtitle: string | null
@@ -104,7 +90,7 @@ export type NewContent = Insertable<ContentsTable>
 export type ContentUpdate = Updateable<ContentsTable>
 
 export interface Database {
-  projects: ProjectsTable
+  users: UsersTable
   contents: ContentsTable
   customers: CustomersTable
   invoices: InvoicesTable

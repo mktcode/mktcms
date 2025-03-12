@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
-import { CustomerFormSchema as schema, type Customer, type Project } from '~/types'
+import { CustomerFormSchema as schema, type Customer, type User } from '~/types'
 
 const props = defineProps<{
-  project: Project
   customer?: Customer
 }>()
 
@@ -12,7 +11,6 @@ type Schema = z.output<typeof schema>
 
 const state = reactive<Partial<Schema>>({
   id: props.customer?.id,
-  projectId: props.project.id,
   name: props.customer?.name,
   address: props.customer?.address,
   zip: props.customer?.zip,

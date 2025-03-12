@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import type { Content, Project } from '~/types';
+import type { Content, User } from '~/types';
 
 const props = defineProps<{
-  project: Project;
   content: Content;
 }>();
 
@@ -11,7 +10,6 @@ const children = ref<Content[]>([]);
 const fetchChildren = async () => {
   const data = await $fetch('/api/content/list', {
     query: {
-      projectId: props.project.id,
       parentId: props.content.id,
     }
   });
@@ -42,5 +40,5 @@ onMounted(fetchChildren);
       </UButton>
     </td>
   </tr>
-  <ListItem v-for="child in children" :key="child.id" :project="project" :content="child" />
+  <ListItem v-for="child in children" :key="child.id" :content="child" />
 </template>

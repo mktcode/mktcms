@@ -1,7 +1,6 @@
 import { z } from "zod";
 
 const paramsSchema = z.object({
-  projectId: z.string(),
   parentId: z.string().optional(),
   limit: z.string().optional(),
 })
@@ -9,12 +8,13 @@ const paramsSchema = z.object({
 export default defineEventHandler(async (event) => {
   const db = await getDatabaseConnection()
 
-  const { projectId, parentId, limit } = await getValidatedQuery(event, paramsSchema.parse);
+  const { parentId, limit } = await getValidatedQuery(event, paramsSchema.parse);
+  const { user } = await requireUserSession(event)
 
   let query = db
     .selectFrom('contents')
     .selectAll()
-    .where('projectId', '=', Number(projectId))
+    .where('userId', '=', user.id)
   
   if (parentId) {
     query = query.where('parentId', '=', Number(parentId))

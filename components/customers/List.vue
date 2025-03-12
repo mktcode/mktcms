@@ -1,21 +1,13 @@
 <script setup lang="ts">
 import { resolveComponent } from 'vue';
 import type { DropdownMenuItem, TableColumn } from '@nuxt/ui';
-import type { Customer, Project } from '~/types';
-
-const props = defineProps<{
-  project: Project;
-}>();
+import type { Customer } from '~/types';
 
 const customers = ref<Customer[]>([]);
 const toast = useToast();
 
 const fetchPosts = async () => {
-  const data = await $fetch('/api/customers/list', {
-    query: {
-      projectId: props.project.id,
-    }
-  });
+  const data = await $fetch('/api/customers/list');
   customers.value = data;
 };
 

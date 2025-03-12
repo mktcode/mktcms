@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
-import { InvoiceFormSchema as schema, type Customer, type Invoice, type Project } from '~/types'
+import { InvoiceFormSchema as schema, type Customer, type Invoice } from '~/types'
 import { CalendarDate, DateFormatter, getLocalTimeZone } from '@internationalized/date'
 
 const props = defineProps<{
-  project: Project
   invoice?: Invoice
 }>()
 
@@ -24,11 +23,7 @@ const isSaving = ref(false)
 const customers = ref<Customer[]>([])
 
 const fetchPosts = async () => {
-  const data = await $fetch('/api/customers/list', {
-    query: {
-      projectId: props.project.id,
-    }
-  });
+  const data = await $fetch('/api/customers/list');
   customers.value = data;
 };
 onMounted(fetchPosts);

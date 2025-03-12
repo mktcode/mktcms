@@ -1,14 +1,5 @@
 <script setup lang="ts">
-import type { Project } from '~/types';
-
-const { clear } = useUserSession();
-
-const websiteButton = ref({
-  label: 'Website öffnen',
-  icon: 'i-heroicons-arrow-top-right-on-square',
-  to: '',
-  target: '_blank',
-})
+const { clear, user } = useUserSession();
 
 const items = ref([
   [
@@ -32,7 +23,12 @@ const items = ref([
       icon: 'i-heroicons-question-mark-circle',
       to: '/hilfe',
     },
-    websiteButton.value,
+    {
+      label: 'Website öffnen',
+      icon: 'i-heroicons-arrow-top-right-on-square',
+      to: `https://${user.value?.domain}`,
+      target: '_blank',
+    },
     {
       slot: 'auth',
       label: 'Abmelden',
@@ -44,18 +40,6 @@ const items = ref([
     }
   ]
 ]);
-
-const currentProject = ref<Project | null>(null);
-
-onMounted(async () => {
-  const projects = await $fetch('/api/projectList');
-  if (projects.length === 0) {
-    return;
-  }
-  
-  currentProject.value = projects[0];
-  websiteButton.value.to = `https://${currentProject.value.domain}`;
-})
 </script>
 
 <template>

@@ -1,18 +1,10 @@
 <script setup lang="ts">
-import type { Content, Project } from '~/types';
-
-const props = defineProps<{
-  project: Project;
-}>();
+import type { Content, User } from '~/types';
 
 const contents = ref<Content[]>([]);
 
 const fetchPosts = async () => {
-  const data = await $fetch('/api/content/list', {
-    query: {
-      projectId: props.project.id,
-    }
-  });
+  const data = await $fetch('/api/content/list');
   contents.value = data;
 };
 
@@ -44,7 +36,7 @@ onMounted(fetchPosts);
           </tr>
         </thead>
         <tbody>
-          <ContentListItem v-for="content in contents" :key="content.id" :project="project" :content="content" />
+          <ContentListItem v-for="content in contents" :key="content.id" :content="content" />
         </tbody>
       </table>
     </div>
