@@ -1,7 +1,6 @@
 import { z } from "zod";
 
 const paramsSchema = z.object({
-  projectId: z.string(),
   limit: z.string().optional(),
 })
 

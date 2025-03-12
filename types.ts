@@ -53,7 +53,7 @@ export interface InvoicesTable {
 export type Invoice = Selectable<InvoicesTable>
 export type NewInvoice = Insertable<InvoicesTable>
 export type InvoiceUpdate = Updateable<InvoicesTable>
-export const InvoiceFormSchema = z.object({
+export const invoiceFormSchema = z.object({
   id: z.number().optional(),
   customerId: z.number(),
   date: z.string(),

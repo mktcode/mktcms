@@ -1,9 +1,8 @@
-import { error } from "console";
-import { InvoiceFormSchema } from "~/types";
+import { invoiceFormSchema } from "~/types";
 
 export default defineEventHandler(async (event) => {
   try {
-    const { id, customerId, date, items } = await readValidatedBody(event, body => InvoiceFormSchema.parse(body))
+    const { id, customerId, date, items } = await readValidatedBody(event, body => invoiceFormSchema.parse(body))
     const db = await getDatabaseConnection()
 
     if (id) {

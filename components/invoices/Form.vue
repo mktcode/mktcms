@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
-import { InvoiceFormSchema as schema, type Customer, type Invoice } from '~/types'
+import { invoiceFormSchema as schema, type Customer, type Invoice } from '~/types'
 import { CalendarDate, DateFormatter, getLocalTimeZone } from '@internationalized/date'
 
 const props = defineProps<{
