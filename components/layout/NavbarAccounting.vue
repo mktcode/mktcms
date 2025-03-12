@@ -32,6 +32,6 @@ const items = ref([
 
 <template>
   <div class="border-b border-gray-200">
-    <UNavigationMenu color="neutral" variant="link" :items="items" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" />
+    <UNavigationMenu color="primary" variant="pill" :items="items" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" />
   </div>
 </template>
