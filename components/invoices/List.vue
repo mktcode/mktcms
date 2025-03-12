@@ -2,7 +2,6 @@
 import { resolveComponent } from 'vue';
 import type { DropdownMenuItem, TableColumn } from '@nuxt/ui';
 import type { Invoice, Project } from '~/types';
-import { PDFDocument, PDFHexString, PDFName, StandardFonts, rgb } from 'pdf-lib'
 
 const props = defineProps<{
   project: Project;
@@ -44,13 +43,29 @@ const columns: TableColumn<Invoice>[] = [
   }
 ]
 
+async function downloadEInvoicePDF(content: Invoice) {
+  const response = await $fetch<Blob>('/api/invoices/einvoice', {
+    method: 'POST',
+    body: { id: content.id },
+    responseType: 'blob'
+  });
+
+  const blob = new Blob([response], { type: 'application/pdf' });
+
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `Rechnung_${content.id}.pdf`;
+  a.click();
+}
+
 function getDropdownActions(content: Invoice): DropdownMenuItem[][] {
   return [
     [
       {
         label: 'Als PDF herunterladen',
         icon: 'i-lucide-copy',
-        onSelect: () => generatePDF(content),
+        onSelect: () => downloadEInvoicePDF(content),
       }
     ],
     [
@@ -74,110 +89,6 @@ function getDropdownActions(content: Invoice): DropdownMenuItem[][] {
       }
     ]
   ]
-}
-
-function _formatDate(date: Date) {
-  return date.toISOString().split('.')[0] + 'Z';
-}
-
-function _addMetadataToDoc(
-  pdfDoc: PDFDocument,
-  date: Date,
-  documentId: string,
-  title: string,
-  author: string,
-  producer: string,
-  creator: string
-) {
-  const metadataXML = `
-  <?xpacket begin="" id="${documentId}"?>
-    <x:xmpmeta xmlns:x="adobe:ns:meta/" x:xmptk="Adobe XMP Core 5.2-c001 63.139439, 2010/09/27-13:37:26">
-      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-
-        <rdf:Description rdf:about="" xmlns:dc="http://purl.org/dc/elements/1.1/">
-          <dc:format>application/pdf</dc:format>
-          <dc:creator>
-            <rdf:Seq>
-              <rdf:li>${author}</rdf:li>
-            </rdf:Seq>
-          </dc:creator>
-          <dc:title>
-              <rdf:Alt>
-                <rdf:li xml:lang="x-default">${title}</rdf:li>
-              </rdf:Alt>
-          </dc:title>
-        </rdf:Description>
-
-        <rdf:Description rdf:about="" xmlns:xmp="http://ns.adobe.com/xap/1.0/">
-          <xmp:CreatorTool>${creator}</xmp:CreatorTool>
-          <xmp:CreateDate>${_formatDate(date)}</xmp:CreateDate>
-          <xmp:ModifyDate>${_formatDate(date)}</xmp:ModifyDate>
-          <xmp:MetadataDate>${_formatDate(date)}</xmp:MetadataDate>
-        </rdf:Description>
-
-        <rdf:Description rdf:about="" xmlns:pdf="http://ns.adobe.com/pdf/1.3/">
-          <pdf:Producer>${producer}</pdf:Producer>
-        </rdf:Description>
-
-        <rdf:Description rdf:about="" xmlns:pdfaid="http://www.aiim.org/pdfa/ns/id/">
-          <pdfaid:part>1</pdfaid:part>
-          <pdfaid:conformance>B</pdfaid:conformance>
-        </rdf:Description>
-      </rdf:RDF>
-    </x:xmpmeta>
-  <?xpacket end="w"?>
-  `.trim();
-
-  const metadataStream = pdfDoc.context.stream(metadataXML, {
-    Type: 'Metadata',
-    Subtype: 'XML',
-    Length: metadataXML.length,
-  });
-  const metadataStreamRef = pdfDoc.context.register(metadataStream);
-  pdfDoc.catalog.set(PDFName.of('Metadata'), metadataStreamRef);
-}
-
-const generatePDF = async (invoice: Invoice) => {
-  const pdfDoc = await PDFDocument.create()
-
-  const documentId = 'a164b1c9821755d27c65f0c0e7e02547'
-  const id = PDFHexString.of(documentId)
-  pdfDoc.context.trailerInfo.ID = pdfDoc.context.obj([id, id])
-
-  const createDate = new Date();
-  pdfDoc.setTitle('Rechnung')
-  pdfDoc.setAuthor('Mein Unternehmen')
-  pdfDoc.setProducer('Mein Unternehmen')
-  pdfDoc.setCreator('Mein Unternehmen')
-  pdfDoc.setCreationDate(createDate);
-  pdfDoc.setModificationDate(createDate);
-  _addMetadataToDoc(pdfDoc, createDate, documentId, 'Rechnung', 'Mein Unternehmen', 'Mein Unternehmen', 'Mein Unternehmen')
-
-  const helveticaFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold)
-
-  const page = pdfDoc.addPage()
-  const { height } = page.getSize()
-  const fontSize = 30
-  page.drawText('Rechnung', {
-    x: 50,
-    y: height - 4 * fontSize,
-    size: fontSize,
-    font: helveticaFont,
-  })
-  page.drawText(`Rechnungsnummer: ${invoice.id}`, {
-    x: 50,
-    y: height - 5 * fontSize,
-    size: fontSize / 2,
-    font: helveticaFont,
-  })
-
-  const pdfBytes = await pdfDoc.save({
-    useObjectStreams: false,
-  })
-
-  const blob = new Blob([pdfBytes], { type: 'application/pdf' })
-  const url = URL.createObjectURL(blob)
-  window.open(url)
 }
 </script>
 
