@@ -2,7 +2,7 @@
 import type { DropdownMenuItem, TableColumn } from '@nuxt/ui';
 import type { Customer } from '~/types';
 
-const { data: customers, status } = useFetch('/api/customers/list');
+const { data: customers, status } = await useFetch('/api/customers/list');
 const toast = useToast();
 
 const columns: TableColumn<Customer>[] = [
