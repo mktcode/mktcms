@@ -29,7 +29,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     body: event.data,
   })
   isSaving.value = false
-  navigateTo('/kunden')
+  navigateTo('/buchhaltung/kunden')
   toast.add({ title: 'Erfolg.', description: 'Kunde wurde gespeichert.', color: 'success' })
 }
 </script>
