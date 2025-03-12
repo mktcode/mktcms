@@ -4,10 +4,13 @@ import type { Customer } from '~/types';
 
 const customers = ref<Customer[]>([]);
 const toast = useToast();
+const loading = ref(false);
 
 const fetchPosts = async () => {
+  loading.value = true;
   const data = await $fetch('/api/customers/list');
   customers.value = data;
+  loading.value = false;
 };
 
 onMounted(fetchPosts);
@@ -59,7 +62,7 @@ function getDropdownActions(content: Customer): DropdownMenuItem[][] {
       {
         label: 'Bearbeiten',
         icon: 'i-lucide-edit',
-        href: `/kunden/${content.id}`
+        href: `/buchhaltung/kunden/${content.id}`
       },
       {
         label: 'Löschen',
@@ -84,6 +87,9 @@ function getDropdownActions(content: Customer): DropdownMenuItem[][] {
     :data="customers"
     :columns="columns"
     class="flex-1"
+    :loading="loading"
+    loading-color="primary"
+    loading-animation="swing"
   >
     <template #address-cell="{ row }">
       <div>

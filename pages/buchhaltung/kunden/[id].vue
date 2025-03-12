@@ -27,7 +27,9 @@ onMounted(async () => {
     <template #navbar2>
       <LayoutNavbarAccounting />
     </template>
-    <CustomersForm v-if="customer" :customer="customer"/>
-    <div v-else>Kunde nicht gefunden</div>
+    <div class="p-6">
+      <CustomersForm v-if="customer" :customer="customer"/>
+      <div v-else>Kunde nicht gefunden</div>
+    </div>
   </NuxtLayout>
 </template>
