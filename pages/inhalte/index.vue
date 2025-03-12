@@ -1,5 +1,7 @@
 <template>
   <NuxtLayout name="default">
-    <ContentList />
+    <div class="p-6">
+      <ContentList />
+    </div>
   </NuxtLayout>
 </template>

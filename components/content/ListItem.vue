@@ -35,7 +35,7 @@ onMounted(fetchChildren);
       <div class="text-gray-900 prose prose-sm line-clamp-1" v-html="content.description" />
     </td>
     <td class="whitespace-nowrap py-px">
-      <UButton :href="`/content/${content.id}`" class="w-fit ml-auto" icon="i-heroicons-pencil">
+      <UButton :href="`/inhalte/${content.id}`" class="w-fit ml-auto" icon="i-heroicons-pencil">
         Bearbeiten
       </UButton>
     </td>
