@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 const features = [
   {
     name: 'Werde gefunden.',
@@ -44,7 +44,7 @@ const features = [
               </div>
             </dl>
             <div class="flex justify-center items-center gap-4 mt-10">
-              <UButton size="xl">
+              <UButton size="xl" to="/start">
                 Jetzt kostenlos testen
               </UButton>
               <UButton size="xl" variant="outline">

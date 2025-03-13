@@ -15,7 +15,6 @@ const { loggedIn } = useUserSession()
         Anmelden
       </UButton>
     </div>
-    <MarketingFeatures />
-    <MarketingExample />
+    <MarketingCompany />
   </NuxtLayout>
 </template>
