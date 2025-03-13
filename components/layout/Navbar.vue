@@ -34,7 +34,7 @@ const items = ref([
       icon: 'i-heroicons-arrow-right-start-on-rectangle',
       onSelect: () => {
         clear();
-        navigateTo('/login');
+        navigateTo('/');
       }
     }
   ]
