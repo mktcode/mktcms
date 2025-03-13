@@ -2,6 +2,12 @@
 @plugin "@tailwindcss/typography";
 @import "@nuxt/ui";
 
+button,
+[role="button"] {
+  @apply cursor-pointer;
+  @apply disabled:cursor-not-allowed;
+}
+
 .navlink {
   @apply rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white flex items-center gap-2 transition-all;
 }
