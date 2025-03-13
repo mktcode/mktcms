@@ -43,9 +43,12 @@ const features = [
                 <dd class="inline">{{ feature.description }}</dd>
               </div>
             </dl>
-            <div class="flex flex-col items-center gap-4 mt-10">
+            <div class="flex justify-center items-center gap-4 mt-10">
               <UButton size="xl">
                 Jetzt kostenlos testen
+              </UButton>
+              <UButton size="xl" variant="outline">
+                App installieren
               </UButton>
             </div>
           </div>
