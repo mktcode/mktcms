@@ -4,6 +4,7 @@ const { targets, addTarget } = usePlanner()
 
 <template>
   <NuxtLayout name="default">
+    <MarketingFeatures />
     <div class="p-6">
       <h1 class="text-3xl font-bold text-gray-900 mb-4">
         Dein Unternehmen
