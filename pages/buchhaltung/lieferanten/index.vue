@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import type { DropdownMenuItem, TableColumn } from '@nuxt/ui';
 import type { Supplier } from '~/types';
+import { LazyLayoutDeleteModal } from '#components'
 
-const { data: suppliers, status } = useFetch('/api/suppliers/list');
+const { data: suppliers, status, refresh } = useFetch('/api/suppliers/list');
 const toast = useToast();
+const overlay = useOverlay();
+const deleteModal = overlay.create(LazyLayoutDeleteModal)
 
 const columns: TableColumn<Supplier>[] = [
   {
@@ -56,13 +59,30 @@ function getDropdownActions(item: Supplier): DropdownMenuItem[][] {
       },
       {
         label: 'Löschen',
-        icon: 'i-lucide-trash',
+        icon: 'i-heroicons-trash',
         color: 'error',
-        onSelect: () => {
-          toast.add({
-            title: 'Kunde gelöscht',
-            color: 'success',
-            icon: 'i-lucide-circle-check'
+        onSelect: async () => {
+          deleteModal.patch({ title: item.name })
+          const shouldDelete = await deleteModal.open()
+          if (!shouldDelete) return
+
+          $fetch(`/api/suppliers/delete`, {
+            method: 'POST',
+            body: { id: item.id }
+          }).then(() => {
+            refresh();
+            toast.add({
+              title: 'Lieferant gelöscht',
+              color: 'success',
+              icon: 'i-lucide-circle-check'
+            })
+          }).catch((e) => {
+            console.log(e)
+            toast.add({
+              title: 'Fehler beim Löschen: ' + e.statusMessage,
+              color: 'error',
+              icon: 'i-lucide-circle-x'
+            })
           })
         }
       }
