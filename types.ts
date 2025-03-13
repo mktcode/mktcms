@@ -44,6 +44,30 @@ export const customerFormSchema = z.object({
   email: z.string().email().optional(),
 })
 
+// Suppliers
+export interface SuppliersTable {
+  id: Generated<number>
+  userId: number
+  name: string
+  address: string
+  zip: string
+  city: string
+  phone: string | null
+  email: string | null
+}
+export type Supplier = Selectable<SuppliersTable>
+export type NewSupplier = Insertable<SuppliersTable>
+export type SupplierUpdate = Updateable<SuppliersTable>
+export const supplierFormSchema = z.object({
+  id: z.number().optional(),
+  name: z.string().min(1, 'Ein Name wird benötigt'),
+  address: z.string().min(1, 'Eine Adresse wird benötigt'),
+  zip: z.string().min(1, 'Eine Postleitzahl wird benötigt'),
+  city: z.string().min(1, 'Ein Ort wird benötigt'),
+  phone: z.string().optional(),
+  email: z.string().email().optional(),
+})
+
 // Invoices
 export interface InvoicesTable {
   id: Generated<number>
@@ -92,6 +116,7 @@ export interface Database {
   users: UsersTable
   contents: ContentsTable
   customers: CustomersTable
+  suppliers: SuppliersTable
   invoices: InvoicesTable
   invoiceItems: InvoiceItemsTable
 }

@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import type { DropdownMenuItem, TableColumn } from '@nuxt/ui';
-import type { Customer } from '~/types';
+import type { Supplier } from '~/types';
 
-const { data: customers, status } = useFetch('/api/customers/list');
+const { data: suppliers, status } = useFetch('/api/suppliers/list');
 const toast = useToast();
 
-const columns: TableColumn<Customer>[] = [
+const columns: TableColumn<Supplier>[] = [
   {
     accessorKey: 'id',
     header: 'Kdnr.',
@@ -32,16 +32,16 @@ const columns: TableColumn<Customer>[] = [
   }
 ]
 
-function getDropdownActions(item: Customer): DropdownMenuItem[][] {
+function getDropdownActions(item: Supplier): DropdownMenuItem[][] {
   return [
     [
       {
-        label: 'Kundennummer kopieren',
+        label: 'Lieferantennummer kopieren',
         icon: 'i-lucide-copy',
         onSelect: () => {
           navigator.clipboard.writeText(item.id.toString())
           toast.add({
-            title: 'Kundennummer kopiert',
+            title: 'Lieferantennummer kopiert',
             color: 'success',
             icon: 'i-lucide-circle-check'
           })
@@ -52,7 +52,7 @@ function getDropdownActions(item: Customer): DropdownMenuItem[][] {
       {
         label: 'Bearbeiten',
         icon: 'i-lucide-edit',
-        href: `/buchhaltung/kunden/${item.id}`
+        href: `/buchhaltung/lieferanten/${item.id}`
       },
       {
         label: 'Löschen',
@@ -81,7 +81,7 @@ function getDropdownActions(item: Customer): DropdownMenuItem[][] {
       </LayoutNavbarAccounting>
     </template>
     <LayoutList
-      :data="customers || []"
+      :data="suppliers || []"
       :columns="columns"
       :getDropdownActions="getDropdownActions"
       :loading="status === 'pending'"
