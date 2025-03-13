@@ -27,8 +27,6 @@ export default defineEventHandler(async (event) => {
     
     const query = db.insertInto('invoices').values({ customerId, date })
 
-    console.log(query.compile().sql)
-
     await query.execute()
 
     return { success: true, error: null }
