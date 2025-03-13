@@ -8,8 +8,8 @@ const items = ref([
       to: '/',
     },
     {
-      label: 'Inhalte',
-      icon: 'i-heroicons-newspaper',
+      label: 'Werbung',
+      icon: 'i-heroicons-megaphone',
       to: '/inhalte',
     },
     {
