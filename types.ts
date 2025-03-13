@@ -11,9 +11,9 @@ import { z } from 'zod';
 export interface UsersTable {
   id: Generated<number>
   name: string
-  domain: string
+  domain: string | null
   googleManagerId: string
-  password: string
+  password: string | null
   isOnline: boolean
 }
 export type User = Selectable<UsersTable>
