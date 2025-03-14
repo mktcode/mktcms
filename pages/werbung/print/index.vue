@@ -78,7 +78,7 @@ function getDropdownActions(item: Vcard): DropdownMenuItem[][] {
       {
         label: 'Druckdatei herunterladen',
         icon: 'i-lucide-download',
-        to: `/api/vcards/print`,
+        to: `/api/vcards/print/${item.id}`,
         target: '_blank'
       }
     ],
