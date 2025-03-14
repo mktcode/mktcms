@@ -1,7 +1,8 @@
 declare module '#auth-utils' {
   interface User {
     id: number
-    domain: string
+    domain: string | null
+    email: string | null
     googleId: string
     picture: string
   }

@@ -1,5 +1,19 @@
 import { User } from "#auth-utils";
 
+export const manageCompany = defineAbility(async (user: User, companyId: number) => {
+  const db = await getDatabaseConnection()
+
+  const ownsCompany = await db
+    .selectFrom('companies')
+    .innerJoin('users', 'users.id', 'companies.userId')
+    .select(({ fn }) => fn.count<number>('companies.id').as('count'))
+    .where('companies.id', '=', companyId)
+    .where('users.googleManagerId', '=', user.googleId)
+    .executeTakeFirstOrThrow()
+
+  return ownsCompany.count === 1
+})
+
 export const manageCustomer = defineAbility(async (user: User, customerId: number) => {
   const db = await getDatabaseConnection()
 

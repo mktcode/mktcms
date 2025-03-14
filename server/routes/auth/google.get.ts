@@ -1,13 +1,17 @@
 export default defineOAuthGoogleEventHandler({
   config: {
-    scope: ['profile', 'https://www.googleapis.com/auth/business.manage'],
+    scope: [
+      'https://www.googleapis.com/auth/userinfo.profile',
+      'https://www.googleapis.com/auth/business.manage',
+      'https://www.googleapis.com/auth/userinfo.email'
+    ],
   },
   async onSuccess(event, { user, tokens }) {
     const db = await getDatabaseConnection()
 
     const existingUser = await db
       .selectFrom('users')
-      .select(['id', 'domain'])
+      .select(['id', 'domain', 'email'])
       .where('googleManagerId', '=', user.sub)
       .executeTakeFirst()
 
@@ -17,6 +21,7 @@ export default defineOAuthGoogleEventHandler({
           ...user,
           id: existingUser.id,
           domain: existingUser.domain,
+          email: existingUser.email,
           googleId: user.sub,
         },
         secure: {
@@ -28,14 +33,19 @@ export default defineOAuthGoogleEventHandler({
         .values({
           name: user.name,
           googleManagerId: user.sub,
+          email: user.email,
           isOnline: false,
         })
         .executeTakeFirstOrThrow()
       
+      if (!insertResult.insertId) {
+        throw new Error('Failed to insert user')
+      }
+
       await setUserSession(event, {
         user: {
           ...user,
-          id: insertResult.insertId,
+          id: Number(insertResult.insertId.toString()),
           domain: null,
           googleId: user.sub,
         },

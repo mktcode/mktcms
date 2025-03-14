@@ -2,9 +2,23 @@ CREATE TABLE IF NOT EXISTS users (
   id INTEGER PRIMARY KEY AUTO_INCREMENT,
   name TEXT NOT NULL,
   domain TEXT,
+  email TEXT,
   googleManagerId TEXT NOT NULL,
   password TEXT,
   isOnline BOOLEAN NOT NULL DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS companies (
+  userId INTEGER NOT NULL,
+  name TEXT NOT NULL,
+  street TEXT,
+  zip TEXT,
+  city TEXT,
+  phone TEXT,
+  email TEXT,
+  vat TEXT,
+  logo TEXT,
+  isSmallBusiness BOOLEAN NOT NULL DEFAULT 1,
 );
 
 CREATE TABLE IF NOT EXISTS customers (

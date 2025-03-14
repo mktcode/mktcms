@@ -24,6 +24,10 @@ const items = ref([
       to: '/hilfe',
     },
     {
+      icon: 'i-heroicons-cog-6-tooth',
+      to: '/einstellungen',
+    },
+    {
       label: 'Website öffnen',
       to: `https://${user.value?.domain}`,
       target: '_blank',

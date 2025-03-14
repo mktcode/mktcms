@@ -44,7 +44,7 @@ const features = [
               </div>
             </dl>
             <div class="flex justify-center items-center gap-4 mt-10">
-              <UButton size="xl" to="/start">
+              <UButton size="xl" to="/login">
                 Jetzt kostenlos testen
               </UButton>
               <UButton size="xl" variant="outline">

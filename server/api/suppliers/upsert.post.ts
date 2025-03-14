@@ -19,4 +19,6 @@ export default defineEventHandler(async (event) => {
   }
   
   await db.insertInto('suppliers').values({ ...supplier, userId: user.id }).execute()
+
+  return { success: true, error: null }
 })

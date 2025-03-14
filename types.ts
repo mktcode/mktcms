@@ -12,13 +12,42 @@ export interface UsersTable {
   id: Generated<number>
   name: string
   domain: string | null
+  email: string | null
   googleManagerId: string
   password: string | null
-  isOnline: boolean
+  isOnline: boolean,
 }
 export type User = Selectable<UsersTable>
 export type NewUser = Insertable<UsersTable>
 export type UserUpdate = Updateable<UsersTable>
+
+// Companies
+export interface CompaniesTable {
+  userId: number
+  name: string
+  street: string
+  zip: string
+  city: string
+  phone: string | null
+  email: string | null
+  vat: string | null
+  logo: string | null
+  isSmallBusiness: boolean
+}
+export type Company = Selectable<CompaniesTable>
+export type NewCompany = Insertable<CompaniesTable>
+export type CompanyUpdate = Updateable<CompaniesTable>
+export const companyFormSchema = z.object({
+  name: z.string().min(1, 'Ein Name wird benötigt'),
+  street: z.string().min(1, 'Eine Straße wird benötigt'),
+  zip: z.string().min(1, 'Eine Postleitzahl wird benötigt'),
+  city: z.string().min(1, 'Ein Ort wird benötigt'),
+  phone: z.string().optional(),
+  email: z.string().email().optional(),
+  vat: z.string().optional(),
+  logo: z.string().optional(),
+  isSmallBusiness: z.boolean(),
+})
 
 // Customers
 export interface CustomersTable {
@@ -114,6 +143,7 @@ export type ContentUpdate = Updateable<ContentsTable>
 
 export interface Database {
   users: UsersTable
+  companies: CompaniesTable
   contents: ContentsTable
   customers: CustomersTable
   suppliers: SuppliersTable
