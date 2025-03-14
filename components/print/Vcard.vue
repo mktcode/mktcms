@@ -14,8 +14,8 @@ defineProps<{
 </script>
 
 <template>
-  <div class="@container bg-white flex aspect-8/5 w-full overflow-hidden">
-    <div class="p-[5cqw] flex flex-col gap-4 w-full">
+  <div class="@container bg-white flex aspect-[8.5/5.5] w-full overflow-hidden text-gray-950">
+    <div class="p-[6cqw] flex flex-col justify-between w-full">
       <div class="flex items-center gap-[3cqw]">
         <div>
           <img src="~/assets/img/mktcms.png" alt="Logo" class="rounded-full w-[15cqw]" />
@@ -29,7 +29,7 @@ defineProps<{
           </div>
         </div>
       </div>
-      <div class="text-[5cqw] font-bold">
+      <div class="text-[5cqw] font-bold leading-tight">
         {{ slogan }}
       </div>
       <div class="flex flex-col gap-[1cqw]">
@@ -53,6 +53,6 @@ defineProps<{
         </div>
       </div>
     </div>
-    <img src="~/assets/img/default-header.jpg" alt="Header" class="w-36 aspect-9/16 object-cover" />
+    <img src="~/assets/img/default-header.jpg" alt="Header" class="w-[33cqw] object-cover" />
   </div>
 </template>
