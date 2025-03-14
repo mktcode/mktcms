@@ -1,3 +1,7 @@
+<script setup lang="ts">
+navigateTo('/buchhaltung/kunden')
+</script>
+
 <template>
   <NuxtLayout name="default">
     <template #navbar2>

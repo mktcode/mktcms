@@ -1,14 +1,8 @@
-<script setup lang="ts">
-navigateTo('/werbung/print')
-</script>
-
 <template>
   <NuxtLayout name="default">
     <template #navbar2>
       <LayoutNavbarAds />
     </template>
-    <div class="p-6">
-      <h1>Werbung</h1>
-    </div>
+    <h1>Website</h1>
   </NuxtLayout>
 </template>
