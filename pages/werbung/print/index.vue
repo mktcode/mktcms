@@ -8,7 +8,37 @@ const toast = useToast();
 const overlay = useOverlay();
 const deleteModal = overlay.create(LazyLayoutDeleteModal)
 
+const PrintVcard = resolveComponent('PrintVcard')
+
 const columns: TableColumn<Vcard>[] = [
+  {
+    accessorKey: 'vcard',
+    enableResizing: false,
+    meta: {
+      class: {
+        th: 'w-72',
+        td: 'p-0'
+      }
+    },
+    size: 340,
+    minSize: 340,
+    maxSize: 340,
+    header: 'Vorschau',
+    cell: ({ row }) => {
+      return h(PrintVcard, {
+        logoWidth: 120,
+        title: row.original.title,
+        subtitle: 'Software und Internet',
+        slogan: 'Ihr Experte für Werbung',
+        description: 'Wir sind ein mittelständisches Unternehmen, das sich auf die Entwicklung von Software und Internetlösungen spezialisiert hat. Wir bieten Ihnen individuelle Lösungen für Ihre Anforderungen.',
+        street: row.original.street,
+        zip: row.original.zip,
+        city: row.original.city,
+        phone: row.original.phone,
+        email: row.original.email
+      })
+    }
+  },
   {
     accessorKey: 'title',
     header: 'Titel'
