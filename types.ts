@@ -49,6 +49,34 @@ export const companyFormSchema = z.object({
   isSmallBusiness: z.boolean(),
 })
 
+// Vcards
+export interface VcardsTable {
+  id: Generated<number>
+  userId: number
+  title: string
+  street: string | null
+  zip: string | null
+  city: string | null
+  phone: string | null
+  email: string | null
+  website: string | null
+  hasBack: boolean
+}
+export type Vcard = Selectable<VcardsTable>
+export type NewVcard = Insertable<VcardsTable>
+export type VcardUpdate = Updateable<VcardsTable>
+export const vcardFormSchema = z.object({
+  id: z.number().optional(),
+  title: z.string().min(1, 'Ein Titel wird benötigt'),
+  street: z.string().optional(),
+  zip: z.string().optional(),
+  city: z.string().optional(),
+  phone: z.string().optional(),
+  email: z.string().email().optional(),
+  website: z.string().url().optional(),
+  hasBack: z.boolean(),
+})
+
 // Customers
 export interface CustomersTable {
   id: Generated<number>
@@ -144,6 +172,7 @@ export type ContentUpdate = Updateable<ContentsTable>
 export interface Database {
   users: UsersTable
   companies: CompaniesTable
+  vcards: VcardsTable
   contents: ContentsTable
   customers: CustomersTable
   suppliers: SuppliersTable

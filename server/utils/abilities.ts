@@ -1,17 +1,17 @@
 import { User } from "#auth-utils";
 
-export const manageCompany = defineAbility(async (user: User, companyId: number) => {
+export const manageVcard = defineAbility(async (user: User, vcardId: number) => {
   const db = await getDatabaseConnection()
 
-  const ownsCompany = await db
-    .selectFrom('companies')
-    .innerJoin('users', 'users.id', 'companies.userId')
-    .select(({ fn }) => fn.count<number>('companies.id').as('count'))
-    .where('companies.id', '=', companyId)
+  const ownsVcard = await db
+    .selectFrom('vcards')
+    .innerJoin('users', 'users.id', 'vcards.userId')
+    .select(({ fn }) => fn.count<number>('vcards.id').as('count'))
+    .where('vcards.id', '=', vcardId)
     .where('users.googleManagerId', '=', user.googleId)
     .executeTakeFirstOrThrow()
 
-  return ownsCompany.count === 1
+  return ownsVcard.count === 1
 })
 
 export const manageCustomer = defineAbility(async (user: User, customerId: number) => {
