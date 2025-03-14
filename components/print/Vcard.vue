@@ -3,13 +3,12 @@ defineProps<{
   logoWidth: number
   title: string
   subtitle: string
+  slogan: string
   street: string
   zip: string
   city: string
   email: string
   phone: string
-  slogan: string
-  description: string
 }>()
 </script>
 

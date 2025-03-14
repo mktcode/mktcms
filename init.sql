@@ -25,13 +25,18 @@ CREATE TABLE IF NOT EXISTS vcards (
   id INTEGER PRIMARY KEY AUTO_INCREMENT,
   userId INTEGER NOT NULL,
   title TEXT NOT NULL,
+  subtitle TEXT,
+  slogan TEXT,
   street TEXT,
   zip TEXT,
   city TEXT,
   phone TEXT,
   email TEXT,
   website TEXT,
-  hasBack BOOLEAN NOT NULL DEFAULT 0
+  hasBack BOOLEAN NOT NULL DEFAULT 0,
+  backLogo BOOLEAN NOT NULL DEFAULT 0,
+  backTitle TEXT,
+  backText TEXT
 );
 
 CREATE TABLE IF NOT EXISTS customers (

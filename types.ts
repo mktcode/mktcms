@@ -54,6 +54,8 @@ export interface VcardsTable {
   id: Generated<number>
   userId: number
   title: string
+  subtitle: string | null
+  slogan: string | null
   street: string | null
   zip: string | null
   city: string | null
@@ -61,6 +63,9 @@ export interface VcardsTable {
   email: string | null
   website: string | null
   hasBack: boolean
+  backLogo: boolean
+  backTitle: string | null
+  backText: string | null
 }
 export type Vcard = Selectable<VcardsTable>
 export type NewVcard = Insertable<VcardsTable>
@@ -68,6 +73,8 @@ export type VcardUpdate = Updateable<VcardsTable>
 export const vcardFormSchema = z.object({
   id: z.number().optional(),
   title: z.string().min(1, 'Ein Titel wird benötigt'),
+  subtitle: z.string().optional(),
+  slogan: z.string().optional(),
   street: z.string().optional(),
   zip: z.string().optional(),
   city: z.string().optional(),
@@ -75,6 +82,9 @@ export const vcardFormSchema = z.object({
   email: z.string().email().optional(),
   website: z.string().url().optional(),
   hasBack: z.boolean(),
+  backLogo: z.boolean(),
+  backTitle: z.string().optional(),
+  backText: z.string().optional(),
 })
 
 // Customers

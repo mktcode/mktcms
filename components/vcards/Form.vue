@@ -12,12 +12,17 @@ type Schema = z.output<typeof schema>
 const state = reactive<Partial<Schema>>({
   id: props.vcard?.id,
   title: props.vcard?.title ?? '',
+  subtitle: props.vcard?.subtitle ?? '',
+  slogan: props.vcard?.slogan ?? '',
   street: props.vcard?.street ?? '',
   zip: props.vcard?.zip ?? '',
   city: props.vcard?.city ?? '',
   phone: props.vcard?.phone ?? '',
   email: props.vcard?.email ?? '',
-  hasBack: false,
+  hasBack: !!props.vcard?.hasBack,
+  backLogo: !!props.vcard?.backLogo,
+  backTitle: props.vcard?.backTitle ?? '',
+  backText: props.vcard?.backText ?? '',
 })
 
 const toast = useToast()
@@ -42,6 +47,14 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         <UFormField label="Titel" name="title" size="xl">
           <UInput v-model="state.title" class="w-full" />
         </UFormField>
+
+        <UFormField label="Untertitel" name="subtitle" size="xl">
+          <UInput v-model="state.subtitle" class="w-full" />
+        </UFormField>
+
+        <UFormField label="Slogan" name="slogan" size="xl">
+          <UInput v-model="state.slogan" class="w-full" />
+        </UFormField>
     
         <UFormField label="Straße" name="street" size="xl">
           <UInput v-model="state.street" class="w-full" />
@@ -64,25 +77,53 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         <UFormField label="Email" name="email" size="xl">
           <UInput v-model="state.email" class="w-full" />
         </UFormField>
+
+        <UCheckbox
+          label="Rückseite"
+          name="hasBack"
+          v-model="state.hasBack"
+        />
+
+        <template v-if="state.hasBack">
+          <UCheckbox
+            label="Logo auf Rückseite"
+            name="backLogo"
+            v-model="state.backLogo"
+          />
+
+          <UFormField label="Titel Rückseite" name="backTitle" size="xl">
+            <UInput v-model="state.backTitle" class="w-full" />
+          </UFormField>
+
+          <UFormField label="Text Rückseite" name="backText" size="xl">
+            <UTextarea v-model="state.backText" class="w-full" />
+          </UFormField>
+        </template>
     
         <UButton :loading="isSaving" type="submit" color="primary" icon="i-heroicons-check" size="xl">
           Speichern
         </UButton>
       </UForm>
     </div>
-    <div class="grow flex items-center justify-center">
-      <div class="border-dashed border-gray-300 border w-96">
+    <div class="grow flex flex-col gap-2 items-center justify-center">
+      <div class="border-dashed border-gray-300 border w-96 transition-all duration-500 hover:shadow-xl hover:scale-105 hover:rotate-3 hover:border-transparent">
         <PrintVcard
           :logo-width="120"
           :title="state.title || 'Meine Firma'"
-          subtitle="Meine Firma"
-          slogan="Musterslogan"
-          description="Musterbeschreibung"
+          :subtitle="state.subtitle || 'Untertitel'"
+          :slogan="state.slogan || 'Slogan'"
           :street="state.street || 'Musterstraße 123'"
           :zip="state.zip || '12345'"
           :city="state.city || 'Musterstadt'"
           :phone="state.phone || '0123456789'"
           :email="state.email || 'kontakt@beispiel.com'"
+        />
+      </div>
+      <div v-if="state.hasBack" class="border-dashed border-gray-300 border w-96 transition-all duration-500 hover:shadow-xl hover:scale-105 hover:rotate-3 hover:border-transparent">
+        <PrintVcardBack
+          :show-logo="!!state.backLogo"
+          :title="state.backTitle || 'Rückseite'"
+          :text="state.backText || 'Musterbeschreibung'"
         />
       </div>
     </div>
