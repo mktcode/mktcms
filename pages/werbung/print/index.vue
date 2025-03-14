@@ -28,14 +28,14 @@ const columns: TableColumn<Vcard>[] = [
       return h(PrintVcard, {
         logoWidth: 120,
         title: row.original.title,
-        subtitle: 'Software und Internet',
-        slogan: 'Ihr Experte für Werbung',
-        description: 'Wir sind ein mittelständisches Unternehmen, das sich auf die Entwicklung von Software und Internetlösungen spezialisiert hat. Wir bieten Ihnen individuelle Lösungen für Ihre Anforderungen.',
+        subtitle: row.original.subtitle,
+        slogan: row.original.slogan,
         street: row.original.street,
         zip: row.original.zip,
         city: row.original.city,
         phone: row.original.phone,
-        email: row.original.email
+        email: row.original.email,
+        website: row.original.website
       })
     }
   },
