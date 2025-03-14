@@ -10,7 +10,7 @@ const items = ref([
     {
       label: 'Werbung',
       icon: 'i-heroicons-megaphone',
-      to: '/inhalte',
+      to: '/werbung',
     },
     {
       label: 'Buchhaltung',

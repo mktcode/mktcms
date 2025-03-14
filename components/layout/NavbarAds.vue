@@ -3,22 +3,22 @@ const items = ref([
   {
     label: 'Texte & Bilder',
     icon: 'i-heroicons-newspaper',
-    to: '/buchhaltung/kunden',
+    to: '/werbung/inhalte',
   },
   {
     label: 'Website',
     icon: 'i-heroicons-computer-desktop',
-    to: '/buchhaltung/lieferanten',
+    to: '/werbung/website',
   },
   {
     label: 'Google',
     icon: 'i-fa-google',
-    to: '/buchhaltung/rechnungen/eingehend',
+    to: '/werbung/google',
   },
   {
     label: 'Print',
     icon: 'i-heroicons-map',
-    to: '/buchhaltung/rechnungen/ausgehend',
+    to: '/werbung/print',
   },
 ])
 </script>
