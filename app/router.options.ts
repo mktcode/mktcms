@@ -1,19 +1,19 @@
 import type { RouterConfig } from '@nuxt/schema'
-import { loadData } from '~/server/utils/loadData';
+import { loadWebsite } from '~/server/utils/loadWebsite';
 
 export default {
   routes: async (_routes) => {
     const { hostname, pathname } = useRequestURL();
 
-    const data = await loadData(hostname, pathname);
+    const website = await loadWebsite(hostname, pathname);
 
-    if (data) {
+    if (website) {
       return [
         {
           name: 'landingpage',
           path: pathname,
           component: () => import('~/components/Landingpage.vue'),
-          props: data,
+          props: { website },
           meta: {
             layout: 'landingpage',
           }

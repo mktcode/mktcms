@@ -104,7 +104,9 @@ export interface WebsitesTable {
   subtitle: string | null
   description: string | null
   domain: string | null
+  path: string | null
   image: string | null
+  isOnline: boolean
 }
 export type Website = Selectable<WebsitesTable>
 export type NewWebsite = Insertable<WebsitesTable>
@@ -118,7 +120,9 @@ export const websiteFormSchema = z.object({
   subtitle: z.string().optional(),
   description: z.string().optional(),
   domain: z.string().optional(),
+  path: z.string().optional(),
   image: z.string().optional(),
+  isOnline: z.boolean(),
 })
 
 // Customers

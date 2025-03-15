@@ -46,7 +46,9 @@ CREATE TABLE IF NOT EXISTS websites (
   subtitle TEXT,
   description TEXT,
   domain TEXT,
+  path TEXT,
   image TEXT
+  isOnline BOOLEAN NOT NULL DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS customers (
