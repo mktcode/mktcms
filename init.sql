@@ -39,6 +39,16 @@ CREATE TABLE IF NOT EXISTS vcards (
   backText TEXT
 );
 
+CREATE TABLE IF NOT EXISTS websites (
+  id INTEGER PRIMARY KEY AUTO_INCREMENT,
+  userId INTEGER NOT NULL,
+  title TEXT NOT NULL,
+  subtitle TEXT,
+  description TEXT,
+  domain TEXT,
+  image TEXT
+);
+
 CREATE TABLE IF NOT EXISTS customers (
   id INTEGER PRIMARY KEY AUTO_INCREMENT,
   userId INTEGER NOT NULL,

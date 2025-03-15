@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import type { Website } from '~/types';
+
 defineProps<{
-  title: string
+  website: Website
 }>()
 </script>
 
 <template>
-  <h1>{{ title }}</h1>
+  <h1>{{ website.title }}</h1>
 </template>

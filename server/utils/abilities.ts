@@ -1,5 +1,19 @@
 import { User } from "#auth-utils";
 
+export const manageWebsite = defineAbility(async (user: User, websiteId: number) => {
+  const db = await getDatabaseConnection()
+
+  const ownsWebsite = await db
+    .selectFrom('websites')
+    .innerJoin('users', 'users.id', 'websites.userId')
+    .select(({ fn }) => fn.count<number>('websites.id').as('count'))
+    .where('websites.id', '=', websiteId)
+    .where('users.googleManagerId', '=', user.googleId)
+    .executeTakeFirstOrThrow()
+
+  return ownsWebsite.count === 1
+})
+
 export const manageVcard = defineAbility(async (user: User, vcardId: number) => {
   const db = await getDatabaseConnection()
 

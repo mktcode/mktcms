@@ -87,6 +87,40 @@ export const vcardFormSchema = z.object({
   backText: z.string().optional(),
 })
 
+// Websites
+// CREATE TABLE IF NOT EXISTS websites (
+//   id INTEGER PRIMARY KEY AUTO_INCREMENT,
+//   userId INTEGER NOT NULL,
+//   title TEXT NOT NULL,
+//   subtitle TEXT,
+//   description TEXT,
+//   domain TEXT,
+//   image TEXT
+// );
+export interface WebsitesTable {
+  id: Generated<number>
+  userId: number
+  title: string
+  subtitle: string | null
+  description: string | null
+  domain: string | null
+  image: string | null
+}
+export type Website = Selectable<WebsitesTable>
+export type NewWebsite = Insertable<WebsitesTable>
+export type WebsiteUpdate = Updateable<WebsitesTable>
+export const websiteFormSchema = z.object({
+  id: z.number().optional(),
+  title: z
+    .string()
+    .min(1, 'Ein Titel wird benötigt')
+    .max(100, 'Der Titel ist zu lang'),
+  subtitle: z.string().optional(),
+  description: z.string().optional(),
+  domain: z.string().optional(),
+  image: z.string().optional(),
+})
+
 // Customers
 export interface CustomersTable {
   id: Generated<number>
@@ -183,6 +217,7 @@ export interface Database {
   users: UsersTable
   companies: CompaniesTable
   vcards: VcardsTable
+  websites: WebsitesTable
   contents: ContentsTable
   customers: CustomersTable
   suppliers: SuppliersTable
