@@ -15,6 +15,7 @@ const state = reactive<Partial<Schema>>({
   subtitle: props.website?.subtitle || '',
   description: props.website?.description || '',
   domain: props.website?.domain || '',
+  isOnline: !!props.website?.isOnline,
 })
 
 const toast = useToast()
@@ -53,6 +54,12 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       </div>
     </UFormField>
 
+    <UCheckbox
+      label="Website online"
+      description="Ist die Website online und für Besucher sichtbar?"
+      name="isOnline"
+      v-model="state.isOnline"
+    />
 
     <UButton :loading="isSaving" type="submit" color="primary" icon="i-heroicons-check" size="xl">
       Speichern
