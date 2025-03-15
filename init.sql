@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS companies (
   email TEXT,
   vat TEXT,
   logo TEXT,
-  isSmallBusiness BOOLEAN NOT NULL DEFAULT 1,
+  isSmallBusiness BOOLEAN NOT NULL DEFAULT 1
 );
 
 CREATE TABLE IF NOT EXISTS vcards (
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS websites (
   description TEXT,
   domain TEXT,
   path TEXT,
-  image TEXT
+  image TEXT,
   isOnline BOOLEAN NOT NULL DEFAULT 0
 );
 
