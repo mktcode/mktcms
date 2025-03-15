@@ -100,7 +100,7 @@ onMounted(load)
 
         <UCheckbox
           label="Ich bin Kleinunternehmer"
-          description="Als Kleinunternehmer sind Sie von der Umsatzsteuer befreit."
+          description="Als Kleinunternehmer sind Sie von der Umsatzsteuer befreit. Sie können diese Einstellung später ändern."
           name="isSmallBusiness"
           v-model="state.isSmallBusiness"
         />
