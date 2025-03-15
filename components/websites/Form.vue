@@ -48,7 +48,11 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
     <UFormField label="Domain" name="domain" size="xl">
       <UInput v-model="state.domain" class="w-full" />
+      <div class="text-sm text-gray-500 mt-2">
+        Noch keine Domain? <ULink href="#" class="text-sky-500">Jetzt registrieren</ULink>
+      </div>
     </UFormField>
+
 
     <UButton :loading="isSaving" type="submit" color="primary" icon="i-heroicons-check" size="xl">
       Speichern
