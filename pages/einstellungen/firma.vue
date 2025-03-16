@@ -3,6 +3,8 @@ import { companyFormSchema } from '~/types'
 
 const { user } = useUserSession()
 
+const showWelcomeMessage = ref(true)
+
 const toast = useToast()
 const isUpdating = ref(false)
 
@@ -67,7 +69,21 @@ onMounted(load)
       <LayoutNavbarSettings />
     </template>
     <div class="p-6">
-      <h1 class="text-3xl font-bold mb-4">
+      <Transition name="fade">
+        <UAlert
+          v-if="showWelcomeMessage"
+          variant="solid"
+          color="primary"
+          title="Willkommen in Mkt's CMS!"
+          description="Geben Sie zunächst Ihre Firmendaten ein. Diese werden dann an anderer Stelle automatisch eingefügt (Website, Visitenkarten, etc.). Danach können Sie dann eine Domain registrieren, E-Mail-Adressen und Website einrichten oder sich erstmal um die Buchhaltung kümmern. Klicken Sie oben rechts auf Hilfe, wenn Sie mal nicht weiterkommen."
+          icon="i-heroicons-information-circle"
+          :ui="{ icon: 'size-11' }"
+          :close="{ class: 'text-white/75 hover:text-white' }"
+          @update:open="showWelcomeMessage = $event"
+        />
+      </Transition>
+
+      <h1 class="text-3xl font-bold mb-4 mt-6">
         Firma
       </h1>
   
