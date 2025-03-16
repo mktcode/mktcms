@@ -20,10 +20,12 @@ const items = ref([
   ],
   [
     {
+      label: 'Hilfe',
       icon: 'i-heroicons-question-mark-circle',
       to: '/hilfe',
     },
     {
+      label: 'Einstellungen',
       icon: 'i-heroicons-cog-6-tooth',
       to: '/einstellungen',
     },
