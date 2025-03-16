@@ -64,18 +64,6 @@ function getDropdownActions(item: Vcard): DropdownMenuItem[][] {
   return [
     [
       {
-        label: 'Vorschau',
-        icon: 'i-lucide-copy',
-        onSelect: () => {
-          navigator.clipboard.writeText(item.id.toString())
-          toast.add({
-            title: 'Kundennummer kopiert',
-            color: 'success',
-            icon: 'i-lucide-circle-check'
-          })
-        },
-      },
-      {
         label: 'Druckdatei herunterladen',
         icon: 'i-lucide-download',
         to: `/api/vcards/print/${item.id}`,
