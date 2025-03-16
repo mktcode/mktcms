@@ -9,6 +9,7 @@ defineProps<{
   city: string
   email: string
   phone: string
+  website: string
 }>()
 </script>
 
@@ -48,6 +49,12 @@ defineProps<{
           <UIcon name="i-heroicons-envelope" class="size-[3cqw] text-gray-300 shrink-0" />
           <div class="text-[3cqw] text-gray-600">
             {{ email }}
+          </div>
+        </div>
+        <div class="flex gap-[1cqw] items-center" v-if="website">
+          <UIcon name="i-heroicons-globe-alt" class="size-[3cqw] text-gray-300 shrink-0" />
+          <div class="text-[3cqw] text-gray-600">
+            {{ website }}
           </div>
         </div>
       </div>

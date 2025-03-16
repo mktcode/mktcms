@@ -19,6 +19,7 @@ const state = reactive<Partial<Schema>>({
   city: props.vcard?.city ?? '',
   phone: props.vcard?.phone ?? '',
   email: props.vcard?.email ?? '',
+  website: props.vcard?.website ?? '',
   hasBack: !!props.vcard?.hasBack,
   backLogo: !!props.vcard?.backLogo,
   backTitle: props.vcard?.backTitle ?? '',
@@ -78,6 +79,13 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
           <UInput v-model="state.email" class="w-full" />
         </UFormField>
 
+        <UFormField label="Website" name="website" size="xl">
+          <UInput v-model="state.website" class="w-full" />
+          <div class="text-sm text-gray-500 mt-2">
+            Noch keine Domain? <ULink href="#" class="text-sky-500">Jetzt registrieren</ULink>
+          </div>
+        </UFormField>
+
         <UCheckbox
           label="Rückseite"
           name="hasBack"
@@ -117,6 +125,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
           :city="state.city || 'Musterstadt'"
           :phone="state.phone || '0123456789'"
           :email="state.email || 'kontakt@beispiel.com'"
+          :website="state.website || 'www.beispiel.com'"
         />
       </div>
       <div v-if="state.hasBack" class="border-dashed border-gray-300 border w-96 transition-all duration-500 hover:shadow-xl hover:scale-105 hover:rotate-3 hover:border-transparent">

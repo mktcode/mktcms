@@ -80,7 +80,7 @@ export const vcardFormSchema = z.object({
   city: z.string().optional(),
   phone: z.string().optional(),
   email: z.string().email().optional(),
-  website: z.string().url().optional(),
+  website: z.string().optional(),
   hasBack: z.boolean(),
   backLogo: z.boolean(),
   backTitle: z.string().optional(),
