@@ -2,6 +2,10 @@
 @plugin "@tailwindcss/typography";
 @import "@nuxt/ui";
 
+@theme {
+  --font-sans: 'Roboto', sans-serif;
+}
+
 button,
 [role="button"] {
   @apply cursor-pointer;
