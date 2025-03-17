@@ -1,5 +1,19 @@
 import { User } from "#auth-utils";
 
+export const manageContactFormMessage = defineAbility(async (user: User, messageId: number) => {
+  const db = await getDatabaseConnection()
+
+  const ownsMessage = await db
+    .selectFrom('contactFormMessages')
+    .innerJoin('websites', 'websites.id', 'contactFormMessages.websiteId')
+    .select(({ fn }) => fn.count<number>('contactFormMessages.id').as('count'))
+    .where('contactFormMessages.id', '=', messageId)
+    .where('websites.userId', '=', user.id)
+    .executeTakeFirstOrThrow()
+  
+  return ownsMessage.count === 1
+})
+
 export const manageWebsite = defineAbility(async (user: User, websiteId: number) => {
   const db = await getDatabaseConnection()
 

@@ -16,6 +16,12 @@ const items = ref([
       label: 'Buchhaltung',
       icon: 'i-heroicons-scale',
       to: '/buchhaltung',
+    },
+    {
+      label: 'Nachrichten',
+      icon: 'i-heroicons-chat-bubble-left-ellipsis',
+      to: '/nachrichten',
+      slot: 'contactFormMessages',
     }
   ],
   [
@@ -49,6 +55,10 @@ const items = ref([
       variant="pill"
       :items="items"
       class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
-    />
+    >
+      <template #contactFormMessages-trailing>
+        <UBadge color="primary" label="1" variant="outline" size="sm" />
+      </template>
+    </UNavigationMenu>
   </nav>
 </template>

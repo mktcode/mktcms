@@ -16,7 +16,7 @@ const showSuccess = ref(false);
 
 const submit = async () => {
   isSending.value = true;
-  await $fetch('/api/contactForm', {
+  await $fetch('/api/contactForm/send', {
     method: 'POST',
     body: JSON.stringify({
       websiteId: props.website.id,

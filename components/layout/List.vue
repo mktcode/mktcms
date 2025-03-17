@@ -7,6 +7,11 @@ defineProps<{
   getDropdownActions: (item: any) => DropdownMenuItem[][];
   loading: boolean;
 }>();
+
+const columnPinning = ref({
+  left: [],
+  right: ['actions']
+})
 </script>
 
 <template>
@@ -17,6 +22,7 @@ defineProps<{
     class="flex-1"
     loading-color="primary"
     loading-animation="swing"
+    v-model:column-pinning="columnPinning"
   >
     <slot />
     <template #actions-cell="{ row }">
