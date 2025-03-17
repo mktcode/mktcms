@@ -12,6 +12,7 @@ proxy: false
 env:
   secret:
     - MYSQL_ROOT_PASSWORD
+    - SESSION_PASSWORD
   clear:
     # DB_HOST: <%= `bin/terraform output -raw db_ip` %>
     DATABASE_URL: "mysql2://root:MYSQL_ROOT_PASSWORD@<%= `bin/terraform output -raw db_ip` %>:3306/mktcms"
