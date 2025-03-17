@@ -51,9 +51,9 @@ CREATE TABLE IF NOT EXISTS websites (
   domain TEXT,
   path TEXT,
   image TEXT,
-  isOnline BOOLEAN NOT NULL DEFAULT 0
-  hasContactForm BOOLEAN NOT NULL DEFAULT 0
-  contactFormSubject TEXT,
+  isOnline BOOLEAN NOT NULL DEFAULT 0,
+  hasContactForm BOOLEAN NOT NULL DEFAULT 0,
+  contactFormSubject TEXT
 );
 
 CREATE TABLE IF NOT EXISTS contactFormMessages (
