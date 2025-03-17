@@ -12,10 +12,13 @@ proxy: false
 env:
   secret:
     - MYSQL_ROOT_PASSWORD
-    - SESSION_PASSWORD
-  clear:
-    # DB_HOST: <%= `bin/terraform output -raw db_ip` %>
-    DATABASE_URL: "mysql2://root:$(MYSQL_ROOT_PASSWORD)@<%= `bin/terraform output -raw db_ip` %>:3306/mktcms"
+    - NUXT_APP_URL
+    - NUXT_DATABASE_URL
+    - NUXT_IP_HASH_SALT
+    - NUXT_SESSION_PASSWORD
+    - NUXT_OAUTH_GOOGLE_CLIENT_ID
+    - NUXT_OAUTH_GOOGLE_CLIENT_SECRET
+    - NUXT_OAUTH_GOOGLE_REDIRECT_URL
 aliases:
   shell: app exec --interactive --reuse "bash"
   logs: app logs -f
