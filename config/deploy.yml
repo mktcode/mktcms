@@ -14,7 +14,7 @@ env:
     - MYSQL_ROOT_PASSWORD
   clear:
     # DB_HOST: <%= `bin/terraform output -raw db_ip` %>
-    DATABASE_URL: "mysql2://root:KAMAL_DB_PASSWORD@<%= `bin/terraform output -raw db_ip` %>:3306/mktcms"
+    DATABASE_URL: "mysql2://root:MYSQL_ROOT_PASSWORD@<%= `bin/terraform output -raw db_ip` %>:3306/mktcms"
 aliases:
   shell: app exec --interactive --reuse "bash"
   logs: app logs -f
