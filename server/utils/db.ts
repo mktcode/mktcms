@@ -7,6 +7,8 @@ let connection: Kysely<Database> | null = null
 export async function getDatabaseConnection() {
   const { databaseUrl } = useRuntimeConfig()
 
+  console.info('Connecting to database:', databaseUrl)
+
   if (connection) {
     return connection
   }
