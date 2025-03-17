@@ -19,5 +19,6 @@ defineProps<{
         </h2>
       </div>
     </div>
+    <LandingpageContactForm v-if="website.hasContactForm" :website="website" />
   </div>
 </template>

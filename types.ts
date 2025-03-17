@@ -88,15 +88,6 @@ export const vcardFormSchema = z.object({
 })
 
 // Websites
-// CREATE TABLE IF NOT EXISTS websites (
-//   id INTEGER PRIMARY KEY AUTO_INCREMENT,
-//   userId INTEGER NOT NULL,
-//   title TEXT NOT NULL,
-//   subtitle TEXT,
-//   description TEXT,
-//   domain TEXT,
-//   image TEXT
-// );
 export interface WebsitesTable {
   id: Generated<number>
   userId: number
@@ -127,6 +118,29 @@ export const websiteFormSchema = z.object({
   isOnline: z.boolean(),
   hasContactForm: z.boolean(),
   contactFormSubject: z.string().optional(),
+})
+
+// Contact Form
+export interface ContactFormMessagesTable {
+  id: Generated<number>
+  websiteId: number
+  firstname: string
+  lastname: string
+  phone: string | null
+  email: string | null
+  message: string
+  date: ColumnType<string, undefined>
+}
+export type ContactFormMessage = Selectable<ContactFormMessagesTable>
+export type NewContactFormMessage = Insertable<ContactFormMessagesTable>
+export const contactFormMessageSchema = z.object({
+  id: z.number().optional(),
+  websiteId: z.number(),
+  firstname: z.string().min(1, 'Ein Vorname wird benötigt'),
+  lastname: z.string().min(1, 'Ein Nachname wird benötigt'),
+  phone: z.string().optional(),
+  email: z.string().email().optional(),
+  message: z.string().min(1, 'Eine Nachricht wird benötigt'),
 })
 
 // Customers
@@ -226,6 +240,7 @@ export interface Database {
   companies: CompaniesTable
   vcards: VcardsTable
   websites: WebsitesTable
+  contactFormMessages: ContactFormMessagesTable
   contents: ContentsTable
   customers: CustomersTable
   suppliers: SuppliersTable
