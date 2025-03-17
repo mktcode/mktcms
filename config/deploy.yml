@@ -1,0 +1,36 @@
+service: mktcms
+image: mktcode/mktcms
+servers:
+  web:
+    - <%= `bin/terraform output -raw app-1_ip` %>
+    - <%= `bin/terraform output -raw app-2_ip` %>
+registry:
+  username: mktcode
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+proxy: false
+env:
+  secret:
+    - MYSQL_ROOT_PASSWORD
+  clear:
+    # DB_HOST: <%= `bin/terraform output -raw db_ip` %>
+    DATABASE_URL: "mysql2://root:KAMAL_DB_PASSWORD@<%= `bin/terraform output -raw db_ip` %>:3306/mktcms"
+aliases:
+  shell: app exec --interactive --reuse "bash"
+  logs: app logs -f
+builder:
+  arch: amd64
+accessories:
+  db:
+    image: mysql:8.0
+    host: <%= `bin/terraform output -raw db_ip` %>
+    port: 3306
+    env:
+      clear:
+        MYSQL_ROOT_HOST: '%'
+      secret:
+        - MYSQL_ROOT_PASSWORD
+    files:
+      - init.sql:/docker-entrypoint-initdb.d/setup.sql
+    directories:
+      - data:/var/lib/mysql
