@@ -1,5 +1,8 @@
 <template>
   <NuxtLayout name="default">
+    <template #navbar2>
+      <LayoutNavbarHelp />
+    </template>
     <div class="p-6">
       <h1 class="text-3xl font-bold mb-4">
         Hilfe
