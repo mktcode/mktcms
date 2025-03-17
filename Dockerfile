@@ -9,5 +9,6 @@ FROM node:20-alpine AS runner
 WORKDIR /app
 COPY --from=builder /app/.output ./
 ENV NODE_ENV=production
-EXPOSE 3000
+ENV PORT=80
+EXPOSE 80
 CMD ["node", "server/index.mjs"]
