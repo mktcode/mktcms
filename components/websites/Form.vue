@@ -16,6 +16,8 @@ const state = reactive<Partial<Schema>>({
   description: props.website?.description || '',
   domain: props.website?.domain || '',
   isOnline: !!props.website?.isOnline,
+  hasContactForm: !!props.website?.hasContactForm,
+  contactFormSubject: props.website?.contactFormSubject || '',
 })
 
 const toast = useToast()
@@ -53,6 +55,19 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         Noch keine Domain? <ULink href="#" class="text-sky-500">Jetzt registrieren</ULink>
       </div>
     </UFormField>
+
+    <UCheckbox
+      label="Kontaktformular"
+      description="Hat die Website ein Kontaktformular?"
+      name="hasContactForm"
+      v-model="state.hasContactForm"
+    />
+
+    <Transition name="fade">
+      <UFormField label="Betreff" name="contactFormSubject" size="xl" v-if="state.hasContactForm">
+        <UInput v-model="state.contactFormSubject" class="w-full" />
+      </UFormField>
+    </Transition>
 
     <UCheckbox
       label="Website online"

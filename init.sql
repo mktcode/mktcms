@@ -49,6 +49,8 @@ CREATE TABLE IF NOT EXISTS websites (
   path TEXT,
   image TEXT,
   isOnline BOOLEAN NOT NULL DEFAULT 0
+  hasContactForm BOOLEAN NOT NULL DEFAULT 0
+  contactFormSubject TEXT,
 );
 
 CREATE TABLE IF NOT EXISTS customers (
