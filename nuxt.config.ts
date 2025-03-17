@@ -20,6 +20,9 @@ export default defineNuxtConfig({
     session: {
       password: process.env.SESSION_PASSWORD || '',
     },
+    public: {
+      appUrl: process.env.APP_URL || 'localhost:3000',
+    }
   },
   app: {
     head: {

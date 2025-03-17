@@ -7,6 +7,7 @@ const paramsSchema = z.object({
 
 export default defineEventHandler(async (event) => {
   const { id } = await getValidatedRouterParams(event, paramsSchema.parse);
+  const { public: { appUrl } } = useRuntimeConfig();
   
   const sessionCookie = getCookie(event, 'nuxt-session');
   if (!sessionCookie) {
@@ -20,12 +21,12 @@ export default defineEventHandler(async (event) => {
   browser.setCookie({
     name: 'nuxt-session',
     value: sessionCookie || '',
-    domain: 'localhost',
+    domain: appUrl.replace(/^https?:\/\//, '')
   });
 
   const page = await browser.newPage();
   page.setViewport({ width: 1700, height: 1100 });
-  await page.goto(`http://localhost:3000/werbung/print/print-${id}`, { waitUntil: "networkidle0" });
+  await page.goto(`${appUrl}/werbung/print/print-${id}`, { waitUntil: "networkidle0" });
   
   const screenshot = await page.screenshot({ type: "png" });
 
