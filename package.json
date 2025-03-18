@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "nuxt build && cp db/migrate.ts .output/migrate.ts",
+    "build": "nuxt build",
     "dev": "nuxt dev --host --dotenv .env.local",
     "dev:reset": "rm -f development.sqlite && ./init-dev-db.sh",
     "preview": "nuxt preview",
