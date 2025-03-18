@@ -3,6 +3,11 @@ export default defineAppConfig({
     colors: {
       primary: 'sky',
       neutral: 'zinc'
+    },
+    navigationMenu: {
+      slots: {
+        linkLabel: 'hidden md:inline'
+      }
     }
   }
 })
