@@ -22,6 +22,7 @@ env:
 aliases:
   shell: app exec --interactive --reuse "sh"
   logs: app logs -f
+  migrate: app exec --primary 'npx tsx server/migrate.ts'
 builder:
   arch: amd64
 accessories:

@@ -9,7 +9,8 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "deploy": "rsync -avz -e 'ssh -i ~/.ssh/uberspace-mktcode' .output/ mktcode@alnilam.uberspace.de:/home/mktcode/projects/cms.markus-kottlaender.de && ssh -i ~/.ssh/uberspace-mktcode mktcode@alnilam.uberspace.de 'supervisorctl restart cms.markus-kottlaender.de'",
-    "bd": "npm run build && npm run deploy"
+    "bd": "npm run build && npm run deploy",
+    "migrate": "npx tsx db/migrate.ts"
   },
   "dependencies": {
     "@googleapis/mybusinessbusinessinformation": "^4.0.11",
