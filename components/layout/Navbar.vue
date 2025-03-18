@@ -49,12 +49,12 @@ const items = ref([
 </script>
 
 <template>
-  <nav class="bg-white sticky top-0 z-[60] border-b border-gray-200">
+  <nav class="bg-white sticky top-0 z-[60] border-b border-gray-200 overflow-x-scroll">
     <UNavigationMenu
       color="primary"
       variant="pill"
       :items="items"
-      class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
+      class="mx-auto min-w-[49rem] max-w-7xl px-4 sm:px-6 lg:px-8"
     >
       <template #contactFormMessages-trailing>
         <UBadge color="primary" label="1" variant="outline" size="sm" />
