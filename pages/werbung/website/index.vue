@@ -19,7 +19,12 @@ const columns: TableColumn<Website>[] = [
   },
   {
     accessorKey: 'description',
-    header: 'Beschreibung'
+    header: 'Beschreibung',
+    meta: {
+      class: {
+        td: 'truncate max-w-[300px]'
+      }
+    }
   },
   {
     accessorKey: 'domain',
