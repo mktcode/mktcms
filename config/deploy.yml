@@ -35,6 +35,6 @@ accessories:
       secret:
         - MYSQL_ROOT_PASSWORD
     files:
-      - init.sql:/docker-entrypoint-initdb.d/setup.sql
+      - db/init.sql:/docker-entrypoint-initdb.d/setup.sql
     directories:
       - data:/var/lib/mysql
