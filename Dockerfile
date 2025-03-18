@@ -8,6 +8,7 @@ RUN npm run build
 FROM node:20-alpine AS runner
 WORKDIR /app
 COPY --from=builder /app/.output ./
+COPY --from=builder /app/db/migrate.ts ./server/migrate.ts
 ENV NODE_ENV=production
 ENV PORT=80
 EXPOSE 80
