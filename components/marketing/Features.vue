@@ -43,11 +43,11 @@ const features = [
                 <dd class="inline">{{ feature.description }}</dd>
               </div>
             </dl>
-            <div class="flex justify-center items-center gap-4 mt-10">
-              <UButton size="xl" to="/login">
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-10">
+              <UButton size="xl" to="/" class="w-full sm:w-auto" icon="i-heroicons-rocket-launch">
                 Jetzt kostenlos testen
               </UButton>
-              <UButton size="xl" variant="outline">
+              <UButton size="xl" variant="outline" class="w-full sm:w-auto" icon="i-heroicons-device-phone-mobile">
                 App installieren
               </UButton>
             </div>
