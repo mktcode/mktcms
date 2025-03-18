@@ -34,7 +34,6 @@ export default defineOAuthGoogleEventHandler({
           name: user.name,
           googleManagerId: user.sub,
           email: user.email,
-          isOnline: false,
         })
         .executeTakeFirstOrThrow()
       

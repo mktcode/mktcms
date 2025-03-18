@@ -15,7 +15,6 @@ export interface UsersTable {
   email: string | null
   googleManagerId: string
   password: string | null
-  isOnline: boolean,
 }
 export type User = Selectable<UsersTable>
 export type NewUser = Insertable<UsersTable>
