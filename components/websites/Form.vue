@@ -18,6 +18,7 @@ const state = reactive<Partial<Schema>>({
   isOnline: !!props.website?.isOnline,
   hasContactForm: !!props.website?.hasContactForm,
   contactFormSubject: props.website?.contactFormSubject || '',
+  font: props.website?.font || 'Roboto',
 })
 
 const toast = useToast()
@@ -47,6 +48,10 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
     <UFormField label="Beschreibung" name="description" size="xl">
       <UTextarea v-model="state.description" class="w-full" />
+    </UFormField>
+
+    <UFormField label="Schriftart" name="font" size="xl">
+      <USelect v-model="state.font" class="w-full" :items="[ 'Roboto', 'Open Sans', 'Lato' ]" />
     </UFormField>
 
     <UFormField label="Domain" name="domain" size="xl">

@@ -99,6 +99,7 @@ export interface WebsitesTable {
   isOnline: boolean
   hasContactForm: boolean
   contactFormSubject: string | null
+  font: string | null
 }
 export type Website = Selectable<WebsitesTable>
 export type NewWebsite = Insertable<WebsitesTable>
@@ -117,6 +118,7 @@ export const websiteFormSchema = z.object({
   isOnline: z.boolean(),
   hasContactForm: z.boolean(),
   contactFormSubject: z.string().optional(),
+  font: z.string().optional(),
 })
 
 // Contact Form
