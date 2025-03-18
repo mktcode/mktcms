@@ -44,4 +44,7 @@ export default defineNuxtConfig({
     'nuxt-authorization',
     '@nuxt/ui',
   ],
+  ui: {
+    colorMode: false,
+  },
 })
