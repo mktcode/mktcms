@@ -10,7 +10,7 @@ import {
 import type { Database } from '../types'
 
 async function migrateToLatest() {
-  const databaseUrl = process.env.DATABASE_URL
+  const databaseUrl = process.env.DATABASE_URL || process.env.NUXT_DATABASE_URL
   if (!databaseUrl) {
     console.error('DATABASE_URL is not set')
     process.exit(1)
