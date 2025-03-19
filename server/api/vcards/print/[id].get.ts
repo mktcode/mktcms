@@ -8,6 +8,7 @@ const paramsSchema = z.object({
 export default defineEventHandler(async (event) => {
   const { id } = await getValidatedRouterParams(event, paramsSchema.parse);
   const { public: { appUrl } } = useRuntimeConfig();
+  console.log('appUrl', appUrl);
   
   const sessionCookie = getCookie(event, 'nuxt-session');
   if (!sessionCookie) {
