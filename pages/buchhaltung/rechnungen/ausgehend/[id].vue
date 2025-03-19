@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { Invoice } from '~/types';
+import type { InvoiceOut } from '~/types';
 
 const route = useRoute()
-const invoice = ref<Invoice | null>(null);
+const invoice = ref<InvoiceOut | null>(null);
 const invoiceId = Array.isArray(route.params.id) ? Number(route.params.id[0]) : Number(route.params.id)
 
 definePageMeta({
@@ -12,7 +12,7 @@ definePageMeta({
 })
 
 onMounted(async () => {
-  const existingInvoice = await $fetch<Invoice>(`/api/invoicesOut/${invoiceId}`);
+  const existingInvoice = await $fetch<InvoiceOut>(`/api/invoicesOut/${invoiceId}`);
   
   invoice.value = existingInvoice;
 })
@@ -23,7 +23,9 @@ onMounted(async () => {
     <template #navbar2>
       <LayoutNavbarAccounting />
     </template>
-    <InvoicesForm v-if="invoice" :invoice="invoice"/>
-    <div v-else>Rechnung nicht gefunden</div>
+    <div class="p-6">
+      <InvoicesOutForm v-if="invoice" :invoice="invoice"/>
+      <div v-else>Rechnung nicht gefunden</div>
+    </div>
   </NuxtLayout>
 </template>

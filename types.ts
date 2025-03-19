@@ -200,9 +200,9 @@ export interface InvoicesOutTable {
   status: number
   discount: number
 }
-export type Invoice = Selectable<InvoicesOutTable>
-export type NewInvoice = Insertable<InvoicesOutTable>
-export type InvoiceUpdate = Updateable<InvoicesOutTable>
+export type InvoiceOut = Selectable<InvoicesOutTable>
+export type NewInvoiceOut = Insertable<InvoicesOutTable>
+export type InvoiceOutUpdate = Updateable<InvoicesOutTable>
 export const invoiceOutFormSchema = z.object({
   id: z.number().optional(),
   customerId: z.number(),

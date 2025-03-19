@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
-import { invoiceOutFormSchema as schema, type Customer, type Invoice } from '~/types'
+import { invoiceOutFormSchema as schema, type Customer, type InvoiceOut } from '~/types'
 import { CalendarDate, DateFormatter, getLocalTimeZone } from '@internationalized/date'
 
 const props = defineProps<{
-  invoice?: Invoice
+  invoice?: InvoiceOut
 }>()
 
 type Schema = z.output<typeof schema>
@@ -14,6 +14,8 @@ const state = reactive<Partial<Schema>>({
   id: props.invoice?.id,
   customerId: props.invoice?.customerId,
   date: props.invoice?.date,
+  status: props.invoice?.status,
+  discount: props.invoice?.discount,
   items: [],
 })
 const dateModel = shallowRef(new CalendarDate(2025, 1, 10))
@@ -39,7 +41,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     body: event.data,
   })
   isSaving.value = false
-  navigateTo('/rechnungen')
+  navigateTo('/buchhaltung/rechnungen/ausgehend')
   toast.add({ title: 'Erfolg.', description: 'Rechnung wurde gespeichert.', color: 'success' })
 }
 </script>
@@ -69,6 +71,25 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
           <UCalendar v-model="dateModel" class="p-2" @update:model-value="state.date = dateModel?.toString()" />
         </template>
       </UPopover>
+    </UFormField>
+
+    <UFormField label="Status" name="status" size="xl">
+      <USelect
+        v-model="state.status"
+        value-key="value"
+        label-key="label"
+        :items="[
+          { label: 'Offen', value: 0 },
+          { label: 'Bezahlt', value: 1 },
+          { label: 'Storniert', value: 2 }
+        ]"
+        size="xl"
+        class="w-48"
+      />
+    </UFormField>
+
+    <UFormField label="Rabatt" name="discount" size="xl">
+      <UInput v-model="state.discount" type="number" size="xl" />
     </UFormField>
 
     <UButton :loading="isSaving" type="submit" color="primary" icon="i-heroicons-check" size="xl">

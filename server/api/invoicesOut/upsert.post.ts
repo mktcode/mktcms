@@ -1,39 +1,38 @@
 import { invoiceOutFormSchema } from "~/types";
 
 export default defineEventHandler(async (event) => {
-  try {
-    const { id, customerId, date, status, discount, items } = await readValidatedBody(event, body => invoiceOutFormSchema.parse(body))
-    const db = await getDatabaseConnection()
+  const invoice = await readValidatedBody(event, body => invoiceOutFormSchema.parse(body))
+  const db = await getDatabaseConnection()
 
-    if (id) {
-      if (await denies(event, manageInvoiceOut, id)) {
-        return createError({
-          status: 403,
-          statusMessage: 'You are not authorized to update this invoice.'
-        })
-      }
-
-      await db.updateTable('invoicesOut').set({ customerId, date }).where('id', '=', id).execute()
-
-      return { success: true, error: null }
-    }
-
-    if (await denies(event, manageCustomer, customerId)) {
-      return createError({
-        status: 403,
-        statusMessage: 'You are not authorized to update this content.'
-      })
-    }
-    
-    const query = db.insertInto('invoicesOut').values({ customerId, date, status, discount })
-
-    await query.execute()
-
-    return { success: true, error: null }
-  } catch (error) {
+  if (await denies(event, manageCustomer, invoice.customerId)) {
     return createError({
-      status: 400,
-      statusMessage: 'Invalid request:' + error,
+      status: 403,
+      statusMessage: 'Du bist nicht berechtigt, Rechnungen für diesen Kunden zu verwalten.'
     })
   }
+
+  if (invoice.id) {
+    if (await denies(event, manageInvoiceOut, invoice.id)) {
+      return createError({
+        status: 403,
+        statusMessage: 'Du bist nicht berechtigt, diese Rechnung zu bearbeiten.'
+      })
+    }
+
+    await db.updateTable('invoicesOut').set({
+      customerId: invoice.customerId,
+      date: invoice.date.split('T')[0],
+      discount: invoice.discount,
+      status: invoice.status,
+    }).where('id', '=', invoice.id).execute()
+
+    return { success: true, error: null }
+  }
+  
+  await db.insertInto('invoicesOut').values({
+    customerId: invoice.customerId,
+    date: invoice.date,
+    discount: invoice.discount,
+    status: invoice.status,
+  }).execute()
 })

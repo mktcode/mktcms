@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { PDFDocument, StandardFonts } from 'pdf-lib'
 import ZUGFeRDGenerator from 'zugferd-generator'
-import { Invoice } from "~/types";
+import { InvoiceOut } from "~/types";
 
 const invoiceData = {
   id: 'INV-001',
@@ -22,7 +22,7 @@ const invoiceData = {
   ],
 };
 
-const generatePDF = async (invoice: Invoice) => {
+const generatePDF = async (invoice: InvoiceOut) => {
   const pdfDoc = await PDFDocument.create()
   const helveticaFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold)
 
