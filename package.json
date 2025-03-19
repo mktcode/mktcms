@@ -32,6 +32,7 @@
     "nuxt": "^3.16.0",
     "nuxt-auth-utils": "^0.5.16",
     "nuxt-authorization": "^0.3.3",
+    "openai": "^4.87.4",
     "pdf-lib": "^1.17.1",
     "puppeteer": "^24.4.0",
     "sharp": "^0.33.5",

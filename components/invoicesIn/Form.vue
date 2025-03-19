@@ -14,14 +14,17 @@ const state = reactive<Partial<Schema>>({
   id: props.invoice?.id,
   supplierId: props.invoice?.supplierId,
   date: props.invoice?.date,
-  status: props.invoice?.status,
-  discount: props.invoice?.discount,
+  status: props.invoice?.status ?? 0,
+  discount: props.invoice?.discount ?? 0,
 })
 const dateModel = shallowRef(new CalendarDate(2025, 1, 10))
 
 const toast = useToast()
 const isSaving = ref(false)
 const suppliers = ref<Supplier[]>([])
+const fileInput = ref<HTMLInputElement | null>(null)
+const files = ref<File[]>([])
+const isReadingFile = ref(false)
 
 const fetchPosts = async () => {
   const data = await $fetch('/api/suppliers/list');
@@ -43,10 +46,65 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   navigateTo('/buchhaltung/rechnungen/eingehend')
   toast.add({ title: 'Erfolg.', description: 'Rechnung wurde gespeichert.', color: 'success' })
 }
+
+async function readImages() {
+  isReadingFile.value = true
+  const images = []
+  for (const file of files.value) {
+    const base64url = await toBase64(file)
+    images.push(base64url)
+  }
+
+  const imageData = await $fetch('/api/invoicesIn/readImages', {
+    method: 'POST',
+    body: { images },
+  })
+
+  if (imageData.supplierId !== 0) {
+    state.supplierId = imageData.supplierId
+  }
+
+  if (imageData.date) {
+    dateModel.value = new CalendarDate(imageData.date.year, imageData.date.month, imageData.date.day)
+  }
+
+  isReadingFile.value = false
+}
+
+function handleFilesChange(event: Event) {
+  const target = event.target as HTMLInputElement
+  if (target.files) {
+    files.value = Array.from(target.files)
+  }
+}
+
+function toBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.addEventListener('load', () => resolve(reader.result as string))
+    reader.addEventListener('error', reject)
+  })
+}
 </script>
 
 <template>
   <UForm :schema="schema" :state="state" class="flex flex-col gap-4" @submit="onSubmit">
+    <UFormField label="Rechnung hochladen/fotografieren" name="file" size="xl">
+      <UInput
+        type="file"
+        size="xl"
+        ref="fileInput"
+        accept="image/*"
+        multiple
+        capture="environment"
+        @change="handleFilesChange"
+      />
+      <UButton color="primary" size="xl" @click="readImages" :disabled="isReadingFile" :loading="isReadingFile">
+        Bild lesen
+      </UButton>
+    </UFormField>
+
     <UFormField label="Lieferant" name="supplierId" size="xl">
       <USelectMenu
         v-model="state.supplierId"
@@ -57,8 +115,6 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         class="w-48"
       />
     </UFormField>
-
-    {{ state.date }}
 
     <UFormField label="Datum" name="date" size="xl">
       <UPopover>

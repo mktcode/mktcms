@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     smtpFromName: process.env.SMTP_FROM_NAME,
     smtpTo: process.env.SMTP_TO,
     ipHashSalt: process.env.IP_HASH_SALT,
+    openaiApiKey: process.env.OPENAI_API_KEY,
     oauth: {
       google: {
         clientId: process.env.OAUTH_GOOGLE_CLIENT_ID,
