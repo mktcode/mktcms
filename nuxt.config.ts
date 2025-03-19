@@ -21,7 +21,7 @@ export default defineNuxtConfig({
       password: process.env.SESSION_PASSWORD || '',
     },
     public: {
-      appUrl: process.env.APP_URL || 'localhost:3000',
+      appUrl: process.env.APP_URL || 'http://localhost:3000',
     }
   },
   app: {
