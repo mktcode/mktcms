@@ -2,7 +2,7 @@
 import type { DropdownMenuItem, TableColumn } from '@nuxt/ui';
 import type { Invoice } from '~/types';
 
-const { data, status } = useFetch('/api/invoices/list');
+const { data, status } = useFetch('/api/invoicesOut/list');
 const toast = useToast();
 
 const columns: TableColumn<Invoice>[] = [
@@ -25,7 +25,7 @@ const columns: TableColumn<Invoice>[] = [
 ]
 
 async function downloadEInvoicePDF(content: Invoice) {
-  const response = await $fetch<Blob>('/api/invoices/einvoice', {
+  const response = await $fetch<Blob>('/api/invoicesOut/einvoice', {
     method: 'POST',
     body: { id: content.id },
     responseType: 'blob'
@@ -76,7 +76,7 @@ function getDropdownActions(content: Invoice): DropdownMenuItem[][] {
   <NuxtLayout name="default">
     <template #navbar2>
       <LayoutNavbarAccounting>
-        <UButton class="ml-auto" icon="i-lucide-plus" to="/rechnungen/eingehend/neu">
+        <UButton class="ml-auto" icon="i-lucide-plus" to="/buchhaltung/rechnungen/eingehend/neu">
           Neue Rechnung
         </UButton>
       </LayoutNavbarAccounting>

@@ -64,14 +64,14 @@ export default defineEventHandler(async (event) => {
   const db = await getDatabaseConnection()
   const { id } = await readValidatedBody(event, bodySchema.parse);
 
-  if (await denies(event, manageInvoice, id)) {
+  if (await denies(event, manageInvoiceOut, id)) {
     return createError({
       status: 403,
       statusMessage: 'You are not authorized to download this invoice.'
     })
   }
 
-  const invoice = await db.selectFrom('invoices')
+  const invoice = await db.selectFrom('invoicesOut')
     .selectAll()
     .where('id', '=', id)
     .limit(1)

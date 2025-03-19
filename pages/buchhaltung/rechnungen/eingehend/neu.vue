@@ -4,7 +4,7 @@
       <LayoutNavbarAccounting />
     </template>
     <div class="p-6">
-      <InvoicesForm />
+      <InvoicesOutForm />
     </div>
   </NuxtLayout>
 </template>

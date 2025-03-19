@@ -192,19 +192,23 @@ export const supplierFormSchema = z.object({
   email: z.string().email().optional(),
 })
 
-// Invoices
-export interface InvoicesTable {
+// Invoices Out
+export interface InvoicesOutTable {
   id: Generated<number>
   customerId: number
   date: ColumnType<string, string, string>
+  status: number
+  discount: number
 }
-export type Invoice = Selectable<InvoicesTable>
-export type NewInvoice = Insertable<InvoicesTable>
-export type InvoiceUpdate = Updateable<InvoicesTable>
-export const invoiceFormSchema = z.object({
+export type Invoice = Selectable<InvoicesOutTable>
+export type NewInvoice = Insertable<InvoicesOutTable>
+export type InvoiceUpdate = Updateable<InvoicesOutTable>
+export const invoiceOutFormSchema = z.object({
   id: z.number().optional(),
   customerId: z.number(),
   date: z.string(),
+  status: z.number(),
+  discount: z.number(),
   items: z.array(z.number()),
 })
 
@@ -218,6 +222,25 @@ export interface InvoiceItemsTable {
 export type InvoiceItem = Selectable<InvoiceItemsTable>
 export type NewInvoiceItem = Insertable<InvoiceItemsTable>
 export type InvoiceItemUpdate = Updateable<InvoiceItemsTable>
+
+// Invoices In
+export interface InvoicesInTable {
+  id: Generated<number>
+  supplierId: number
+  date: ColumnType<string, string, string>
+  status: number
+  discount: number
+}
+export type InvoiceIn = Selectable<InvoicesInTable>
+export type NewInvoiceIn = Insertable<InvoicesInTable>
+export type InvoiceInUpdate = Updateable<InvoicesInTable>
+export const invoiceInFormSchema = z.object({
+  id: z.number().optional(),
+  supplierId: z.number(),
+  date: z.string(),
+  status: z.number(),
+  discount: z.number(),
+})
 
 // Content
 export interface ContentsTable {
@@ -245,6 +268,7 @@ export interface Database {
   contents: ContentsTable
   customers: CustomersTable
   suppliers: SuppliersTable
-  invoices: InvoicesTable
+  invoicesOut: InvoicesOutTable
   invoiceItems: InvoiceItemsTable
+  invoicesIn: InvoicesInTable
 }

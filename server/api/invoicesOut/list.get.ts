@@ -11,9 +11,9 @@ export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
 
   const invoices = await db
-    .selectFrom('invoices')
-    .innerJoin('customers', 'customers.id', 'invoices.customerId')
-    .select(['invoices.id', 'invoices.customerId', 'customers.name as customerName', 'invoices.date'])
+    .selectFrom('invoicesOut')
+    .innerJoin('customers', 'customers.id', 'invoicesOut.customerId')
+    .select(['invoicesOut.id', 'invoicesOut.customerId', 'customers.name as customerName', 'invoicesOut.date'])
     .where('customers.userId', '=', user.id)
     .limit(limit ? Number(limit) : 9999999)
     .execute()

@@ -12,7 +12,7 @@ definePageMeta({
 })
 
 onMounted(async () => {
-  const existingInvoice = await $fetch<Invoice>(`/api/invoices/${invoiceId}`);
+  const existingInvoice = await $fetch<Invoice>(`/api/invoicesOut/${invoiceId}`);
   
   invoice.value = existingInvoice;
 })

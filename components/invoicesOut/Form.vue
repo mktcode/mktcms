@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
-import { invoiceFormSchema as schema, type Customer, type Invoice } from '~/types'
+import { invoiceOutFormSchema as schema, type Customer, type Invoice } from '~/types'
 import { CalendarDate, DateFormatter, getLocalTimeZone } from '@internationalized/date'
 
 const props = defineProps<{
@@ -34,7 +34,7 @@ const df = new DateFormatter('de-DE', {
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   isSaving.value = true
-  await $fetch('/api/invoices/upsert', {
+  await $fetch('/api/invoicesOut/upsert', {
     method: 'POST',
     body: event.data,
   })

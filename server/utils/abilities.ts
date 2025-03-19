@@ -70,15 +70,30 @@ export const manageSupplier = defineAbility(async (user: User, supplierId: numbe
   return ownsSupplier.count === 1
 })
 
-export const manageInvoice = defineAbility(async (user: User, invoiceId: number) => {
+export const manageInvoiceOut = defineAbility(async (user: User, invoiceId: number) => {
   const db = await getDatabaseConnection()
 
   const ownsInvoice = await db
-    .selectFrom('invoices')
-    .innerJoin('customers', 'customers.id', 'invoices.customerId')
+    .selectFrom('invoicesOut')
+    .innerJoin('customers', 'customers.id', 'invoicesOut.customerId')
     .innerJoin('users', 'users.id', 'customers.userId')
-    .select(({ fn }) => fn.count<number>('invoices.id').as('count'))
-    .where('invoices.id', '=', invoiceId)
+    .select(({ fn }) => fn.count<number>('invoicesOut.id').as('count'))
+    .where('invoicesOut.id', '=', invoiceId)
+    .where('users.googleManagerId', '=', user.googleId)
+    .executeTakeFirstOrThrow()
+  
+  return ownsInvoice.count === 1
+})
+
+export const manageInvoiceIn = defineAbility(async (user: User, invoiceId: number) => {
+  const db = await getDatabaseConnection()
+
+  const ownsInvoice = await db
+    .selectFrom('invoicesIn')
+    .innerJoin('suppliers', 'suppliers.id', 'invoicesIn.supplierId')
+    .innerJoin('users', 'users.id', 'suppliers.userId')
+    .select(({ fn }) => fn.count<number>('invoicesIn.id').as('count'))
+    .where('invoicesIn.id', '=', invoiceId)
     .where('users.googleManagerId', '=', user.googleId)
     .executeTakeFirstOrThrow()
   

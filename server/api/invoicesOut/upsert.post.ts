@@ -1,19 +1,19 @@
-import { invoiceFormSchema } from "~/types";
+import { invoiceOutFormSchema } from "~/types";
 
 export default defineEventHandler(async (event) => {
   try {
-    const { id, customerId, date, items } = await readValidatedBody(event, body => invoiceFormSchema.parse(body))
+    const { id, customerId, date, status, discount, items } = await readValidatedBody(event, body => invoiceOutFormSchema.parse(body))
     const db = await getDatabaseConnection()
 
     if (id) {
-      if (await denies(event, manageInvoice, id)) {
+      if (await denies(event, manageInvoiceOut, id)) {
         return createError({
           status: 403,
           statusMessage: 'You are not authorized to update this invoice.'
         })
       }
 
-      await db.updateTable('invoices').set({ customerId, date }).where('id', '=', id).execute()
+      await db.updateTable('invoicesOut').set({ customerId, date }).where('id', '=', id).execute()
 
       return { success: true, error: null }
     }
@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
       })
     }
     
-    const query = db.insertInto('invoices').values({ customerId, date })
+    const query = db.insertInto('invoicesOut').values({ customerId, date, status, discount })
 
     await query.execute()
 

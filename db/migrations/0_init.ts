@@ -96,7 +96,7 @@ export async function up(db: Kysely<any>): Promise<void> {
     .execute()
   
   await db.schema
-    .createTable('invoices_out')
+    .createTable('invoicesOut')
     .addColumn('id', 'integer', (col) => col.primaryKey().autoIncrement())
     .addColumn('customerId', 'integer', (col) => col.notNull())
     .addColumn('date', 'timestamp')
@@ -105,7 +105,7 @@ export async function up(db: Kysely<any>): Promise<void> {
     .execute()
   
   await db.schema
-    .createTable('invoices_in')
+    .createTable('invoicesIn')
     .addColumn('id', 'integer', (col) => col.primaryKey().autoIncrement())
     .addColumn('supplierId', 'integer', (col) => col.notNull())
     .addColumn('date', 'timestamp')
@@ -114,7 +114,7 @@ export async function up(db: Kysely<any>): Promise<void> {
     .execute()
   
   await db.schema
-    .createTable('invoice_items')
+    .createTable('invoiceItems')
     .addColumn('id', 'integer', (col) => col.primaryKey().autoIncrement())
     .addColumn('title', 'text', (col) => col.notNull())
     .addColumn('description', 'text')
@@ -123,7 +123,7 @@ export async function up(db: Kysely<any>): Promise<void> {
     .execute()
   
   await db.schema
-    .createTable('invoice_item_relations')
+    .createTable('invoiceItemRelations')
     .addColumn('id', 'integer', (col) => col.primaryKey().autoIncrement())
     .addColumn('invoiceId', 'integer', (col) => col.notNull())
     .addColumn('itemId', 'integer', (col) => col.notNull())
@@ -153,9 +153,9 @@ export async function down(db: Kysely<any>): Promise<void> {
   await db.schema.dropTable('contactFormMessages').execute()
   await db.schema.dropTable('customers').execute()
   await db.schema.dropTable('suppliers').execute()
-  await db.schema.dropTable('invoices_out').execute()
-  await db.schema.dropTable('invoices_in').execute()
-  await db.schema.dropTable('invoice_items').execute()
-  await db.schema.dropTable('invoice_item_relations').execute()
+  await db.schema.dropTable('invoicesOut').execute()
+  await db.schema.dropTable('invoicesIn').execute()
+  await db.schema.dropTable('invoiceItems').execute()
+  await db.schema.dropTable('invoiceItemRelations').execute()
   await db.schema.dropTable('contents').execute()
 }

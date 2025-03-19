@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
   const db = await getDatabaseConnection()
   const { id } = await getValidatedRouterParams(event, paramsSchema.parse);
 
-  const invoice = await db.selectFrom('invoices')
+  const invoice = await db.selectFrom('invoicesOut')
     .selectAll()
     .where('id', '=', Number(id))
     .limit(1)
