@@ -10,7 +10,6 @@ WORKDIR /app
 COPY --from=builder /app/.output ./
 COPY --from=builder /app/db/migrate.ts ./server/migrate.ts
 COPY --from=builder /app/db/migrations ./server/migrations
-RUN npx puppeteer browsers install chrome
 ENV NODE_ENV=production
 ENV PORT=80
 EXPOSE 80
