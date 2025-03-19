@@ -46,7 +46,7 @@ export default defineEventHandler(async (event) => {
 
   const response = await openai.responses.create({
     store: false,
-    model: 'gpt-4o',
+    model: 'gpt-4o-mini',
     input: [systemMessage, message] as ResponseInput,
     text: {
       format: {
