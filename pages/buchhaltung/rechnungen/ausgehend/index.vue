@@ -86,13 +86,6 @@ function getDropdownActions(content: InvoiceOut): DropdownMenuItem[][] {
       :columns="columns"
       :getDropdownActions="getDropdownActions"
       :loading="status === 'pending'"
-    >
-      <template #address-cell="{ row }">
-        <div>
-          <div>{{ row.original.address }}</div>
-          <div>{{ row.original.zip }} {{ row.original.city }}</div>
-        </div>
-      </template>
-    </LayoutList>
+    />
   </NuxtLayout>
 </template>
