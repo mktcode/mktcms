@@ -17,7 +17,11 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const browser = await puppeteer.launch();
+  // Yes, we trust the pages we open.
+  // See: https://pptr.dev/troubleshooting#setting-up-chrome-linux-sandbox
+  const browser = await puppeteer.launch({
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  });
   browser.setCookie({
     name: 'nuxt-session',
     value: sessionCookie || '',
