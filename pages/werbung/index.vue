@@ -1,5 +1,5 @@
 <script setup lang="ts">
-navigateTo('/werbung/print')
+navigateTo('/werbung/website')
 </script>
 
 <template>
