@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
-import { websiteFormSchema as schema, type Website } from '~/types'
+import { websiteFormSchema as schema, type NewWebsiteForm, type Website } from '~/types'
 
 const props = defineProps<{
   website?: Website
+  suggestions?: NewWebsiteForm | null
 }>()
 
 type Schema = z.output<typeof schema>
 
 const state = reactive<Partial<Schema>>({
   id: props.website?.id,
-  title: props.website?.title,
+  title: props.website?.title || props.suggestions?.title || '',
   subtitle: props.website?.subtitle || '',
   description: props.website?.description || '',
   domain: props.website?.domain || '',

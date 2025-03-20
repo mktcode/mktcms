@@ -115,11 +115,12 @@ export const websiteFormSchema = z.object({
   domain: z.string().optional(),
   path: z.string().optional(),
   image: z.string().optional(),
-  isOnline: z.boolean(),
-  hasContactForm: z.boolean(),
+  isOnline: z.boolean().optional(),
+  hasContactForm: z.boolean().optional(),
   contactFormSubject: z.string().optional(),
   font: z.string().optional(),
 })
+export type NewWebsiteForm = z.infer<typeof websiteFormSchema>
 
 // Contact Form
 export interface ContactFormMessagesTable {
