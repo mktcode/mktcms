@@ -16,6 +16,7 @@ export default defineEventHandler(async (event) => {
   }
 
   await db.deleteFrom('websites').where('id', '=', id).execute()
+  await db.deleteFrom('websiteContents').where('websiteId', '=', id).execute()
 
   return { success: true, error: null }
 })

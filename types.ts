@@ -104,6 +104,7 @@ export interface WebsitesTable {
   aboutTitle: string | null
   aboutSubtitle: string | null
   aboutText: string | null
+  showContents: boolean
 }
 export type Website = Selectable<WebsitesTable>
 export type NewWebsite = Insertable<WebsitesTable>
@@ -119,16 +120,43 @@ export const websiteFormSchema = z.object({
   domain: z.string().optional(),
   path: z.string().optional(),
   image: z.string().optional(),
-  isOnline: z.boolean().optional(),
-  hasContactForm: z.boolean().optional(),
+  isOnline: z.boolean(),
+  hasContactForm: z.boolean(),
   contactFormSubject: z.string().optional(),
   font: z.string().optional(),
-  showAbout: z.boolean().optional(),
+  showAbout: z.boolean(),
   aboutTitle: z.string().optional(),
   aboutSubtitle: z.string().optional(),
   aboutText: z.string().optional(),
+  showContents: z.boolean(),
 })
 export type NewWebsiteForm = z.infer<typeof websiteFormSchema>
+
+// Website Contents
+export interface WebsiteContentsTable {
+  id: Generated<number>
+  websiteId: number
+  title: string
+  subtitle: string | null
+  description: string | null
+  date: ColumnType<string, string, string> | null
+  url: string | null
+  image: string | null
+  orderIndex: number
+}
+export type WebsiteContent = Selectable<WebsiteContentsTable>
+export type NewWebsiteContent = Insertable<WebsiteContentsTable>
+export type WebsiteContentUpdate = Updateable<WebsiteContentsTable>
+export const websiteContentFormSchema = z.object({
+  id: z.number().optional(),
+  title: z.string().min(1, 'Ein Titel wird benötigt'),
+  subtitle: z.string().nullable().optional(),
+  description: z.string().nullable().optional(),
+  date: z.string().nullable().optional(),
+  url: z.string().nullable().optional(),
+  image: z.string().nullable().optional(),
+  orderIndex: z.number(),
+})
 
 // Contact Form
 export interface ContactFormMessagesTable {
@@ -251,30 +279,13 @@ export const invoiceInFormSchema = z.object({
   discount: z.number(),
 })
 
-// Content
-export interface ContentsTable {
-  id: Generated<number>
-  userId: number
-  parentId: number | null
-  title: string
-  subtitle: string | null
-  description: string | null
-  date: ColumnType<string, string, string> | null
-  url: string | null
-  image: string | null
-  orderIndex: number
-}
-export type Content = Selectable<ContentsTable>
-export type NewContent = Insertable<ContentsTable>
-export type ContentUpdate = Updateable<ContentsTable>
-
 export interface Database {
   users: UsersTable
   companies: CompaniesTable
   vcards: VcardsTable
   websites: WebsitesTable
+  websiteContents: WebsiteContentsTable
   contactFormMessages: ContactFormMessagesTable
-  contents: ContentsTable
   customers: CustomersTable
   suppliers: SuppliersTable
   invoicesOut: InvoicesOutTable

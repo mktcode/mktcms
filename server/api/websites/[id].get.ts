@@ -14,5 +14,17 @@ export default defineEventHandler(async (event) => {
     .limit(1)
     .executeTakeFirst()
   
-  return website
+  if (website) {
+    const contents = await db.selectFrom('websiteContents')
+      .selectAll()
+      .where('websiteId', '=', website.id)
+      .execute()
+    
+    return {
+      ...website,
+      contents
+    }
+  }
+  
+  return null
 })

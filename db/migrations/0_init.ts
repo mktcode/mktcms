@@ -57,6 +57,20 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('isOnline', 'boolean', (col) => col.notNull().defaultTo(0))
     .addColumn('hasContactForm', 'boolean', (col) => col.notNull().defaultTo(0))
     .addColumn('contactFormSubject', 'text')
+    .addColumn('showContents', 'boolean', (col) => col.notNull().defaultTo(0))
+    .execute()
+  
+  await db.schema
+    .createTable('websiteContents')
+    .addColumn('id', 'integer', (col) => col.primaryKey().autoIncrement())
+    .addColumn('websiteId', 'integer', (col) => col.notNull())
+    .addColumn('title', 'text', (col) => col.notNull())
+    .addColumn('subtitle', 'text')
+    .addColumn('description', 'text')
+    .addColumn('date', 'timestamp')
+    .addColumn('url', 'text')
+    .addColumn('image', 'text')
+    .addColumn('orderIndex', 'integer', (col) => col.notNull().defaultTo(0))
     .execute()
 
   await db.schema
@@ -129,20 +143,6 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('itemId', 'integer', (col) => col.notNull())
     .addColumn('quantity', 'integer', (col) => col.notNull().defaultTo(1))
     .execute()
-  
-  await db.schema
-    .createTable('contents')
-    .addColumn('id', 'integer', (col) => col.primaryKey().autoIncrement())
-    .addColumn('userId', 'integer', (col) => col.notNull())
-    .addColumn('parentId', 'integer')
-    .addColumn('title', 'text', (col) => col.notNull())
-    .addColumn('subtitle', 'text')
-    .addColumn('description', 'text')
-    .addColumn('date', 'timestamp')
-    .addColumn('url', 'text')
-    .addColumn('image', 'text')
-    .addColumn('orderIndex', 'integer', (col) => col.notNull().defaultTo(0))
-    .execute()
 }
 
 export async function down(db: Kysely<any>): Promise<void> {
@@ -150,6 +150,7 @@ export async function down(db: Kysely<any>): Promise<void> {
   await db.schema.dropTable('companies').execute()
   await db.schema.dropTable('vcards').execute()
   await db.schema.dropTable('websites').execute()
+  await db.schema.dropTable('websiteContents').execute()
   await db.schema.dropTable('contactFormMessages').execute()
   await db.schema.dropTable('customers').execute()
   await db.schema.dropTable('suppliers').execute()
@@ -157,5 +158,4 @@ export async function down(db: Kysely<any>): Promise<void> {
   await db.schema.dropTable('invoicesIn').execute()
   await db.schema.dropTable('invoiceItems').execute()
   await db.schema.dropTable('invoiceItemRelations').execute()
-  await db.schema.dropTable('contents').execute()
 }

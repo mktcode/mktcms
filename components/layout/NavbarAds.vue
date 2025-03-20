@@ -1,11 +1,6 @@
 <script setup lang="ts">
 const items = ref([
   {
-    label: 'Texte & Bilder',
-    icon: 'i-heroicons-newspaper',
-    to: '/werbung/inhalte',
-  },
-  {
     label: 'Website',
     icon: 'i-heroicons-computer-desktop',
     to: '/werbung/website',

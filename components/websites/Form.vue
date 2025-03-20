@@ -1,16 +1,20 @@
 <script setup lang="ts">
 import z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
-import { websiteFormSchema as schema, type NewWebsiteForm, type Website } from '~/types'
+import { websiteFormSchema, websiteContentFormSchema, type NewWebsiteForm, type Website, type WebsiteContent } from '~/types'
+
+type WebsiteWithContents = Website & { contents: WebsiteContent[] }
 
 const props = defineProps<{
-  website?: Website
+  website?: WebsiteWithContents
   suggestions?: NewWebsiteForm | null
 }>()
 
-type Schema = z.output<typeof schema>
+type WebsiteSchema = z.output<typeof websiteFormSchema>
+type WebsiteContentSchema = z.output<typeof websiteContentFormSchema>
+type NestedFormSchema = Partial<WebsiteSchema & { contents: Partial<WebsiteContentSchema>[] }>
 
-const state = reactive<Partial<Schema>>({
+const state = reactive<NestedFormSchema>({
   id: props.website?.id,
   title: props.website?.title || props.suggestions?.title || '',
   subtitle: props.website?.subtitle || '',
@@ -24,12 +28,30 @@ const state = reactive<Partial<Schema>>({
   aboutTitle: props.website?.aboutTitle || '',
   aboutSubtitle: props.website?.aboutSubtitle || '',
   aboutText: props.website?.aboutText || '',
+  showContents: !!props.website?.showContents,
+  contents: props.website?.contents || [],
 })
+
+function addContent() {
+  if (!state.contents) {
+    state.contents = []
+  }
+  state.contents.push({
+    orderIndex: state.contents.length,
+  })
+}
+
+function removeContent(index: number) {
+  if (!state.contents) {
+    return
+  }
+  state.contents.splice(index, 1)
+}
 
 const toast = useToast()
 const isSaving = ref(false)
 
-async function onSubmit(event: FormSubmitEvent<Schema>) {
+async function onSubmit(event: FormSubmitEvent<NestedFormSchema>) {
   isSaving.value = true
   await $fetch('/api/websites/upsert', {
     method: 'POST',
@@ -42,7 +64,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 </script>
 
 <template>
-  <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
+  <UForm :schema="websiteFormSchema" :state="state" class="flex flex-col gap-4" @submit="onSubmit">
     <UFormField label="Titel" name="title" size="xl">
       <UInput v-model="state.title" class="w-full" />
     </UFormField>
@@ -62,19 +84,53 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       v-model="state.showAbout"
     />
 
-    <TransitionGroup name="fade">
-      <UFormField label="Title" name="aboutTitle" size="xl" v-if="state.showAbout">
-        <UInput v-model="state.aboutTitle" class="w-full" />
-      </UFormField>
+    <Transition name="fade">
+      <div v-if="state.showAbout" class="flex flex-col gap-4">
+        <UFormField label="Title" name="aboutTitle" size="xl">
+          <UInput v-model="state.aboutTitle" class="w-full" />
+        </UFormField>
+  
+        <UFormField label="Untertitel" name="aboutSubtitle" size="xl">
+          <UInput v-model="state.aboutSubtitle" class="w-full" />
+        </UFormField>
+  
+        <UFormField label="Text" name="aboutText" size="xl">
+          <UTextarea v-model="state.aboutText" class="w-full" />
+        </UFormField>
+      </div>
+    </Transition>
 
-      <UFormField label="Untertitel" name="aboutSubtitle" size="xl" v-if="state.showAbout">
-        <UInput v-model="state.aboutSubtitle" class="w-full" />
-      </UFormField>
+    <UCheckbox
+      label="Weitere Inhalte als Liste"
+      description="Eine weitere Sektion mit einer Raster- oder Listenansicht anzeigen."
+      name="showAbout"
+      v-model="state.showContents"
+    />
 
-      <UFormField label="Text" name="aboutText" size="xl" v-if="state.showAbout">
-        <UTextarea v-model="state.aboutText" class="w-full" />
-      </UFormField>
-    </TransitionGroup>
+    <Transition name="fade">
+      <div v-if="state.showContents" class="flex flex-col gap-4">
+        <TransitionGroup name="fade">
+          <UForm v-for="content, index in state.contents" :key="index" :schema="websiteContentFormSchema" :state="content" class="flex flex-col gap-4">
+            <UFormField label="Titel" name="title" size="xl" class="flex-1">
+              <UInput v-model="content.title" class="w-full" />
+            </UFormField>
+            <UFormField label="Untertitel" name="subtitle" size="xl" class="flex-1">
+              <UInput v-model="content.subtitle" class="w-full" />
+            </UFormField>
+            <UFormField label="Text" name="text" size="xl" class="flex-1">
+              <UTextarea v-model="content.description" class="w-full" />
+            </UFormField>
+            <UButton color="error" variant="soft" size="xl" icon="i-heroicons-trash" @click="removeContent(index)">
+              Entfernen
+            </UButton>
+            <UInput v-model="content.orderIndex" type="hidden" class="hidden" />
+          </UForm>
+        </TransitionGroup>
+        <UButton color="primary" variant="soft" size="xl" icon="i-heroicons-plus" @click="addContent">
+          Inhalt hinzufügen
+        </UButton>
+      </div>
+    </Transition>
 
     <UFormField label="Schriftart" name="font" size="xl">
       <USelect v-model="state.font" class="w-full" :items="[ 'Roboto', 'Open Sans', 'Lato' ]" />

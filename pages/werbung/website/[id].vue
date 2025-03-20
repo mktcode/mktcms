@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import type { Website } from '~/types';
+import type { Website, WebsiteContent } from '~/types';
+
+type WebsiteWithContents = Website & { contents: WebsiteContent[] }
 
 const route = useRoute()
-const website = ref<Website | null>(null);
+const website = ref<WebsiteWithContents | null>(null);
 const websiteId = Array.isArray(route.params.id) ? Number(route.params.id[0]) : Number(route.params.id)
 
 definePageMeta({
@@ -12,7 +14,7 @@ definePageMeta({
 })
 
 onMounted(async () => {
-  const existingWebsite = await $fetch<Website>(`/api/websites/${websiteId}`);
+  const existingWebsite = await $fetch<WebsiteWithContents>(`/api/websites/${websiteId}`);
 
   if (!existingWebsite) {
     return;
