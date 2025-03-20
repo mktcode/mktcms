@@ -19,12 +19,21 @@ const state = reactive<Partial<Schema>>({
 })
 const dateModel = shallowRef(new CalendarDate(2025, 1, 10))
 
+const isConfirmed = ref({
+  supplierId: true,
+  date: true,
+  status: true,
+  discount: true,
+})
+
 const toast = useToast()
 const isSaving = ref(false)
 const suppliers = ref<Supplier[]>([])
-const fileInput = ref<HTMLInputElement | null>(null)
+const captureFileInput = ref<HTMLInputElement | null>(null)
+const uploadFileInput = ref<HTMLInputElement | null>(null)
 const files = ref<File[]>([])
 const isReadingFile = ref(false)
+const showAlert = ref(true)
 
 const fetchPosts = async () => {
   const data = await $fetch('/api/suppliers/list');
@@ -62,10 +71,13 @@ async function readImages() {
 
   if (imageData.supplierId !== 0) {
     state.supplierId = imageData.supplierId
+    isConfirmed.value.supplierId = false
   }
 
   if (imageData.date) {
     dateModel.value = new CalendarDate(imageData.date.year, imageData.date.month, imageData.date.day)
+    state.date = dateModel.value.toString()
+    isConfirmed.value.date = false
   }
 
   isReadingFile.value = false
@@ -90,43 +102,89 @@ function toBase64(file: File): Promise<string> {
 
 <template>
   <UForm :schema="schema" :state="state" class="flex flex-col gap-4" @submit="onSubmit">
-    <UFormField label="Rechnung hochladen/fotografieren" name="file" size="xl">
-      <UInput
-        type="file"
-        size="xl"
-        ref="fileInput"
-        accept="image/*"
-        multiple
-        capture="environment"
-        @change="handleFilesChange"
-      />
-      <UButton color="primary" size="xl" @click="readImages" :disabled="isReadingFile" :loading="isReadingFile">
-        Bild lesen
-      </UButton>
-    </UFormField>
-
-    <UFormField label="Lieferant" name="supplierId" size="xl">
-      <USelectMenu
-        v-model="state.supplierId"
-        value-key="id"
-        label-key="name"
-        :items="suppliers"
-        size="xl"
-        class="w-48"
-      />
-    </UFormField>
-
-    <UFormField label="Datum" name="date" size="xl">
-      <UPopover>
-        <UButton color="neutral" variant="outline" icon="i-lucide-calendar" size="xl">
-          {{ dateModel ? df.format(dateModel.toDate(getLocalTimeZone())) : 'Wähle ein Datum' }}
-        </UButton>
-  
-        <template #content>
-          <UCalendar v-model="dateModel" class="p-2" @update:model-value="state.date = dateModel?.toString()" />
+    <Transition name="fade">
+      <UAlert
+        v-if="showAlert"
+        color="primary"
+        icon="i-heroicons-information-circle"
+        class="w-full"
+        :ui="{ icon: 'size-8' }"
+        :close="{ class: 'text-white/75 hover:text-white' }"
+        @update:open="showAlert = $event"
+      >
+        <template #title>
+          Lesen Sie Rechnungsdaten aus einem Bild oder einer Datei (PDF, Word) ein. Bei niedriger Bildqualität oder untypischen Formaten können dabei Fehler auftreten. Überprüfen Sie anschließend die Daten und passen Sie sie ggf. an.
         </template>
-      </UPopover>
-    </UFormField>
+      </UAlert>
+    </Transition>
+
+    <div class="flex flex-col md:flex-row gap-4">
+      <UFormField label="Foto machen" name="file" size="xl" class="md:hidden">
+        <UInput
+          type="file"
+          size="xl"
+          ref="captureFileInput"
+          accept="image/*"
+          multiple
+          capture="environment"
+          @change="handleFilesChange"
+        />
+      </UFormField>
+  
+      <UFormField label="Foto oder Datei hochladen" name="file" size="xl">
+        <UInput
+          type="file"
+          size="xl"
+          ref="uploadFileInput"
+          accept="image/*"
+          multiple
+          @change="handleFilesChange"
+        />
+      </UFormField>
+    </div>
+
+    <UButton
+      color="primary"
+      size="xl"
+      @click="readImages"
+      :disabled="isReadingFile || files.length === 0"
+      :loading="isReadingFile"
+    >
+      Daten einlesen
+    </UButton>
+
+    <div class="flex items-end gap-4">
+      <UFormField label="Lieferant" name="supplierId" size="xl" class="w-full">
+        <USelectMenu
+          v-model="state.supplierId"
+          value-key="id"
+          label-key="name"
+          :items="suppliers"
+          size="xl"
+          class="w-full"
+        />
+      </UFormField>
+      <UButton color="primary" size="xl" @click="isConfirmed.supplierId = true" v-if="!isConfirmed.supplierId">
+        Bestätigen
+      </UButton>
+    </div>
+
+    <div class="flex items-end gap-4">
+      <UFormField label="Datum" name="date" size="xl">
+        <UPopover>
+          <UButton color="neutral" variant="outline" icon="i-lucide-calendar" size="xl">
+            {{ dateModel ? df.format(dateModel.toDate(getLocalTimeZone())) : 'Wähle ein Datum' }}
+          </UButton>
+    
+          <template #content>
+            <UCalendar v-model="dateModel" class="p-2" @update:model-value="state.date = dateModel?.toString()" />
+          </template>
+        </UPopover>
+      </UFormField>
+      <UButton color="primary" size="xl" @click="isConfirmed.date = true" v-if="!isConfirmed.date">
+        Bestätigen
+      </UButton>
+    </div>
 
     <UFormField label="Status" name="status" size="xl">
       <USelect
@@ -147,7 +205,14 @@ function toBase64(file: File): Promise<string> {
       <UInput v-model="state.discount" type="number" size="xl" />
     </UFormField>
 
-    <UButton :loading="isSaving" type="submit" color="primary" icon="i-heroicons-check" size="xl">
+    <UButton
+      :disabled="isSaving || Object.values(isConfirmed).some((v) => v === false)"
+      :loading="isSaving"
+      type="submit"
+      color="primary"
+      icon="i-heroicons-check"
+      size="xl"
+    >
       Speichern
     </UButton>
   </UForm>
