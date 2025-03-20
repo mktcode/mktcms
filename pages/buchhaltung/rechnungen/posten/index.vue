@@ -3,6 +3,6 @@
     <template #navbar2>
       <LayoutNavbarAccounting />
     </template>
-    <h1>Rechnungsposten</h1>
+    <h1 class="p-6">In Arbeit...</h1>
   </NuxtLayout>
 </template>

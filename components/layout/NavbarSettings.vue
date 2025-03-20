@@ -8,12 +8,12 @@ const items = ref([
   {
     label: 'Domains',
     icon: 'i-heroicons-globe-alt',
-    to: '/einstellungen/domains',
+    disabled: true,
   },
   {
     label: 'E-Mail',
     icon: 'i-heroicons-envelope',
-    to: '/einstellungen/email',
+    disabled: true,
   },
 ])
 </script>
