@@ -25,7 +25,7 @@ const features = [
       <div class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
         <div class="lg:pt-4 lg:pr-8">
           <div class="lg:max-w-lg">
-            <h2 class="text-base/7 font-semibold text-sky-600">Für Einsteiger</h2>
+            <h2 class="text-base/7 font-semibold text-primary-600">Für Einsteiger</h2>
             <p class="text-3xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-4xl">
               Werbung und Buchhaltung in einer App
             </p>
@@ -36,7 +36,7 @@ const features = [
             <dl class="flex  flex-col mt-10 max-w-xl gap-4 text-base/7 text-gray-600 lg:max-w-none">
               <div v-for="feature in features" :key="feature.name" class="relative pl-9">
                 <dt class="inline font-semibold text-gray-900">
-                  <UIcon :name="feature.icon" class="absolute top-1 left-1 size-5 text-sky-600" />
+                  <UIcon :name="feature.icon" class="absolute top-1 left-1 size-5 text-primary-600" />
                   {{ feature.name }}
                 </dt>
                 {{ ' ' }}
