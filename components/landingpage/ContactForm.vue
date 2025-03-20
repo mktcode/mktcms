@@ -36,37 +36,36 @@ const submit = async () => {
   <div class="h-screen flex items-center justify-center">
     <div class="w-full p-6 sm:p-12 lg:p-24" id="contact">
       <div class="w-full max-w-4xl mx-auto">
-        <h2 class="text-3xl font-bold text-center mb-8">Kontakt</h2>
+        <h2 class="text-4xl font-bold text-center mb-8">
+          Kontakt
+        </h2>
         <div v-if="showSuccess" class="bg-green-100 border border-green-200 text-green-800 p-4 rounded mb-4">
           Ihre Nachricht wurde erfolgreich versendet.
         </div>
         <template v-else>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <h3 class="text-xl font-bold">Vorname</h3>
-              <input type="text" class="w-full border border-gray-300 rounded p-2" v-model="firstname" />
+            <UFormField label="Vorname" name="firstname" size="xl" class="w-full">
+              <UInput v-model="firstname" class="w-full" />
+            </UFormField>
+            <UFormField label="Nachname" name="lastname" size="xl" class="w-full">
+              <UInput v-model="lastname" class="w-full" />
+            </UFormField>
+            <UFormField label="Telefon" name="phone" size="xl" class="w-full">
+              <UInput v-model="phone" class="w-full" />
+            </UFormField>
+            <UFormField label="E-Mail" name="email" size="xl" class="w-full">
+              <UInput v-model="email" class="w-full" />
+            </UFormField>
+            <UFormField label="Nachricht" name="message" size="xl" class="w-full col-span-2">
+              <UTextarea v-model="message" class="w-full" />
+            </UFormField>
+            <div class="col-span-2 flex justify-end">
+              <UButton @click="submit" :loading="isSending" size="xl">
+                Absenden
+              </UButton>
             </div>
-            <div>
-              <h3 class="text-xl font-bold">Nachname</h3>
-              <input type="text" class="w-full border border-gray-300 rounded p-2" v-model="lastname" />
-            </div>
-            <div>
-              <h3 class="text-xl font-bold">Telefon</h3>
-              <input type="text" class="w-full border border-gray-300 rounded p-2" v-model="phone" />
-            </div>
-            <div>
-              <h3 class="text-xl font-bold">E-Mail</h3>
-              <input type="text" class="w-full border border-gray-300 rounded p-2" v-model="email" />
-            </div>
-          </div>
-          <div class="mt-4">
-            <h3 class="text-xl font-bold">Nachricht</h3>
-            <textarea class="w-full border border-gray-300 rounded p-2" v-model="message"></textarea>
           </div>
           <div class="mt-4 text-right">
-            <UButton @click="submit" :loading="isSending" size="xl">
-              Absenden
-            </UButton>
           </div>
         </template>
       </div>

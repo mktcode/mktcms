@@ -20,6 +20,10 @@ const state = reactive<Partial<Schema>>({
   hasContactForm: !!props.website?.hasContactForm,
   contactFormSubject: props.website?.contactFormSubject || '',
   font: props.website?.font || 'Roboto',
+  showAbout: !!props.website?.showAbout,
+  aboutTitle: props.website?.aboutTitle || '',
+  aboutSubtitle: props.website?.aboutSubtitle || '',
+  aboutText: props.website?.aboutText || '',
 })
 
 const toast = useToast()
@@ -47,9 +51,30 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       <UInput v-model="state.subtitle" class="w-full" />
     </UFormField>
 
-    <UFormField label="Beschreibung" name="description" size="xl">
+    <UFormField label="Kurzbeschreibung" name="description" size="xl">
       <UTextarea v-model="state.description" class="w-full" />
     </UFormField>
+
+    <UCheckbox
+      label="Details zum Angebot oder Unternehmen"
+      description="Eine weitere Sektion mit Details zum Angebot oder Unternehmen anzeigen."
+      name="showAbout"
+      v-model="state.showAbout"
+    />
+
+    <TransitionGroup name="fade">
+      <UFormField label="Title" name="aboutTitle" size="xl" v-if="state.showAbout">
+        <UInput v-model="state.aboutTitle" class="w-full" />
+      </UFormField>
+
+      <UFormField label="Untertitel" name="aboutSubtitle" size="xl" v-if="state.showAbout">
+        <UInput v-model="state.aboutSubtitle" class="w-full" />
+      </UFormField>
+
+      <UFormField label="Text" name="aboutText" size="xl" v-if="state.showAbout">
+        <UTextarea v-model="state.aboutText" class="w-full" />
+      </UFormField>
+    </TransitionGroup>
 
     <UFormField label="Schriftart" name="font" size="xl">
       <USelect v-model="state.font" class="w-full" :items="[ 'Roboto', 'Open Sans', 'Lato' ]" />

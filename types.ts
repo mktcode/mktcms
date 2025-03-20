@@ -100,6 +100,10 @@ export interface WebsitesTable {
   hasContactForm: boolean
   contactFormSubject: string | null
   font: string | null
+  showAbout: boolean
+  aboutTitle: string | null
+  aboutSubtitle: string | null
+  aboutText: string | null
 }
 export type Website = Selectable<WebsitesTable>
 export type NewWebsite = Insertable<WebsitesTable>
@@ -119,6 +123,10 @@ export const websiteFormSchema = z.object({
   hasContactForm: z.boolean().optional(),
   contactFormSubject: z.string().optional(),
   font: z.string().optional(),
+  showAbout: z.boolean().optional(),
+  aboutTitle: z.string().optional(),
+  aboutSubtitle: z.string().optional(),
+  aboutText: z.string().optional(),
 })
 export type NewWebsiteForm = z.infer<typeof websiteFormSchema>
 
