@@ -14,6 +14,97 @@ type WebsiteSchema = z.output<typeof websiteFormSchema>
 type WebsiteContentSchema = z.output<typeof websiteContentFormSchema>
 type NestedFormSchema = Partial<WebsiteSchema & { contents: Partial<WebsiteContentSchema>[] }>
 
+const colors = ref([
+  {
+    label: 'Rot',
+    value: 'red',
+  },
+  {
+    label: 'Orange',
+    value: 'orange',
+  },
+  {
+    label: 'Bernstein',
+    value: 'amber',
+  },
+  {
+    label: 'Gelb',
+    value: 'yellow',
+  },
+  {
+    label: 'Limette',
+    value: 'lime',
+  },
+  {
+    label: 'Grün',
+    value: 'green',
+  },
+  {
+    label: 'Smaragd',
+    value: 'emerald',
+  },
+  {
+    label: 'Blaugrün',
+    value: 'teal',
+  },
+  {
+    label: 'Cyan',
+    value: 'cyan',
+  },
+  {
+    label: 'Himmelblau',
+    value: 'sky',
+  },
+  {
+    label: 'Blau',
+    value: 'blue',
+  },
+  {
+    label: 'Indigo',
+    value: 'indigo',
+  },
+  {
+    label: 'Violett',
+    value: 'violet',
+  },
+  {
+    label: 'Lila',
+    value: 'purple',
+  },
+  {
+    label: 'Fuchsie',
+    value: 'fuchsia',
+  },
+  {
+    label: 'Rosa',
+    value: 'pink',
+  },
+  {
+    label: 'Rose',
+    value: 'rose',
+  },
+  {
+    label: 'Schiefer',
+    value: 'slate',
+  },
+  {
+    label: 'Grau',
+    value: 'gray',
+  },
+  {
+    label: 'Zink',
+    value: 'zinc',
+  },
+  {
+    label: 'Neutral',
+    value: 'neutral',
+  },
+  {
+    label: 'Stein',
+    value: 'stone',
+  },
+])
+
 const state = reactive<NestedFormSchema>({
   id: props.website?.id,
   title: props.website?.title || props.suggestions?.title || '',
@@ -29,6 +120,7 @@ const state = reactive<NestedFormSchema>({
   aboutSubtitle: props.website?.aboutSubtitle || '',
   aboutText: props.website?.aboutText || '',
   showContents: !!props.website?.showContents,
+  primaryColor: props.website?.primaryColor || colors.value[9].value,
   contents: props.website?.contents || [],
 })
 
@@ -136,10 +228,63 @@ async function onSubmit(event: FormSubmitEvent<NestedFormSchema>) {
       <USelect v-model="state.font" class="w-full" :items="[ 'Roboto', 'Open Sans', 'Lato' ]" />
     </UFormField>
 
+    <UFormField label="Primärfarbe" name="primaryColor" size="xl">
+      <USelect v-model="state.primaryColor" :items="colors" class="w-48">
+        <template #leading="{ modelValue }">
+          <div :class="`w-4 h-4 rounded-full bg-red-500`" v-if="modelValue === 'red'" />
+          <div :class="`w-4 h-4 rounded-full bg-orange-500`" v-if="modelValue === 'orange'" />
+          <div :class="`w-4 h-4 rounded-full bg-amber-500`" v-if="modelValue === 'amber'" />
+          <div :class="`w-4 h-4 rounded-full bg-yellow-500`" v-if="modelValue === 'yellow'" />
+          <div :class="`w-4 h-4 rounded-full bg-lime-500`" v-if="modelValue === 'lime'" />
+          <div :class="`w-4 h-4 rounded-full bg-green-500`" v-if="modelValue === 'green'" />
+          <div :class="`w-4 h-4 rounded-full bg-emerald-500`" v-if="modelValue === 'emerald'" />
+          <div :class="`w-4 h-4 rounded-full bg-teal-500`" v-if="modelValue === 'teal'" />
+          <div :class="`w-4 h-4 rounded-full bg-cyan-500`" v-if="modelValue === 'cyan'" />
+          <div :class="`w-4 h-4 rounded-full bg-sky-500`" v-if="modelValue === 'sky'" />
+          <div :class="`w-4 h-4 rounded-full bg-blue-500`" v-if="modelValue === 'blue'" />
+          <div :class="`w-4 h-4 rounded-full bg-indigo-500`" v-if="modelValue === 'indigo'" />
+          <div :class="`w-4 h-4 rounded-full bg-violet-500`" v-if="modelValue === 'violet'" />
+          <div :class="`w-4 h-4 rounded-full bg-purple-500`" v-if="modelValue === 'purple'" />
+          <div :class="`w-4 h-4 rounded-full bg-fuchsia-500`" v-if="modelValue === 'fuchsia'" />
+          <div :class="`w-4 h-4 rounded-full bg-pink-500`" v-if="modelValue === 'pink'" />
+          <div :class="`w-4 h-4 rounded-full bg-rose-500`" v-if="modelValue === 'rose'" />
+          <div :class="`w-4 h-4 rounded-full bg-slate-500`" v-if="modelValue === 'slate'" />
+          <div :class="`w-4 h-4 rounded-full bg-gray-500`" v-if="modelValue === 'gray'" />
+          <div :class="`w-4 h-4 rounded-full bg-zinc-500`" v-if="modelValue === 'zinc'" />
+          <div :class="`w-4 h-4 rounded-full bg-neutral-500`" v-if="modelValue === 'neutral'" />
+          <div :class="`w-4 h-4 rounded-full bg-stone-500`" v-if="modelValue === 'stone'" />
+        </template>
+        <template #item-leading="{ item }">
+          <div :class="`w-4 h-4 rounded-full bg-red-500`" v-if="item.value === 'red'" />
+          <div :class="`w-4 h-4 rounded-full bg-orange-500`" v-if="item.value === 'orange'" />
+          <div :class="`w-4 h-4 rounded-full bg-amber-500`" v-if="item.value === 'amber'" />
+          <div :class="`w-4 h-4 rounded-full bg-yellow-500`" v-if="item.value === 'yellow'" />
+          <div :class="`w-4 h-4 rounded-full bg-lime-500`" v-if="item.value === 'lime'" />
+          <div :class="`w-4 h-4 rounded-full bg-green-500`" v-if="item.value === 'green'" />
+          <div :class="`w-4 h-4 rounded-full bg-emerald-500`" v-if="item.value === 'emerald'" />
+          <div :class="`w-4 h-4 rounded-full bg-teal-500`" v-if="item.value === 'teal'" />
+          <div :class="`w-4 h-4 rounded-full bg-cyan-500`" v-if="item.value === 'cyan'" />
+          <div :class="`w-4 h-4 rounded-full bg-sky-500`" v-if="item.value === 'sky'" />
+          <div :class="`w-4 h-4 rounded-full bg-blue-500`" v-if="item.value === 'blue'" />
+          <div :class="`w-4 h-4 rounded-full bg-indigo-500`" v-if="item.value === 'indigo'" />
+          <div :class="`w-4 h-4 rounded-full bg-violet-500`" v-if="item.value === 'violet'" />
+          <div :class="`w-4 h-4 rounded-full bg-purple-500`" v-if="item.value === 'purple'" />
+          <div :class="`w-4 h-4 rounded-full bg-fuchsia-500`" v-if="item.value === 'fuchsia'" />
+          <div :class="`w-4 h-4 rounded-full bg-pink-500`" v-if="item.value === 'pink'" />
+          <div :class="`w-4 h-4 rounded-full bg-rose-500`" v-if="item.value === 'rose'" />
+          <div :class="`w-4 h-4 rounded-full bg-slate-500`" v-if="item.value === 'slate'" />
+          <div :class="`w-4 h-4 rounded-full bg-gray-500`" v-if="item.value === 'gray'" />
+          <div :class="`w-4 h-4 rounded-full bg-zinc-500`" v-if="item.value === 'zinc'" />
+          <div :class="`w-4 h-4 rounded-full bg-neutral-500`" v-if="item.value === 'neutral'" />
+          <div :class="`w-4 h-4 rounded-full bg-stone-500`" v-if="item.value === 'stone'" />
+        </template>
+      </USelect>
+    </UFormField>
+
     <UFormField label="Domain" name="domain" size="xl">
       <UInput v-model="state.domain" class="w-full" />
       <div class="text-sm text-gray-500 mt-2">
-        Noch keine Domain? <ULink href="#" class="text-sky-500">Jetzt registrieren</ULink>
+        Noch keine Domain? <ULink href="#" class="text-primary-500">Jetzt registrieren</ULink>
       </div>
     </UFormField>
 

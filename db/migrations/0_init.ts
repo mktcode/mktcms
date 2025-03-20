@@ -58,6 +58,7 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('hasContactForm', 'boolean', (col) => col.notNull().defaultTo(0))
     .addColumn('contactFormSubject', 'text')
     .addColumn('showContents', 'boolean', (col) => col.notNull().defaultTo(0))
+    .addColumn('primaryColor', 'text')
     .execute()
   
   await db.schema

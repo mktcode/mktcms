@@ -3,12 +3,17 @@ import type { Website, WebsiteContent } from '~/types';
 
 type WebsiteWithContents = Website & { contents: WebsiteContent[] }
 
-defineProps<{
+const props = defineProps<{
   website: WebsiteWithContents
 }>()
 
 const router = useRouter()
 const contactLink = `${router.currentRoute.value.fullPath}#contact`
+
+const appConfig = useAppConfig()
+appConfig.ui.colors.primary = props.website.primaryColor || appConfig.ui.colors.primary
+
+updateAppConfig(appConfig)
 </script>
 
 <template>

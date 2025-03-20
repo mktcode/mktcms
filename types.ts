@@ -105,6 +105,7 @@ export interface WebsitesTable {
   aboutSubtitle: string | null
   aboutText: string | null
   showContents: boolean
+  primaryColor: string | null
 }
 export type Website = Selectable<WebsitesTable>
 export type NewWebsite = Insertable<WebsitesTable>
@@ -129,6 +130,7 @@ export const websiteFormSchema = z.object({
   aboutSubtitle: z.string().optional(),
   aboutText: z.string().optional(),
   showContents: z.boolean(),
+  primaryColor: z.string().optional(),
 })
 export type NewWebsiteForm = z.infer<typeof websiteFormSchema>
 
