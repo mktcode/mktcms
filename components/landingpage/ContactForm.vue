@@ -33,9 +33,9 @@ const submit = async () => {
 </script>
 
 <template>
-  <div>
-    <div class="bg-gray-100 py-12">
-      <div class="max-w-5xl mx-auto">
+  <div class="h-screen flex items-center justify-center">
+    <div class="w-full p-6 sm:p-12 lg:p-24" id="contact">
+      <div class="w-full max-w-4xl mx-auto">
         <h2 class="text-3xl font-bold text-center mb-8">Kontakt</h2>
         <div v-if="showSuccess" class="bg-green-100 border border-green-200 text-green-800 p-4 rounded mb-4">
           Ihre Nachricht wurde erfolgreich versendet.
