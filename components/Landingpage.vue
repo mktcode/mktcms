@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import type { Website } from '~/types';
+import type { Website, WebsiteContent } from '~/types';
+
+type WebsiteWithContents = Website & { contents: WebsiteContent[] }
 
 defineProps<{
-  website: Website
+  website: WebsiteWithContents
 }>()
 
 const router = useRouter()
@@ -31,6 +33,7 @@ const contactLink = `${router.currentRoute.value.fullPath}#contact`
       </div>
     </div>
     <LandingpageAbout v-if="website.showAbout" :website="website" />
+    <LandingpageContents v-if="website.showContents" :website="website" />
     <LandingpageContactForm v-if="website.hasContactForm" :website="website" />
   </div>
 </template>
