@@ -64,9 +64,9 @@ const submit = async () => {
             <textarea class="w-full border border-gray-300 rounded p-2" v-model="message"></textarea>
           </div>
           <div class="mt-4 text-right">
-            <button class="bg-sky-500 text-white px-4 py-2 rounded" @click="submit">
+            <UButton @click="submit" :loading="isSending" size="xl">
               Absenden
-            </button>
+            </UButton>
           </div>
         </template>
       </div>
