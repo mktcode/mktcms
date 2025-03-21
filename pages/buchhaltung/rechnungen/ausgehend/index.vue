@@ -24,30 +24,9 @@ const columns: TableColumn<InvoiceOut>[] = [
   }
 ]
 
-async function downloadEInvoicePDF(content: InvoiceOut) {
-  const response = await $fetch<Blob>('/api/invoicesOut/einvoice', {
-    method: 'POST',
-    body: { id: content.id },
-    responseType: 'blob'
-  });
-
-  const blob = new Blob([response], { type: 'application/pdf' });
-
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `Rechnung_${content.id}.pdf`;
-  a.click();
-}
-
 function getDropdownActions(content: InvoiceOut): DropdownMenuItem[][] {
   return [
     [
-      {
-        label: 'Als E-Rechnung herunterladen',
-        icon: 'i-lucide-copy',
-        onSelect: () => downloadEInvoicePDF(content),
-      },
       {
         label: 'Als PDF herunterladen',
         icon: 'i-lucide-download',
