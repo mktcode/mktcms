@@ -52,6 +52,7 @@ export const companyFormSchema = z.object({
 export interface VcardsTable {
   id: Generated<number>
   userId: number
+  image: string | null
   title: string
   subtitle: string | null
   slogan: string | null
@@ -71,6 +72,7 @@ export type NewVcard = Insertable<VcardsTable>
 export type VcardUpdate = Updateable<VcardsTable>
 export const vcardFormSchema = z.object({
   id: z.number().optional(),
+  image: z.string().optional(),
   title: z.string().min(1, 'Ein Titel wird benötigt'),
   subtitle: z.string().optional(),
   slogan: z.string().optional(),

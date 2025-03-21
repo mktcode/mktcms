@@ -27,6 +27,7 @@ const columns: TableColumn<Vcard>[] = [
     cell: ({ row }) => {
       return h(PrintVcard, {
         logoWidth: 120,
+        image: row.original.image,
         title: row.original.title,
         subtitle: row.original.subtitle,
         slogan: row.original.slogan,

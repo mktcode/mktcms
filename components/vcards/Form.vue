@@ -9,8 +9,18 @@ const props = defineProps<{
 
 type Schema = z.output<typeof schema>
 
+const { public: { s3Endpoint } } = useRuntimeConfig()
+const { data: files } = await useFetch('/api/files')
+const showImageModal = ref(false)
+
+function selectImage(key: string) {
+  state.image = key
+  showImageModal.value = false
+}
+
 const state = reactive<Partial<Schema>>({
   id: props.vcard?.id,
+  image: props.vcard?.image ?? '',
   title: props.vcard?.title ?? '',
   subtitle: props.vcard?.subtitle ?? '',
   slogan: props.vcard?.slogan ?? '',
@@ -45,6 +55,30 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   <div class="flex gap-8">
     <div>
       <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
+        <div class="flex flex-col items-start gap-4">
+          <img v-if="state.image" :src="`${s3Endpoint}/mktcms/${state.image}`" alt="Kein Bild" class="w-full h-40 object-cover object-center rounded-lg" />
+          <div class="flex items-start gap-4">
+            <UModal v-model:open="showImageModal" title="Bild auswählen" icon="i-heroicons-photo" size="xl">
+              <UButton label="Bild auswählen" icon="i-heroicons-photo" />
+  
+              <template #body>
+                <div class="grid grid-cols-3 gap-4">
+                  <div v-for="file in files" :key="file.key" class="cursor-pointer" @click="selectImage(file.key)">
+                    <img :src="`${s3Endpoint}/mktcms/${file.key}`" alt="Kein Bild" class="w-full h-40 object-cover object-center rounded-lg opacity-90 hover:opacity-100" />
+                  </div>
+                </div>
+              </template>
+            </UModal>
+            <UButton
+              v-if="state.image"
+              label="Bild entfernen"
+              variant="ghost"
+              icon="i-heroicons-trash"
+              @click="state.image = ''"
+            />
+          </div>
+        </div>
+
         <UFormField label="Titel" name="title" size="xl">
           <UInput v-model="state.title" class="w-full" />
         </UFormField>
@@ -117,6 +151,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       <div class="border-dashed border-gray-300 border w-96 transition-all duration-500 hover:shadow-xl hover:scale-105 hover:rotate-3 hover:border-transparent">
         <PrintVcard
           :logo-width="120"
+          :image="state.image"
           :title="state.title || 'Meine Firma'"
           :subtitle="state.subtitle || 'Untertitel'"
           :slogan="state.slogan || 'Slogan'"

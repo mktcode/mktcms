@@ -1,6 +1,7 @@
 <script setup lang="ts">
 defineProps<{
   logoWidth: number
+  image?: string
   title: string
   subtitle: string
   slogan: string
@@ -11,6 +12,8 @@ defineProps<{
   phone: string
   website: string
 }>()
+
+const { public: { s3Endpoint } } = useRuntimeConfig()
 </script>
 
 <template>
@@ -59,6 +62,11 @@ defineProps<{
         </div>
       </div>
     </div>
-    <img src="~/assets/img/default-header.jpg" alt="Header" class="w-[33cqw] object-cover shrink-0" />
+    <img
+      v-if="image"
+      :src="`${s3Endpoint}/mktcms/${image}`"
+      alt="Bild"
+      class="w-[33cqw] object-cover shrink-0"
+    />
   </div>
 </template>
