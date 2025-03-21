@@ -11,13 +11,13 @@ const items = ref([
     to: '/buchhaltung/lieferanten',
   },
   {
-    label: 'Eingehend',
-    icon: 'i-heroicons-arrow-down-tray',
+    label: 'Ausgaben',
+    icon: 'i-heroicons-arrow-up-tray',
     to: '/buchhaltung/rechnungen/eingehend',
   },
   {
-    label: 'Ausgehend',
-    icon: 'i-heroicons-arrow-up-tray',
+    label: 'Einnahmen',
+    icon: 'i-heroicons-arrow-down-tray',
     to: '/buchhaltung/rechnungen/ausgehend',
   },
   {
