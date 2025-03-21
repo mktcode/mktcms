@@ -13,6 +13,7 @@
     "migrate": "npx tsx db/migrate.ts"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.772.0",
     "@googleapis/mybusinessbusinessinformation": "^4.3.0",
     "@heroicons/vue": "^2.2.0",
     "@nuxt/ui": "^3.0.0",

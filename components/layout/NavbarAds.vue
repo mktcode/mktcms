@@ -11,6 +11,11 @@ const items = ref([
     to: '/werbung/print',
   },
   {
+    label: 'Dateien',
+    icon: 'i-heroicons-photo',
+    to: '/werbung/dateien',
+  },
+  {
     label: 'Google',
     icon: 'i-fa-google',
     disabled: true,

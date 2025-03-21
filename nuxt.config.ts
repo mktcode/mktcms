@@ -11,6 +11,8 @@ export default defineNuxtConfig({
     smtpTo: process.env.SMTP_TO,
     ipHashSalt: process.env.IP_HASH_SALT,
     openaiApiKey: process.env.OPENAI_API_KEY,
+    s3AccessKey: process.env.S3_ACCESS_KEY,
+    s3SecretKey: process.env.S3_SECRET_KEY,
     oauth: {
       google: {
         clientId: process.env.OAUTH_GOOGLE_CLIENT_ID,
@@ -22,6 +24,7 @@ export default defineNuxtConfig({
       password: process.env.SESSION_PASSWORD || '',
     },
     public: {
+      s3Endpoint: process.env.S3_ENDPOINT,
       appUrl: process.env.APP_URL || 'http://localhost:3000',
     }
   },

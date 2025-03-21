@@ -20,6 +20,9 @@ env:
     - NUXT_OAUTH_GOOGLE_CLIENT_SECRET
     - NUXT_OAUTH_GOOGLE_REDIRECT_URL
     - NUXT_OPENAI_API_KEY
+    - NUXT_S3_ACCESS_KEY
+    - NUXT_S3_SECRET_KEY
+    - NUXT_PUBLIC_S3_ENDPOINT
 aliases:
   shell: app exec --interactive --reuse "sh"
   logs: app logs -f
