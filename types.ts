@@ -263,6 +263,7 @@ export const invoiceOutFormSchema = z.object({
 
 export interface InvoiceItemsTable {
   id: Generated<number>
+  userId: number
   title: string
   description: string | null
   price: number
@@ -271,6 +272,16 @@ export interface InvoiceItemsTable {
 export type InvoiceItem = Selectable<InvoiceItemsTable>
 export type NewInvoiceItem = Insertable<InvoiceItemsTable>
 export type InvoiceItemUpdate = Updateable<InvoiceItemsTable>
+export const invoiceItemFormSchema = z.object({
+  id: z.number().optional(),
+  title: z
+    .string()
+    .min(1, 'Ein Titel wird benötigt')
+    .max(100, 'Der Titel ist zu lang'),
+  description: z.string().optional(),
+  price: z.number().min(0.01, 'Ein Preis wird benötigt'),
+  unit: z.string().optional(),
+})
 
 // Invoices In
 export interface InvoicesInTable {

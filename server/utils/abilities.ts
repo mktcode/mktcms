@@ -56,6 +56,20 @@ export const manageCustomer = defineAbility(async (user: User, customerId: numbe
   return ownsCustomer.count === 1
 })
 
+export const manageInvoiceItem = defineAbility(async (user: User, invoiceItemid: number) => {
+  const db = await getDatabaseConnection()
+
+  const ownsinvoiceItem = await db
+    .selectFrom('invoiceItems')
+    .innerJoin('users', 'users.id', 'invoiceItems.userId')
+    .select(({ fn }) => fn.count<number>('invoiceItems.id').as('count'))
+    .where('invoiceItems.id', '=', invoiceItemid)
+    .where('users.googleManagerId', '=', user.googleId)
+    .executeTakeFirstOrThrow()
+  
+  return ownsinvoiceItem.count === 1
+})
+
 export const manageSupplier = defineAbility(async (user: User, supplierId: number) => {
   const db = await getDatabaseConnection()
 
