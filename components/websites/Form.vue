@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
-import { websiteFormSchema, websiteContentFormSchema, type NewWebsiteForm, type Website, type WebsiteContent } from '~/types'
+import { websiteFormSchema, websiteContentFormSchema, type NewWebsiteFormSuggestions, type Website, type WebsiteContent } from '~/types'
 
 type WebsiteWithContents = Website & { contents: WebsiteContent[] }
 
 const props = defineProps<{
   website?: WebsiteWithContents
-  suggestions?: NewWebsiteForm | null
+  suggestions?: NewWebsiteFormSuggestions | null
 }>()
 
 type WebsiteSchema = z.output<typeof websiteFormSchema>

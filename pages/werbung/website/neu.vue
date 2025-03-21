@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import type { NewWebsiteForm } from '~/types';
+import type { NewWebsiteFormSuggestions } from '~/types';
 
-const suggestions = ref<NewWebsiteForm | null>(null);
+const suggestions = ref<NewWebsiteFormSuggestions | null>(null);
 
 const { data: existingCompany } = await useFetch('/api/company')
 
 if (existingCompany.value) {
   suggestions.value = {
-    title: existingCompany.value.name,
+    title: existingCompany.value.name
   };
 }
 </script>

@@ -132,7 +132,7 @@ export const websiteFormSchema = z.object({
   showContents: z.boolean(),
   primaryColor: z.string().optional(),
 })
-export type NewWebsiteForm = z.infer<typeof websiteFormSchema>
+export type NewWebsiteFormSuggestions = Partial<z.infer<typeof websiteFormSchema>>
 
 // Website Contents
 export interface WebsiteContentsTable {
