@@ -29,9 +29,14 @@ onMounted(async () => {
     <template #navbar2>
       <LayoutNavbarAds />
     </template>
-    <div class="p-6">
-      <WebsitesForm v-if="website" :website="website"/>
-      <div v-else>Website nicht gefunden</div>
+    <div class="flex items-center gap-4 p-6">
+      <h1 class="text-2xl font-bold">
+        {{ website ? website.title : 'Lade...' }}
+      </h1>
+      <UButton v-if="website" :to="`/website/${website.id}`" target="_blank" icon="i-lucide-external-link" variant="ghost">
+        Website öffnen
+      </UButton>
     </div>
+    <WebsitesForm v-if="website" :website="website"/>
   </NuxtLayout>
 </template>

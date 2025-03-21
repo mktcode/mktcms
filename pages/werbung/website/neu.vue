@@ -17,8 +17,9 @@ if (existingCompany.value) {
     <template #navbar2>
       <LayoutNavbarAds />
     </template>
-    <div class="p-6">
-      <WebsitesForm :suggestions="suggestions" />
-    </div>
+    <h1 class="text-2xl font-bold p-6">
+      Neue Website
+    </h1>
+    <WebsitesForm :suggestions="suggestions" />
   </NuxtLayout>
 </template>
