@@ -1,23 +1,35 @@
 <script setup lang="ts">
-import type { InvoiceOut } from '~/types';
+import type { Company, Customer, InvoiceOut } from '~/types';
 
 defineProps<{
   invoice: InvoiceOut
+  customer: Customer
+  company: Company
 }>()
 </script>
 
 <template>
-  <div class="@container bg-white flex aspect-[8.5/5.5] w-full overflow-hidden text-gray-950 whitespace-normal">
-    <div class="p-[6cqw] flex flex-col justify-between w-[67cqw]">
-      <div class="flex items-center gap-[3cqw]">
-        <div>
-          <img src="~/assets/img/mktcms.png" alt="Logo" class="rounded-full w-[15cqw]" />
-        </div>
-        <div>
-          <div class="font-bold text-[3cqw] leading-none">
-            {{ invoice.id }}
-          </div>
-        </div>
+  <div class="bg-white flex flex-col text-gray-950">
+    <div class="p-12 flex items-center gap-6">
+      <div>
+        <img src="~/assets/img/mktcms.png" alt="Logo" class="rounded-full w-24" />
+      </div>
+      <div class="font-bold text-2xl leading-none">
+        Rechnung
+      </div>
+    </div>
+    <div class="p-12 flex items-center gap-6">
+      <div class="w-1/2">
+        <div class="font-bold text-lg">Rechnung an:</div>
+        <div>{{ customer.name }}</div>
+        <div>{{ customer.address }}</div>
+        <div>{{ customer.zip }} {{ customer.city }}</div>
+      </div>
+      <div class="w-1/2">
+        <div class="font-bold text-lg">Rechnung von:</div>
+        <div>{{ company.name }}</div>
+        <div>{{ company.street }}</div>
+        <div>{{ company.zip }} {{ company.city }}</div>
       </div>
     </div>
   </div>

@@ -3,5 +3,4 @@ export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
 
   return await db.selectFrom('companies').selectAll().where('userId', '=', user.id).executeTakeFirst()
-
 })

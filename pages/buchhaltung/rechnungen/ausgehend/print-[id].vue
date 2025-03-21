@@ -7,17 +7,19 @@ definePageMeta({
 
 const route = useRoute()
 const invoice = await $fetch<InvoiceOut>(`/api/invoicesOut/${route.params.id}`)
+const { data: company } = await useFetch('/api/company')
+const customer = await $fetch(`/api/customers/${invoice.customerId}`)
 
-if (!invoice) {
+if (!invoice || !company || !customer) {
   throw createError({
     statusCode: 404,
-    statusMessage: 'Rechnung nicht gefunden',
+    statusMessage: 'Fehler beim Laden der Rechnung',
   })
 }
 </script>
 
 <template>
-  <div class="w-full">
-    <PrintInvoiceOut  :invoice="invoice" />
+  <div class="w-full" v-if="invoice && company && customer">
+    <PrintInvoiceOut :invoice="invoice" :company="company" :customer="customer" />
   </div>
 </template>
