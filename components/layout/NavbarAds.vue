@@ -6,14 +6,14 @@ const items = ref([
     to: '/werbung/website',
   },
   {
-    label: 'Google',
-    icon: 'i-fa-google',
-    to: '/werbung/google',
-  },
-  {
     label: 'Print',
     icon: 'i-heroicons-map',
     to: '/werbung/print',
+  },
+  {
+    label: 'Google',
+    icon: 'i-fa-google',
+    disabled: true,
   },
 ])
 </script>
