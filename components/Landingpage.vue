@@ -19,7 +19,17 @@ updateAppConfig(appConfig)
 </script>
 
 <template>
-  <div>
+  <div :class="{
+    'font-roboto': website.font === 'roboto',
+    'font-open-sans': website.font === 'open-sans',
+    'font-lato': website.font === 'lato',
+    'font-montserrat': website.font === 'montserrat',
+    'font-poppins': website.font === 'poppins',
+    'font-merriweather': website.font === 'merriweather',
+    'font-lora': website.font === 'lora',
+    'font-playfair-display': website.font === 'playfair-display',
+
+  }">
     <div class="h-screen flex items-center justify-center bg-primary-950">
       <img
         v-if="website.image"
