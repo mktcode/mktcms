@@ -172,7 +172,9 @@ const state = reactive<NestedFormSchema>({
   domain: props.website?.domain || '',
   isOnline: !!props.website?.isOnline,
   hasContactForm: !!props.website?.hasContactForm,
-  contactFormSubject: props.website?.contactFormSubject || '',
+  contactFormSubject: props.website?.contactFormSubject || 'Anfrage',
+  contactFormTitle: props.website?.contactFormTitle || 'Kontakt',
+  contactFormText: props.website?.contactFormText || 'Wir sind werktags von 9 bis 17 Uhr für Sie da.',
   headerVariant: props.website?.headerVariant || 0,
   showAbout: !!props.website?.showAbout,
   aboutImage: props.website?.aboutImage || '',
@@ -392,9 +394,17 @@ const formSections = [
         />
 
         <Transition name="fade">
-          <UFormField label="Betreff" name="contactFormSubject" size="xl" v-if="state.hasContactForm">
-            <UInput v-model="state.contactFormSubject" class="w-full" />
-          </UFormField>
+          <div v-if="state.hasContactForm" class="flex flex-col gap-6">
+            <UFormField label="Titel" name="contactFormTitle" size="xl" v-if="state.hasContactForm">
+              <UInput v-model="state.contactFormTitle" class="w-full" />
+            </UFormField>
+            <UFormField label="Text" name="contactFormText" size="xl" v-if="state.hasContactForm">
+              <UTextarea v-model="state.contactFormText" class="w-full" />
+            </UFormField>
+            <UFormField label="Betreff" name="contactFormSubject" size="xl" v-if="state.hasContactForm">
+              <UInput v-model="state.contactFormSubject" class="w-full" />
+            </UFormField>
+          </div>
         </Transition>
       </template>
 

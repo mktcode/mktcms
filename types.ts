@@ -101,6 +101,8 @@ export interface WebsitesTable {
   isOnline: boolean
   hasContactForm: boolean
   contactFormSubject: string | null
+  contactFormTitle: string | null
+  contactFormText: string | null
   headerVariant: number
   showAbout: boolean
   aboutImage: string | null
@@ -128,6 +130,8 @@ export const websiteFormSchema = z.object({
   isOnline: z.boolean(),
   hasContactForm: z.boolean(),
   contactFormSubject: z.string().optional(),
+  contactFormTitle: z.string().optional(),
+  contactFormText: z.string().optional(),
   headerVariant: z.number(),
   showAbout: z.boolean(),
   aboutImage: z.string().optional(),

@@ -36,9 +36,12 @@ const submit = async () => {
   <div class="h-screen flex items-center justify-center">
     <div class="w-full p-6 sm:p-12 lg:p-24" id="contact">
       <div class="w-full max-w-4xl mx-auto">
-        <h2 class="text-4xl font-bold text-center mb-8">
-          Kontakt
+        <h2 class="text-5xl font-bold text-center mb-8">
+          {{ website.contactFormTitle }}
         </h2>
+        <p class="text-center text-2xl mb-8">
+          {{ website.contactFormText }}
+        </p>
         <div v-if="showSuccess" class="bg-green-100 border border-green-200 text-green-800 p-4 rounded mb-4">
           Ihre Nachricht wurde erfolgreich versendet.
         </div>
