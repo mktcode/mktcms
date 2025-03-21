@@ -157,26 +157,32 @@ async function onSubmit(event: FormSubmitEvent<NestedFormSchema>) {
 const formSections = [
   {
     label: 'Kopfbereich',
+    icon: 'i-heroicons-newspaper',
     slot: 'header',
   },
   {
     label: 'Details',
+    icon: 'i-heroicons-identification',
     slot: 'details',
   },
   {
     label: 'Weitere Inhalte',
+    icon: 'i-heroicons-squares-plus',
     slot: 'contents',
   },
   {
     label: 'Kontakt',
+    icon: 'i-heroicons-envelope',
     slot: 'contact',
   },
   {
     label: 'Design',
+    icon: 'i-heroicons-paint-brush',
     slot: 'design',
   },
   {
     label: 'Veröffentlichen',
+    icon: 'i-heroicons-check',
     slot: 'publish',
   }
 ]
@@ -344,7 +350,7 @@ const formSections = [
         </UFormField>
     
         <UCheckbox
-          label="Website online"
+          label="Website ist online"
           description="Ist die Website online und für Besucher sichtbar?"
           name="isOnline"
           v-model="state.isOnline"
