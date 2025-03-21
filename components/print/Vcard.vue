@@ -1,7 +1,7 @@
 <script setup lang="ts">
 defineProps<{
   logoWidth: number
-  image?: string
+  image: string
   title: string
   subtitle: string
   slogan: string

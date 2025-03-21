@@ -151,7 +151,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       <div class="border-dashed border-gray-300 border w-96 transition-all duration-500 hover:shadow-xl hover:scale-105 hover:rotate-3 hover:border-transparent">
         <PrintVcard
           :logo-width="120"
-          :image="state.image"
+          :image="state.image || ''"
           :title="state.title || 'Meine Firma'"
           :subtitle="state.subtitle || 'Untertitel'"
           :slogan="state.slogan || 'Slogan'"

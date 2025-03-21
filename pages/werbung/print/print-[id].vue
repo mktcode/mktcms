@@ -20,6 +20,7 @@ if (!vcard) {
   <div class="w-full">
     <PrintVcard
       :logo-width="120"
+      :image="vcard.image || ''"
       :title="vcard.title"
       :subtitle="vcard.subtitle || ''"
       :slogan="vcard.slogan || ''"
