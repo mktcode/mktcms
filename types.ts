@@ -99,13 +99,14 @@ export interface WebsitesTable {
   isOnline: boolean
   hasContactForm: boolean
   contactFormSubject: string | null
-  font: string | null
+  headerVariant: number
   showAbout: boolean
   aboutImage: string | null
   aboutTitle: string | null
   aboutSubtitle: string | null
   aboutText: string | null
   showContents: boolean
+  font: string | null
   primaryColor: string | null
 }
 export type Website = Selectable<WebsitesTable>
@@ -125,13 +126,14 @@ export const websiteFormSchema = z.object({
   isOnline: z.boolean(),
   hasContactForm: z.boolean(),
   contactFormSubject: z.string().optional(),
-  font: z.string().optional(),
+  headerVariant: z.number(),
   showAbout: z.boolean(),
   aboutImage: z.string().optional(),
   aboutTitle: z.string().optional(),
   aboutSubtitle: z.string().optional(),
   aboutText: z.string().optional(),
   showContents: z.boolean(),
+  font: z.string().optional(),
   primaryColor: z.string().optional(),
 })
 export type NewWebsiteFormSuggestions = Partial<z.infer<typeof websiteFormSchema>>

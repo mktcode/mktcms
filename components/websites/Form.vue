@@ -173,15 +173,16 @@ const state = reactive<NestedFormSchema>({
   isOnline: !!props.website?.isOnline,
   hasContactForm: !!props.website?.hasContactForm,
   contactFormSubject: props.website?.contactFormSubject || '',
-  font: props.website?.font || 'roboto',
+  headerVariant: props.website?.headerVariant || 0,
   showAbout: !!props.website?.showAbout,
   aboutImage: props.website?.aboutImage || '',
   aboutTitle: props.website?.aboutTitle || '',
   aboutSubtitle: props.website?.aboutSubtitle || '',
   aboutText: props.website?.aboutText || '',
   showContents: !!props.website?.showContents,
-  primaryColor: props.website?.primaryColor || colors.value[9].value,
   contents: props.website?.contents || [],
+  primaryColor: props.website?.primaryColor || colors.value[9].value,
+  font: props.website?.font || 'roboto',
 })
 
 function addContent() {
@@ -256,6 +257,13 @@ const formSections = [
       class="border-t border-b border-gray-200"
     >
       <template #header-body>
+        <UFormField label="Header-Variante" name="headerVariant" size="xl">
+          <USelect v-model="state.headerVariant" class="w-48" :items="[
+            { label: 'Vollbild', value: 0 },
+            { label: 'Geteilt', value: 1 },
+          ]" />
+        </UFormField>
+
         <div class="flex flex-col items-start gap-4">
           <img v-if="state.image" :src="`${s3Endpoint}/mktcms/${state.image}`" alt="Kein Bild" class="w-full h-40 object-cover object-center rounded-lg" />
           <div class="flex items-start gap-4">
