@@ -15,13 +15,18 @@ type WebsiteContentSchema = z.output<typeof websiteContentFormSchema>
 type NestedFormSchema = Partial<WebsiteSchema & { contents: Partial<WebsiteContentSchema>[] }>
 
 const { public: { s3Endpoint } } = useRuntimeConfig()
-const { user } = useUserSession()
 const { data: files } = await useFetch('/api/files')
-const showFilesModal = ref(false)
+const showHeaderImageModal = ref(false)
+const showAboutImageModal = ref(false)
 
-function selectImage(key: string) {
+function selectHeaderImage(key: string) {
   state.image = key
-  showFilesModal.value = false
+  showHeaderImageModal.value = false
+}
+
+function selectAboutImage(key: string) {
+  state.aboutImage = key
+  showAboutImageModal.value = false
 }
 
 const colors = ref([
@@ -127,6 +132,7 @@ const state = reactive<NestedFormSchema>({
   contactFormSubject: props.website?.contactFormSubject || '',
   font: props.website?.font || 'Roboto',
   showAbout: !!props.website?.showAbout,
+  aboutImage: props.website?.aboutImage || '',
   aboutTitle: props.website?.aboutTitle || '',
   aboutSubtitle: props.website?.aboutSubtitle || '',
   aboutText: props.website?.aboutText || '',
@@ -210,12 +216,12 @@ const formSections = [
         <div class="flex flex-col items-start gap-4">
           <img v-if="state.image" :src="`${s3Endpoint}/mktcms/${state.image}`" alt="Kein Bild" class="w-full h-40 object-cover object-center rounded-lg" />
           <div class="flex items-start gap-4">
-            <UModal v-model:open="showFilesModal" title="Bild auswählen" icon="i-heroicons-photo" size="xl">
+            <UModal v-model:open="showHeaderImageModal" title="Bild auswählen" icon="i-heroicons-photo" size="xl">
               <UButton label="Bild auswählen" icon="i-heroicons-photo" />
   
               <template #body>
                 <div class="grid grid-cols-3 gap-4">
-                  <div v-for="file in files" :key="file.key" class="cursor-pointer" @click="selectImage(file.key)">
+                  <div v-for="file in files" :key="file.key" class="cursor-pointer" @click="selectHeaderImage(file.key)">
                     <img :src="`${s3Endpoint}/mktcms/${file.key}`" alt="Kein Bild" class="w-full h-40 object-cover object-center rounded-lg opacity-90 hover:opacity-100" />
                   </div>
                 </div>
@@ -253,6 +259,30 @@ const formSections = [
 
         <Transition name="fade">
           <div v-if="state.showAbout" class="flex flex-col gap-4">
+            <div class="flex flex-col items-start gap-4">
+              <img v-if="state.aboutImage" :src="`${s3Endpoint}/mktcms/${state.aboutImage}`" alt="Kein Bild" class="w-full h-40 object-cover object-center rounded-lg" />
+              <div class="flex items-start gap-4">
+                <UModal v-model:open="showAboutImageModal" title="Bild auswählen" icon="i-heroicons-photo" size="xl">
+                  <UButton label="Bild auswählen" icon="i-heroicons-photo" />
+      
+                  <template #body>
+                    <div class="grid grid-cols-3 gap-4">
+                      <div v-for="file in files" :key="file.key" class="cursor-pointer" @click="selectAboutImage(file.key)">
+                        <img :src="`${s3Endpoint}/mktcms/${file.key}`" alt="Kein Bild" class="w-full h-40 object-cover object-center rounded-lg opacity-90 hover:opacity-100" />
+                      </div>
+                    </div>
+                  </template>
+                </UModal>
+                <UButton
+                  v-if="state.aboutImage"
+                  label="Bild entfernen"
+                  variant="ghost"
+                  icon="i-heroicons-trash"
+                  @click="state.aboutImage = ''"
+                />
+              </div>
+            </div>
+
             <UFormField label="Title" name="aboutTitle" size="xl">
               <UInput v-model="state.aboutTitle" class="w-full" />
             </UFormField>

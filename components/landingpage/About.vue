@@ -4,12 +4,18 @@ import type { Website } from '~/types';
 defineProps<{
   website: Website
 }>()
+
+const { public: { s3Endpoint } } = useRuntimeConfig()
 </script>
 
 <template>
   <div class="min-h-screen flex items-center justify-center">
     <div class="flex flex-col sm:flex-row gap-6 p-6 sm:p-12 lg:p-24 sm:gap-12">
-      <img src="~/assets/img/default-header.jpg" class="object-cover aspect-square w-full sm:w-96 mb-auto rounded-full" />
+      <img
+        v-if="website.aboutImage"
+        :src="`${s3Endpoint}/mktcms/${website.aboutImage}`"
+        class="object-cover aspect-square w-full sm:w-96 mb-auto rounded-full"
+      />
       <div class="text-primary-950 flex flex-col items-start justify-center gap-8">
         <div>
           <h1 class="text-5xl font-bold mb-2">

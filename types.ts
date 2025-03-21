@@ -101,6 +101,7 @@ export interface WebsitesTable {
   contactFormSubject: string | null
   font: string | null
   showAbout: boolean
+  aboutImage: string | null
   aboutTitle: string | null
   aboutSubtitle: string | null
   aboutText: string | null
@@ -126,6 +127,7 @@ export const websiteFormSchema = z.object({
   contactFormSubject: z.string().optional(),
   font: z.string().optional(),
   showAbout: z.boolean(),
+  aboutImage: z.string().optional(),
   aboutTitle: z.string().optional(),
   aboutSubtitle: z.string().optional(),
   aboutText: z.string().optional(),
