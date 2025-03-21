@@ -11,10 +11,11 @@ export default defineEventHandler(async (event) => {
   });
   const result = await s3.send(command);
 
-  const files = (result.Contents || []).map((obj) => ({
-    key: obj.Key,
-    size: obj.Size,
-  }));
+  const files = (result.Contents || [])
+    .map((obj) => ({
+      key: obj.Key || '',
+      size: obj.Size || 0,
+    }));
 
   return files;
 });

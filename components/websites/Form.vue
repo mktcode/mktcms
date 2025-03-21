@@ -14,6 +14,16 @@ type WebsiteSchema = z.output<typeof websiteFormSchema>
 type WebsiteContentSchema = z.output<typeof websiteContentFormSchema>
 type NestedFormSchema = Partial<WebsiteSchema & { contents: Partial<WebsiteContentSchema>[] }>
 
+const { public: { s3Endpoint } } = useRuntimeConfig()
+const { user } = useUserSession()
+const { data: files } = await useFetch('/api/files')
+const showFilesModal = ref(false)
+
+function selectImage(key: string) {
+  state.image = key
+  showFilesModal.value = false
+}
+
 const colors = ref([
   {
     label: 'Rot',
@@ -107,6 +117,7 @@ const colors = ref([
 
 const state = reactive<NestedFormSchema>({
   id: props.website?.id,
+  image: props.website?.image || '',
   title: props.website?.title || props.suggestions?.title || '',
   subtitle: props.website?.subtitle || '',
   description: props.website?.description || '',
@@ -196,6 +207,30 @@ const formSections = [
       class="border-t border-b border-gray-200"
     >
       <template #header-body>
+        <div class="flex flex-col items-start gap-4">
+          <img v-if="state.image" :src="`${s3Endpoint}/mktcms/${state.image}`" alt="Kein Bild" class="w-full h-40 object-cover object-center rounded-lg" />
+          <div class="flex items-start gap-4">
+            <UModal v-model:open="showFilesModal" title="Bild auswählen" icon="i-heroicons-photo" size="xl">
+              <UButton label="Bild auswählen" icon="i-heroicons-photo" />
+  
+              <template #body>
+                <div class="grid grid-cols-3 gap-4">
+                  <div v-for="file in files" :key="file.key" class="cursor-pointer" @click="selectImage(file.key)">
+                    <img :src="`${s3Endpoint}/mktcms/${file.key}`" alt="Kein Bild" class="w-full h-40 object-cover object-center rounded-lg opacity-90 hover:opacity-100" />
+                  </div>
+                </div>
+              </template>
+            </UModal>
+            <UButton
+              v-if="state.image"
+              label="Bild entfernen"
+              variant="ghost"
+              icon="i-heroicons-trash"
+              @click="state.image = ''"
+            />
+          </div>
+        </div>
+
         <UFormField label="Titel" name="title" size="xl">
           <UInput v-model="state.title" class="w-full" />
         </UFormField>

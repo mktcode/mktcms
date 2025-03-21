@@ -13,13 +13,19 @@ const contactLink = `${router.currentRoute.value.fullPath}#contact`
 const appConfig = useAppConfig()
 appConfig.ui.colors.primary = props.website.primaryColor || appConfig.ui.colors.primary
 
+const { public: { s3Endpoint } } = useRuntimeConfig()
+
 updateAppConfig(appConfig)
 </script>
 
 <template>
   <div>
     <div class="h-screen flex items-center justify-center bg-primary-950">
-      <img src="~/assets/img/default-header.jpg" class="absolute inset-0 object-cover w-full h-full opacity-10" />
+      <img
+        v-if="website.image"
+        :src="`${s3Endpoint}/mktcms/${website.image}`"
+        class="absolute inset-0 object-cover w-full h-full opacity-10"
+      />
       <div class="relative z-10 text-primary-50 flex flex-col p-6 sm:p-12 lg:p-24 items-start justify-center gap-8 max-w-7xl">
         <div>
           <h1 class="text-7xl font-bold mb-2">
