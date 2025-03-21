@@ -6,3 +6,7 @@ Sicherstellen, dass Datenbank-Schema, Typen und Formular-Validierungen korrekt s
 
 Sicherstellen, dass Dateien optimiert werden und nicht zu groß sind.
 Evtl. Beschränkungen bzw. Anzahl und Kapazität erwägen.
+
+# Authentifizierung
+
+Sicherstellen, dass Authentifizierung und Autorisierung für alle Datensätze korrekt sind.
