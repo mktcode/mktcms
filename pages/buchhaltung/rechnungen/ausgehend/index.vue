@@ -44,9 +44,15 @@ function getDropdownActions(content: InvoiceOut): DropdownMenuItem[][] {
   return [
     [
       {
-        label: 'Als PDF herunterladen',
+        label: 'Als E-Rechnung herunterladen',
         icon: 'i-lucide-copy',
         onSelect: () => downloadEInvoicePDF(content),
+      },
+      {
+        label: 'Als PDF herunterladen',
+        icon: 'i-lucide-download',
+        to: `/api/invoicesOut/print/${content.id}`,
+        target: '_blank'
       }
     ],
     [
