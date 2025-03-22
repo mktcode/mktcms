@@ -16,5 +16,8 @@ export default defineEventHandler(async (event) => {
     .limit(Number(limit) || 999)
     .execute()
   
-  return invoiceItems
+  return invoiceItems.map(item => ({
+    ...item,
+    price: Number(item.price),
+  }))
 })

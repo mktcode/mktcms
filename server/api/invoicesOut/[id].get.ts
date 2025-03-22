@@ -22,6 +22,7 @@ export default defineEventHandler(async (event) => {
         'invoiceItems.title',
         'invoiceItems.description',
         'invoiceItems.unit',
+        'invoiceItemRelations.itemId',
         'invoiceItemRelations.quantity',
         'invoiceItemRelations.price'
       ])
@@ -30,7 +31,12 @@ export default defineEventHandler(async (event) => {
     
     const result = {
       ...invoice,
-      items
+      discount: Number(invoice.discount),
+      items: items.map(item => ({
+        ...item,
+        price: Number(item.price),
+        quantity: Number(item.quantity)
+      }))
     }
 
     return result

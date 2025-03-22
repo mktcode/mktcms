@@ -17,7 +17,7 @@ type NestedFormSchema = Partial<InvoiceOutSchema & { items: Partial<InvoiceItemR
 const state = reactive<NestedFormSchema>({
   id: props.invoice?.id,
   customerId: props.invoice?.customerId,
-  date: props.invoice?.date,
+  date: props.invoice?.date ?? `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()}`,
   status: props.invoice?.status ?? 0,
   discount: props.invoice?.discount ?? 0,
   items: props.invoice?.items ?? [],
@@ -29,6 +29,9 @@ const today = new CalendarDate(
   new Date().getDate()
 )
 const dateModel = shallowRef(today)
+const df = new DateFormatter('de-DE', {
+  dateStyle: 'medium'
+})
 
 const toast = useToast()
 const isSaving = ref(false)
@@ -57,10 +60,6 @@ onMounted(() => {
   fetchInvoiceItems();
 });
 
-const df = new DateFormatter('de-DE', {
-  dateStyle: 'medium'
-})
-
 async function onSubmit(event: FormSubmitEvent<NestedFormSchema>) {
   isSaving.value = true
   await $fetch('/api/invoicesOut/upsert', {
@@ -88,6 +87,7 @@ function addInvoiceItem() {
 
 <template>
   <UForm :schema="invoiceOutFormSchema" :state="state" class="flex flex-col gap-4" @submit="onSubmit">
+    {{ invoiceOutFormSchema.safeParse(state) }}
     <div class="flex flex-col sm:flex-row gap-4">
       <UFormField label="Kunde" name="customerId" size="xl">
         <USelectMenu
@@ -136,6 +136,7 @@ function addInvoiceItem() {
       :schema="invoiceItemRelationFormSchema"
       class="flex gap-4"
     >
+      {{ invoiceItemRelationFormSchema.safeParse(relation) }}
       <div class="flex-1">
         <div class="font-bold">
           {{ items.find((item) => item.id === relation.itemId)?.title }}
@@ -151,7 +152,7 @@ function addInvoiceItem() {
           </UButton>
     
           <template #content>
-            <UCalendar v-model="dateModel" class="p-2" @update:model-value="state.date = dateModel?.toString()" />
+            <UCalendar v-model="dateModel" class="p-2" @update:model-value="relation.date = dateModel?.toString()" />
           </template>
         </UPopover>
       </UFormField>
@@ -182,7 +183,7 @@ function addInvoiceItem() {
     </UFormField>
 
     <UFormField label="Rabatt" name="discount" size="xl">
-      <UInput v-model="state.discount" type="number" size="xl" />
+      <UInputNumber v-model="state.discount" size="xl" />
     </UFormField>
 
     <UButton :loading="isSaving" type="submit" color="primary" icon="i-heroicons-check" size="xl">
