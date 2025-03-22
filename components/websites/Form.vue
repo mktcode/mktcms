@@ -189,6 +189,11 @@ const state = reactive<NestedFormSchema>({
   font: props.website?.font || 'roboto',
 })
 
+const pathInput = ref<string>(props.website?.path?.replace(/^\//, '') || '')
+watch(() => pathInput.value, (value) => {
+  state.path = `/${value.replace(/^\//, '')}`
+})
+
 function addContent() {
   if (!state.contents) {
     state.contents = []
@@ -503,11 +508,19 @@ const formSections = [
         <UFormField label="Domain" name="domain" size="xl">
           <UInput v-model="state.domain" class="w-full" />
           <div class="text-sm text-gray-500 mt-2">
-            Noch keine Domain? <ULink href="#" class="text-primary-500">Jetzt registrieren</ULink>
+            Noch keine Domain? Sie können <ULink href="#" class="text-primary-500">hier eine registrieren</ULink> und dann hier auswählen. Wenn Sie schon eine haben, können Sie diese hier eintragen, wenn Sie die entsprechenden <ULink href="#" class="text-primary-500">DNS-Einstellungen</ULink> vorgenommen haben.
+          </div>
+        </UFormField>
+
+        <UFormField label="Pfad" name="path" size="xl">
+          <UInput v-model="pathInput" class="w-full" icon="i-heroicons-slash" />
+          <div class="text-sm text-gray-500 mt-2">
+            Der Pfad ist der Teil nach der Domain. Für die Hauptseite lassen Sie dieses Feld leer. Für eine Unterseite tragen Sie hier eine Bezeichnung ein, z.B. "ueber-mich". (Nur Kleinbuchstaben, Zahlen und Bindestriche erlaubt.)
           </div>
         </UFormField>
     
         <UCheckbox
+          v-if="state.domain"
           label="Website ist online"
           description="Ist die Website online und für Besucher sichtbar?"
           name="isOnline"

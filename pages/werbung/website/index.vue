@@ -52,7 +52,7 @@ function getDropdownActions(item: Website): DropdownMenuItem[][] {
         href: `/werbung/website/${item.id}`
       },
       {
-        label: 'Neue Website aus dieser kopieren',
+        label: 'Neue Seite aus Kopie',
         icon: 'i-heroicons-document-duplicate',
         onSelect: async () => {
           $fetch(`/api/websites/clone`, {
@@ -115,7 +115,7 @@ function getDropdownActions(item: Website): DropdownMenuItem[][] {
     <template #navbar2>
       <LayoutNavbarAds>
         <UButton class="ml-auto" icon="i-lucide-plus" to="/werbung/website/neu">
-          Neue Website
+          Neue Seite
         </UButton>
       </LayoutNavbarAds>
     </template>
