@@ -99,6 +99,7 @@ export interface WebsitesTable {
   path: string | null
   image: string | null
   isOnline: boolean
+  showMenu: boolean
   hasContactForm: boolean
   contactFormSubject: string | null
   contactFormTitle: string | null
@@ -128,6 +129,7 @@ export const websiteFormSchema = z.object({
   path: z.string().optional(),
   image: z.string().optional(),
   isOnline: z.boolean(),
+  showMenu: z.boolean(),
   hasContactForm: z.boolean(),
   contactFormSubject: z.string().optional(),
   contactFormTitle: z.string().optional(),

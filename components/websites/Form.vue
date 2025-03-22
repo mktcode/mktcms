@@ -170,7 +170,9 @@ const state = reactive<NestedFormSchema>({
   subtitle: props.website?.subtitle || '',
   description: props.website?.description || '',
   domain: props.website?.domain || '',
+  path: props.website?.path || '/',
   isOnline: !!props.website?.isOnline,
+  showMenu: !!props.website?.showMenu,
   hasContactForm: !!props.website?.hasContactForm,
   contactFormSubject: props.website?.contactFormSubject || 'Anfrage',
   contactFormTitle: props.website?.contactFormTitle || 'Kontakt',
@@ -289,6 +291,13 @@ const formSections = [
             />
           </div>
         </div>
+
+        <UCheckbox
+          label="Menü anzeigen"
+          description="Deine anderen Websites werden in einem Menü verlinkt."
+          name="showMenu"
+          v-model="state.showMenu"
+        />
 
         <UFormField label="Titel" name="title" size="xl">
           <UInput v-model="state.title" class="w-full" />
