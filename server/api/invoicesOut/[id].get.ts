@@ -24,16 +24,20 @@ export default defineEventHandler(async (event) => {
         'invoiceItems.unit',
         'invoiceItemRelations.itemId',
         'invoiceItemRelations.quantity',
+        'invoiceItemRelations.date',
         'invoiceItemRelations.price'
       ])
       .where('invoiceItemRelations.invoiceId', '=', invoice.id)
       .execute()
     
+    console.log('typeof', typeof invoice.date, invoice.date)
     const result = {
       ...invoice,
+      date: invoice.date.toISOString().split('T')[0],
       discount: Number(invoice.discount),
       items: items.map(item => ({
         ...item,
+        date: item.date.toISOString().split('T')[0],
         price: Number(item.price),
         quantity: Number(item.quantity)
       }))

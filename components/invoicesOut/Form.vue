@@ -2,7 +2,6 @@
 import z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
 import { invoiceOutFormSchema, invoiceItemRelationFormSchema, type Customer, type InvoiceItem, type InvoiceOut, type InvoiceItemRelation } from '~/types'
-import { CalendarDate, DateFormatter, getLocalTimeZone } from '@internationalized/date'
 
 type InvoiceOutWithItemRelations = InvoiceOut & { items: InvoiceItemRelation[] }
 
@@ -21,16 +20,6 @@ const state = reactive<NestedFormSchema>({
   status: props.invoice?.status ?? 0,
   discount: props.invoice?.discount ?? 0,
   items: props.invoice?.items ?? [],
-})
-
-const today = new CalendarDate(
-  new Date().getFullYear(),
-  new Date().getMonth() + 1,
-  new Date().getDate()
-)
-const dateModel = shallowRef(today)
-const df = new DateFormatter('de-DE', {
-  dateStyle: 'medium'
 })
 
 const toast = useToast()
@@ -77,7 +66,7 @@ function addInvoiceItem() {
   if (item && state.items) {
     state.items.push({
       itemId: item.id,
-      date: date.toISOString(),
+      date: date.toISOString().split('T')[0],
       price: item.price,
       quantity: 1,
     })
@@ -87,7 +76,6 @@ function addInvoiceItem() {
 
 <template>
   <UForm :schema="invoiceOutFormSchema" :state="state" class="flex flex-col gap-4" @submit="onSubmit">
-    {{ invoiceOutFormSchema.safeParse(state) }}
     <div class="flex flex-col sm:flex-row gap-4">
       <UFormField label="Kunde" name="customerId" size="xl">
         <USelectMenu
@@ -101,15 +89,7 @@ function addInvoiceItem() {
       </UFormField>
   
       <UFormField label="Datum" name="date" size="xl">
-        <UPopover>
-          <UButton color="neutral" variant="outline" icon="i-lucide-calendar" size="xl">
-            {{ dateModel ? df.format(dateModel.toDate(getLocalTimeZone())) : 'Wähle ein Datum' }}
-          </UButton>
-    
-          <template #content>
-            <UCalendar v-model="dateModel" class="p-2" @update:model-value="state.date = dateModel?.toString()" />
-          </template>
-        </UPopover>
+        <LayoutDatepicker v-model="state.date" size="xl" />
       </UFormField>
     </div>
 
@@ -136,7 +116,6 @@ function addInvoiceItem() {
       :schema="invoiceItemRelationFormSchema"
       class="flex gap-4"
     >
-      {{ invoiceItemRelationFormSchema.safeParse(relation) }}
       <div class="flex-1">
         <div class="font-bold">
           {{ items.find((item) => item.id === relation.itemId)?.title }}
@@ -146,15 +125,7 @@ function addInvoiceItem() {
         </div>
       </div>
       <UFormField label="Datum" name="date" size="xl">
-        <UPopover>
-          <UButton color="neutral" variant="outline" icon="i-lucide-calendar" size="xl">
-            {{ dateModel ? df.format(dateModel.toDate(getLocalTimeZone())) : 'Wähle ein Datum' }}
-          </UButton>
-    
-          <template #content>
-            <UCalendar v-model="dateModel" class="p-2" @update:model-value="relation.date = dateModel?.toString()" />
-          </template>
-        </UPopover>
+        <LayoutDatepicker v-model="relation.date" size="xl" />
       </UFormField>
       <UFormField label="Preis" name="price" size="xl">
         <UInput v-model="relation.price" type="number" />
