@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
   const db = await getDatabaseConnection()
 
   if (await denies(event, manageCustomer, invoice.customerId)) {
-    return createError({
+    throw createError({
       status: 403,
       statusMessage: 'Du bist nicht berechtigt, Rechnungen für diesen Kunden zu verwalten.'
     })
@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
 
   if (invoice.id) {
     if (await denies(event, manageInvoiceOut, invoice.id)) {
-      return createError({
+      throw createError({
         status: 403,
         statusMessage: 'Du bist nicht berechtigt, diese Rechnung zu bearbeiten.'
       })
