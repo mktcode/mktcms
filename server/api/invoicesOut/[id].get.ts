@@ -14,5 +14,27 @@ export default defineEventHandler(async (event) => {
     .limit(1)
     .executeTakeFirst()
   
-  return invoice
+  if (invoice) {
+    const items = await db.selectFrom('invoiceItemRelations')
+      .innerJoin('invoiceItems', 'invoiceItems.id', 'invoiceItemRelations.itemId')
+      .select([
+        'invoiceItems.id',
+        'invoiceItems.title',
+        'invoiceItems.description',
+        'invoiceItems.unit',
+        'invoiceItemRelations.quantity',
+        'invoiceItemRelations.price'
+      ])
+      .where('invoiceItemRelations.invoiceId', '=', invoice.id)
+      .execute()
+    
+    const result = {
+      ...invoice,
+      items
+    }
+
+    return result
+  }
+  
+  return null
 })

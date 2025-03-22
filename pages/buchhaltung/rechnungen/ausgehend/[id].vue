@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import type { InvoiceOut } from '~/types';
+import type { InvoiceItemRelation, InvoiceOut } from '~/types';
+
+type InvoiceOutWithItemRelations = InvoiceOut & { items: InvoiceItemRelation[] }
 
 const route = useRoute()
-const invoice = ref<InvoiceOut | null>(null);
+const invoice = ref<InvoiceOutWithItemRelations | null>(null);
 const invoiceId = Array.isArray(route.params.id) ? Number(route.params.id[0]) : Number(route.params.id)
 
 definePageMeta({
@@ -12,7 +14,7 @@ definePageMeta({
 })
 
 onMounted(async () => {
-  const existingInvoice = await $fetch<InvoiceOut>(`/api/invoicesOut/${invoiceId}`);
+  const existingInvoice = await $fetch<InvoiceOutWithItemRelations>(`/api/invoicesOut/${invoiceId}`);
   
   invoice.value = existingInvoice;
 })
