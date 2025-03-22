@@ -295,7 +295,6 @@ export type InvoiceItemRelation = Selectable<InvoiceItemRelationsTable>
 export type NewInvoiceItemRelation = Insertable<InvoiceItemRelationsTable>
 export type InvoiceItemRelationUpdate = Updateable<InvoiceItemRelationsTable>
 export const invoiceItemRelationFormSchema = z.object({
-  invoiceId: z.number(),
   itemId: z.number(),
   date: z.string(),
   quantity: z.number().min(1, 'Eine Menge wird benötigt'),
