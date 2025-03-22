@@ -52,6 +52,31 @@ function getDropdownActions(item: Website): DropdownMenuItem[][] {
         href: `/werbung/website/${item.id}`
       },
       {
+        label: 'Neue Website aus dieser kopieren',
+        icon: 'i-heroicons-document-duplicate',
+        onSelect: async () => {
+          $fetch(`/api/websites/clone`, {
+            method: 'POST',
+            body: { id: item.id }
+          }).then((data) => {
+            navigateTo(`/werbung/website/${data.newWebsiteId}`)
+            refresh();
+            toast.add({
+              title: 'Website kopiert',
+              color: 'success',
+              icon: 'i-lucide-circle-check'
+            })
+          }).catch((e) => {
+            console.log(e)
+            toast.add({
+              title: 'Fehler beim kopieren: ' + e.statusMessage,
+              color: 'error',
+              icon: 'i-lucide-circle-x'
+            })
+          })
+        }
+      },
+      {
         label: 'Löschen',
         icon: 'i-heroicons-trash',
         color: 'error',
