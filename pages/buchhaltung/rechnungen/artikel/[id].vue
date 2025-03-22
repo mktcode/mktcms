@@ -29,7 +29,7 @@ onMounted(async () => {
     </template>
     <div class="p-6">
       <InvoiceItemsForm v-if="invoiceItem" :invoiceItem="invoiceItem" />
-      <div v-else>Posten nicht gefunden</div>
+      <div v-else>Artikel nicht gefunden</div>
     </div>
   </NuxtLayout>
 </template>

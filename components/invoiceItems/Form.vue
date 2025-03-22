@@ -27,8 +27,8 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     body: event.data,
   })
   isSaving.value = false
-  navigateTo('/buchhaltung/rechnungen/posten')
-  toast.add({ title: 'Erfolg.', description: 'Posten wurde gespeichert.', color: 'success' })
+  navigateTo('/buchhaltung/rechnungen/artikel')
+  toast.add({ title: 'Erfolg.', description: 'Artikel wurde gespeichert.', color: 'success' })
 }
 </script>
 

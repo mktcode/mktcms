@@ -36,7 +36,7 @@ function getDropdownActions(item: InvoiceItem): DropdownMenuItem[][] {
       {
         label: 'Bearbeiten',
         icon: 'i-lucide-edit',
-        href: `/buchhaltung/rechnungen/posten/${item.id}`
+        href: `/buchhaltung/rechnungen/artikel/${item.id}`
       },
       {
         label: 'Löschen',
@@ -53,7 +53,7 @@ function getDropdownActions(item: InvoiceItem): DropdownMenuItem[][] {
           }).then(() => {
             refresh();
             toast.add({
-              title: 'Posten gelöscht',
+              title: 'Artikel gelöscht',
               color: 'success',
               icon: 'i-lucide-circle-check'
             })
@@ -76,8 +76,8 @@ function getDropdownActions(item: InvoiceItem): DropdownMenuItem[][] {
   <NuxtLayout name="default">
     <template #navbar2>
       <LayoutNavbarAccounting>
-        <UButton class="ml-auto" icon="i-lucide-plus" to="/buchhaltung/rechnungen/posten/neu">
-          Neuer Posten
+        <UButton class="ml-auto" icon="i-lucide-plus" to="/buchhaltung/rechnungen/artikel/neu">
+          Neuer Artikel
         </UButton>
       </LayoutNavbarAccounting>
     </template>

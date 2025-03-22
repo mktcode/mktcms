@@ -21,9 +21,9 @@ const items = ref([
     to: '/buchhaltung/rechnungen/ausgehend',
   },
   {
-    label: 'Posten',
+    label: 'Artikel',
     icon: 'i-heroicons-list-bullet',
-    to: '/buchhaltung/rechnungen/posten',
+    to: '/buchhaltung/rechnungen/artikel',
   }
 ])
 </script>

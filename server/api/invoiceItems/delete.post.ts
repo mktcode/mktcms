@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
   if (await denies(event, manageInvoiceItem, id)) {
     return createError({
       status: 403,
-      statusMessage: 'Du bist nicht berechtigt, diesen Posten zu löschen',
+      statusMessage: 'Du bist nicht berechtigt, diesen Artikel zu löschen',
     })
   }
 
