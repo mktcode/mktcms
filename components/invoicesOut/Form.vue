@@ -14,21 +14,31 @@ const state = reactive<Partial<Schema>>({
   id: props.invoice?.id,
   customerId: props.invoice?.customerId,
   date: props.invoice?.date,
-  status: props.invoice?.status,
-  discount: props.invoice?.discount,
+  status: props.invoice?.status ?? 0,
+  discount: props.invoice?.discount ?? 0,
   items: [],
 })
-const dateModel = shallowRef(new CalendarDate(2025, 1, 10))
+
+const today = new CalendarDate(
+  new Date().getFullYear(),
+  new Date().getMonth() + 1,
+  new Date().getDate()
+)
+const dateModel = shallowRef(today)
 
 const toast = useToast()
 const isSaving = ref(false)
 const customers = ref<Customer[]>([])
 
-const fetchPosts = async () => {
+const fetchCustomers = async () => {
   const data = await $fetch('/api/customers/list');
   customers.value = data;
+
+  if (state.customerId === undefined && customers.value.length > 0) {
+    state.customerId = customers.value[0].id;
+  }
 };
-onMounted(fetchPosts);
+onMounted(fetchCustomers);
 
 const df = new DateFormatter('de-DE', {
   dateStyle: 'medium'
@@ -48,30 +58,30 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
 <template>
   <UForm :schema="schema" :state="state" class="flex flex-col gap-4" @submit="onSubmit">
-    <UFormField label="Kunde" name="customerId" size="xl">
-      <USelectMenu
-        v-model="state.customerId"
-        value-key="id"
-        label-key="name"
-        :items="customers"
-        size="xl"
-        class="w-48"
-      />
-    </UFormField>
-
-    {{ state.date }}
-
-    <UFormField label="Datum" name="date" size="xl">
-      <UPopover>
-        <UButton color="neutral" variant="outline" icon="i-lucide-calendar" size="xl">
-          {{ dateModel ? df.format(dateModel.toDate(getLocalTimeZone())) : 'Wähle ein Datum' }}
-        </UButton>
+    <div class="flex flex-col sm:flex-row gap-4">
+      <UFormField label="Kunde" name="customerId" size="xl">
+        <USelectMenu
+          v-model="state.customerId"
+          value-key="id"
+          label-key="name"
+          :items="customers"
+          size="xl"
+          class="w-64"
+        />
+      </UFormField>
   
-        <template #content>
-          <UCalendar v-model="dateModel" class="p-2" @update:model-value="state.date = dateModel?.toString()" />
-        </template>
-      </UPopover>
-    </UFormField>
+      <UFormField label="Datum" name="date" size="xl">
+        <UPopover>
+          <UButton color="neutral" variant="outline" icon="i-lucide-calendar" size="xl">
+            {{ dateModel ? df.format(dateModel.toDate(getLocalTimeZone())) : 'Wähle ein Datum' }}
+          </UButton>
+    
+          <template #content>
+            <UCalendar v-model="dateModel" class="p-2" @update:model-value="state.date = dateModel?.toString()" />
+          </template>
+        </UPopover>
+      </UFormField>
+    </div>
 
     <UFormField label="Status" name="status" size="xl">
       <USelect
