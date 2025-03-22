@@ -316,6 +316,7 @@ const formSections = [
           <UTextarea v-model="state.description" class="w-full" />
         </UFormField>
       </template>
+      
       <template #details-body>
         <UCheckbox
           label="Details zum Angebot oder Unternehmen"
