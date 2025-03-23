@@ -6,6 +6,10 @@ defineProps<{
   customer: Customer
   company: Company
 }>()
+
+function formatPrice(price: number) {
+  return price.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })
+}
 </script>
 
 <template>
@@ -33,24 +37,37 @@ defineProps<{
       </div>
     </div>
     <div class="p-12">
-      <table class="w-full">
+      <table class="w-full table">
         <thead>
           <tr>
-            <th class="border-b border-gray-300">Artikel</th>
-            <th class="border-b border-gray-300">Datum</th>
-            <th class="border-b border-gray-300">Preis</th>
+            <th class="border-b border-gray-300 text-left">Artikel</th>
+            <th class="border-b border-gray-300 text-center">Datum</th>
+            <th class="border-b border-gray-300 text-right">Einzelpreis</th>
+            <th class="border-b border-gray-300 text-right">Menge</th>
+            <th class="border-b border-gray-300 text-right">Betrag</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="relation in invoice.items" :key="relation.id">
             <td class="border-b border-gray-300">
-              <!-- {{ relation.title }} -->
+              <div class="font-bold">
+                {{ relation.title }}
+              </div>
+              <div>
+                {{ relation.description }}
+              </div>
             </td>
-            <td class="border-b border-gray-300">
+            <td class="border-b border-gray-300 text-center">
               {{ relation.date }}
             </td>
-            <td class="border-b border-gray-300">
-              {{ relation.price }}
+            <td class="border-b border-gray-300 text-right">
+              {{ formatPrice(relation.price) }}
+            </td>
+            <td class="border-b border-gray-300 text-right">
+              {{ relation.quantity }} {{ relation.unit }}
+            </td>
+            <td class="border-b border-gray-300 text-right">
+              {{ formatPrice(relation.price * relation.quantity) }}
             </td>
           </tr>
         </tbody>
