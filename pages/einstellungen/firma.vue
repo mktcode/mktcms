@@ -9,6 +9,7 @@ const toast = useToast()
 const isUpdating = ref(false)
 
 const state = reactive({
+  logo: '',
   name: '',
   street: '',
   zip: '',
@@ -22,6 +23,7 @@ const state = reactive({
 async function load() {
   const existingCompany = await $fetch('/api/company')
   if (existingCompany) {
+    state.logo = existingCompany.logo || ''
     state.name = existingCompany.name
     state.street = existingCompany.street
     state.zip = existingCompany.zip
