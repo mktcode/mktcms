@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import type { InvoiceOut } from '~/types'
+import type { InvoiceOutWithItemRelations } from '~/types'
 
 definePageMeta({
   layout: 'print',
 })
 
 const route = useRoute()
-const invoice = await $fetch<InvoiceOut>(`/api/invoicesOut/${route.params.id}`)
+const invoice = await $fetch<InvoiceOutWithItemRelations>(`/api/invoicesOut/${route.params.id}`)
 const { data: company } = await useFetch('/api/company')
 const customer = await $fetch(`/api/customers/${invoice.customerId}`)
 

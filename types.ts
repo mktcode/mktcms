@@ -285,6 +285,7 @@ export const invoiceItemFormSchema = z.object({
 })
 
 export interface InvoiceItemRelationsTable {
+  id: Generated<number>
   invoiceId: number
   itemId: number
   date: ColumnType<string, string, string>
@@ -295,11 +296,13 @@ export type InvoiceItemRelation = Selectable<InvoiceItemRelationsTable>
 export type NewInvoiceItemRelation = Insertable<InvoiceItemRelationsTable>
 export type InvoiceItemRelationUpdate = Updateable<InvoiceItemRelationsTable>
 export const invoiceItemRelationFormSchema = z.object({
+  id: z.number().optional(),
   itemId: z.number(),
   date: z.string(),
   quantity: z.number().min(1, 'Eine Menge wird benötigt'),
   price: z.number().min(0.01, 'Ein Preis wird benötigt'),
 })
+export type InvoiceOutWithItemRelations = InvoiceOut & { items: InvoiceItemRelation[] }
 
 // Invoices In
 export interface InvoicesInTable {

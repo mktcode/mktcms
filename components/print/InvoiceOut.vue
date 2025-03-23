@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { Company, Customer, InvoiceOut } from '~/types';
+import type { Company, Customer, InvoiceOutWithItemRelations } from '~/types';
 
 defineProps<{
-  invoice: InvoiceOut
+  invoice: InvoiceOutWithItemRelations
   customer: Customer
   company: Company
 }>()
@@ -31,6 +31,30 @@ defineProps<{
         <div>{{ company.street }}</div>
         <div>{{ company.zip }} {{ company.city }}</div>
       </div>
+    </div>
+    <div class="p-12">
+      <table class="w-full">
+        <thead>
+          <tr>
+            <th class="border-b border-gray-300">Artikel</th>
+            <th class="border-b border-gray-300">Datum</th>
+            <th class="border-b border-gray-300">Preis</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="relation in invoice.items" :key="relation.id">
+            <td class="border-b border-gray-300">
+              <!-- {{ relation.title }} -->
+            </td>
+            <td class="border-b border-gray-300">
+              {{ relation.date }}
+            </td>
+            <td class="border-b border-gray-300">
+              {{ relation.price }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>

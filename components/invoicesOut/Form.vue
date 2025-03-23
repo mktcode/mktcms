@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
-import { invoiceOutFormSchema, invoiceItemRelationFormSchema, type Customer, type InvoiceItem, type InvoiceOut, type InvoiceItemRelation } from '~/types'
-
-type InvoiceOutWithItemRelations = InvoiceOut & { items: InvoiceItemRelation[] }
+import { invoiceOutFormSchema, invoiceItemRelationFormSchema, type Customer, type InvoiceItem, type InvoiceOutWithItemRelations } from '~/types'
 
 const props = defineProps<{
   invoice?: InvoiceOutWithItemRelations
