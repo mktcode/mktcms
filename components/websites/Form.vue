@@ -285,7 +285,7 @@ const formSections = [
 
         <UCheckbox
           label="Menü anzeigen"
-          description="Deine anderen Websites werden in einem Menü verlinkt."
+          description="Deine anderen Seiten werden in einem Menü verlinkt."
           name="showMenu"
           v-model="state.showMenu"
         />

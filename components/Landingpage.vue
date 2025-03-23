@@ -24,7 +24,6 @@ updateAppConfig(appConfig)
     'font-merriweather': website.font === 'merriweather',
     'font-lora': website.font === 'lora',
     'font-playfair-display': website.font === 'playfair-display',
-
   }">
     <LandingpageHeader0 v-if="website.headerVariant === 0" :website="website" :isLive="isLive" />
     <LandingpageHeader1 v-if="website.headerVariant === 1" :website="website" :isLive="isLive" />
