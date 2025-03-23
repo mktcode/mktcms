@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import type { Website, WebsiteContent } from '~/types';
+import type { Company, Website, WebsiteContent } from '~/types';
 
 type WebsiteWithContents = Website & { contents: WebsiteContent[] }
 
 const props = defineProps<{
   website: WebsiteWithContents
+  company: Company
   isLive?: boolean
 }>()
 
@@ -27,7 +28,7 @@ updateAppConfig(appConfig)
   }">
     <LandingpageHeader0 v-if="website.headerVariant === 0" :website="website" :isLive="isLive" />
     <LandingpageHeader1 v-if="website.headerVariant === 1" :website="website" :isLive="isLive" />
-    <LandingpageHeader2 v-if="website.headerVariant === 2" :website="website" :isLive="isLive" />
+    <LandingpageHeader2 v-if="website.headerVariant === 2" :website="website" :company="company" :isLive="isLive" />
     <LandingpageAbout v-if="website.showAbout" :website="website" />
     <LandingpageContents v-if="website.showContents" :website="website" />
     <LandingpageContactForm v-if="website.hasContactForm" :website="website" />

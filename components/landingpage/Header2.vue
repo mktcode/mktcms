@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import type { Website } from '~/types';
+import type { Company, Website } from '~/types';
 
 const props = defineProps<{
   website: Website
+  company: Company
   isLive?: boolean
 }>()
 
@@ -12,22 +13,25 @@ const router = useRouter()
 const contactLink = `${router.currentRoute.value.fullPath}#contact`
 
 const { data: menuItems } = await useFetch('/api/websites/menu', { params: { userId: props.website.userId } })
-
-const showLogo = ref(true)
 </script>
 
 <template>
   <div class="h-screen bg-white relative">
-    <nav v-if="website.showMenu || showLogo" class="absolute top-0 left-0 right-0 z-50 flex items-center p-6 sm:px-12 lg:px-24 gap-6 sm:gap-12 text-xl">
+    <nav v-if="website.showMenu || company.logo || company.name" class="absolute top-0 left-0 right-0 z-50 flex items-center p-6 sm:px-12 lg:px-24 gap-6 sm:gap-12 text-xl">
       <div class="w-full flex justify-between gap-6">
-        <div v-if="showLogo" class="flex items-center gap-4">
-          <img src="~/assets/img/mktcms.png" alt="Logo" class="rounded-full w-24" />
-          <div>
+        <div v-if="company.logo || company.name" class="flex items-center gap-4">
+          <img
+            v-if="company.logo"
+            :src="`${s3Endpoint}/mktcms/${company.logo}`"
+            alt="Logo"
+            class="rounded-full w-24"
+          />
+          <div v-if="company.name">
             <div class="font-bold">
-              Markus GmbH
+              {{ company.name }}
             </div>
             <div class="text-primary-500 text-sm">
-              Eine GmbH zum Geld machen.
+              {{ company.name }}
             </div>
           </div>
         </div>
