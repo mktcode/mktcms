@@ -13,6 +13,11 @@ const appConfig = useAppConfig()
 appConfig.ui.colors.primary = props.website.primaryColor || appConfig.ui.colors.primary
 
 updateAppConfig(appConfig)
+
+useSeoMeta({
+  title: `${props.company.name} - ${props.website.title}`,
+  description: props.website.description,
+})
 </script>
 
 <template>
