@@ -14,7 +14,6 @@ function onSelect(image: string) {
 }
 
 const uploadFile = async () => {
-  console.log('uploadFile')
   const formData = new FormData()
   const files = fileInput.value?.files
 
