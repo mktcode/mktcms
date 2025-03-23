@@ -16,16 +16,16 @@ const { public: { s3Endpoint } } = useRuntimeConfig()
         :src="`${s3Endpoint}/mktcms/${website.aboutImage}`"
         class="object-cover aspect-square w-full sm:w-96 mb-auto rounded-full"
       />
-      <div class="text-primary-950 flex flex-col items-start justify-center gap-8">
+      <div class="flex flex-col items-start justify-center gap-8">
         <div>
-          <h1 class="text-5xl font-bold mb-2">
+          <h1 class="text-5xl text-gray-800 font-bold mb-2">
             {{ website.aboutTitle }}
           </h1>
           <h2 class="text-3xl text-primary-500">
             {{ website.aboutSubtitle }}
           </h2>
         </div>
-        <p class="text-2xl opacity-70">
+        <p class="text-2xl text-primary-950 opacity-70 leading-normal">
           {{ website.aboutText }}
         </p>
       </div>

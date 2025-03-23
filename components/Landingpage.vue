@@ -28,6 +28,7 @@ updateAppConfig(appConfig)
   }">
     <LandingpageHeader0 v-if="website.headerVariant === 0" :website="website" :isLive="isLive" />
     <LandingpageHeader1 v-if="website.headerVariant === 1" :website="website" :isLive="isLive" />
+    <LandingpageHeader2 v-if="website.headerVariant === 2" :website="website" :isLive="isLive" />
     <LandingpageAbout v-if="website.showAbout" :website="website" />
     <LandingpageContents v-if="website.showContents" :website="website" />
     <LandingpageContactForm v-if="website.hasContactForm" :website="website" />

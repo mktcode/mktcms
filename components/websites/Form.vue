@@ -270,6 +270,7 @@ const formSections = [
           <USelect v-model="state.headerVariant" class="w-48" :items="[
             { label: 'Vollbild', value: 0 },
             { label: 'Geteilt', value: 1 },
+            { label: 'Geteilt (Welle)', value: 2 },
           ]" />
         </UFormField>
 
