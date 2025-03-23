@@ -2,6 +2,7 @@
 import { companyFormSchema } from '~/types'
 
 const { user } = useUserSession()
+const { public: { s3Endpoint } } = useRuntimeConfig()
 
 const showWelcomeMessage = ref(true)
 
@@ -39,11 +40,16 @@ async function load() {
   }
 }
 
+function selectLogo(key: string) {
+  state.logo = key
+}
+
 async function update() {
   isUpdating.value = true
   await $fetch('/api/company/upsert', {
     method: 'POST',
     body: {
+      logo: state.logo,
       name: state.name,
       street: state.street,
       zip: state.zip,
@@ -90,6 +96,20 @@ onMounted(load)
       </h1>
   
       <UForm class="flex flex-col gap-4" @submit="update" :state="state" :schema="companyFormSchema">
+        <div class="flex flex-col items-start gap-4">
+          <img v-if="state.logo" :src="`${s3Endpoint}/mktcms/${state.logo}`" alt="Kein Bild" class="w-40 object-cover object-center rounded-lg" />
+          <div class="flex items-start gap-4">
+            <LayoutFileExplorer @select="selectLogo" />
+            <UButton
+              v-if="state.logo"
+              label="Logo entfernen"
+              variant="ghost"
+              icon="i-heroicons-trash"
+              @click="state.logo = ''"
+            />
+          </div>
+        </div>
+
         <UFormField label="Firmenname" name="companyName" required>
           <UInput class="w-full" size="xl" v-model="state.name" />
         </UFormField>
