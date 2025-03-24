@@ -314,9 +314,10 @@ export type InvoiceOutWithItemRelations = InvoiceOut & { items: InvoiceItemRelat
 export interface InvoicesInTable {
   id: Generated<number>
   supplierId: number
-  date: ColumnType<string, string, string>
+  date: ColumnType<Date, string, string>
   status: number
-  discount: number
+  amount: number
+  vat: number
 }
 export type InvoiceIn = Selectable<InvoicesInTable>
 export type NewInvoiceIn = Insertable<InvoicesInTable>
@@ -326,7 +327,8 @@ export const invoiceInFormSchema = z.object({
   supplierId: z.number(),
   date: z.string(),
   status: z.number(),
-  discount: z.number(),
+  amount: z.number().min(0.01, 'Ein Betrag wird benötigt'),
+  vat: z.number(),
 })
 
 export interface Database {
