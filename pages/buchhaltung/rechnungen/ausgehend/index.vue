@@ -26,7 +26,7 @@ const columns: TableColumn<InvoiceOut>[] = [
     accessorKey: 'total',
     header: 'Betrag',
     cell: ({ row }) => {
-      return formatPrice(100)
+      return formatPrice(row.getValue('total'))
     }
   },
   {

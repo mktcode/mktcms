@@ -1,3 +1,4 @@
+import { sql } from "kysely";
 import { z } from "zod";
 
 const paramsSchema = z.object({
@@ -13,8 +14,16 @@ export default defineEventHandler(async (event) => {
   const invoices = await db
     .selectFrom('invoicesOut')
     .innerJoin('customers', 'customers.id', 'invoicesOut.customerId')
-    .select(['invoicesOut.id', 'invoicesOut.customerId', 'customers.name as customerName', 'invoicesOut.date'])
+    .innerJoin('invoiceItemRelations', 'invoiceItemRelations.invoiceId', 'invoicesOut.id')
+    .select(({ eb, fn, ref }) => [
+      'invoicesOut.id',
+      'invoicesOut.customerId',
+      'customers.name as customerName',
+      'invoicesOut.date',
+      fn.sum(sql`${ref('invoiceItemRelations.price')} * ${ref('invoiceItemRelations.quantity')}`).as('total'),
+    ])
     .where('customers.userId', '=', user.id)
+    .groupBy('invoicesOut.id')
     .limit(limit ? Number(limit) : 9999999)
     .execute()
   
