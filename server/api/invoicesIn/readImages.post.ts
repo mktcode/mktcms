@@ -45,7 +45,7 @@ export default defineEventHandler(async (event) => {
     role: 'developer',
     content: [{
       type: 'input_text',
-      text: `Folgende Lieferanten sind in deiner Datenbank gespeichert:\n\nID | Name\n${suppliers.map(supplier => `${supplier.id} | ${supplier.name}`).join('\n')}`
+      text: `Folgende Lieferanten sind in deiner Datenbank gespeichert:\n\nID | Name\n${suppliers.map(supplier => `${supplier.id} | ${supplier.name}`).join('\n')}\n\nGebe als ID null an, wenn der Lieferant nicht in der Liste ist.`
     }]
   }
 
@@ -74,7 +74,7 @@ export default defineEventHandler(async (event) => {
           properties: {
             supplierId: {
               type: ["number", "null"],
-              description: "ID des Lieferanten (Falls bekannt. Name auf der Rechnung kann leicht vom Namen in der Datenbank abweichen. 0 wenn unbekannt)",
+              description: "ID des Lieferanten",
             },
             supplierName: {
               type: ["string", "null"],

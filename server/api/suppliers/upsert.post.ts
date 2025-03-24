@@ -7,18 +7,32 @@ export default defineEventHandler(async (event) => {
 
   if (supplier.id) {
     if (await denies(event, manageSupplier, supplier.id)) {
-      return createError({
+      throw createError({
         status: 403,
         statusMessage: 'You are not authorized to update this supplier.'
       })
     }
 
-    await db.updateTable('suppliers').set(supplier).where('id', '=', supplier.id).execute()
+    const result = await db.updateTable('suppliers').set(supplier).where('id', '=', supplier.id).executeTakeFirst()
 
-    return { success: true, error: null }
+    if (!result) {
+      throw createError({
+        status: 404,
+        statusMessage: 'Supplier not found.'
+      })
+    }
+
+    return { success: true, error: null, supplierId: supplier.id }
   }
   
-  await db.insertInto('suppliers').values({ ...supplier, userId: user.id }).execute()
+  const result = await db.insertInto('suppliers').values({ ...supplier, userId: user.id }).executeTakeFirst()
 
-  return { success: true, error: null }
+  if (!result.insertId) {
+    throw createError({
+      status: 404,
+      statusMessage: 'Supplier not inserted.'
+    })
+  }
+
+  return { success: true, error: null, supplierId: Number(result.insertId) }
 })

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
-import { invoiceInFormSchema as schema, type Supplier } from '~/types'
+import { invoiceInFormSchema, supplierFormSchema, type Supplier } from '~/types'
 import { CalendarDate, DateFormatter, getLocalTimeZone } from '@internationalized/date'
 import type { OutputItem as InvoiceInListItem } from '~/server/api/invoicesIn/list.get';
 import type { Output as ReadImagesOutput } from '~/server/api/invoicesIn/readImages.post';
@@ -10,7 +10,8 @@ const props = defineProps<{
   invoice?: InvoiceInListItem
 }>()
 
-type Schema = z.output<typeof schema>
+type Schema = z.output<typeof invoiceInFormSchema>
+type SupplierSchema = z.output<typeof supplierFormSchema>
 
 const state = reactive<Partial<Schema>>({
   id: props.invoice?.id,
@@ -19,6 +20,13 @@ const state = reactive<Partial<Schema>>({
   status: props.invoice?.status ?? 0,
   amount: props.invoice?.amount ?? 0,
   vat: props.invoice?.vat ?? 0,
+})
+
+const supplierState = reactive<Partial<SupplierSchema>>({
+  name: '',
+  address: '',
+  zip: '',
+  city: '',
 })
 
 const today = new CalendarDate(
@@ -50,18 +58,15 @@ const isConfirmed = ref({
 
 const toast = useToast()
 const isSaving = ref(false)
-const suppliers = ref<Supplier[]>([])
+const isSavingSupplier = ref(false)
 const captureFileInput = ref<HTMLInputElement | null>(null)
 const uploadFileInput = ref<HTMLInputElement | null>(null)
 const files = ref<File[]>([])
 const isReadingFile = ref(false)
 const showAlert = ref(true)
+const showNewSupplierModal = ref(false)
 
-const fetchPosts = async () => {
-  const data = await $fetch('/api/suppliers/list');
-  suppliers.value = data;
-};
-onMounted(fetchPosts);
+const { data: suppliers, refresh: refreshSuppliers } = await useFetch('/api/suppliers/list')
 
 const df = new DateFormatter('de-DE', {
   dateStyle: 'medium'
@@ -78,6 +83,19 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   toast.add({ title: 'Erfolg.', description: 'Rechnung wurde gespeichert.', color: 'success' })
 }
 
+async function onSupplierSubmit() {
+  isSavingSupplier.value = true
+  const { supplierId } = await $fetch('/api/suppliers/upsert', {
+    method: 'POST',
+    body: supplierState,
+  })
+  await refreshSuppliers()
+  state.supplierId = supplierId
+  isSavingSupplier.value = false
+  showNewSupplierModal.value = false
+  toast.add({ title: 'Erfolg.', description: 'Lieferant wurde gespeichert.', color: 'success' })
+}
+
 async function readImages() {
   isReadingFile.value = true
   const images = []
@@ -91,9 +109,35 @@ async function readImages() {
     body: { images },
   })
 
+  if (
+    !imageData.value.supplierId && (
+      imageData.value.supplierName ||
+      imageData.value.supplierStreet ||
+      imageData.value.supplierZip ||
+      imageData.value.supplierCity
+    )) {
+    showNewSupplierModal.value = true
+  }
+
   if (imageData.value.supplierId) {
     state.supplierId = imageData.value.supplierId
     isConfirmed.value.supplierId = false
+  }
+
+  if (imageData.value.supplierName) {
+    supplierState.name = imageData.value.supplierName
+  }
+
+  if (imageData.value.supplierStreet) {
+    supplierState.address = imageData.value.supplierStreet
+  }
+
+  if (imageData.value.supplierZip) {
+    supplierState.zip = imageData.value.supplierZip
+  }
+
+  if (imageData.value.supplierCity) {
+    supplierState.city = imageData.value.supplierCity
   }
 
   if (imageData.value.date) {
@@ -133,7 +177,7 @@ function toBase64(file: File): Promise<string> {
 </script>
 
 <template>
-  <UForm :schema="schema" :state="state" class="flex flex-col gap-4" @submit="onSubmit">
+  <UForm :schema="invoiceInFormSchema" :state="state" class="flex flex-col gap-4" @submit="onSubmit">
     <Transition name="fade">
       <UAlert
         v-if="showAlert"
@@ -185,26 +229,41 @@ function toBase64(file: File): Promise<string> {
       Daten einlesen
     </UButton>
 
-    <div v-if="!state.supplierId && imageData.supplierName" class="p-4 border border-primary-600 rounded-lg text-primary-950">
-      <div class="flex items-center gap-2">
-        <div class="font-bold">
-          Neuer Lieferant:
+    <UModal
+      v-model:open="showNewSupplierModal"
+      title="Neuen Lieferanten anlegen"
+    >
+      <template #body>
+        <div class="flex flex-col gap-4">
+          <UFormField label="Name" name="supplierName" size="xl">
+            <UInput v-model="supplierState.name" class="w-full" />
+          </UFormField>
+          <div class="flex gap-4">
+            <UFormField label="Straße" name="supplierStreet" size="xl">
+              <UInput v-model="supplierState.address" class="w-full" />
+            </UFormField>
+            <UFormField label="PLZ" name="supplierZip" size="xl">
+              <UInput v-model="supplierState.zip" class="w-full" />
+            </UFormField>
+          </div>
+          <UFormField label="Ort" name="supplierCity" size="xl">
+            <UInput v-model="supplierState.city" class="w-full" />
+          </UFormField>
         </div>
-        <div>
-          {{ imageData.supplierName }}
+      </template>
+      <template #footer>
+        <div class="flex justify-between w-full gap-4">
+          <UButton color="error" variant="ghost" size="xl" @click="showNewSupplierModal = false">
+            Abbrechen
+          </UButton>
+          <UButton color="primary" size="xl" @click="onSupplierSubmit" :loading="isSavingSupplier">
+            Lieferant anlegen
+          </UButton>
         </div>
-      </div>
-      <div class="text-sm text-primary-800 pt-1 pb-3">
-        <div>{{ imageData.supplierStreet }}</div>
-        <div>{{ imageData.supplierZip }} {{ imageData.supplierCity }}</div>
-      </div>
-
-      <UButton :disabled="true">
-        Lieferant anlegen und auswählen
-      </UButton>
-    </div>
-
-    <div class="flex items-end gap-4">
+      </template>
+    </UModal>
+    
+    <div class="flex items-end gap-4" v-if="suppliers">
       <UFormField label="Lieferant" name="supplierId" size="xl" class="w-full">
         <USelectMenu
           v-model="state.supplierId"
@@ -214,6 +273,11 @@ function toBase64(file: File): Promise<string> {
           size="xl"
           class="w-full"
         />
+        <div>
+          <UButton variant="link" color="primary" class="px-0" @click="showNewSupplierModal = true">
+            Neuen Lieferanten anlegen
+          </UButton>
+        </div>
       </UFormField>
       <UButton color="primary" size="xl" @click="isConfirmed.supplierId = true" v-if="!isConfirmed.supplierId">
         Bestätigen
