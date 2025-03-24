@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import type { DropdownMenuItem, TableColumn } from '@nuxt/ui';
-import type { InvoiceOut } from '~/types';
 import { LazyLayoutDeleteModal } from '#components'
+import type { OutputItem as InvoicesOutListItem } from '~/server/api/invoicesOut/list.get';
 
-const { data, status, refresh } = useFetch('/api/invoicesOut/list');
+const { data, status, refresh } = await useFetch('/api/invoicesOut/list');
 const toast = useToast();
 const overlay = useOverlay();
 const deleteModal = overlay.create(LazyLayoutDeleteModal)
 
-const columns: TableColumn<InvoiceOut>[] = [
+const columns: TableColumn<InvoicesOutListItem>[] = [
   {
     accessorKey: 'id',
     header: 'Rnr.',
@@ -42,7 +42,7 @@ const columns: TableColumn<InvoiceOut>[] = [
   }
 ]
 
-function getDropdownActions(content: InvoiceOut): DropdownMenuItem[][] {
+function getDropdownActions(content: InvoicesOutListItem): DropdownMenuItem[][] {
   return [
     [
       {

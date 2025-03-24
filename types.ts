@@ -253,7 +253,7 @@ export const supplierFormSchema = z.object({
 export interface InvoicesOutTable {
   id: Generated<number>
   customerId: number
-  date: ColumnType<string, string, string>
+  date: ColumnType<Date, string, string>
   status: number
   discount: number
 }
