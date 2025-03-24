@@ -185,7 +185,7 @@ function toBase64(file: File): Promise<string> {
       Daten einlesen
     </UButton>
 
-    <div v-if="!state.supplierId && imageData.supplierName" class="p-4 bg-primary-100 rounded-lg text-primary-950">
+    <div v-if="!state.supplierId && imageData.supplierName" class="p-4 border border-primary-600 rounded-lg text-primary-950">
       <div class="flex items-center gap-2">
         <div class="font-bold">
           Neuer Lieferant:
