@@ -10,7 +10,8 @@
     "postinstall": "nuxt prepare",
     "deploy": "rsync -avz -e 'ssh -i ~/.ssh/uberspace-mktcode' .output/ mktcode@alnilam.uberspace.de:/home/mktcode/projects/cms.markus-kottlaender.de && ssh -i ~/.ssh/uberspace-mktcode mktcode@alnilam.uberspace.de 'supervisorctl restart cms.markus-kottlaender.de'",
     "bd": "npm run build && npm run deploy",
-    "migrate": "npx tsx db/migrate.ts"
+    "migrate": "npx tsx db/migrate.ts",
+    "migrate:down": "npx tsx db/down.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.772.0",
