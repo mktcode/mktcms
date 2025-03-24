@@ -6,10 +6,6 @@ defineProps<{
   customer: Customer
   company: Company
 }>()
-
-function formatPrice(price: number) {
-  return price.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })
-}
 </script>
 
 <template>
@@ -72,6 +68,9 @@ function formatPrice(price: number) {
           </tr>
         </tbody>
       </table>
+      <div v-if="company.isSmallBusiness" class="mt-6 text-right">
+        Gemäß § 19 UStG wird keine Umsatzsteuer berechnet.
+      </div>
     </div>
   </div>
 </template>

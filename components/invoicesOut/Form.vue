@@ -70,6 +70,13 @@ function addInvoiceItem() {
     })
   }
 }
+
+const total = computed(() => {
+  return state.items?.reduce((acc, item) => {
+    const itemPrice = items.value.find((i) => i.id === item.itemId)?.price ?? 0
+    return acc + itemPrice * (item.quantity ?? 0) * (1 - (state.discount ?? 0) / 100)
+  }, 0) ?? 0
+})
 </script>
 
 <template>
@@ -107,34 +114,36 @@ function addInvoiceItem() {
       </UButton>
     </div>
 
-    <UForm
-      v-for="relation, count in state.items"
-      :key="count"
-      :state="relation"
-      :schema="invoiceItemRelationFormSchema"
-      class="flex gap-4"
-    >
-      <div class="flex-1">
-        <div class="font-bold">
-          {{ items.find((item) => item.id === relation.itemId)?.title }}
+    <div class="my-6 flex flex-col gap-4">
+      <UForm
+        v-for="relation, count in state.items"
+        :key="count"
+        :state="relation"
+        :schema="invoiceItemRelationFormSchema"
+        class="flex gap-4"
+      >
+        <div class="flex-1">
+          <div class="font-bold">
+            {{ items.find((item) => item.id === relation.itemId)?.title }}
+          </div>
+          <div>
+            {{ items.find((item) => item.id === relation.itemId)?.description }}
+          </div>
         </div>
-        <div>
-          {{ items.find((item) => item.id === relation.itemId)?.description }}
-        </div>
-      </div>
-      <UFormField label="Datum" name="date" size="xl">
-        <LayoutDatepicker v-model="relation.date" size="xl" />
-      </UFormField>
-      <UFormField label="Preis" name="price" size="xl">
-        <UInput v-model="relation.price" type="number" />
-      </UFormField>
-      <UFormField :label="`Menge (${items.find((item) => item.id === relation.itemId)?.unit})`" name="quantity" size="xl">
-        <UInput v-model="relation.quantity" type="number" />
-      </UFormField>
-      <UButton icon="i-heroicons-trash" color="error" variant="ghost" size="xl" @click="state.items?.splice(count, 1)" class="self-end">
-        Entfernen
-      </UButton>
-    </UForm>
+        <UFormField label="Datum" name="date" size="xl">
+          <LayoutDatepicker v-model="relation.date" size="xl" />
+        </UFormField>
+        <UFormField label="Preis" name="price" size="xl">
+          <UInput v-model="relation.price" type="number" />
+        </UFormField>
+        <UFormField :label="`Menge (${items.find((item) => item.id === relation.itemId)?.unit})`" name="quantity" size="xl">
+          <UInput v-model="relation.quantity" type="number" />
+        </UFormField>
+        <UButton icon="i-heroicons-trash" color="error" variant="ghost" size="xl" @click="state.items?.splice(count, 1)" class="self-end">
+          Entfernen
+        </UButton>
+      </UForm>
+    </div>
 
     <UFormField label="Status" name="status" size="xl">
       <USelect
@@ -154,6 +163,16 @@ function addInvoiceItem() {
     <UFormField label="Rabatt" name="discount" size="xl">
       <UInputNumber v-model="state.discount" size="xl" />
     </UFormField>
+
+    <div class="font-bold text-2xl flex justify-end">
+      <div class="grid grid-cols-2 gap-x-4">
+        <div>Netto</div>
+        {{ formatPrice(total / 1.19) }}
+        <div>Brutto</div>
+        {{ formatPrice(total) }}
+
+      </div>
+    </div>
 
     <UButton :loading="isSaving" type="submit" color="primary" icon="i-heroicons-check" size="xl">
       Speichern
