@@ -23,6 +23,21 @@ const columns: TableColumn<InvoiceOut>[] = [
     header: 'Datum'
   },
   {
+    accessorKey: 'total',
+    header: 'Betrag',
+    cell: ({ row }) => {
+      return formatPrice(100)
+    }
+  },
+  {
+    accessorKey: 'status',
+    header: 'Status',
+    cell: ({ row }) => {
+      const status = row.getValue('status')
+      return status === 0 ? 'Offen' : 'Bezahlt'
+    }
+  },
+  {
     id: 'actions',
   }
 ]
