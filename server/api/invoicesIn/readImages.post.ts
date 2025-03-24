@@ -2,14 +2,31 @@ import OpenAI from 'openai'
 import { ResponseInput } from 'openai/resources/responses/responses.mjs'
 import { z } from "zod"
 
-const bodySchema = z.object({
+const inputSchema = z.object({
   images: z.array(z.string())
 })
+
+const outputSchema = z.object({
+  supplierId: z.number().nullable(),
+  supplierName: z.string().nullable(),
+  supplierStreet: z.string().nullable(),
+  supplierCity: z.string().nullable(),
+  supplierZip: z.string().nullable(),
+  date: z.object({
+    day: z.number(),
+    month: z.number(),
+    year: z.number(),
+  }).nullable(),
+  totalGross: z.number().nullable(),
+  totalNet: z.number().nullable(),
+  totalVat: z.number().nullable(),
+})
+export type Output = z.infer<typeof outputSchema>
 
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
   const { openaiApiKey } = useRuntimeConfig()
-  const { images } = await readValidatedBody(event, body => bodySchema.parse(body))
+  const { images } = await readValidatedBody(event, body => inputSchema.parse(body))
   const db = await getDatabaseConnection()
 
   const suppliers = await db
@@ -56,11 +73,27 @@ export default defineEventHandler(async (event) => {
           type: "object",
           properties: {
             supplierId: {
-              type: "number",
+              type: ["number", "null"],
               description: "ID des Lieferanten (Falls bekannt. Name auf der Rechnung kann leicht vom Namen in der Datenbank abweichen. 0 wenn unbekannt)",
             },
+            supplierName: {
+              type: ["string", "null"],
+              description: "Firmenname des Lieferanten",
+            },
+            supplierStreet: {
+              type: ["string", "null"],
+              description: "Straße des Lieferanten",
+            },
+            supplierCity: {
+              type: ["string", "null"],
+              description: "Stadt des Lieferanten",
+            },
+            supplierZip: {
+              type: ["string", "null"],
+              description: "Postleitzahl des Lieferanten",
+            },
             date: {
-              type: "object",
+              type: ["object", "null"],
               description: "Rechnungsdatum",
               properties: {
                 day: {
@@ -79,25 +112,39 @@ export default defineEventHandler(async (event) => {
               required: ["day", "month", "year"],
               additionalProperties: false,
             },
-            totalNet: {
-              type: "number",
-              description: "Nettobetrag"
-            },
             totalGross: {
-              type: "number",
+              type: ["number", "null"],
               description: "Bruttobetrag"
             },
-            tax: {
-              type: "number",
+            totalNet: {
+              type: ["number", "null"],
+              description: "Nettobetrag"
+            },
+            totalVat: {
+              type: ["number", "null"],
               description: "Steuerbetrag"
             },
           },
-          required: ["supplierId", "date", "totalNet", "totalGross", "tax"],
+          required: [
+            'supplierId',
+            'supplierName',
+            'supplierStreet',
+            'supplierCity',
+            'supplierZip',
+            'date',
+            'totalGross',
+            'totalNet',
+            'totalVat'
+          ],
           additionalProperties: false,
         },
       },
     },
   })
 
-  return JSON.parse(response.output_text)
+  const imageData = JSON.parse(response.output_text)
+
+  outputSchema.parse(imageData)
+
+  return imageData
 })

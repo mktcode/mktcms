@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
-import { invoiceInFormSchema as schema, type InvoiceIn, type Supplier } from '~/types'
+import { invoiceInFormSchema as schema, type Supplier } from '~/types'
 import { CalendarDate, DateFormatter, getLocalTimeZone } from '@internationalized/date'
+import type { OutputItem as InvoiceInListItem } from '~/server/api/invoicesIn/list.get';
+import type { Output as ReadImagesOutput } from '~/server/api/invoicesIn/readImages.post';
 
 const props = defineProps<{
-  invoice?: InvoiceIn
+  invoice?: InvoiceInListItem
 }>()
 
 type Schema = z.output<typeof schema>
@@ -15,15 +17,35 @@ const state = reactive<Partial<Schema>>({
   supplierId: props.invoice?.supplierId,
   date: props.invoice?.date,
   status: props.invoice?.status ?? 0,
-  discount: props.invoice?.discount ?? 0,
+  amount: props.invoice?.amount ?? 0,
+  vat: props.invoice?.vat ?? 0,
 })
-const dateModel = shallowRef(new CalendarDate(2025, 1, 10))
+
+const today = new CalendarDate(
+  new Date().getFullYear(),
+  new Date().getMonth() + 1,
+  new Date().getDate()
+)
+const dateModel = shallowRef(today)
+
+const imageData = ref<ReadImagesOutput>({
+  supplierId: null,
+  supplierName: null,
+  supplierStreet: null,
+  supplierZip: null,
+  supplierCity: null,
+  date: null,
+  totalNet: null,
+  totalGross: null,
+  totalVat: null,
+})
 
 const isConfirmed = ref({
   supplierId: true,
   date: true,
   status: true,
-  discount: true,
+  amount: true,
+  vat: true,
 })
 
 const toast = useToast()
@@ -64,20 +86,30 @@ async function readImages() {
     images.push(base64url)
   }
 
-  const imageData = await $fetch('/api/invoicesIn/readImages', {
+  imageData.value = await $fetch('/api/invoicesIn/readImages', {
     method: 'POST',
     body: { images },
   })
 
-  if (imageData.supplierId !== 0) {
-    state.supplierId = imageData.supplierId
+  if (imageData.value.supplierId) {
+    state.supplierId = imageData.value.supplierId
     isConfirmed.value.supplierId = false
   }
 
-  if (imageData.date) {
-    dateModel.value = new CalendarDate(imageData.date.year, imageData.date.month, imageData.date.day)
+  if (imageData.value.date) {
+    dateModel.value = new CalendarDate(imageData.value.date.year, imageData.value.date.month, imageData.value.date.day)
     state.date = dateModel.value.toString()
     isConfirmed.value.date = false
+  }
+
+  if (imageData.value.totalNet) {
+    state.amount = imageData.value.totalNet
+    isConfirmed.value.amount = false
+  }
+
+  if (imageData.value.totalVat) {
+    state.vat = imageData.value.totalVat
+    isConfirmed.value.vat = false
   }
 
   isReadingFile.value = false
@@ -153,6 +185,25 @@ function toBase64(file: File): Promise<string> {
       Daten einlesen
     </UButton>
 
+    <div v-if="!state.supplierId && imageData.supplierName" class="p-4 bg-primary-100 rounded-lg text-primary-950">
+      <div class="flex items-center gap-2">
+        <div class="font-bold">
+          Neuer Lieferant:
+        </div>
+        <div>
+          {{ imageData.supplierName }}
+        </div>
+      </div>
+      <div class="text-sm text-primary-800 pt-1 pb-3">
+        <div>{{ imageData.supplierStreet }}</div>
+        <div>{{ imageData.supplierZip }} {{ imageData.supplierCity }}</div>
+      </div>
+
+      <UButton :disabled="true">
+        Lieferant anlegen und auswählen
+      </UButton>
+    </div>
+
     <div class="flex items-end gap-4">
       <UFormField label="Lieferant" name="supplierId" size="xl" class="w-full">
         <USelectMenu
@@ -186,6 +237,40 @@ function toBase64(file: File): Promise<string> {
       </UButton>
     </div>
 
+    <div class="flex items-end gap-4">
+      <UFormField label="Nettobetrag" name="amount" size="xl">
+        <UInputNumber
+          v-model="state.amount"
+          :format-options="{
+            minimumFractionDigits: 2,
+          }"
+          :min="0"
+          :step="0.01"
+          size="xl"
+        />
+      </UFormField>
+      <UButton color="primary" size="xl" @click="isConfirmed.amount = true" v-if="!isConfirmed.amount">
+        Bestätigen
+      </UButton>
+    </div>
+
+    <div class="flex items-end gap-4">
+      <UFormField label="MwSt." name="vat" size="xl">
+        <UInputNumber
+          v-model="state.vat"
+          :format-options="{
+            minimumFractionDigits: 2,
+          }"
+          :min="0"
+          :step="0.01"
+          size="xl"
+        />
+      </UFormField>
+      <UButton color="primary" size="xl" @click="isConfirmed.vat = true" v-if="!isConfirmed.vat">
+        Bestätigen
+      </UButton>
+    </div>
+
     <UFormField label="Status" name="status" size="xl">
       <USelect
         v-model="state.status"
@@ -199,10 +284,6 @@ function toBase64(file: File): Promise<string> {
         size="xl"
         class="w-48"
       />
-    </UFormField>
-
-    <UFormField label="Rabatt" name="discount" size="xl">
-      <UInput v-model="state.discount" type="number" size="xl" />
     </UFormField>
 
     <UButton
