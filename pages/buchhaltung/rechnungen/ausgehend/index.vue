@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import type { DropdownMenuItem, TableColumn } from '@nuxt/ui';
 import type { InvoiceOut } from '~/types';
+import { LazyLayoutDeleteModal } from '#components'
 
-const { data, status } = useFetch('/api/invoicesOut/list');
+const { data, status, refresh } = useFetch('/api/invoicesOut/list');
 const toast = useToast();
+const overlay = useOverlay();
+const deleteModal = overlay.create(LazyLayoutDeleteModal)
 
 const columns: TableColumn<InvoiceOut>[] = [
   {
@@ -42,13 +45,30 @@ function getDropdownActions(content: InvoiceOut): DropdownMenuItem[][] {
       },
       {
         label: 'Löschen',
-        icon: 'i-lucide-trash',
+        icon: 'i-heroicons-trash',
         color: 'error',
-        onSelect: () => {
-          toast.add({
-            title: 'Rechnung gelöscht',
-            color: 'success',
-            icon: 'i-lucide-circle-check'
+        onSelect: async () => {
+          deleteModal.patch({ title: `Rechnung ${content.id}` })
+          const shouldDelete = await deleteModal.open()
+          if (!shouldDelete) return
+
+          $fetch(`/api/invoicesOut/delete`, {
+            method: 'POST',
+            body: { id: content.id }
+          }).then(() => {
+            refresh();
+            toast.add({
+              title: 'Rechnung gelöscht',
+              color: 'success',
+              icon: 'i-lucide-circle-check'
+            })
+          }).catch((e) => {
+            console.log(e)
+            toast.add({
+              title: 'Fehler beim Löschen: ' + e.statusMessage,
+              color: 'error',
+              icon: 'i-lucide-circle-x'
+            })
           })
         }
       }
