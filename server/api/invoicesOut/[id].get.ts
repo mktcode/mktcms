@@ -30,7 +30,6 @@ export default defineEventHandler(async (event) => {
       .where('invoiceItemRelations.invoiceId', '=', invoice.id)
       .execute()
     
-    console.log('typeof', typeof invoice.date, invoice.date)
     const result = {
       ...invoice,
       date: invoice.date.toISOString().split('T')[0],
