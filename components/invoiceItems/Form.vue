@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
-import { invoiceItemFormSchema as schema, type InvoiceItem } from '~/types'
+import { invoiceItemFormSchema, type InvoiceItem } from '~/types'
 
 const props = defineProps<{
   invoiceItem?: InvoiceItem
 }>()
 
-type Schema = z.output<typeof schema>
+type Schema = z.output<typeof invoiceItemFormSchema>
 
 const state = reactive<Partial<Schema>>({
   id: props.invoiceItem?.id,
@@ -33,7 +33,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 </script>
 
 <template>
-  <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
+  <UForm :schema="invoiceItemFormSchema" :state="state" class="space-y-4" @submit="onSubmit">
     <UFormField label="Titel" name="title" size="xl">
       <UInput v-model="state.title" class="w-full" />
     </UFormField>
@@ -43,7 +43,15 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     </UFormField>
 
     <UFormField label="Standardpreis" name="price" size="xl">
-      <UInputNumber v-model="state.price" class="w-full" />
+      <UInputNumber
+        v-model="state.price"
+        :format-options="{
+          minimumFractionDigits: 2,
+        }"
+        :min="0"
+        :step="0.01"
+        class="w-full"
+      />
     </UFormField>
 
     <UFormField label="Einheit" name="unit" size="xl">

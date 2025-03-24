@@ -19,7 +19,14 @@ const columns: TableColumn<InvoiceItem>[] = [
   },
   {
     accessorKey: 'price',
-    header: 'Standardpreis'
+    header: 'Standardpreis',
+    cell: ({ row }) => formatPrice(row.getValue('price')),
+    meta: {
+      class: {
+        th: 'text-right',
+        td: 'text-right'
+      }
+    }
   },
   {
     accessorKey: 'unit',
