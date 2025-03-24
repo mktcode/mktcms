@@ -19,6 +19,9 @@ const state = reactive({
   email: '',
   vat: '',
   isSmallBusiness: true,
+  bankHolder: '',
+  bankIban: '',
+  bankBic: '',
 })
 
 async function load() {
@@ -33,6 +36,9 @@ async function load() {
     state.email = existingCompany.email || ''
     state.vat = existingCompany.vat || ''
     state.isSmallBusiness = !!existingCompany.isSmallBusiness
+    state.bankHolder = existingCompany.bankHolder || ''
+    state.bankIban = existingCompany.bankIban || ''
+    state.bankBic = existingCompany.bankBic || ''
   }
 
   if (state.email === '') {
@@ -58,6 +64,9 @@ async function update() {
       email: state.email,
       vat: state.vat,
       isSmallBusiness: state.isSmallBusiness,
+      bankHolder: state.bankHolder,
+      bankIban: state.bankIban,
+      bankBic: state.bankBic,
     },
   })
   isUpdating.value = false
@@ -151,6 +160,22 @@ onMounted(load)
             <UInput class="w-full" size="xl" v-model="state.vat" />
           </UFormField>
         </Transition>
+
+        <h2 class="text-xl font-bold mt-6">
+          Bankverbindung
+        </h2>
+
+        <UFormField label="Kontoinhaber" name="bankHolder">
+          <UInput class="w-full" size="xl" v-model="state.bankHolder" />
+        </UFormField>
+
+        <UFormField label="IBAN" name="bankIban">
+          <UInput class="w-full" size="xl" v-model="state.bankIban" />
+        </UFormField>
+
+        <UFormField label="BIC" name="bankBic">
+          <UInput class="w-full" size="xl" v-model="state.bankBic" />
+        </UFormField>
 
         <div class="flex justify-end">
           <UButton type="submit" size="xl" icon="i-heroicons-check">

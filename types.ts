@@ -32,6 +32,9 @@ export interface CompaniesTable {
   vat: string | null
   logo: string | null
   isSmallBusiness: boolean
+  bankHolder: string | null
+  bankIban: string | null
+  bankBic: string | null
 }
 export type Company = Selectable<CompaniesTable>
 export type NewCompany = Insertable<CompaniesTable>
@@ -46,6 +49,9 @@ export const companyFormSchema = z.object({
   vat: z.string().optional(),
   logo: z.string().optional(),
   isSmallBusiness: z.boolean(),
+  bankHolder: z.string().optional(),
+  bankIban: z.string().optional(),
+  bankBic: z.string().optional(),
 })
 
 // Vcards
