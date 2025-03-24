@@ -134,7 +134,14 @@ const total = computed(() => {
           <LayoutDatepicker v-model="relation.date" size="xl" />
         </UFormField>
         <UFormField label="Preis" name="price" size="xl">
-          <UInput v-model="relation.price" type="number" />
+          <UInputNumber
+            v-model="relation.price"
+            :format-options="{
+              minimumFractionDigits: 2,
+            }"
+            :min="0"
+            :step="0.01"
+          />
         </UFormField>
         <UFormField :label="`Menge (${items.find((item) => item.id === relation.itemId)?.unit})`" name="quantity" size="xl">
           <UInput v-model="relation.quantity" type="number" />
