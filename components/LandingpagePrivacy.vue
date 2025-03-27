@@ -75,18 +75,25 @@ const { data: menuItems } = await useFetch('/api/websites/menu', { params: { use
           Gemäß DSGVO und BDSG
         </h2>
         <h3>
-          Inhaltlich verantwortlich:
+          Verantwortlich:
         </h3>
         <p>
           {{ company.name }}<br />
           {{ company.street }}<br />
           {{ company.zip }} {{ company.city }}
         </p>
-        <p v-if="company.isSmallBusiness">
-          Gemäß § 19 UStG wird keine Umsatzsteuer berechnet.
-        </p>
-        <p v-else>
-          Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: {{ company.vat }}
+        <h3>
+          Welche Daten werden erhoben und warum?
+        </h3>
+        <p>
+          Diese Website verwendet keine Cookies und keine Tracker. Es werden keine Inhalte oder Scripte von Drittanbietern geladen, die Ihre IP-Adresse speichern könnten. 
+          <template v-if="website.hasContactForm">
+            <br /><br />
+            Wenn Sie das Kontaktformular auf dieser Website nutzen, werden folgende personenbezogene Daten verarbeitet:<br />
+            Ihr Name, Ihre E-Mail-Adresse, Ihre Telefonnummer und Ihre persönliche Nachricht werden ausschließlich zur Beantwortung Ihrer Anfrage verwendet und nicht an Dritte weitergegeben oder im Ausland gespeichert. Die rechtliche Grundlage hierfür ist Art. 6 Abs. 1 S. 1 lit. b und f der DSGVO.<br />
+            <br />
+            Die Daten werden so lange gespeichert, bis Ihre Anfrage abschließend bearbeitet ist und keine gesetzlichen Aufbewahrungspflichten entgegenstehen. 
+          </template>
         </p>
       </div>
     </div>
