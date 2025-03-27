@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
   let { hostname, pathname } = await readValidatedBody(event, body => bodySchema.parse(body))
   const db = await getDatabaseConnection()
 
-  if (pathname === '/impressum') {
+  if (pathname === '/impressum' || pathname === '/datenschutz') {
     pathname = '/'
   }
 

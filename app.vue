@@ -9,6 +9,7 @@ const website = useState<WebsiteWithContents | undefined>('website')
 const company = useState<Company | undefined>('company')
 const { hostname, pathname, origin } = useRequestURL()
 const isImprint = pathname === '/impressum'
+const isPrivacy = pathname === '/datenschutz'
 
 await callOnce(async () => {
   website.value = await $fetch('/api/websites/byHost', {
@@ -40,6 +41,7 @@ await callOnce(async () => {
 
 <template>
   <LandingpageImprint v-if="website && company && isImprint" :website="website" :company="company" :is-live="true" />
+  <LandingpagePrivacy v-else-if="website && company && isPrivacy" :website="website" :company="company" :is-live="true" />
   <Landingpage v-else-if="website && company" :website="website" :company="company" :is-live="true" />
   <UApp v-else :locale="de">
     <NuxtRouteAnnouncer />

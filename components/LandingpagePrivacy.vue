@@ -1,0 +1,95 @@
+<script setup lang="ts">
+import type { Company, Website, WebsiteContent } from '~/types';
+
+type WebsiteWithContents = Website & { contents: WebsiteContent[] }
+
+const props = defineProps<{
+  website: WebsiteWithContents
+  company: Company
+  isLive?: boolean
+}>()
+
+const { public: { s3Endpoint } } = useRuntimeConfig()
+
+const appConfig = useAppConfig()
+appConfig.ui.colors.primary = props.website.primaryColor || appConfig.ui.colors.primary
+
+updateAppConfig(appConfig)
+
+useSeoMeta({
+  title: `${props.company.name} - ${props.website.title}`,
+  description: props.website.description,
+})
+
+const { data: menuItems } = await useFetch('/api/websites/menu', { params: { userId: props.website.userId } })
+</script>
+
+<template>
+  <div :class="{
+    'font-roboto': website.font === 'roboto',
+    'font-open-sans': website.font === 'open-sans',
+    'font-lato': website.font === 'lato',
+    'font-montserrat': website.font === 'montserrat',
+    'font-poppins': website.font === 'poppins',
+    'font-merriweather': website.font === 'merriweather',
+    'font-lora': website.font === 'lora',
+    'font-playfair-display': website.font === 'playfair-display',
+  }">
+    <div class="h-screen bg-white relative">
+      <nav v-if="website.showMenu || company.logo || company.name" class="absolute top-0 left-0 right-0 z-50 flex items-center p-6 sm:px-12 lg:px-24 gap-6 sm:gap-12 text-xl">
+        <div class="w-full flex justify-between gap-6">
+          <div v-if="company.logo || company.name" class="flex items-center gap-4">
+            <img
+              v-if="company.logo"
+              :src="`${s3Endpoint}/mktcms/${company.logo}`"
+              alt="Logo"
+              class="rounded-full w-24"
+            />
+            <div v-if="company.name">
+              <div class="font-bold">
+                {{ company.name }}
+              </div>
+              <div class="text-primary-500 text-sm">
+                {{ company.name }}
+              </div>
+            </div>
+          </div>
+          <div class="ml-auto" v-if="website.showMenu">
+            <ULink
+              v-for="item, index in menuItems"
+              :key="index"
+              :to="isLive ? item.path ?? '/' : `/website/${item.id}`"
+              active-class="text-primary-300"
+              inactive-class="text-primary-50 hover:text-primary-200"
+            >
+              {{ item.title }}
+            </ULink>
+          </div>
+        </div>
+      </nav>
+      <div class="flex flex-col p-6 sm:p-12 lg:p-24 items-start justify-end max-w-7xl prose-xl">
+        <h1 class="text-gray-800 font-bold mt-24 mb-4">
+          Datenschutzerklärung
+        </h1>
+        <h2 class="text-primary-500 mt-0">
+          Gemäß DSGVO und BDSG
+        </h2>
+        <h3>
+          Inhaltlich verantwortlich:
+        </h3>
+        <p>
+          {{ company.name }}<br />
+          {{ company.street }}<br />
+          {{ company.zip }} {{ company.city }}
+        </p>
+        <p v-if="company.isSmallBusiness">
+          Gemäß § 19 UStG wird keine Umsatzsteuer berechnet.
+        </p>
+        <p v-else>
+          Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: {{ company.vat }}
+        </p>
+      </div>
+    </div>
+    <LandingpageFooter :website="website" :company="company" :is-live="isLive" />
+  </div>
+</template>
