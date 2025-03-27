@@ -8,6 +8,7 @@ const { public: { appUrl } } = useRuntimeConfig()
 const website = useState<WebsiteWithContents | undefined>('website')
 const company = useState<Company | undefined>('company')
 const { hostname, pathname, origin } = useRequestURL()
+const isImprint = pathname === '/impressum'
 
 await callOnce(async () => {
   website.value = await $fetch('/api/websites/byHost', {
@@ -38,7 +39,8 @@ await callOnce(async () => {
 </script>
 
 <template>
-  <Landingpage v-if="website && company" :website="website" :company="company" :is-live="true" />
+  <LandingpageImprint v-if="website && company && isImprint" :website="website" :company="company" :is-live="true" />
+  <Landingpage v-else-if="website && company" :website="website" :company="company" :is-live="true" />
   <UApp v-else :locale="de">
     <NuxtRouteAnnouncer />
     <NuxtPage />

@@ -37,5 +37,6 @@ useSeoMeta({
     <LandingpageAbout v-if="website.showAbout" :website="website" />
     <LandingpageContents v-if="website.showContents" :website="website" />
     <LandingpageContactForm v-if="website.hasContactForm" :website="website" />
+    <LandingpageFooter :website="website" :company="company" :isLive="isLive" />
   </div>
 </template>

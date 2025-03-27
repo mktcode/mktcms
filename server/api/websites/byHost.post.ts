@@ -6,8 +6,12 @@ export const bodySchema = z.object({
 })
 
 export default defineEventHandler(async (event) => {
-  const { hostname, pathname } = await readValidatedBody(event, body => bodySchema.parse(body))
+  let { hostname, pathname } = await readValidatedBody(event, body => bodySchema.parse(body))
   const db = await getDatabaseConnection()
+
+  if (pathname === '/impressum') {
+    pathname = '/'
+  }
 
   const website = await db
     .selectFrom('websites')
