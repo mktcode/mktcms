@@ -16,6 +16,11 @@ const features = [
     description: 'Verwalte Kunden und Lieferanten, Angebote und (E-)Rechnungen und behalte den Überblick über Einnahmen und Ausgaben.',
     icon: 'i-heroicons-scale',
   },
+  {
+    name: 'Freie Software.',
+    description: 'Kann unabhängig weiterentwickelt und auf eigenen Servern betrieben werden, in der Cloud oder im Büro.',
+    icon: 'i-heroicons-code-bracket',
+  },
 ]
 </script>
 
