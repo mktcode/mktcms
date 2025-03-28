@@ -6,6 +6,7 @@ const { data: averagePrice, refresh: refreshAveragePrice } = useFetch('/api/user
 const { data: costInfo, refresh: refreshCost } = useFetch('/api/system/cost')
 
 const showWelcomeMessage = ref(true)
+const showTopupModal = ref(false)
 
 const toast = useToast()
 const isUpdating = ref(false)
@@ -60,6 +61,9 @@ async function update() {
               Solihost ermöglichst es auch mit kleinem Budget durchzustarten. Du kannst deinen monatlichen Preis selbst bestimmen und einfach Guthaben aufladen. Dein Guthaben wird dann einmal im Monat um den von dir gewählten Betrag belastet. Außerdem siehst du ganz transparent den aktuellen Durchschnittspreis aller Kunden und wie gut davon die Kosten für den Betrieb von Solihost gedeckt werden.
             </p>
             <p class="mt-4">
+              Der erste Monat nach deiner Anmeldung ist kostenlos. Ist den Guthaben aufgebraucht oder reicht nicht mehr für den von dir eingestellten Preis, hast du noch einen Monat Zeit, es wieder aufzuladen. Danach wird dein Account automatisch gesperrt und nach weiteren 90 Tagen gelöscht. Du bekommst dann ein Backup deiner Daten per E-Mail zugeschickt, wenn du diese Funktion nicht vorher deaktivierst.
+            </p>
+            <p class="mt-4">
               <span class="font-bold">Praktisch:</span> Rechnungen für das Aufladen von Guthaben landen automatisch in der Buchhaltung unter Ausgaben.
             </p>
           </template>
@@ -79,7 +83,7 @@ async function update() {
               Nächste Abbuchung: {{ new Date().toLocaleDateString() }}
             </div>
           </div>
-          <UButton size="xl">
+          <UButton size="xl" @click="showTopupModal = true">
             Guthaben aufladen
           </UButton>
         </div>
@@ -114,6 +118,35 @@ async function update() {
           </UAlert>
         </div>
       </div>
+      <UModal
+        v-model:open="showTopupModal"
+        title="Guthaben aufladen"
+      >
+        <template #body>
+          <div class="flex flex-col gap-4">
+            <p>
+              Dein Guthaben kannst du aktuell nur per Banküberweisung aufladen. Bitte überweise den gewünschten Betrag an folgende Bankverbindung:
+            </p>
+            <div class="flex flex-col">
+              <div>
+                <span class="font-bold">Empfänger:</span> Markus Kottländer
+              </div>
+              <div>
+                <span class="font-bold">IBAN:</span> DE12 3456 7890 1234 5678 90
+              </div>
+              <div>
+                <span class="font-bold">BIC:</span> SOLIDE12XXX
+              </div>
+              <div>
+                <span class="font-bold">Verwendungszweck:</span> Guthaben {{ user?.id }}
+              </div>
+            </div>
+            <p>
+              Sobald der Betrag eingegangen ist, wird dein Guthaben aufgeladen und du erhältst eine Bestätigung per E-Mail.
+            </p>
+          </div>
+        </template>
+      </UModal>
     </div>
   </NuxtLayout>
 </template>
