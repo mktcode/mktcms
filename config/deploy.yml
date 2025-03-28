@@ -43,3 +43,13 @@ accessories:
       - db/init.sql:/docker-entrypoint-initdb.d/setup.sql
     directories:
       - data:/var/lib/mysql
+  node_exporter:
+    image: prom/node-exporter:latest
+    hosts:
+      - <%= `bin/terraform output -raw app-1_ip` %>
+      - <%= `bin/terraform output -raw app-2_ip` %>
+      - <%= `bin/terraform output -raw db_ip` %>
+    port: 9100
+    cmd: "--path.rootfs=/host"
+    volumes:
+      - "/:/host:ro,rslave"
