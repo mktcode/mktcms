@@ -5,6 +5,8 @@ declare module '#auth-utils' {
     email: string | null
     googleId: string
     picture: string
+    balance: number
+    price: number
   }
 
   interface SecureSessionData {

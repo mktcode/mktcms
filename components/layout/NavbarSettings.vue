@@ -15,6 +15,11 @@ const items = ref([
     icon: 'i-heroicons-envelope',
     disabled: true,
   },
+  {
+    label: 'Guthaben',
+    icon: 'i-hugeicons-savings',
+    to: '/einstellungen/guthaben',
+  },
 ])
 </script>
 

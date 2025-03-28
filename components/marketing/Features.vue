@@ -17,9 +17,9 @@ const features = [
     icon: 'i-heroicons-scale',
   },
   {
-    name: 'Freie Software.',
-    description: 'Kann unabhängig weiterentwickelt und auf eigenen Servern betrieben werden, in der Cloud oder im Büro.',
-    icon: 'i-heroicons-code-bracket',
+    name: 'Solidarisches Preismodel.',
+    description: 'Zahle nur so viel, wie du kannst und willst. Du lädst Guthaben auf und kannst den Preis jederzeit anpassen.',
+    icon: 'i-lucide-heart-handshake',
   },
 ]
 </script>

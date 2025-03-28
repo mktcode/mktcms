@@ -11,7 +11,7 @@ export default defineOAuthGoogleEventHandler({
 
     const existingUser = await db
       .selectFrom('users')
-      .select(['id', 'domain', 'email'])
+      .select(['id', 'domain', 'email', 'balance', 'price'])
       .where('googleManagerId', '=', user.sub)
       .executeTakeFirst()
 
@@ -22,6 +22,8 @@ export default defineOAuthGoogleEventHandler({
           id: existingUser.id,
           domain: existingUser.domain,
           email: existingUser.email,
+          balance: existingUser.balance,
+          price: existingUser.price,
           googleId: user.sub,
         },
         secure: {
@@ -34,6 +36,8 @@ export default defineOAuthGoogleEventHandler({
           name: user.name,
           googleManagerId: user.sub,
           email: user.email,
+          balance: 0,
+          price: 0,
         })
         .executeTakeFirstOrThrow()
       
@@ -47,6 +51,7 @@ export default defineOAuthGoogleEventHandler({
           id: Number(insertResult.insertId.toString()),
           domain: null,
           googleId: user.sub,
+          balance: 0,
         },
         secure: {
           token: tokens.access_token,
