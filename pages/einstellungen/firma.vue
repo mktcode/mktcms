@@ -94,7 +94,7 @@ onMounted(load)
           title="Willkommen in Mkt's CMS!"
           description="Geben Sie zunächst Ihre Firmendaten ein. Diese werden dann an anderer Stelle automatisch eingefügt (Website, Visitenkarten, etc.). Danach können Sie dann eine Domain registrieren, E-Mail-Adressen und Website einrichten oder sich erstmal um die Buchhaltung kümmern. Klicken Sie oben rechts auf Hilfe, wenn Sie mal nicht weiterkommen."
           icon="i-heroicons-information-circle"
-          :ui="{ icon: 'size-11' }"
+          :ui="{ icon: 'size-11', title: 'text-xl' }"
           :close="{ class: 'text-white/75 hover:text-white' }"
           @update:open="showWelcomeMessage = $event"
         />

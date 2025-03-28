@@ -50,13 +50,18 @@ async function update() {
           color="primary"
           title="Bestimme selbst den Preis!"
           icon="i-heroicons-information-circle"
-          :ui="{ icon: 'size-11' }"
+          :ui="{ icon: 'size-11', title: 'text-xl' }"
           :close="{ class: 'text-white/75 hover:text-white' }"
           @update:open="showWelcomeMessage = $event"
           class="mb-6"
         >
           <template #description>
-            Solihost ermöglichst es auch mit kleinem Budget durchzustarten. Du kannst deinen monatlichen Preis selbst bestimmen und einfach Guthaben aufladen. Dein Guthaben wird dann einmal im Monat um den von dir gewählten Betrag belastet. Außerdem siehst du ganz transparent den aktuellen Durchschnittspreis aller Kunden und wie gut davon die Kosten für den Betrieb von Solihost gedeckt werden.
+            <p>
+              Solihost ermöglichst es auch mit kleinem Budget durchzustarten. Du kannst deinen monatlichen Preis selbst bestimmen und einfach Guthaben aufladen. Dein Guthaben wird dann einmal im Monat um den von dir gewählten Betrag belastet. Außerdem siehst du ganz transparent den aktuellen Durchschnittspreis aller Kunden und wie gut davon die Kosten für den Betrieb von Solihost gedeckt werden.
+            </p>
+            <p class="mt-4">
+              <span class="font-bold">Praktisch:</span> Rechnungen für das Aufladen von Guthaben landen automatisch in der Buchhaltung unter Ausgaben.
+            </p>
           </template>
         </UAlert>
       </Transition>
@@ -66,30 +71,36 @@ async function update() {
           <h1 class="text-xl font-bold whitespace-nowrap">
             Aktuelles Guthaben:
           </h1>
-          <div class="text-3xl font-bold">
-            {{ formatPrice(user?.balance || 0) }}
+          <div>
+            <div class="text-3xl font-bold">
+              {{ formatPrice(user?.balance || 0) }}
+            </div>
+            <div class="text-sm text-gray-500">
+              Nächste Abbuchung: {{ new Date().toLocaleDateString() }}
+            </div>
           </div>
+          <UButton size="xl">
+            Guthaben aufladen
+          </UButton>
         </div>
         <div>
           <UForm class="flex flex-col gap-4" @submit="update" :state="state" :schema="formSchema">
             <h1 class="text-xl font-bold whitespace-nowrap">
               Monatlicher Preis:
             </h1>
-            <div class="flex items-end gap-4">
-              <UInputNumber
-                size="xl"
-                v-model="state.price"
-                :format-options="{
-                  minimumFractionDigits: 2,
-                }"
-                :min="1"
-                :step="0.01"
-                class="w-40"
-              />
-              <UButton type="submit" size="xl" icon="i-heroicons-check">
-                Speichern
-              </UButton>
-            </div>
+            <UInputNumber
+              size="xl"
+              v-model="state.price"
+              :format-options="{
+                minimumFractionDigits: 2,
+              }"
+              :min="1"
+              :step="0.01"
+              class="w-40"
+            />
+            <UButton type="submit" size="xl" icon="i-heroicons-check">
+              Speichern
+            </UButton>
           </UForm>
         </div>
         <div>
