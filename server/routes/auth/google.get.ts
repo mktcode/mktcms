@@ -37,7 +37,7 @@ export default defineOAuthGoogleEventHandler({
           googleManagerId: user.sub,
           email: user.email,
           balance: 0,
-          price: 0,
+          price: 1,
         })
         .executeTakeFirstOrThrow()
       

@@ -1,7 +1,7 @@
 import { z } from "zod"
 
 const inputSchema = z.object({
-  newPrice: z.number()
+  newPrice: z.number().min(1)
 })
 
 export default defineEventHandler(async (event) => {

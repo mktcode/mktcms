@@ -10,7 +10,7 @@ const toast = useToast()
 const isUpdating = ref(false)
 
 const formSchema = z.object({
-  price: z.number().min(0),
+  price: z.number().min(1),
 })
 const state = reactive({
   price: user.value?.price || 0,
@@ -60,19 +60,19 @@ async function update() {
       </h1>
   
       <UForm class="flex flex-col gap-4" @submit="update" :state="state" :schema="formSchema">
-        <UFormField label="Preis" name="companyName">
+        <UFormField label="Preis" name="price">
           <UInputNumber
             size="xl"
             v-model="state.price"
             :format-options="{
               minimumFractionDigits: 2,
             }"
-            :min="0"
+            :min="1"
             :step="0.01"
           />
         </UFormField>
 
-        <div>
+        <div class="text-gray-600">
           <template v-if="averagePrice">
             Der aktuelle Durchschnittspreis aller Kunden beträgt {{ formatPrice(averagePrice) }}.
           </template>
