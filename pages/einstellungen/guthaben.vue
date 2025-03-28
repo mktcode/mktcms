@@ -3,6 +3,7 @@ import { z } from 'zod'
 
 const { user, fetch: fetchUser } = useUserSession()
 const { data: averagePrice, refresh: refreshAveragePrice } = useFetch('/api/user/averagePrice')
+const { data: costInfo, refresh: refreshCost } = useFetch('/api/system/cost')
 
 const showWelcomeMessage = ref(true)
 
@@ -27,6 +28,7 @@ async function update() {
   isUpdating.value = false
   fetchUser()
   refreshAveragePrice()
+  refreshCost()
   toast.add({
     title: 'Einstellungen gespeichert',
     description: 'Ihre Einstellungen wurden erfolgreich gespeichert.',
@@ -52,41 +54,47 @@ async function update() {
           :ui="{ icon: 'size-11' }"
           :close="{ class: 'text-white/75 hover:text-white' }"
           @update:open="showWelcomeMessage = $event"
+          class="mb-6"
         />
       </Transition>
 
-      <h1 class="text-3xl font-bold mb-4 mt-6">
-        Guthaben: {{ formatPrice(user?.balance || 0) }}
-      </h1>
-  
-      <UForm class="flex flex-col gap-4" @submit="update" :state="state" :schema="formSchema">
-        <UFormField label="Preis" name="price">
-          <UInputNumber
-            size="xl"
-            v-model="state.price"
-            :format-options="{
-              minimumFractionDigits: 2,
-            }"
-            :min="1"
-            :step="0.01"
-          />
-        </UFormField>
-
-        <div class="text-gray-600">
-          <template v-if="averagePrice">
-            Der aktuelle Durchschnittspreis aller Kunden beträgt {{ formatPrice(averagePrice) }}.
-          </template>
-          <template v-else>
-            Der aktuelle Durchschnittspreis aller Kunden konnte nicht geladen werden.
-          </template>
+      <div class="flex flex-col sm:flex-row gap-6">
+        <div>
+          <h1 class="text-3xl font-bold mb-4">
+            Guthaben: {{ formatPrice(user?.balance || 0) }}
+          </h1>
+      
+          <UForm class="flex flex-col gap-4" @submit="update" :state="state" :schema="formSchema">
+            <div class="flex items-end gap-4">
+              <UFormField label="Preis" name="price" size="xl">
+                <UInputNumber
+                  size="xl"
+                  v-model="state.price"
+                  :format-options="{
+                    minimumFractionDigits: 2,
+                  }"
+                  :min="1"
+                  :step="0.01"
+                  class="w-40"
+                />
+              </UFormField>
+              <UButton type="submit" size="xl" icon="i-heroicons-check">
+                Speichern
+              </UButton>
+            </div>
+          </UForm>
         </div>
-
-        <div class="flex justify-end">
-          <UButton type="submit" size="xl" icon="i-heroicons-check">
-            Speichern
-          </UButton>
+        <div>
+          <UAlert v-if="averagePrice && costInfo" variant="outline" color="neutral">
+            <template #description>
+              <div class="text-lg">
+                Die monatlichen Kosten für den Betrieb von Solihost betragen aktuell <span class="font-bold">{{ formatPrice(costInfo.total) }}</span> und sind für die nächsten <span class="font-bold">{{ formatNumber(costInfo.coveredMonths) }}</span> Monate gedeckt.
+                Der Durchschnittspreis beträgt aktuell <span class="font-bold">{{ formatPrice(averagePrice) }}</span> und müsste bei <span class="font-bold">{{ formatPrice(costInfo.requiredAveragePrice)  }}</span> liegen, um die Kosten zu decken.
+              </div>
+            </template>
+          </UAlert>
         </div>
-      </UForm>
+      </div>
     </div>
   </NuxtLayout>
 </template>
