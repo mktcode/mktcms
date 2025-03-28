@@ -17,6 +17,7 @@ export interface UsersTable {
   password: string | null
   balance: number
   price: number
+  createdAt: ColumnType<Date, undefined, undefined>
 }
 export type User = Selectable<UsersTable>
 export type NewUser = Insertable<UsersTable>
