@@ -49,35 +49,43 @@ async function update() {
           variant="solid"
           color="primary"
           title="Bestimme selbst den Preis!"
-          description="Solihost ermöglichst es auch mit kleinem Budget durchzustarten. Du kannst deinen monatlichen Preis selbst bestimmen und einfach Guthaben aufladen. Dein Guthaben wird dann einmal im Monat um den von dir gewählten Betrag belastet. Außerdem siehst du ganz transparent den aktuellen Durchschnittspreis aller Kunden und wie gut davon die Kosten für den Betrieb von Solihost gedeckt werden."
           icon="i-heroicons-information-circle"
           :ui="{ icon: 'size-11' }"
           :close="{ class: 'text-white/75 hover:text-white' }"
           @update:open="showWelcomeMessage = $event"
           class="mb-6"
-        />
+        >
+          <template #description>
+            Solihost ermöglichst es auch mit kleinem Budget durchzustarten. Du kannst deinen monatlichen Preis selbst bestimmen und einfach Guthaben aufladen. Dein Guthaben wird dann einmal im Monat um den von dir gewählten Betrag belastet. Außerdem siehst du ganz transparent den aktuellen Durchschnittspreis aller Kunden und wie gut davon die Kosten für den Betrieb von Solihost gedeckt werden.
+          </template>
+        </UAlert>
       </Transition>
 
-      <div class="flex flex-col sm:flex-row gap-6">
-        <div>
-          <h1 class="text-3xl font-bold mb-4">
-            Guthaben: {{ formatPrice(user?.balance || 0) }}
+      <div class="flex flex-col lg:flex-row gap-12">
+        <div class="flex flex-col gap-4">
+          <h1 class="text-xl font-bold whitespace-nowrap">
+            Aktuelles Guthaben:
           </h1>
-      
+          <div class="text-3xl font-bold">
+            {{ formatPrice(user?.balance || 0) }}
+          </div>
+        </div>
+        <div>
           <UForm class="flex flex-col gap-4" @submit="update" :state="state" :schema="formSchema">
+            <h1 class="text-xl font-bold whitespace-nowrap">
+              Monatlicher Preis:
+            </h1>
             <div class="flex items-end gap-4">
-              <UFormField label="Preis" name="price" size="xl">
-                <UInputNumber
-                  size="xl"
-                  v-model="state.price"
-                  :format-options="{
-                    minimumFractionDigits: 2,
-                  }"
-                  :min="1"
-                  :step="0.01"
-                  class="w-40"
-                />
-              </UFormField>
+              <UInputNumber
+                size="xl"
+                v-model="state.price"
+                :format-options="{
+                  minimumFractionDigits: 2,
+                }"
+                :min="1"
+                :step="0.01"
+                class="w-40"
+              />
               <UButton type="submit" size="xl" icon="i-heroicons-check">
                 Speichern
               </UButton>
