@@ -35,7 +35,7 @@ const features = [
               Werbung und Buchhaltung in einer App
             </p>
             <p class="mt-6 text-lg/8 text-gray-600">
-              Mkt's CMS hilft Einzelunternehmern, die nicht gerne am Computer sitzen und klare, übersichtliche Lösungen schätzen.
+              Solihost hilft Einzelunternehmern, die nicht gerne am Computer sitzen und klare, übersichtliche Lösungen schätzen.
               Sofort startklar, sehr leicht zu bedienen und Sie haben den Kopf frei fürs Wesentliche.
             </p>
             <dl class="flex  flex-col mt-10 max-w-xl gap-4 text-base/7 text-gray-600 lg:max-w-none">
@@ -70,9 +70,9 @@ const features = [
             </div>
             <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-10">
               <UButton size="xl" to="/login" class="w-full sm:w-auto" icon="i-heroicons-rocket-launch">
-                Jetzt kostenlos testen
+                Kostenlos testen
               </UButton>
-              <UButton size="xl" variant="outline" class="w-full sm:w-auto" icon="i-heroicons-device-phone-mobile">
+              <UButton size="xl" variant="outline" class="w-full sm:w-auto" icon="i-heroicons-device-phone-mobile" disabled>
                 App installieren
               </UButton>
             </div>
