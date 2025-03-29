@@ -23,7 +23,7 @@ export default defineOAuthGoogleEventHandler({
           domain: existingUser.domain,
           email: existingUser.email,
           balance: existingUser.balance,
-          price: existingUser.price,
+          price: Number(existingUser.price),
           googleId: user.sub,
         },
         secure: {
@@ -52,6 +52,7 @@ export default defineOAuthGoogleEventHandler({
           domain: null,
           googleId: user.sub,
           balance: 0,
+          price: 1,
         },
         secure: {
           token: tokens.access_token,
