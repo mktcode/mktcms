@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import { useLocalStorage } from '@vueuse/core'
 import { companyFormSchema } from '~/types'
 
 const { user } = useUserSession()
 const { public: { s3Endpoint } } = useRuntimeConfig()
 
-const showWelcomeMessage = ref(true)
+const showWelcomeMessage = useLocalStorage('showWelcomeMessage', true)
+const redirectToGuthaben = useLocalStorage('redirectToGuthaben', true)
 
 const toast = useToast()
 const isUpdating = ref(false)
@@ -75,6 +77,11 @@ async function update() {
     description: 'Ihre Einstellungen wurden erfolgreich gespeichert.',
     color: 'success',
   })
+
+  if (redirectToGuthaben.value) {
+    redirectToGuthaben.value = false
+    navigateTo('/einstellungen/guthaben')
+  }
 }
 
 onMounted(load)
