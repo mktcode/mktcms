@@ -18,7 +18,7 @@ const features = [
   },
   {
     name: 'Solidarisches Preismodel.',
-    description: 'Zahle nur so viel, wie du kannst und willst. Du lädst Guthaben auf und kannst den Preis jederzeit anpassen.',
+    description: 'Zahle nur so viel, wie es dir wert ist und wie du kannst. Du lädst Guthaben auf und kannst den Preis jederzeit anpassen.',
     icon: 'i-lucide-heart-handshake',
   },
 ]
@@ -58,11 +58,26 @@ const features = [
             </div>
           </div>
         </div>
-        <img
-          src="~/assets/img/screenshot.png"
-          alt="Product screenshot"
-          class="w-[48rem] max-w-none rounded-xl ring-1 shadow-xl ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
-        />
+        <div>
+          <img
+            src="~/assets/img/screenshot.png"
+            alt="Product screenshot"
+            class="w-[48rem] max-w-none rounded-xl ring-1 shadow-xl ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
+          />
+          <div class="w-full flex items-center justify-center mt-6">
+            <div class="flex gap-2">
+              <div
+                v-for="(feature, index) in features" :key="index"
+                class="w-2 h-2 rounded-full"
+                :class="{
+                  'bg-primary-600': index === 0,
+                  'bg-gray-300': index !== 0,
+                }"
+              >
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
