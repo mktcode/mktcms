@@ -9,7 +9,7 @@ const outputSchema = z.object({
 export default defineEventHandler(async (event) => {
   const db = await getDatabaseConnection()
 
-  const fixedCost = 2600
+  const fixedCost = 35
   const costPerUser = 1
 
   let { userCount } = await db

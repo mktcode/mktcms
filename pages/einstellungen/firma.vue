@@ -5,7 +5,7 @@ import { companyFormSchema } from '~/types'
 const { user } = useUserSession()
 const { public: { s3Endpoint } } = useRuntimeConfig()
 
-const showWelcomeMessage = useLocalStorage('showWelcomeMessage', true)
+const showWelcomeMessage = useLocalStorage('showWelcomeMessage.firma', true)
 const redirectToGuthaben = useLocalStorage('redirectToGuthaben', true)
 
 const toast = useToast()

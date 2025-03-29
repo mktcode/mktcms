@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import { useLocalStorage } from '@vueuse/core'
 import { z } from 'zod'
 
 const { user, fetch: fetchUser } = useUserSession()
 const { data: averagePrice, refresh: refreshAveragePrice } = useFetch('/api/user/averagePrice')
 const { data: costInfo, refresh: refreshCost } = useFetch('/api/system/cost')
 
-const showWelcomeMessage = ref(true)
+const showWelcomeMessage = useLocalStorage('showWelcomeMessage.guthaben', true)
 const showTopupModal = ref(false)
 
 const toast = useToast()
