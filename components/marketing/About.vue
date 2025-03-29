@@ -18,17 +18,18 @@
         <p class="mt-8 text-lg/8 text-gray-600">
           Ich bin Markus, der Entwickler von Solihost, einem Leidenschaftsprojekt, das ich nach 20 Jahren in der IT-Branche endlich umsetzen kann.
           In dieser Zeit habe ich meist als Allrounder gearbeitet, von der Systemadministration über Redaktion bis zum Design.
-          Ich liebe es komplexe Systeme zu entwickeln, technische und fachliche Herausforderungen zu meistern und damit einen Mehrwert zu schaffen.
+          Ich liebe es, komplexe Systeme zu entwickeln, technische und fachliche Herausforderungen zu meistern und damit einen Mehrwert zu schaffen.
         </p>
         <p class="mt-4 text-lg/8 text-gray-600">
-          Die starren und zergliederten Rollenverteilung in der Branche liegen mir aber nicht.
-          Ich möchte auch nicht für große Konzerne arbeiten, sondern für und mit Menschen, die einfach Hilfe mit diesem ganzen Technik-Kram brauchen und mit einem begrenztem Budget auskommen müssen.
+          Die starre und zergliederte Rollenverteilung in der Branche liegen mir aber nicht.
+          Ich möchte auch nicht für große Konzerne arbeiten, sondern für und mit Menschen, die einfach Hilfe mit diesem ganzen Technik-Kram brauchen und mit einem begrenzten Budget auskommen müssen.
           Daraus ist Solihost entstanden.
         </p>
         <p class="mt-4 text-lg/8 text-gray-600">
           Die Infrastruktur für so einen Service ist natürlich nicht ganz trivial.
           Vor allem wenn es um Datenschutz und Datensicherheit geht, braucht es viel Liebe zum Detail.
-          Die Entwicklung wird noch ein bisschen dauern, findet aber öffentlich und transparent statt und ich freue mich über Kommentare und Anregungen.
+          Die Entwicklung wird noch ein bisschen dauern, findet aber öffentlich und transparent statt.
+          Ich freue mich über Kommentare und Anregungen.
         </p>
         <UButton to="https://github.com/users/mktcode/projects/6" target="_blank" size="xl" class="mt-6 mr-auto" variant="ghost" icon="i-heroicons-code-bracket">
           Entwicklung verfolgen

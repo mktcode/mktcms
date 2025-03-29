@@ -48,14 +48,6 @@ const features = [
                 <dd class="inline">{{ feature.description }}</dd>
               </div>
             </dl>
-            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-10">
-              <UButton size="xl" to="/login" class="w-full sm:w-auto" icon="i-heroicons-rocket-launch">
-                Jetzt kostenlos starten
-              </UButton>
-              <!-- <UButton size="xl" variant="outline" class="w-full sm:w-auto" icon="i-heroicons-device-phone-mobile">
-                App installieren
-              </UButton> -->
-            </div>
           </div>
         </div>
         <div>
@@ -64,7 +56,7 @@ const features = [
             alt="Product screenshot"
             class="w-[48rem] max-w-none rounded-xl ring-1 shadow-xl ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
           />
-          <div class="w-full flex items-center justify-center mt-6">
+          <div class="w-full flex flex-col items-center justify-center mt-6">
             <div class="flex gap-2">
               <div
                 v-for="(feature, index) in features" :key="index"
@@ -75,6 +67,14 @@ const features = [
                 }"
               >
               </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-10">
+              <UButton size="xl" to="/login" class="w-full sm:w-auto" icon="i-heroicons-rocket-launch">
+                Jetzt kostenlos starten
+              </UButton>
+              <UButton size="xl" variant="outline" class="w-full sm:w-auto" icon="i-heroicons-device-phone-mobile">
+                App installieren
+              </UButton>
             </div>
           </div>
         </div>
