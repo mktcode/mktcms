@@ -2,7 +2,7 @@
   <div class="min-h-screen max-w-lg mx-auto flex flex-col items-center justify-center">
     <img src="~/assets/img/mktcms.png" alt="Error" class="w-24 mx-auto mb-12" />
     <p class="text-lg text-gray-700 text-center mb-12">
-      Aktuell ist die Anmeldung nur mit einem vorhandenen Google-Konto möglich.
+      Aktuell ist die Anmeldung nur mit einem vorhandenen Google-Konto möglich und <span class="font-bold">erfordert eine Einladung</span>.
       Weitere Anmeldemöglichkeiten werden in Zukunft verfügbar sein.
     </p>
     <a href="/auth/google" class="border border-gray-300 rounded-md p-4 text-xl font-medium text-gray-700 hover:bg-gray-50 flex items-center justify-between gap-4">
