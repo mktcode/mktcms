@@ -70,7 +70,7 @@ const features = [
             </div>
             <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-10">
               <UButton size="xl" to="/login" class="w-full sm:w-auto" icon="i-heroicons-rocket-launch">
-                Jetzt kostenlos starten
+                Jetzt kostenlos testen
               </UButton>
               <UButton size="xl" variant="outline" class="w-full sm:w-auto" icon="i-heroicons-device-phone-mobile">
                 App installieren

@@ -25,5 +25,6 @@ const { loggedIn } = useUserSession()
     </div>
     <MarketingFeatures />
     <MarketingAbout />
+    <MarketingFooter />
   </NuxtLayout>
 </template>
