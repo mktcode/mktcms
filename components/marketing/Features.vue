@@ -22,6 +22,12 @@ const features = [
     icon: 'i-lucide-heart-handshake',
   },
 ]
+
+const screenshots = [
+  '/marketing/screenshots/screenshot.png',
+  '/marketing/screenshots/screenshot.png',
+  '/marketing/screenshots/screenshot.png',
+]
 </script>
 
 <template>
@@ -51,23 +57,20 @@ const features = [
           </div>
         </div>
         <div>
-          <img
-            src="~/assets/img/screenshot.png"
-            alt="Product screenshot"
-            class="w-[48rem] max-w-none rounded-xl ring-1 shadow-xl ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
-          />
-          <div class="w-full flex flex-col items-center justify-center mt-6">
-            <div class="flex gap-2">
-              <div
-                v-for="(feature, index) in features" :key="index"
-                class="w-2 h-2 rounded-full"
-                :class="{
-                  'bg-primary-600': index === 0,
-                  'bg-gray-300': index !== 0,
-                }"
-              >
-              </div>
-            </div>
+          <UCarousel
+            v-slot="{ item }"
+            dots
+            :items="screenshots"
+            class=""
+            :ui="{
+              viewport: 'w-[48rem] sm:w-[57rem] overflow-hidden shadow-xl shadow-black/5 rounded-xl border border-gray-200',
+              controls: 'relative',
+              dot: 'bg-gray-200',
+            }"
+          >
+            <img :src="item" class="rounded-xl " />
+          </UCarousel>
+          <div class="w-full flex flex-col items-center justify-center mt-8">
             <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-10">
               <UButton size="xl" to="/login" class="w-full sm:w-auto" icon="i-heroicons-rocket-launch">
                 Kostenlos testen

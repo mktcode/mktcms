@@ -8,6 +8,15 @@ export default defineAppConfig({
       slots: {
         linkLabel: 'hidden md:inline'
       }
+    },
+    carousel: {
+      variants: {
+        active: {
+          true: {
+            dot: '!bg-(--color-primary-500)',
+          }
+        }
+      }
     }
   }
 })
