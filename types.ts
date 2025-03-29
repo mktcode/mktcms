@@ -23,6 +23,22 @@ export type User = Selectable<UsersTable>
 export type NewUser = Insertable<UsersTable>
 export type UserUpdate = Updateable<UsersTable>
 
+// Domains
+export interface DomainsTable {
+  id: Generated<number>
+  userId: number
+  domain: string
+  authcode: string | null
+}
+export type Domain = Selectable<DomainsTable>
+export type NewDomain = Insertable<DomainsTable>
+export type DomainUpdate = Updateable<DomainsTable>
+export const domainFormSchema = z.object({
+  id: z.number().optional(),
+  domain: z.string().min(1, 'Eine Domain wird benötigt'),
+  authcode: z.string().nullable().optional(),
+})
+
 // Companies
 export interface CompaniesTable {
   userId: number
@@ -336,6 +352,7 @@ export const invoiceInFormSchema = z.object({
 
 export interface Database {
   users: UsersTable
+  domains: DomainsTable
   companies: CompaniesTable
   vcards: VcardsTable
   websites: WebsitesTable

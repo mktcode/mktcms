@@ -42,6 +42,20 @@ export const manageVcard = defineAbility(async (user: User, vcardId: number) => 
   return ownsVcard.count === 1
 })
 
+export const manageDomain = defineAbility(async (user: User, domainId: number) => {
+  const db = await getDatabaseConnection()
+
+  const ownsDomain = await db
+    .selectFrom('domains')
+    .innerJoin('users', 'users.id', 'domains.userId')
+    .select(({ fn }) => fn.count<number>('domains.id').as('count'))
+    .where('domains.id', '=', domainId)
+    .where('users.googleManagerId', '=', user.googleId)
+    .executeTakeFirstOrThrow()
+  
+  return ownsDomain.count === 1
+})
+
 export const manageCustomer = defineAbility(async (user: User, customerId: number) => {
   const db = await getDatabaseConnection()
 
