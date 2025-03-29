@@ -6,10 +6,10 @@
   <div class="bg-white">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <div class="flex flex-col justify-center py-16 lg:py-24">
-        <div class="flex items-center gap-8">
-          <img src="~/assets/img/default-header.jpg" alt="" class="size-24 rounded-full object-cover object-center" />
+        <div class="flex items-center gap-6">
+          <img src="~/assets/img/mkt.png" alt="" class="size-24 rounded-xl object-cover object-center" />
           <div>
-            <h2 class="text-lg font-semibold text-primary-600">Hi!</h2>
+            <h2 class="text-xl font-semibold text-primary-600">Hi!</h2>
             <p class="text-4xl font-bold tracking-tight text-pretty text-gray-900 sm:text-4xl">
               Ein Gruß vom Entwickler
             </p>
