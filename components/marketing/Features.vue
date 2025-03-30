@@ -25,8 +25,8 @@ const features = [
 
 const screenshots = [
   '/marketing/screenshots/screenshot.png',
-  '/marketing/screenshots/screenshot.png',
-  '/marketing/screenshots/screenshot.png',
+  '/marketing/screenshots/screenshot2.png',
+  '/marketing/screenshots/screenshot3.png',
 ]
 </script>
 
