@@ -17,6 +17,7 @@
           </div>
         </div>
         <p class="mt-8 text-lg/8 text-gray-600">
+          So eine Infrastruktur ist natürlich nicht ganz trivial, vor allem wenn es um Datenschutz und Datensicherheit geht.
           Jeder Gewerbetreibende, der personenbezogene Daten erhebt und verarbeitet, ist gesetzlich dazu verpflichtet, mit diesen Daten sorgfältig umzugehen und betroffenen Personen Auskunft zu gewähren.
           Diese Auskunft hilft einem natürlich nicht viel, wenn sie in einem juristischen Fachtext verpackt ist.
           Ein wichtiger Aspekt einer Datenschutzerklärung ist für mich daher folgender:

@@ -16,31 +16,23 @@
           </div>
         </div>
         <p class="mt-8 text-lg/8 text-gray-600">
-          Ich bin Markus, der Entwickler von Solihost, einem Leidenschaftsprojekt, das ich nach 20 Jahren in der IT-Branche endlich umsetzen kann.
-          In dieser Zeit habe ich meist als Allrounder gearbeitet, von der Systemadministration über Redaktion bis zum Design.
-          Ich liebe es, komplexe Systeme zu entwickeln, technische und fachliche Herausforderungen zu meistern und damit einen Mehrwert zu schaffen.
+          Ich bin Markus, der Entwickler von Solihost. In den letzten 20 Jahren habe ich meist als Allrounder gearbeitet,
+          von der Systemadministration und Softwareentwicklung über Redaktion und Design bis zur Kundenberatung. Ich mag es, aus der Vogelperspektive auf Dinge zu schauen.
+          Die oft recht starre Rollenverteilung in der IT-Branche liegt mir nicht so sehr und ich bevorzuge einen agileren Ansatz.
         </p>
         <p class="mt-4 text-lg/8 text-gray-600">
-          Die starre und zergliederte Rollenverteilung in der Branche liegt mir aber nicht.
-          Ich möchte auch nicht für große Konzerne arbeiten, sondern für und mit Menschen, die einfach Hilfe mit diesem ganzen Technik-Kram brauchen und mit einem begrenzten Budget auskommen müssen.
-          Daraus ist Solihost entstanden.
-        </p>
-        <p class="mt-4 text-lg/8 text-gray-600">
-          Die Infrastruktur für so einen Service ist natürlich nicht ganz trivial.
-          Vor allem wenn es um Datenschutz und Datensicherheit geht, braucht es viel Liebe zum Detail.
-          Die Entwicklung wird noch ein bisschen dauern, findet aber öffentlich und transparent statt.
-          Es gibt kein ausformuliertes Konzept, keinen Plan und keine Roadmap. Solihost entsteht einfach.
-          Ich freue mich über Kommentare und Anregungen.
+          Solihost ist das Ergebnis - Eine technische Infrastruktur (man könnte auch "App" dazu sagen), die eine Reihe von Grundbedürfnissen abdeckt und möglichst kosteneffizient betrieben wird.
+          Als Nutzer gestaltest du diese mit und hilfst, die Kosten zu decken. Und neben all dem üblichen Produkt-Geschwafel, soll hier vor allem auch die persönliche Unterstützung im Vordergrund stehen.
+          Du bist hier kein anonymer Nutzer, sondern ein Mensch mit einem Anliegen und ich versuche dir dabei zu helfen, so gut ich kann.
         </p>
         <div class="mt-10 flex flex-col sm:flex-row items-center gap-4">
           <UButton
-            to="https://github.com/users/mktcode/projects/6"
-            target="_blank"
+            to="tel:017670864627"
             size="xl"
             variant="ghost"
-            icon="i-heroicons-code-bracket"
+            icon="i-heroicons-phone"
           >
-            Entwicklung verfolgen
+            0176 708 646 27
           </UButton>
         </div>
       </div>
