@@ -2,6 +2,7 @@
 import { useLocalStorage } from '@vueuse/core';
 
 const props = defineProps<{
+  title: string
   storageKey: string
 }>()
 
@@ -14,12 +15,11 @@ const showAlert = useLocalStorage(props.storageKey, true)
       v-if="showAlert"
       variant="solid"
       color="primary"
-      title="Bestimme selbst den Preis!"
+      :title="title"
       icon="i-heroicons-information-circle"
       :ui="{ icon: 'size-11', title: 'text-xl' }"
       :close="{ class: 'text-white/75 hover:text-white' }"
       @update:open="showAlert = $event"
-      class="mb-6"
     >
       <template #description>
         <slot />

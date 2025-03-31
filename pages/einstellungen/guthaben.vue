@@ -45,7 +45,7 @@ async function update() {
     </template>
     <div class="p-6">
       <ClientOnly>
-        <LayoutDismissableAlert storage-key="showWelcomeMessage.guthaben">
+        <LayoutDismissableAlert title="Bestimme selbst den Preis." storage-key="showWelcomeMessage.guthaben" class="mb-6">
           <p>
             Solihost ermöglichst es auch mit kleinem Budget durchzustarten. Du kannst deinen monatlichen Preis selbst bestimmen und einfach Guthaben aufladen. Dein Guthaben wird dann einmal im Monat um den von dir gewählten Betrag belastet. Außerdem siehst du ganz transparent den aktuellen Durchschnittspreis aller Kunden und wie gut davon die Kosten für den Betrieb von Solihost gedeckt werden.
           </p>
