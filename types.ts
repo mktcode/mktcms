@@ -350,6 +350,39 @@ export const invoiceInFormSchema = z.object({
   vat: z.number(),
 })
 
+// Privacy
+export interface PrivacyTable {
+  id: Generated<number>
+  userId: number
+  needsOfficer: boolean
+  officerName: string | null
+  officerEmail: string | null
+  officerPhone: string | null
+  usesOfflineData: boolean
+  offlineDataText: string | null
+  usesOtherServiceProviders: boolean
+  otherServiceProviders: string | null
+}
+export type Privacy = Selectable<PrivacyTable>
+export type NewPrivacy = Insertable<PrivacyTable>
+export type PrivacyUpdate = Updateable<PrivacyTable>
+export const privacyFormSchema = z.object({
+  id: z.number().optional(),
+  needsOfficer: z.boolean(),
+  officerName: z.string().nullable().optional(),
+  officerEmail: z.string().email().nullable().optional(),
+  officerPhone: z.string().nullable().optional(),
+  usesOfflineData: z.boolean(),
+  offlineDataText: z.string().nullable().optional(),
+  usesOtherServiceProviders: z.boolean(),
+  otherServiceProviders: z.array(z.object({
+    name: z.string(),
+    purpose: z.string(),
+    dataTypes: z.string(),
+    linkToPrivacyPolicy: z.string(),
+  })),
+})
+
 export interface Database {
   users: UsersTable
   domains: DomainsTable

@@ -1,39 +1,22 @@
 <script setup lang="ts">
-type State = {
-  needsPrivacyOfficer: boolean
-  privacyOfficerName: string
-  privacyOfficerEmail: string
-  privacyOfficerPhone: string
-  usesOtherServiceProviders: boolean
-  otherServiceProviders: {
-    name: string
-    purpose: string
-    dataTypes: string
-    linkToPrivacyPolicy: string
-    dataProcessingAgreement: boolean
-  }[]
-  usesSocialMedia: boolean
-  socialMedia: {
-    name: string
-  }[]
-}
+import type { z } from 'zod';
+import { privacyFormSchema } from '~/types';
 
-const state = reactive<State>({
-  needsPrivacyOfficer: false,
-  privacyOfficerName: '',
-  privacyOfficerEmail: '',
-  privacyOfficerPhone: '',
+type FormSchema = z.infer<typeof privacyFormSchema>;
+
+const state = reactive<FormSchema>({
+  needsOfficer: false,
+  officerName: '',
+  officerEmail: '',
+  officerPhone: '',
+  usesOfflineData: false,
+  offlineDataText: '',
   usesOtherServiceProviders: false,
   otherServiceProviders: [{
     name: '',
     purpose: '',
     dataTypes: '',
     linkToPrivacyPolicy: '',
-    dataProcessingAgreement: false,
-  }],
-  usesSocialMedia: false,
-  socialMedia: [{
-    name: '',
   }],
 })
 
@@ -44,14 +27,14 @@ const formSections = [
     slot: 'dpo',
   },
   {
+    label: 'Analoge Daten',
+    icon: 'i-heroicons-printer',
+    slot: 'offline-data',
+  },
+  {
     label: 'Weitere Dienstleister',
     icon: 'i-heroicons-building-office',
     slot: 'service-providers',
-  },
-  {
-    label: 'Social Media',
-    icon: 'i-heroicons-share',
-    slot: 'social-media',
   },
 ]
 </script>
@@ -80,10 +63,10 @@ const formSections = [
           checked-icon="i-lucide-check"
           default-value
           label="Ja, ich muss einen Datenschutzbeauftragten ernennen."
-          v-model="state.needsPrivacyOfficer"
+          v-model="state.needsOfficer"
         />
     
-        <template v-if="state.needsPrivacyOfficer">
+        <template v-if="state.needsOfficer">
           <p>
             Ein Name ist nicht zwingend erforderlich, sondern nur eine Kontaktmöglichkeit.
             Ist diese allerdings nur durch Nennung des Namens gegeben, so ist der Name anzugeben.
@@ -91,13 +74,35 @@ const formSections = [
             Eine Liste der Aufsichtsbehörden finden Sie <a href="https://www.bfdi.bund.de/DE/Service/Anschriften/Laender/Laender-node.html" target="_blank" class="text-sky-500">hier</a>.
           </p>
           <UFormField label="Name" name="privacyOfficerName">
-            <UInput class="w-full" size="xl" v-model="state.privacyOfficerName" />
+            <UInput class="w-full" size="xl" v-model="state.officerName" />
           </UFormField>
           <UFormField label="E-Mail" name="privacyOfficerEmail">
-            <UInput class="w-full" size="xl" v-model="state.privacyOfficerEmail" />
+            <UInput class="w-full" size="xl" v-model="state.officerEmail" />
           </UFormField>
           <UFormField label="Telefon" name="privacyOfficerPhone">
-            <UInput class="w-full" size="xl" v-model="state.privacyOfficerPhone" />
+            <UInput class="w-full" size="xl" v-model="state.officerPhone" />
+          </UFormField>
+        </template>
+      </template>
+
+      <template #offline-data-body>
+        <p class="text-lg font-bold">
+          Erheben Sie personenbezogene Daten Ihrer Kunden auch analog, z.B. in Papierform?
+        </p>
+        <USwitch
+          unchecked-icon="i-lucide-x"
+          checked-icon="i-lucide-check"
+          default-value
+          label="Ja, ich erhebe personenbezogene Daten auch analog."
+          v-model="state.usesOfflineData"
+        />
+    
+        <template v-if="state.usesOfflineData">
+          <p>
+            Bitte beschreiben Sie hier, wie Sie personenbezogene Daten analog erheben.
+          </p>
+          <UFormField label="Beschreibung" name="offlineDataText">
+            <UInput class="w-full" size="xl" v-model="state.offlineDataText" />
           </UFormField>
         </template>
       </template>
@@ -120,52 +125,19 @@ const formSections = [
             <UFormField label="Name" name="name">
               <UInput class="w-full" size="xl" v-model="provider.name" />
             </UFormField>
-            <UFormField label="Verarbeitete Datenarten" name="dataTypes">
+            <UFormField label="Verarbeitete Daten" name="dataTypes" help="Geben Sie einfach mit Komma getrennt an, welche Daten weitergegeben werden. z.B. Name, E-Mail, Adresse, Geburtsdatum">
               <UInput class="w-full" size="xl" v-model="provider.dataTypes" />
             </UFormField>
-            <UFormField label="Zweck der Verarbeitung" name="purpose">
+            <UFormField label="Zweck der Verarbeitung" name="purpose" help="Beschreiben Sie kurz, zu welchem Zweck die Daten verarbeitet werden.">
               <UInput class="w-full" size="xl" v-model="provider.purpose" />
             </UFormField>
             <UFormField label="Link zur Datenschutzerklärung des Dienstleisters" name="linkToPrivacyPolicy">
               <UInput class="w-full" size="xl" v-model="provider.linkToPrivacyPolicy" />
             </UFormField>
-            <USwitch
-              unchecked-icon="i-lucide-x"
-              checked-icon="i-lucide-check"
-              default-value
-              label="Datenverarbeitungsvertrag vorhanden?"
-              v-model="provider.dataProcessingAgreement"
-            />
           </div>
-          <UButton icon="i-heroicons-plus" size="xl" @click="state.otherServiceProviders.push({ name: '', purpose: '', dataTypes: '', linkToPrivacyPolicy: '', dataProcessingAgreement: false })">
+          <UButton icon="i-heroicons-plus" size="xl" @click="state.otherServiceProviders.push({ name: '', purpose: '', dataTypes: '', linkToPrivacyPolicy: '' })">
             Dienstleister hinzufügen
           </UButton>
-        </template>
-      </template>
-
-      <template #social-media-body>
-        <p class="text-lg font-bold">
-          Nutzen Sie Social Media Plattformen, wie Facebook, Instagram, TikTok, etc., für Ihre gewerblichen Zwecke?
-        </p>
-        <USwitch
-          unchecked-icon="i-lucide-x"
-          checked-icon="i-lucide-check"
-          default-value
-          label="Ja, ich nutze Social Media Plattformen."
-          v-model="state.usesSocialMedia"
-        />
-        <template v-if="state.usesSocialMedia">
-          <div v-for="(social, index) in state.socialMedia" :key="index" class="flex flex-col gap-4">
-            <UFormField label="Name" name="name">
-              <UInput class="w-full" size="xl" v-model="social.name" />
-            </UFormField>
-          </div>
-          <UButton icon="i-heroicons-plus" size="xl" @click="state.socialMedia.push({ name: '' })">
-            Social Media Plattform hinzufügen
-          </UButton>
-          <p>
-            Bitte bedenken Sie, dass Sie Ihre Datenschutzerklärung und Ihr Impressum auch in Ihren Social Media Profilen verlinken müssen.
-          </p>
         </template>
       </template>
     </UAccordion>
