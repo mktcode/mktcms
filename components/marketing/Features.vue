@@ -38,7 +38,7 @@ const screenshots = [
           <div class="lg:max-w-lg">
             <h2 class="text-base/7 font-semibold text-primary-600">Für Einsteiger</h2>
             <p class="text-3xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-4xl">
-              Werbung und Buchhaltung in einer App
+              Solihost: Werbung und Buchhaltung in einer App
             </p>
             <p class="mt-6 text-lg/8 text-gray-600">
               Solihost hilft Einzelunternehmern, die nicht gerne am Computer sitzen und klare, übersichtliche Lösungen schätzen.
