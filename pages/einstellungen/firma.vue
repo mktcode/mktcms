@@ -121,11 +121,11 @@ const formSections = [
 
     <UAccordion
       :items="formSections"
-      :ui="{ label: 'text-xl', header: 'px-6 hover:bg-gray-50 data-[state=open]:bg-gray-50 data-[state=open]:text-sky-500', body: 'p-6 flex flex-col gap-4' }"
+      :ui="{ label: 'text-xl', header: 'px-6 hover:bg-gray-50 data-[state=open]:bg-gray-50 data-[state=open]:text-sky-500' }"
       class="border-t border-b border-gray-200"
     >
       <template #general-body>
-        <UForm class="flex flex-col gap-4" @submit="update" :state="state" :schema="companyFormSchema">
+        <UForm class="flex flex-col gap-4 p-6" @submit="update" :state="state" :schema="companyFormSchema">
           <div class="flex flex-col items-start gap-4">
             <img v-if="state.logo" :src="`${s3Endpoint}/mktcms/${state.logo}`" alt="Kein Bild" class="w-40 object-cover object-center rounded-lg" />
             <div class="flex items-start gap-4">
@@ -191,7 +191,7 @@ const formSections = [
       </template>
 
       <template #bank-body>
-        <UForm class="flex flex-col gap-4" @submit="update" :state="state" :schema="companyFormSchema">
+        <UForm class="flex flex-col gap-4 p-6" @submit="update" :state="state" :schema="companyFormSchema">
           <UFormField label="Kontoinhaber" name="bankHolder">
             <UInput class="w-full" size="xl" v-model="state.bankHolder" />
           </UFormField>
