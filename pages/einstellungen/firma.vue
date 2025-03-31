@@ -84,6 +84,24 @@ async function update() {
 }
 
 onMounted(load)
+
+const formSections = [
+  {
+    label: 'Allgemeine Angaben',
+    icon: 'i-heroicons-building-storefront',
+    slot: 'general',
+  },
+  {
+    label: 'Bankverbindung',
+    icon: 'i-heroicons-building-library',
+    slot: 'bank',
+  },
+  {
+    label: 'Datenschutzerklärung',
+    icon: 'i-heroicons-shield-check',
+    slot: 'privacy',
+  },
+]
 </script>
 
 <template>
@@ -99,90 +117,104 @@ onMounted(load)
           </p>
         </LayoutDismissableAlert>
       </ClientOnly>
-
-      <h1 class="text-3xl font-bold mb-4 mt-6">
-        Firma
-      </h1>
-  
-      <UForm class="flex flex-col gap-4" @submit="update" :state="state" :schema="companyFormSchema">
-        <div class="flex flex-col items-start gap-4">
-          <img v-if="state.logo" :src="`${s3Endpoint}/mktcms/${state.logo}`" alt="Kein Bild" class="w-40 object-cover object-center rounded-lg" />
-          <div class="flex items-start gap-4">
-            <LayoutFileExplorer @select="selectLogo" />
-            <UButton
-              v-if="state.logo"
-              label="Logo entfernen"
-              variant="ghost"
-              icon="i-heroicons-trash"
-              @click="state.logo = ''"
-            />
-          </div>
-        </div>
-
-        <UFormField label="Firmenname" name="companyName" required>
-          <UInput class="w-full" size="xl" v-model="state.name" />
-        </UFormField>
-
-        <UFormField label="Straße" name="street" required>
-          <UInput class="w-full" size="xl" v-model="state.street" />
-        </UFormField>
-
-        <div class="flex w-full gap-4">
-          <div>
-            <UFormField label="PLZ" name="zip" required>
-              <UInput class="w-full" size="xl" v-model="state.zip" />
-            </UFormField>
-          </div>
-          <div class="flex-grow">
-            <UFormField label="Ort" name="city" required>
-              <UInput class="w-full" size="xl" v-model="state.city" />
-            </UFormField>
-          </div>
-        </div>
-
-        <UFormField label="Telefon" name="phone" required>
-          <UInput class="w-full" size="xl" v-model="state.phone" />
-        </UFormField>
-
-        <UFormField label="E-Mail" name="email">
-          <UInput class="w-full" size="xl" v-model="state.email" />
-        </UFormField>
-
-        <UCheckbox
-          label="Ich bin Kleinunternehmer"
-          description="Als Kleinunternehmer sind Sie von der Umsatzsteuer befreit. Sie können diese Einstellung später ändern."
-          name="isSmallBusiness"
-          v-model="state.isSmallBusiness"
-        />
-
-        <Transition name="fade">
-          <UFormField label="Umsatzsteuer-ID" name="vatId" v-if="!state.isSmallBusiness">
-            <UInput class="w-full" size="xl" v-model="state.vat" />
-          </UFormField>
-        </Transition>
-
-        <h2 class="text-xl font-bold mt-6">
-          Bankverbindung
-        </h2>
-
-        <UFormField label="Kontoinhaber" name="bankHolder">
-          <UInput class="w-full" size="xl" v-model="state.bankHolder" />
-        </UFormField>
-
-        <UFormField label="IBAN" name="bankIban">
-          <UInput class="w-full" size="xl" v-model="state.bankIban" />
-        </UFormField>
-
-        <UFormField label="BIC" name="bankBic">
-          <UInput class="w-full" size="xl" v-model="state.bankBic" />
-        </UFormField>
-
-        <div class="flex justify-end">
-          <UButton type="submit" size="xl" icon="i-heroicons-check">
-            Speichern
-          </UButton>
-        </div>
-      </UForm>
     </div>
+
+    <UAccordion
+      :items="formSections"
+      :ui="{ label: 'text-xl', header: 'px-6 hover:bg-gray-50 data-[state=open]:bg-gray-50 data-[state=open]:text-sky-500', body: 'p-6 flex flex-col gap-4' }"
+      class="border-t border-b border-gray-200"
+    >
+      <template #general-body>
+        <UForm class="flex flex-col gap-4" @submit="update" :state="state" :schema="companyFormSchema">
+          <div class="flex flex-col items-start gap-4">
+            <img v-if="state.logo" :src="`${s3Endpoint}/mktcms/${state.logo}`" alt="Kein Bild" class="w-40 object-cover object-center rounded-lg" />
+            <div class="flex items-start gap-4">
+              <LayoutFileExplorer @select="selectLogo" />
+              <UButton
+                v-if="state.logo"
+                label="Logo entfernen"
+                variant="ghost"
+                icon="i-heroicons-trash"
+                @click="state.logo = ''"
+              />
+            </div>
+          </div>
+
+          <UFormField label="Firmenname" name="companyName" required>
+            <UInput class="w-full" size="xl" v-model="state.name" />
+          </UFormField>
+
+          <UFormField label="Straße" name="street" required>
+            <UInput class="w-full" size="xl" v-model="state.street" />
+          </UFormField>
+
+          <div class="flex w-full gap-4">
+            <div>
+              <UFormField label="PLZ" name="zip" required>
+                <UInput class="w-full" size="xl" v-model="state.zip" />
+              </UFormField>
+            </div>
+            <div class="flex-grow">
+              <UFormField label="Ort" name="city" required>
+                <UInput class="w-full" size="xl" v-model="state.city" />
+              </UFormField>
+            </div>
+          </div>
+
+          <UFormField label="Telefon" name="phone" required>
+            <UInput class="w-full" size="xl" v-model="state.phone" />
+          </UFormField>
+
+          <UFormField label="E-Mail" name="email">
+            <UInput class="w-full" size="xl" v-model="state.email" />
+          </UFormField>
+
+          <UCheckbox
+            label="Ich bin Kleinunternehmer"
+            description="Als Kleinunternehmer sind Sie von der Umsatzsteuer befreit. Sie können diese Einstellung später ändern."
+            name="isSmallBusiness"
+            v-model="state.isSmallBusiness"
+          />
+
+          <Transition name="fade">
+            <UFormField label="Umsatzsteuer-ID" name="vatId" v-if="!state.isSmallBusiness">
+              <UInput class="w-full" size="xl" v-model="state.vat" />
+            </UFormField>
+          </Transition>
+
+          <div class="flex justify-end">
+            <UButton type="submit" size="xl" icon="i-heroicons-check">
+              Speichern
+            </UButton>
+          </div>
+        </UForm>
+      </template>
+
+      <template #bank-body>
+        <UForm class="flex flex-col gap-4" @submit="update" :state="state" :schema="companyFormSchema">
+          <UFormField label="Kontoinhaber" name="bankHolder">
+            <UInput class="w-full" size="xl" v-model="state.bankHolder" />
+          </UFormField>
+
+          <UFormField label="IBAN" name="bankIban">
+            <UInput class="w-full" size="xl" v-model="state.bankIban" />
+          </UFormField>
+
+          <UFormField label="BIC" name="bankBic">
+            <UInput class="w-full" size="xl" v-model="state.bankBic" />
+          </UFormField>
+
+          <div class="flex justify-end">
+            <UButton type="submit" size="xl" icon="i-heroicons-check">
+              Speichern
+            </UButton>
+          </div>
+        </UForm>
+      </template>
+
+      <template #privacy-body>
+        <SettingsPrivacyForm />
+      </template>
+    </UAccordion>
   </NuxtLayout>
 </template>

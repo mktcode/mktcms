@@ -12,3 +12,7 @@ Evtl. Beschränkungen bzw. Anzahl und Kapazität erwägen.
 # Authentifizierung
 
 Sicherstellen, dass Authentifizierung und Autorisierung für alle Datensätze korrekt sind.
+
+# Datenschutz
+
+Mich als Datenschutzbeauftragter bei der zuständigen Datenschutzbehörde anmelden.
