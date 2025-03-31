@@ -14,8 +14,7 @@ const { loggedIn } = useUserSession()
     </UAlert>
     <div class="pt-6 px-6 flex items-center gap-4">
       <NuxtLink to="/" class="flex items-center gap-4">
-        <img src="~/assets/img/mktcms.png" alt="MktCMS Logo" class="w-16 -rotate-12" />
-        <div class="text-2xl italic font-semibold text-gray-900">
+        <div class="text-3xl font-bold text-gray-900">
           Solihost
         </div>
       </NuxtLink>

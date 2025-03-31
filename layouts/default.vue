@@ -3,7 +3,7 @@ const { loggedIn } = useUserSession();
 </script>
 
 <template>
-  <div class="min-h-screen flex flex-col">
+  <div class="min-h-screen flex flex-col font-nunito">
     <LayoutNavbar v-if="loggedIn" />
     <slot name="navbar2" />
     
