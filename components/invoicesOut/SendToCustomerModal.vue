@@ -19,7 +19,7 @@ const emit = defineEmits<{ close: [boolean] }>()
       <br />
       <strong>Rechnung an:</strong><br />
       {{ invoice.customerName }}<br />
-      {{  invoice.customerEmail }}
+      {{ invoice.customerEmail }}
     </template>
 
     <template #footer>
