@@ -44,25 +44,36 @@ export default defineEventHandler(async (event) => {
 
     return { success: true, error: null }
   }
+
+  const now = new Date()
+  const invoiceNumber = `${String(now.getFullYear()).slice(-2)}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}`
+
+  await db.transaction().execute(async (trx) => {
+    const insertResult = await trx.insertInto('invoicesOut').values({
+      customerId: invoice.customerId,
+      number: invoiceNumber,
+      date: invoice.date,
+      discount: invoice.discount,
+      status: invoice.status,
+    }).executeTakeFirstOrThrow()
   
-  const insertResult = await db.insertInto('invoicesOut').values({
-    customerId: invoice.customerId,
-    date: invoice.date,
-    discount: invoice.discount,
-    status: invoice.status,
-  }).executeTakeFirstOrThrow()
-
-  if (insertResult.insertId) {
-    for (const item of invoice.items) {
-      await db.insertInto('invoiceItemRelations').values({
-        invoiceId: Number(insertResult.insertId.toString()),
-        itemId: item.itemId,
-        date: item.date.split('T')[0],
-        quantity: item.quantity,
-        price: item.price,
-      }).execute()
+    if (insertResult.insertId) {
+      for (const item of invoice.items) {
+        await trx.insertInto('invoiceItemRelations').values({
+          invoiceId: Number(insertResult.insertId.toString()),
+          itemId: item.itemId,
+          date: item.date.split('T')[0],
+          quantity: item.quantity,
+          price: item.price,
+        }).execute()
+      }
+    } else {
+      throw createError({
+        status: 500,
+        statusMessage: 'Fehler beim Erstellen der Rechnung.'
+      })
     }
-
-    return { success: true, error: null }
-  }
+  })
+  
+  return { success: true, error: null }
 })

@@ -8,6 +8,7 @@ const inputSchema = z.object({
 const outputSchema = z.array(
   z.object({
     id: z.number(),
+    number: z.string(),
     customerId: z.number(),
     customerName: z.string(),
     customerEmail: z.string(),
@@ -32,6 +33,7 @@ export default defineEventHandler(async (event) => {
     .innerJoin('invoiceItemRelations', 'invoiceItemRelations.invoiceId', 'invoicesOut.id')
     .select(({ eb, fn, ref }) => [
       'invoicesOut.id',
+      'invoicesOut.number',
       'invoicesOut.customerId',
       'customers.name as customerName',
       'customers.email as customerEmail',

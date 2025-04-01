@@ -11,9 +11,8 @@ const sendToCustomerModal = overlay.create(LazyInvoicesOutSendToCustomerModal)
 
 const columns: TableColumn<InvoicesOutListItem>[] = [
   {
-    accessorKey: 'id',
+    accessorKey: 'number',
     header: 'Rnr.',
-    cell: ({ row }) => `${row.getValue('id')}`
   },
   {
     accessorKey: 'customerName',
