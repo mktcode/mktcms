@@ -166,6 +166,26 @@ const total = computed(() => {
       />
     </UFormField>
 
+    <Transition name="fade">
+      <UAlert color="primary" v-if="invoice && invoice.status === 0 && state.status !== 0">
+        <template #description>
+          <div class="flex flex-col gap-2">
+            <div class="flex items-center gap-2">
+              <UIcon name="i-heroicons-exclamation-triangle" size="24" />
+              <h3 class="text-lg font-bold">
+                Achtung
+              </h3>
+            </div>
+            <p class="text-lg">
+              Wird der Staus geändert, gilt die Rechnung als final und kann nicht mehr bearbeitet werden!
+              Der Status wird automatisch auf "Offen" gesetzt, wenn die Rechnung aus Solihost heraus per E-Mail an den Kunden verschickt wird.
+              Haben Sie die Rechnung auf anderem Weg verschickt, können Sie den Status hier manuell setzen.
+            </p>
+          </div>
+        </template>
+      </UAlert>
+    </Transition>
+
     <UFormField label="Rabatt" name="discount" size="xl">
       <UInputNumber v-model="state.discount" size="xl" />
     </UFormField>
