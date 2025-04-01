@@ -9,8 +9,8 @@ const outputSchema = z.object({
 export default defineEventHandler(async (event) => {
   const db = await getDatabaseConnection()
 
-  const fixedCost = 35
-  const costPerUser = 1
+  const fixedCost = 50
+  const costPerUser = 1.5
 
   let { userCount } = await db
     .selectFrom('users')
