@@ -3,6 +3,8 @@ import z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
 import { invoiceOutFormSchema, invoiceItemRelationFormSchema, type Customer, type InvoiceItem, type InvoiceOutWithItemRelations } from '~/types'
 
+// TODO: require at least one item
+
 const props = defineProps<{
   invoice?: InvoiceOutWithItemRelations
 }>()
@@ -77,10 +79,22 @@ const total = computed(() => {
     return acc + itemPrice * (item.quantity ?? 0) * (1 - (state.discount ?? 0) / 100)
   }, 0) ?? 0
 })
+
+const sampleInvoiceNumber = getDateBasedInvoiceNumber()
 </script>
 
 <template>
   <UForm :schema="invoiceOutFormSchema" :state="state" class="flex flex-col gap-4" @submit="onSubmit">
+    <ClientOnly>
+      <LayoutDismissableAlert title="Ihre erste Rechnung" storage-key="showWelcomeMessage.firstInvoice">
+        <p>
+          Eine Rechnungsnummer wird automatisch auf Basis des Datums und der Uhrzeit zum Zeitpunkt des ersten Speicherns generiert.
+          Aktuell wäre das die Rechnungsnummer <strong>{{ sampleInvoiceNumber }}</strong>.
+          So können Sie sicher sein, dass jede Rechnung eine eindeutige und fortlaufende Nummer hat.
+        </p>
+      </LayoutDismissableAlert>
+    </ClientOnly>
+
     <div class="flex flex-col sm:flex-row gap-4">
       <UFormField label="Kunde" name="customerId" size="xl">
         <USelectMenu

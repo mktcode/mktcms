@@ -45,13 +45,10 @@ export default defineEventHandler(async (event) => {
     return { success: true, error: null }
   }
 
-  const now = new Date()
-  const invoiceNumber = `${String(now.getFullYear()).slice(-2)}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}`
-
   await db.transaction().execute(async (trx) => {
     const insertResult = await trx.insertInto('invoicesOut').values({
       customerId: invoice.customerId,
-      number: invoiceNumber,
+      number: getDateBasedInvoiceNumber(),
       date: invoice.date,
       discount: invoice.discount,
       status: invoice.status,

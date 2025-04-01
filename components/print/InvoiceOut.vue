@@ -53,7 +53,7 @@ const { public: { s3Endpoint } } = useRuntimeConfig()
           Datum: {{ formatDate(invoice.date) }}
         </div>
         <div>
-          Rechnungsnummer: {{ invoice.id }}
+          Rechnungsnummer: {{ invoice.number }}
         </div>
         <div>
           Kundenummer: {{ customer.id }}
