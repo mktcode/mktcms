@@ -32,11 +32,11 @@ export default defineEventHandler(async (event) => {
     
     const result = {
       ...invoice,
-      date: invoice.date.toISOString().split('T')[0],
+      date: invoice.date.toISOString(),
       discount: Number(invoice.discount),
       items: items.map(item => ({
         ...item,
-        date: item.date.toISOString().split('T')[0],
+        date: invoice.date.toISOString(),
         price: Number(item.price),
         quantity: Number(item.quantity)
       }))
