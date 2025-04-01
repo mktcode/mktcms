@@ -157,11 +157,10 @@ const total = computed(() => {
         v-model="state.status"
         value-key="value"
         label-key="label"
-        :items="[
-          { label: 'Offen', value: 0 },
-          { label: 'Bezahlt', value: 1 },
-          { label: 'Storniert', value: 2 }
-        ]"
+        :items="Object.entries(invoiceStatus).map(([key, value]) => ({
+          value: Number(key),
+          label: value,
+        }))"
         size="xl"
         class="w-48"
       />

@@ -36,8 +36,8 @@ const columns: TableColumn<InvoicesOutListItem>[] = [
     accessorKey: 'status',
     header: 'Status',
     cell: ({ row }) => {
-      const status = row.getValue('status')
-      return status === 0 ? 'Offen' : 'Bezahlt'
+      const status = row.getValue('status') as keyof typeof invoiceStatus
+      return invoiceStatus[status]
     }
   },
   {

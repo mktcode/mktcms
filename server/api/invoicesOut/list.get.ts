@@ -12,6 +12,8 @@ const outputSchema = z.array(
     customerName: z.string(),
     date: z.string(),
     total: z.number(),
+    discount: z.number(),
+    status: z.number(),
   })
 )
 export type Output = z.infer<typeof outputSchema>
@@ -33,6 +35,8 @@ export default defineEventHandler(async (event) => {
       'customers.name as customerName',
       'invoicesOut.date',
       fn.sum(sql`${ref('invoiceItemRelations.price')} * ${ref('invoiceItemRelations.quantity')}`).as('total'),
+      'invoicesOut.discount',
+      'invoicesOut.status',
     ])
     .where('customers.userId', '=', user.id)
     .groupBy('invoicesOut.id')
@@ -43,6 +47,7 @@ export default defineEventHandler(async (event) => {
     ...invoice,
     date: invoice.date.toISOString(),
     total: Number(invoice.total),
+    discount: Number(invoice.discount),
   }))
 
   outputSchema.parse(formattedInvoices)
