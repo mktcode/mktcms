@@ -46,16 +46,25 @@ const columns: TableColumn<InvoicesOutListItem>[] = [
 ]
 
 function getDropdownActions(content: InvoicesOutListItem): DropdownMenuItem[][] {
-  return [
+  const items: DropdownMenuItem[][] = [
     [
       {
         label: 'Als PDF herunterladen',
         icon: 'i-lucide-download',
         to: `/api/invoicesOut/print/${content.id}`,
         target: '_blank'
+      },
+      {
+        label: 'An Kunde senden',
+        icon: 'i-heroicons-envelope',
+        to: `/api/invoicesOut/print/${content.id}`,
+        target: '_blank'
       }
     ],
-    [
+  ]
+
+  if (content.status === 0) {
+    items.push([
       {
         label: 'Bearbeiten',
         icon: 'i-lucide-edit',
@@ -90,8 +99,10 @@ function getDropdownActions(content: InvoicesOutListItem): DropdownMenuItem[][] 
           })
         }
       }
-    ]
-  ]
+    ])
+  }
+
+  return items
 }
 </script>
 
