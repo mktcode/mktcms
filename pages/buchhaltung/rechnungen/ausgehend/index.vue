@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import type { DropdownMenuItem, TableColumn } from '@nuxt/ui';
-import { LazyLayoutDeleteModal } from '#components'
+import { LazyLayoutDeleteModal, LazyInvoicesOutSendToCustomerModal } from '#components'
 import type { OutputItem as InvoicesOutListItem } from '~/server/api/invoicesOut/list.get';
 
 const { data, status, refresh } = await useFetch('/api/invoicesOut/list');
 const toast = useToast();
 const overlay = useOverlay();
 const deleteModal = overlay.create(LazyLayoutDeleteModal)
+const sendToCustomerModal = overlay.create(LazyInvoicesOutSendToCustomerModal)
 
 const columns: TableColumn<InvoicesOutListItem>[] = [
   {
@@ -45,43 +46,65 @@ const columns: TableColumn<InvoicesOutListItem>[] = [
   }
 ]
 
-function getDropdownActions(content: InvoicesOutListItem): DropdownMenuItem[][] {
+function getDropdownActions(invoiceListItem: InvoicesOutListItem): DropdownMenuItem[][] {
   const items: DropdownMenuItem[][] = [
     [
       {
         label: 'Als PDF herunterladen',
         icon: 'i-lucide-download',
-        to: `/api/invoicesOut/print/${content.id}`,
+        to: `/api/invoicesOut/print/${invoiceListItem.id}`,
         target: '_blank'
       },
       {
         label: 'An Kunde senden',
         icon: 'i-heroicons-envelope',
-        to: `/api/invoicesOut/print/${content.id}`,
-        target: '_blank'
+        onSelect: async () => {
+          sendToCustomerModal.patch({ invoice: invoiceListItem })
+          const shouldSend = await sendToCustomerModal.open()
+          if (!shouldSend) return
+
+          $fetch(`/api/invoicesOut/sendToCustomer`, {
+            method: 'POST',
+            body: { id: invoiceListItem.id }
+          }).then(() => {
+            refresh();
+            toast.add({
+              title: 'Rechnung gesendet',
+              color: 'success',
+              icon: 'i-lucide-circle-check'
+            })
+          }).catch((e) => {
+            console.log(e)
+            toast.add({
+              title: 'Fehler beim Senden: ' + e.statusMessage,
+              color: 'error',
+              icon: 'i-lucide-circle-x'
+            })
+          })
+        }
       }
     ],
   ]
 
-  if (content.status === 0) {
+  if (invoiceListItem.status === 0) {
     items.push([
       {
         label: 'Bearbeiten',
         icon: 'i-lucide-edit',
-        href: `/buchhaltung/rechnungen/ausgehend/${content.id}`
+        href: `/buchhaltung/rechnungen/ausgehend/${invoiceListItem.id}`
       },
       {
         label: 'Löschen',
         icon: 'i-heroicons-trash',
         color: 'error',
         onSelect: async () => {
-          deleteModal.patch({ title: `Rechnung ${content.id}` })
+          deleteModal.patch({ title: `Rechnung ${invoiceListItem.id}` })
           const shouldDelete = await deleteModal.open()
           if (!shouldDelete) return
 
           $fetch(`/api/invoicesOut/delete`, {
             method: 'POST',
-            body: { id: content.id }
+            body: { id: invoiceListItem.id }
           }).then(() => {
             refresh();
             toast.add({

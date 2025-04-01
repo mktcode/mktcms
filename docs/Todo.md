@@ -3,6 +3,7 @@
 Sicherstellen, dass Datenbank-Schema, Typen und Formular-Validierungen korrekt sind.
 Transaktionen und Konsistenz sicherstellen.
 IDs umstellen auf UUIDs.
+Foreign Keys und Constraints setzen.
 
 # Storage
 
