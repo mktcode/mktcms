@@ -20,7 +20,10 @@ const columns: TableColumn<InvoicesOutListItem>[] = [
   },
   {
     accessorKey: 'date',
-    header: 'Datum'
+    header: 'Datum',
+    cell: ({ row }) => {
+      return formatDate(row.getValue('date'))
+    }
   },
   {
     accessorKey: 'total',
