@@ -5,6 +5,7 @@ const toast = useToast()
 const isUpdating = ref(false)
 
 const state = reactive({
+  from: '',
   host: '',
   port: 587,
   username: '',
@@ -14,8 +15,9 @@ const state = reactive({
 async function load() {
   const existingSmtp = await $fetch('/api/smtp')
   if (existingSmtp) {
+    state.from = existingSmtp.from || ''
     state.host = existingSmtp.host || ''
-    state.port = existingSmtp.port || 587
+    state.port = existingSmtp.port || 465
     state.username = existingSmtp.username || ''
     state.password = existingSmtp.password || ''
   }
@@ -27,6 +29,7 @@ async function update() {
   await $fetch('/api/smtp/upsert', {
     method: 'POST',
     body: {
+      from: state.from,
       host: state.host,
       port: state.port,
       username: state.username,
@@ -60,6 +63,10 @@ onMounted(load)
     </div>
 
     <UForm class="flex flex-col gap-4 p-6" @submit="update" :state="state" :schema="smtpFormSchema">
+      <UFormField label="E-Mail-Adresse" name="from" required>
+        <UInput class="w-full" size="xl" v-model="state.from" placeholder="z.B. kontakt@beispiel.de" />
+      </UFormField>
+
       <UFormField label="Host" name="host" required>
         <UInput class="w-full" size="xl" v-model="state.host" placeholder="z.B. smtp.beispiel.de" />
       </UFormField>
