@@ -386,6 +386,7 @@ export const privacyFormSchema = z.object({
 
 export interface SmtpTable {
   userId: number
+  from: string
   host: string
   port: number
   username: string
@@ -395,6 +396,7 @@ export type Smtp = Selectable<SmtpTable>
 export type NewSmtp = Insertable<SmtpTable>
 export type SmtpUpdate = Updateable<SmtpTable>
 export const smtpFormSchema = z.object({
+  from: z.string().email('Eine gültige E-Mail-Adresse wird benötigt'),
   host: z.string().min(1, 'Ein Host wird benötigt'),
   port: z.number().min(1, 'Ein Port wird benötigt'),
   username: z.string().min(1, 'Ein Benutzername wird benötigt'),

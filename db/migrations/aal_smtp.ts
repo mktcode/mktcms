@@ -4,6 +4,7 @@ export async function up(db: Kysely<any>): Promise<void> {
   await db.schema
     .createTable('smtp')
     .addColumn('userId', 'integer', (col) => col.notNull().unique())
+    .addColumn('from', 'text', (col) => col.notNull())
     .addColumn('host', 'text', (col) => col.notNull())
     .addColumn('port', 'integer', (col) => col.notNull())
     .addColumn('username', 'text', (col) => col.notNull())
