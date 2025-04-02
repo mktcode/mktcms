@@ -23,9 +23,6 @@ async function migrateToLatest() {
   const migrationFolder = path.join(import.meta.dirname, 'migrations')
   const migrator = new Migrator({ db, provider: new FileMigrationProvider({ fs, path, migrationFolder }) })
 
-  const info = await migrator.getMigrations()
-  console.log('Available migrations:', info)
-
   const { error, results } = await migrator.migrateToLatest()
 
   results?.forEach((it) => {
