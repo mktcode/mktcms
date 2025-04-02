@@ -72,7 +72,7 @@ const screenshots = [
           </UCarousel>
           <div class="w-full flex flex-col items-center justify-center mt-8">
             <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-10">
-              <UButton size="xl" to="/login" class="w-full sm:w-auto" icon="i-heroicons-rocket-launch">
+              <UButton size="xl" to="/einstellungen" class="w-full sm:w-auto" icon="i-heroicons-rocket-launch">
                 Kostenlos testen
               </UButton>
               <UButton size="xl" variant="outline" class="w-full sm:w-auto" icon="i-heroicons-device-phone-mobile" disabled>
