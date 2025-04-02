@@ -24,6 +24,12 @@ export default defineEventHandler(async (event) => {
       })
     }
 
+    const existingInvoice = await db
+      .selectFrom('invoicesOut')
+      .selectAll()
+      .where('id', '=', invoice.id)
+      .executeTakeFirstOrThrow()
+
     await db.updateTable('invoicesOut').set({
       customerId: invoice.customerId,
       date: invoice.date.split('T')[0],
@@ -40,6 +46,16 @@ export default defineEventHandler(async (event) => {
         quantity: item.quantity,
         price: item.price,
       }).execute()
+    }
+
+    const updatedInvoice = await db
+      .selectFrom('invoicesOut')
+      .selectAll()
+      .where('id', '=', invoice.id)
+      .executeTakeFirstOrThrow()
+
+    if (existingInvoice.status === 0 && updatedInvoice.status !== 0) {
+      await finalizeInvoice(event, updatedInvoice)
     }
 
     return { success: true, error: null }

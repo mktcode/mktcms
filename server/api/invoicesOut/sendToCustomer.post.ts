@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
     .selectAll()
     .where('id', '=', id)
     .executeTakeFirst()
-
+  
   if (!invoice) {
     return createError({
       status: 404,
@@ -28,7 +28,16 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  // TODO: Send the invoice to the customer via user email
+  await finalizeInvoice(event, invoice)
+  await sendInvoiceToCustomer(event, invoice)
+
+  if (invoice.status === 0) {
+    await db
+      .updateTable('invoicesOut')
+      .set({ status: 1 })
+      .where('id', '=', invoice.id)
+      .execute()
+  }
 
   return { success: true, error: null }
 })
