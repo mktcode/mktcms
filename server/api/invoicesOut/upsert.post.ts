@@ -51,7 +51,7 @@ export default defineEventHandler(async (event) => {
       number: getDateBasedInvoiceNumber(),
       date: invoice.date,
       discount: invoice.discount,
-      status: invoice.status,
+      status: 0,
     }).executeTakeFirstOrThrow()
   
     if (insertResult.insertId) {
