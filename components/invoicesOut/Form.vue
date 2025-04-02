@@ -181,7 +181,7 @@ const sampleInvoiceNumber = getDateBasedInvoiceNumber()
     </UFormField>
 
     <Transition name="fade">
-      <UAlert color="primary" v-if="invoice && invoice.status === 0 && state.status !== 0">
+      <UAlert color="primary" v-if="(!invoice || invoice.status === 0) && state.status !== 0">
         <template #description>
           <div class="flex flex-col gap-2">
             <div class="flex items-center gap-2">
