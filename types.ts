@@ -384,6 +384,23 @@ export const privacyFormSchema = z.object({
   })),
 })
 
+export interface SmtpTable {
+  userId: number
+  host: string
+  port: number
+  username: string
+  password: string
+}
+export type Smtp = Selectable<SmtpTable>
+export type NewSmtp = Insertable<SmtpTable>
+export type SmtpUpdate = Updateable<SmtpTable>
+export const smtpFormSchema = z.object({
+  host: z.string().min(1, 'Ein Host wird benötigt'),
+  port: z.number().min(1, 'Ein Port wird benötigt'),
+  username: z.string().min(1, 'Ein Benutzername wird benötigt'),
+  password: z.string().min(1, 'Ein Passwort wird benötigt'),
+})
+
 export interface Database {
   users: UsersTable
   domains: DomainsTable
@@ -398,4 +415,6 @@ export interface Database {
   invoiceItems: InvoiceItemsTable
   invoiceItemRelations: InvoiceItemRelationsTable
   invoicesIn: InvoicesInTable
+  privacy: PrivacyTable
+  smtp: SmtpTable
 }

@@ -127,3 +127,17 @@ export const manageInvoiceIn = defineAbility(async (user: User, invoiceId: numbe
   
   return ownsInvoice.count === 1
 })
+
+export const manageSmtp = defineAbility(async (user: User, smtpId: number) => {
+  const db = await getDatabaseConnection()
+
+  const ownsSmtp = await db
+    .selectFrom('smtp')
+    .innerJoin('users', 'users.id', 'smtp.userId')
+    .select(({ fn }) => fn.count<number>('smtp.id').as('count'))
+    .where('smtp.id', '=', smtpId)
+    .where('users.googleManagerId', '=', user.googleId)
+    .executeTakeFirstOrThrow()
+  
+  return ownsSmtp.count === 1
+})

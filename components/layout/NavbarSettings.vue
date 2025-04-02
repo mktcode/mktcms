@@ -13,7 +13,7 @@ const items = ref([
   {
     label: 'E-Mail',
     icon: 'i-heroicons-envelope',
-    disabled: true,
+    to: '/einstellungen/email',
   },
   {
     label: 'Guthaben',
