@@ -50,7 +50,11 @@ async function update() {
             Solihost ermöglichst es auch mit kleinem Budget durchzustarten. Du kannst deinen monatlichen Preis selbst bestimmen und einfach Guthaben aufladen. Dein Guthaben wird dann einmal im Monat um den von dir gewählten Betrag belastet. Außerdem siehst du ganz transparent den aktuellen Durchschnittspreis aller Kunden und wie gut davon die Kosten für den Betrieb von Solihost gedeckt werden.
           </p>
           <p class="mt-4">
-            Der erste Monat nach deiner Anmeldung ist kostenlos. Ist den Guthaben aufgebraucht oder reicht nicht mehr für den von dir eingestellten Preis, hast du noch einen Monat Zeit, es wieder aufzuladen. Danach wird dein Account automatisch gesperrt und nach weiteren 90 Tagen gelöscht. Du bekommst dann ein Backup deiner Daten per E-Mail zugeschickt, wenn du diese Funktion nicht vorher deaktivierst.
+            Der erste Monat nach deiner Anmeldung ist kostenlos.
+            Du brauchst dein Guthaben also nicht sofort aufladen.
+            Ist dein Guthaben später mal aufgebraucht oder reicht nicht mehr für den von dir eingestellten Preis, hast du noch einen Monat Zeit, es wieder aufzuladen.
+            Danach wird dein Konto automatisch gesperrt und nach einem halben Jahr gelöscht.
+            Wir erinnern dich dann regelmäßig per E-Mail daran, entweder dein Guthaben aufzuladen oder eine Datensicherung herunterzuladen.
           </p>
           <p class="mt-4">
             <span class="font-bold">Praktisch:</span> Rechnungen für das Aufladen von Guthaben landen automatisch in der Buchhaltung unter Ausgaben.

@@ -99,7 +99,7 @@ const formSections = [
     
         <template v-if="state.usesOfflineData">
           <p>
-            Bitte beschreiben Sie hier, wie Sie personenbezogene Daten analog erheben.
+            Bitte beschreiben Sie hier, wie Sie personenbezogene Daten analog erheben <strong>und wie sie diese sicher aufbewahren</strong>. Das darf so simpel sein wie „in einem verschlossenen Schrank“.
           </p>
           <UFormField label="Beschreibung" name="offlineDataText">
             <UInput class="w-full" size="xl" v-model="state.offlineDataText" />

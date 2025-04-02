@@ -113,7 +113,7 @@ const formSections = [
       <ClientOnly>
         <LayoutDismissableAlert title="Herzlich Willkommen!" storage-key="showWelcomeMessage.firma">
           <p>
-            Geben Sie zunächst Ihre Firmendaten ein. Diese werden dann an anderer Stelle automatisch eingefügt (Website, Visitenkarten, etc.). Danach können Sie dann eine Domain registrieren, E-Mail-Adressen und Website einrichten oder sich erstmal um die Buchhaltung kümmern. Klicken Sie oben rechts auf Hilfe, wenn Sie mal nicht weiterkommen.
+            Geben Sie zunächst Ihre Firmendaten ein. Diese werden dann an anderer Stelle automatisch eingefügt (Website, Visitenkarten, Buchhaltung, etc.). Danach können Sie dann Ihre Website einrichten, eine Domain registrieren und E-Mail-Adressen anlegen oder sich erstmal um die Buchhaltung kümmern. Klicken Sie oben rechts auf Hilfe, wenn Sie mal nicht weiterkommen.
           </p>
         </LayoutDismissableAlert>
       </ClientOnly>
