@@ -26,14 +26,14 @@ const items = ref([
       slot: 'contactFormMessages',
     },
     {
-      label: 'Hilfe',
-      icon: 'i-heroicons-question-mark-circle',
-      to: '/hilfe',
-    },
-    {
       label: 'Einstellungen',
       icon: 'i-heroicons-cog-6-tooth',
       to: '/einstellungen',
+    },
+    {
+      label: 'Hilfe',
+      icon: 'i-heroicons-question-mark-circle',
+      to: '/hilfe',
     },
     {
       slot: 'auth',
@@ -57,7 +57,7 @@ const items = ref([
       class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
     >
       <template #contactFormMessages-trailing>
-        <UBadge color="primary" label="1" variant="outline" size="sm" />
+        <UBadge color="primary" label="1" variant="outline" size="sm" class="rounded-full" />
       </template>
     </UNavigationMenu>
   </nav>
