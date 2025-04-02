@@ -41,14 +41,19 @@ export default defineOAuthGoogleEventHandler({
         })
         .executeTakeFirstOrThrow()
       
+        
       if (!insertResult.insertId) {
         throw new Error('Failed to insert user')
       }
 
+      const newUserId = Number(insertResult.insertId.toString())
+        
+      await insertDefaultsAfterSignup(newUserId)
+
       await setUserSession(event, {
         user: {
           ...user,
-          id: Number(insertResult.insertId.toString()),
+          id: newUserId,
           domain: null,
           googleId: user.sub,
           balance: 0,

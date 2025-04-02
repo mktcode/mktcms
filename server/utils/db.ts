@@ -17,3 +17,21 @@ export async function getDatabaseConnection() {
 
   return connection
 }
+
+export async function insertDefaultsAfterSignup(userId: number) {
+  const db = await getDatabaseConnection()
+
+  await db.insertInto('websites')
+    .values({
+      userId,
+      title: 'Meine Website',
+      path: '/',
+      isOnline: false,
+      showMenu: false,
+      hasContactForm: false,
+      showAbout: false,
+      showContents: false,
+      headerVariant: 0,
+    })
+    .execute()
+}
