@@ -17,14 +17,14 @@ const items = ref([
       icon: 'i-heroicons-scale',
       to: '/buchhaltung',
     },
+  ],
+  [
     {
       label: 'Nachrichten',
       icon: 'i-heroicons-chat-bubble-left-ellipsis',
       to: '/nachrichten',
       slot: 'contactFormMessages',
-    }
-  ],
-  [
+    },
     {
       label: 'Hilfe',
       icon: 'i-heroicons-question-mark-circle',
