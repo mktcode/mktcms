@@ -43,6 +43,8 @@ export default defineEventHandler(async (event) => {
   const formattedInvoices = invoices.map((invoice) => ({
     ...invoice,
     date: invoice.date.toISOString(),
+    vat: Number(invoice.vat),
+    amount: Number(invoice.amount),
   }))
 
   outputSchema.parse(formattedInvoices)
