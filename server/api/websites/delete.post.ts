@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
   const db = await getDatabaseConnection()
 
   if (await denies(event, manageWebsite, id)) {
-    return createError({
+    throw createError({
       status: 403,
       statusMessage: 'Du bist nicht berechtigt, diese Website zu löschen.'
     })
