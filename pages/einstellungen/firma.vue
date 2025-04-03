@@ -134,7 +134,7 @@ const formSections = [
           <div class="flex flex-col items-start gap-4">
             <img v-if="state.logo" :src="`${s3Endpoint}/mktcms/${state.logo}`" alt="Kein Bild" class="w-40 object-cover object-center rounded-lg" />
             <div class="flex items-start gap-4">
-              <LayoutFileExplorer @select="selectLogo" />
+              <LayoutFileExplorer @select="selectLogo" buttonLabel="Logo auswählen" />
               <UButton
                 v-if="state.logo"
                 label="Logo entfernen"

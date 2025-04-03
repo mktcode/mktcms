@@ -4,6 +4,12 @@ const { data: files, refresh } = await useFetch('/api/files')
 const showModal = ref(false)
 const fileInput = ref<HTMLInputElement | null>(null)
 
+withDefaults(defineProps<{
+  buttonLabel: string
+}>(), {
+  buttonLabel: 'Bild auswählen',
+})
+
 const emit = defineEmits<{
   select: [image: string]
 }>()
@@ -33,7 +39,7 @@ const uploadFile = async () => {
 
 <template>
   <UModal v-model:open="showModal" title="Bild auswählen" icon="i-heroicons-photo" size="xl">
-    <UButton label="Bild auswählen" icon="i-heroicons-photo" />
+    <UButton :label="buttonLabel" icon="i-heroicons-photo" />
 
     <template #body>
       <div class="flex items-center justify-center w-full mb-4">
