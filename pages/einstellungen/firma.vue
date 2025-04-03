@@ -87,13 +87,18 @@ onMounted(load)
 
 const formSections = [
   {
-    label: 'Allgemeine Angaben',
+    label: 'Kontaktdaten',
     icon: 'i-heroicons-building-storefront',
     slot: 'general',
   },
   {
-    label: 'Bankverbindung',
-    icon: 'i-heroicons-building-library',
+    label: 'Inhalte planen',
+    icon: 'i-heroicons-sparkles',
+    slot: 'content',
+  },
+  {
+    label: 'Buchhaltung',
+    icon: 'i-heroicons-scale',
     slot: 'bank',
   },
   {
@@ -188,6 +193,10 @@ const formSections = [
             </UButton>
           </div>
         </UForm>
+      </template>
+
+      <template #content-body>
+        <SettingsPrepareContentForm />
       </template>
 
       <template #bank-body>

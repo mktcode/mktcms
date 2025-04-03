@@ -384,6 +384,7 @@ export const privacyFormSchema = z.object({
   })),
 })
 
+// SMTP
 export interface SmtpTable {
   userId: number
   from: string
@@ -403,6 +404,26 @@ export const smtpFormSchema = z.object({
   password: z.string().min(1, 'Ein Passwort wird benötigt'),
 })
 
+// Prepare Content
+export interface PrepareContentTable {
+  userId: number
+  aboutTargetGroup: string
+  offerShortDescription: string
+  offerDetails: string
+  companyValues: string
+  communicationTone: string
+}
+export type PrepareContent = Selectable<PrepareContentTable>
+export type NewPrepareContent = Insertable<PrepareContentTable>
+export type PrepareContentUpdate = Updateable<PrepareContentTable>
+export const prepareContentFormSchema = z.object({
+  aboutTargetGroup: z.string(),
+  offerShortDescription: z.string(),
+  offerDetails: z.string(),
+  companyValues: z.string(),
+  communicationTone: z.string(),
+})
+
 export interface Database {
   users: UsersTable
   domains: DomainsTable
@@ -419,4 +440,5 @@ export interface Database {
   invoicesIn: InvoicesInTable
   privacy: PrivacyTable
   smtp: SmtpTable
+  prepareContent: PrepareContentTable
 }
