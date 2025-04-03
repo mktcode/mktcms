@@ -118,12 +118,12 @@ onMounted(load)
 
       <div class="flex items-center justify-end gap-4 p-6">
         <UCheckbox
-          label="Website erstellen"
+          label="Neue Website erstellen"
           v-model="generateWebsite"
         />
 
         <UCheckbox
-          label="Visitenkarte erstellen"
+          label="Neue Visitenkarte erstellen"
           v-model="generateVcard"
         />
 
