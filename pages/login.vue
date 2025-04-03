@@ -3,7 +3,6 @@
     <img src="~/assets/img/logo-small.png" alt="Solihost" class="w-32 mx-auto mb-12" />
     <p class="text-lg text-gray-700 text-center mb-12">
       Aktuell ist die Anmeldung nur mit einem vorhandenen Google-Konto möglich und <span class="font-bold">erfordert eine Einladung</span>.
-      Weitere Anmeldemöglichkeiten werden in Zukunft verfügbar sein.
     </p>
     <a href="/auth/google" class="border border-gray-300 shadow rounded-md p-4 text-xl font-medium text-gray-700 hover:bg-gray-50 flex items-center justify-between gap-4">
       <img src="~/assets/img/google.svg" class="size-8" />
