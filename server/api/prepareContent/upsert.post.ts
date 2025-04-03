@@ -20,12 +20,15 @@ export default defineEventHandler(async (event) => {
     await db.insertInto('prepareContent').values({ ...prepareContent, userId: user.id }).execute()
   }
 
+  let newWebsiteId = null
+  let newVcardId = null
+
   if (generateWebsite) {
-    await generateWebsiteFromUserInfo({
+    newWebsiteId = await generateWebsiteFromUserInfo({
       userId: user.id,
       ...prepareContent
     })
   }
 
-  return { success: true, error: null }
+  return { success: true, error: null, newWebsiteId, newVcardId }
 })

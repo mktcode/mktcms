@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { ButtonProps } from '@nuxt/ui';
 import { z } from 'zod';
 
 const formSchema = z.object({
@@ -20,7 +21,7 @@ const state = reactive<FormSchema>({
 })
 
 const generateWebsite = ref(true)
-const generateVcard = ref(true)
+const generateVcard = ref(false)
 const toast = useToast()
 const isUpdating = ref(false)
 
@@ -38,7 +39,7 @@ async function load() {
 
 async function update() {
   isUpdating.value = true
-  await $fetch('/api/prepareContent/upsert', {
+  const { newWebsiteId, newVcardId } = await $fetch('/api/prepareContent/upsert', {
     method: 'POST',
     body: {
       prepareContent: state,
@@ -47,10 +48,40 @@ async function update() {
     },
   })
   isUpdating.value = false
+
+  const toastActions: ButtonProps[] = []
+  if (generateWebsite.value) {
+    toastActions.push({
+      icon: 'i-lucide-external-link',
+      label: 'Website öffnen',
+      color: 'primary',
+      variant: 'outline',
+      onClick: (e) => {
+        e.preventDefault()
+        window.open(`/website/${newWebsiteId}`, '_blank')
+      }
+    })
+  }
+
+  if (generateVcard.value) {
+    toastActions.push({
+      icon: 'i-lucide-external-link',
+      label: 'Visitenkarte öffnen',
+      color: 'primary',
+      variant: 'outline',
+      onClick: (e) => {
+        e.preventDefault()
+        window.open(`/werbung/print/${newVcardId}`, '_blank')
+      }
+    })
+  }
+
   toast.add({
     title: 'Einstellungen gespeichert',
     description: `Ihre Einstellungen wurden erfolgreich gespeichert.${generateWebsite.value ? ' Die Website wurde erstellt.' : ''}${generateVcard.value ? ' Die Visitenkarte wurde erstellt.' : ''}`,
     color: 'success',
+    actions: toastActions,
+    duration: 10000,
   })
 }
 
@@ -125,6 +156,7 @@ onMounted(load)
         <UCheckbox
           label="Neue Visitenkarte erstellen"
           v-model="generateVcard"
+          disabled
         />
 
         <UButton type="submit" size="xl" icon="i-heroicons-check" :loading="isUpdating">
