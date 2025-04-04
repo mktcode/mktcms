@@ -38,7 +38,13 @@ onMounted(async () => {
           <h1 class="text-xl font-bold">
             {{ website ? website.title : 'Lade...' }}
           </h1>
-          <UButton v-if="website" :to="`/website/${website.id}`" target="_blank" trailing-icon="i-lucide-external-link" variant="ghost">
+          <UButton
+            v-if="website?.domain"
+            :to="`https://${website.domain}`"
+            target="_blank"
+            trailing-icon="i-lucide-external-link"
+            variant="ghost"
+          >
             Website öffnen
           </UButton>
         </div>

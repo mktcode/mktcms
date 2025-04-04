@@ -58,7 +58,7 @@ async function update() {
       variant: 'outline',
       onClick: (e) => {
         e.preventDefault()
-        window.open(`/website/${newWebsiteId}`, '_blank')
+        window.open(`/werbung/website/${newWebsiteId}`, '_blank')
       }
     })
   }

@@ -36,77 +36,82 @@ const columns: TableColumn<Website>[] = [
 ]
 
 function getDropdownActions(item: Website): DropdownMenuItem[][] {
-  return [
-    [
+  const items: DropdownMenuItem[][] = []
+  
+  if (item.domain) {
+    items.push([
       {
         label: 'Website öffnen',
         icon: 'i-lucide-external-link',
-        to: `/website/${item.id}`,
+        to: `https://${item.domain}`,
         target: '_blank'
       }
-    ],
-    [
-      {
-        label: 'Bearbeiten',
-        icon: 'i-lucide-edit',
-        href: `/werbung/website/${item.id}`
-      },
-      {
-        label: 'Neue Seite aus Kopie',
-        icon: 'i-heroicons-document-duplicate',
-        onSelect: async () => {
-          $fetch(`/api/websites/clone`, {
-            method: 'POST',
-            body: { id: item.id }
-          }).then((data) => {
-            navigateTo(`/werbung/website/${data.newWebsiteId}`)
-            refresh();
-            toast.add({
-              title: 'Website kopiert',
-              color: 'success',
-              icon: 'i-lucide-circle-check'
-            })
-          }).catch((e) => {
-            console.log(e)
-            toast.add({
-              title: 'Fehler beim kopieren: ' + e.statusMessage,
-              color: 'error',
-              icon: 'i-lucide-circle-x'
-            })
-          })
-        }
-      },
-      {
-        label: 'Löschen',
-        icon: 'i-heroicons-trash',
-        color: 'error',
-        onSelect: async () => {
-          deleteModal.patch({ title: item.title })
-          const shouldDelete = await deleteModal.open()
-          if (!shouldDelete) return
+    ])
+  }
 
-          $fetch(`/api/websites/delete`, {
-            method: 'POST',
-            body: { id: item.id }
-          }).then(() => {
-            refresh();
-            toast.add({
-              title: 'Website gelöscht',
-              color: 'success',
-              icon: 'i-lucide-circle-check'
-            })
-          }).catch((e) => {
-            console.log(e)
-            toast.add({
-              title: 'Fehler beim Löschen: ' + e.statusMessage,
-              color: 'error',
-              icon: 'i-lucide-circle-x'
-            })
+  items.push([
+    {
+      label: 'Bearbeiten',
+      icon: 'i-lucide-edit',
+      href: `/werbung/website/${item.id}`
+    },
+    {
+      label: 'Neue Seite aus Kopie',
+      icon: 'i-heroicons-document-duplicate',
+      onSelect: async () => {
+        $fetch(`/api/websites/clone`, {
+          method: 'POST',
+          body: { id: item.id }
+        }).then((data) => {
+          navigateTo(`/werbung/website/${data.newWebsiteId}`)
+          refresh();
+          toast.add({
+            title: 'Website kopiert',
+            color: 'success',
+            icon: 'i-lucide-circle-check'
           })
-        }
+        }).catch((e) => {
+          console.log(e)
+          toast.add({
+            title: 'Fehler beim kopieren: ' + e.statusMessage,
+            color: 'error',
+            icon: 'i-lucide-circle-x'
+          })
+        })
       }
-    ]
-  ]
+    },
+    {
+      label: 'Löschen',
+      icon: 'i-heroicons-trash',
+      color: 'error',
+      onSelect: async () => {
+        deleteModal.patch({ title: item.title })
+        const shouldDelete = await deleteModal.open()
+        if (!shouldDelete) return
+
+        $fetch(`/api/websites/delete`, {
+          method: 'POST',
+          body: { id: item.id }
+        }).then(() => {
+          refresh();
+          toast.add({
+            title: 'Website gelöscht',
+            color: 'success',
+            icon: 'i-lucide-circle-check'
+          })
+        }).catch((e) => {
+          console.log(e)
+          toast.add({
+            title: 'Fehler beim Löschen: ' + e.statusMessage,
+            color: 'error',
+            icon: 'i-lucide-circle-x'
+          })
+        })
+      }
+    }
+  ])
+
+  return items
 }
 </script>
 
