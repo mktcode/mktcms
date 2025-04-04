@@ -5,7 +5,7 @@ const showModal = ref(false)
 const fileInput = ref<HTMLInputElement | null>(null)
 
 withDefaults(defineProps<{
-  buttonLabel: string
+  buttonLabel?: string
 }>(), {
   buttonLabel: 'Bild auswählen',
 })
