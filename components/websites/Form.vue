@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
 import { websiteFormSchema, websiteContentFormSchema, type NewWebsiteFormSuggestions, type Website, type WebsiteContent } from '~/types'
 
@@ -10,71 +9,43 @@ const props = defineProps<{
   suggestions?: NewWebsiteFormSuggestions | null
 }>()
 
-type WebsiteSchema = z.output<typeof websiteFormSchema>
-type WebsiteContentSchema = z.output<typeof websiteContentFormSchema>
-type NestedFormSchema = Partial<WebsiteSchema & { contents: Partial<WebsiteContentSchema>[] }>
-
 const { public: { s3Endpoint } } = useRuntimeConfig()
 
 function selectHeaderImage(key: string) {
-  state.image = key
+  state.value.image = key
 }
 
 function selectAboutImage(key: string) {
-  state.aboutImage = key
+  state.value.aboutImage = key
 }
 
-const state = reactive<NestedFormSchema>({
-  id: props.website?.id,
-  image: props.website?.image || '',
-  title: props.website?.title || props.suggestions?.title || '',
-  subtitle: props.website?.subtitle || '',
-  description: props.website?.description || '',
-  domain: props.website?.domain || '',
-  path: props.website?.path || '/',
-  isOnline: !!props.website?.isOnline,
-  showMenu: !!props.website?.showMenu,
-  hasContactForm: !!props.website?.hasContactForm,
-  contactFormSubject: props.website?.contactFormSubject || 'Anfrage',
-  contactFormTitle: props.website?.contactFormTitle || 'Kontakt',
-  contactFormText: props.website?.contactFormText || 'Wir sind werktags von 9 bis 17 Uhr für Sie da.',
-  headerVariant: props.website?.headerVariant || 0,
-  showAbout: !!props.website?.showAbout,
-  aboutImage: props.website?.aboutImage || '',
-  aboutTitle: props.website?.aboutTitle || '',
-  aboutSubtitle: props.website?.aboutSubtitle || '',
-  aboutText: props.website?.aboutText || '',
-  showContents: !!props.website?.showContents,
-  contents: props.website?.contents || [],
-  primaryColor: props.website?.primaryColor || availableColors.value[9].value,
-  font: props.website?.font || 'roboto',
-})
+const { state } = useWebsiteState(props.website)
 
 const pathInput = ref<string>(props.website?.path?.replace(/^\//, '') || '')
 watch(() => pathInput.value, (value) => {
-  state.path = `/${value.replace(/^\//, '')}`
+  state.value.path = `/${value.replace(/^\//, '')}`
 })
 
 function addContent() {
-  if (!state.contents) {
-    state.contents = []
+  if (!state.value.contents) {
+    state.value.contents = []
   }
-  state.contents.push({
-    orderIndex: state.contents.length,
+  state.value.contents.push({
+    orderIndex: state.value.contents.length,
   })
 }
 
 function removeContent(index: number) {
-  if (!state.contents) {
+  if (!state.value.contents) {
     return
   }
-  state.contents.splice(index, 1)
+  state.value.contents.splice(index, 1)
 }
 
 const toast = useToast()
 const isSaving = ref(false)
 
-async function onSubmit(event: FormSubmitEvent<NestedFormSchema>) {
+async function onSubmit(event: FormSubmitEvent<NestedWebsiteFormSchema>) {
   isSaving.value = true
   await $fetch('/api/websites/upsert', {
     method: 'POST',

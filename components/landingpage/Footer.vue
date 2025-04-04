@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import type { Company, Website } from '~/types';
+import type { Company } from '~/types';
+
+const { state: website } = useWebsiteState()
 
 defineProps<{
-  website: Website
   company: Company
   isLive?: boolean
 }>()
@@ -14,13 +15,13 @@ defineProps<{
       <!-- Nuxt Link doesn't work here. Why? Because of missing NuxtPage?-->
       <a
         :href="isLive ? '/impressum' : `/website/${website.id}/impressum`"
-        class="text-primary-500"
+        class="text-website-500"
       >
         Impressum
       </a>
       <a
         :href="isLive ? '/datenschutz' : `/website/${website.id}/datenschutz`"
-        class="text-primary-500"
+        class="text-website-500"
       >
         Datenschutz
       </a>

@@ -1,9 +1,5 @@
 <script setup lang="ts">
-import type { Website } from '~/types';
-
-const props = defineProps<{
-  website: Website
-}>()
+const { state: website } = useWebsiteState()
 
 const firstname = ref('');
 const lastname = ref('');
@@ -19,7 +15,7 @@ const submit = async () => {
   await $fetch('/api/contactForm/send', {
     method: 'POST',
     body: JSON.stringify({
-      websiteId: props.website.id,
+      websiteId: website.value.id,
       firstname: firstname.value,
       lastname: lastname.value,
       phone: phone.value,
@@ -63,7 +59,7 @@ const submit = async () => {
               <UTextarea v-model="message" class="w-full" />
             </UFormField>
             <div class="col-span-2 flex justify-end">
-              <UButton @click="submit" :loading="isSending" size="xl">
+              <UButton @click="submit" :loading="isSending" size="xl" color="website">
                 Absenden
               </UButton>
             </div>

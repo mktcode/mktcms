@@ -28,12 +28,12 @@ onMounted(async () => {
 </script>
 
 <template>
-  <NuxtLayout name="fullwidth">
+  <NuxtLayout name="editwebsite">
     <template #navbar2>
-      <LayoutNavbarAds />
+      <LayoutNavbarAds class="sticky top-[49px]" />
     </template>
-    <div class="flex flex-col md:flex-row">
-      <div class="md:w-72 2xl:w-80 flex-none">
+    <div class="flex flex-col md:flex-row flex-1 h-full">
+      <div class="w-full md:max-w-72 2xl:max-w-80 border-r border-gray-200 flex-1 overflow-y-scroll">
         <div class="flex flex-col gap-4 p-3">
           <h1 class="text-xl font-bold">
             {{ website ? website.title : 'Lade...' }}
@@ -50,7 +50,7 @@ onMounted(async () => {
         </div>
         <WebsitesForm v-if="website" :website="website"/>
       </div>
-      <div class="flex-1">
+      <div class="flex-1 overflow-y-scroll">
         <Landingpage v-if="website && company" :website="website" :company="company" :is-live="false" />
       </div>
     </div>

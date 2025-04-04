@@ -2,17 +2,17 @@
 import type { Company, Website } from '~/types';
 
 const props = defineProps<{
-  website: Website
   company: Company
   isLive?: boolean
 }>()
 
+const { state: website } = useWebsiteState()
 const { public: { s3Endpoint } } = useRuntimeConfig()
 
 const router = useRouter()
 const contactLink = `${router.currentRoute.value.fullPath}#contact`
 
-const { data: menuItems } = await useFetch('/api/websites/menu', { params: { userId: props.website.userId } })
+// const { data: menuItems } = await useFetch('/api/websites/menu', { params: { userId: props.website.userId } })
 </script>
 
 <template>
@@ -30,22 +30,22 @@ const { data: menuItems } = await useFetch('/api/websites/menu', { params: { use
             <div class="font-bold">
               {{ company.name }}
             </div>
-            <div class="text-primary-500 text-sm">
+            <div class="text-website-500 text-sm">
               {{ company.name }}
             </div>
           </div>
         </div>
-        <div class="ml-auto" v-if="website.showMenu">
+        <!-- <div class="ml-auto" v-if="website.showMenu">
           <ULink
             v-for="item, index in menuItems"
             :key="index"
             :to="isLive ? item.path ?? '/' : `/website/${item.id}`"
-            active-class="text-primary-300"
-            inactive-class="text-primary-50 hover:text-primary-200"
+            active-class="text-website-300"
+            inactive-class="text-website-50 hover:text-website-200"
           >
             {{ item.title }}
           </ULink>
-        </div>
+        </div> -->
       </div>
     </nav>
     <div class="h-1/2 flex flex-col p-6 sm:p-12 lg:p-24 !pb-6 items-start justify-end gap-8 max-w-7xl">
@@ -53,14 +53,14 @@ const { data: menuItems } = await useFetch('/api/websites/menu', { params: { use
         <h1 class="text-7xl text-gray-800 font-bold mb-2" v-if="website.title">
           {{ website.title }}
         </h1>
-        <h2 class="text-4xl text-primary-500" v-if="website.subtitle">
+        <h2 class="text-4xl text-website-500" v-if="website.subtitle">
           {{ website.subtitle }}
         </h2>
       </div>
-      <p class="text-2xl text-primary-950 opacity-80" v-if="website.description">
+      <p class="text-2xl text-website-950 opacity-80" v-if="website.description">
         {{ website.description }}
       </p>
-      <UButton v-if="website.hasContactForm" size="xl" :to="contactLink">
+      <UButton v-if="website.hasContactForm" size="xl" :to="contactLink" color="website">
         Kontakt aufnehmen
       </UButton>
     </div>

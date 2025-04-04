@@ -1,10 +1,5 @@
 <script setup lang="ts">
-import type { Website } from '~/types';
-
-defineProps<{
-  website: Website
-}>()
-
+const { state: website } = useWebsiteState()
 const { public: { s3Endpoint } } = useRuntimeConfig()
 </script>
 
@@ -21,11 +16,11 @@ const { public: { s3Endpoint } } = useRuntimeConfig()
           <h1 class="text-5xl text-gray-800 font-bold mb-2">
             {{ website.aboutTitle }}
           </h1>
-          <h2 class="text-3xl text-primary-500">
+          <h2 class="text-3xl text-website-500">
             {{ website.aboutSubtitle }}
           </h2>
         </div>
-        <p class="text-2xl text-primary-950 opacity-70 leading-normal">
+        <p class="text-2xl text-website-950 opacity-70 leading-normal">
           {{ website.aboutText }}
         </p>
       </div>

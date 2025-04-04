@@ -10,7 +10,12 @@ const props = defineProps<{
 }>()
 
 const appConfig = useAppConfig()
-appConfig.ui.colors.primary = props.website.primaryColor || appConfig.ui.colors.primary
+
+const { state } = useWebsiteState(props.website)
+
+watch(state.value, () => {
+  appConfig.ui.colors.website = state.value.primaryColor || appConfig.ui.colors.primary
+}, { immediate: true })
 
 updateAppConfig(appConfig)
 
@@ -22,21 +27,21 @@ useSeoMeta({
 
 <template>
   <div :class="{
-    'font-roboto': website.font === 'roboto',
-    'font-open-sans': website.font === 'open-sans',
-    'font-lato': website.font === 'lato',
-    'font-montserrat': website.font === 'montserrat',
-    'font-poppins': website.font === 'poppins',
-    'font-merriweather': website.font === 'merriweather',
-    'font-lora': website.font === 'lora',
-    'font-playfair-display': website.font === 'playfair-display',
+    'font-roboto': state.font === 'roboto',
+    'font-open-sans': state.font === 'open-sans',
+    'font-lato': state.font === 'lato',
+    'font-montserrat': state.font === 'montserrat',
+    'font-poppins': state.font === 'poppins',
+    'font-merriweather': state.font === 'merriweather',
+    'font-lora': state.font === 'lora',
+    'font-playfair-display': state.font === 'playfair-display',
   }">
-    <LandingpageHeader0 v-if="website.headerVariant === 0" :website="website" :isLive="isLive" />
-    <LandingpageHeader1 v-if="website.headerVariant === 1" :website="website" :isLive="isLive" />
-    <LandingpageHeader2 v-if="website.headerVariant === 2" :website="website" :company="company" :isLive="isLive" />
-    <LandingpageAbout v-if="website.showAbout" :website="website" />
-    <LandingpageContents v-if="website.showContents" :website="website" />
-    <LandingpageContactForm v-if="website.hasContactForm" :website="website" />
-    <LandingpageFooter :website="website" :company="company" :isLive="isLive" />
+    <LandingpageHeader0 v-if="state.headerVariant === 0" :isLive="isLive" />
+    <LandingpageHeader1 v-if="state.headerVariant === 1" :isLive="isLive" />
+    <LandingpageHeader2 v-if="state.headerVariant === 2" :company="company" :isLive="isLive" />
+    <LandingpageAbout v-if="state.showAbout" />
+    <LandingpageContents v-if="state.showContents" />
+    <LandingpageContactForm v-if="state.hasContactForm" />
+    <LandingpageFooter :company="company" :isLive="isLive" />
   </div>
 </template>
