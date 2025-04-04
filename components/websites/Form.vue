@@ -24,140 +24,6 @@ function selectAboutImage(key: string) {
   state.aboutImage = key
 }
 
-const fonts = ref([
-  {
-    type: 'label',
-    label: 'Ohne Serifen',
-  },
-  {
-    label: 'Roboto',
-    value: 'roboto',
-  },
-  {
-    label: 'Open Sans',
-    value: 'open-sans',
-  },
-  {
-    label: 'Lato',
-    value: 'lato',
-  },
-  {
-    label: 'Montserrat',
-    value: 'montserrat',
-  },
-  {
-    label: 'Poppins',
-    value: 'poppins',
-  },
-  {
-    type: 'label',
-    label: 'Mit Serifen',
-  },
-  {
-    label: 'Merriweather',
-    value: 'merriweather',
-  },
-  {
-    label: 'Lora',
-    value: 'lora',
-  },
-  {
-    label: 'Playfair Display',
-    value: 'playfair-display',
-  }
-])
-
-const colors = ref([
-  {
-    label: 'Rot',
-    value: 'red',
-  },
-  {
-    label: 'Orange',
-    value: 'orange',
-  },
-  {
-    label: 'Bernstein',
-    value: 'amber',
-  },
-  {
-    label: 'Gelb',
-    value: 'yellow',
-  },
-  {
-    label: 'Limette',
-    value: 'lime',
-  },
-  {
-    label: 'Grün',
-    value: 'green',
-  },
-  {
-    label: 'Smaragd',
-    value: 'emerald',
-  },
-  {
-    label: 'Blaugrün',
-    value: 'teal',
-  },
-  {
-    label: 'Cyan',
-    value: 'cyan',
-  },
-  {
-    label: 'Himmelblau',
-    value: 'sky',
-  },
-  {
-    label: 'Blau',
-    value: 'blue',
-  },
-  {
-    label: 'Indigo',
-    value: 'indigo',
-  },
-  {
-    label: 'Violett',
-    value: 'violet',
-  },
-  {
-    label: 'Lila',
-    value: 'purple',
-  },
-  {
-    label: 'Fuchsie',
-    value: 'fuchsia',
-  },
-  {
-    label: 'Rosa',
-    value: 'pink',
-  },
-  {
-    label: 'Rose',
-    value: 'rose',
-  },
-  {
-    label: 'Schiefer',
-    value: 'slate',
-  },
-  {
-    label: 'Grau',
-    value: 'gray',
-  },
-  {
-    label: 'Zink',
-    value: 'zinc',
-  },
-  {
-    label: 'Neutral',
-    value: 'neutral',
-  },
-  {
-    label: 'Stein',
-    value: 'stone',
-  },
-])
-
 const state = reactive<NestedFormSchema>({
   id: props.website?.id,
   image: props.website?.image || '',
@@ -180,7 +46,7 @@ const state = reactive<NestedFormSchema>({
   aboutText: props.website?.aboutText || '',
   showContents: !!props.website?.showContents,
   contents: props.website?.contents || [],
-  primaryColor: props.website?.primaryColor || colors.value[9].value,
+  primaryColor: props.website?.primaryColor || availableColors.value[9].value,
   font: props.website?.font || 'roboto',
 })
 
@@ -402,7 +268,7 @@ const formSections = [
       <template #design-body>
         <div class="flex items-center gap-4">
           <UFormField label="Schriftart" name="font" size="xl" class="w-64">
-            <USelect v-model="state.font" class="w-full" :items="fonts">
+            <USelect v-model="state.font" class="w-full" :items="availableFonts">
               <template #item-label="{ item }">
                 <div class="text-gray-400">
                   {{ item.label }}
@@ -427,7 +293,7 @@ const formSections = [
           </UFormField>
       
           <UFormField label="Primärfarbe" name="primaryColor" size="xl">
-            <USelect v-model="state.primaryColor" :items="colors" class="w-48">
+            <USelect v-model="state.primaryColor" :items="availableColors" class="w-48">
               <template #leading="{ modelValue }">
                 <div :class="`w-4 h-4 rounded-full bg-red-500`" v-if="modelValue === 'red'" />
                 <div :class="`w-4 h-4 rounded-full bg-orange-500`" v-if="modelValue === 'orange'" />
