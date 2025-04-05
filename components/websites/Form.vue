@@ -52,7 +52,6 @@ async function onSubmit(event: FormSubmitEvent<NestedWebsiteFormSchema>) {
     body: event.data,
   })
   isSaving.value = false
-  navigateTo('/werbung/website')
   toast.add({ title: 'Erfolg.', description: 'Website wurde gespeichert.', color: 'success' })
 }
 
@@ -343,7 +342,7 @@ const formSections = [
       </template>
     </UAccordion>
 
-    <div class="flex justify-end p-6">
+    <div class="flex justify-end p-6 sticky bottom-0 left-0 right-0 bg-white border-t border-gray-200">
       <UButton :loading="isSaving" type="submit" color="primary" icon="i-heroicons-check" size="xl">
         Speichern
       </UButton>

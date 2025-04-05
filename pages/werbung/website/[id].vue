@@ -18,12 +18,8 @@ onMounted(async () => {
   const existingWebsite = await $fetch<WebsiteWithContents>(`/api/websites/${websiteId}`);
   const existingCompany = await $fetch(`/api/company`);
 
-  if (!existingWebsite || !existingCompany) {
-    return;
-  }
-  
   website.value = existingWebsite;
-  company.value = existingCompany;
+  company.value = existingCompany ?? null;
 })
 </script>
 
@@ -33,7 +29,7 @@ onMounted(async () => {
       <LayoutNavbarAds class="sticky top-[49px]" />
     </template>
     <div class="flex flex-col md:flex-row flex-1 h-full">
-      <div class="w-full md:max-w-72 2xl:max-w-80 border-r border-gray-200 flex-1 overflow-y-scroll">
+      <div class="w-full md:max-w-72 2xl:max-w-80 border-r border-gray-200 flex-1 overflow-y-scroll relative">
         <div class="flex flex-col gap-4 p-3">
           <h1 class="text-xl font-bold">
             {{ website ? website.title : 'Lade...' }}
@@ -52,6 +48,14 @@ onMounted(async () => {
       </div>
       <div class="flex-1 overflow-y-scroll">
         <Landingpage v-if="website && company" :website="website" :company="company" :is-live="false" />
+        <div v-else class="flex flex-col items-center justify-center p-6 gap-4">
+          <p>
+            Sie haben noch keine Kontaktdaten Ihres Unternehmens angegeben. Diese sind erforderlich, für die Darstellung Ihrer Website.
+          </p>
+          <UButton to="/einstellungen/firma" size="xl">
+            Kontaktdaten angeben
+          </UButton>
+        </div>
       </div>
     </div>
   </NuxtLayout>
