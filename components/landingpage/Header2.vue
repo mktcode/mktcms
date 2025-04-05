@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Company, Website } from '~/types';
+import type { Company } from '~/types';
 
 const props = defineProps<{
   company: Company
