@@ -65,9 +65,9 @@ const contactLink = `${router.currentRoute.value.fullPath}#contact`
       </UButton>
     </div>
     <img
-      v-if="website.image"
+      alt=""
       :src="`${s3Endpoint}/mktcms/${website.image}`"
-      class="h-1/2 object-cover object-bottom w-full opacity-90 curved"
+      class="h-1/2 object-cover object-bottom w-full opacity-90 curved bg-website-300"
     />
   </div>
 
