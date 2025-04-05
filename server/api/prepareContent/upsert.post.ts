@@ -20,6 +20,13 @@ export default defineEventHandler(async (event) => {
     await db.insertInto('prepareContent').values({ ...prepareContent, userId: user.id }).execute()
   }
 
+  if (prepareContent.slogan) {
+    const existingCompany = await db.selectFrom('companies').selectAll().where('userId', '=', user.id).executeTakeFirst()
+    if (existingCompany) {
+      await db.updateTable('companies').set({ slogan: prepareContent.slogan }).where('userId', '=', user.id).execute()
+    }
+  }
+
   let newWebsiteId = null
   let newVcardId = null
 

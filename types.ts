@@ -43,6 +43,7 @@ export const domainFormSchema = z.object({
 export interface CompaniesTable {
   userId: number
   name: string
+  slogan: string | null
   street: string
   zip: string
   city: string
@@ -60,6 +61,7 @@ export type NewCompany = Insertable<CompaniesTable>
 export type CompanyUpdate = Updateable<CompaniesTable>
 export const companyFormSchema = z.object({
   name: z.string().min(1, 'Ein Name wird benötigt'),
+  slogan: z.string().optional(),
   street: z.string().min(1, 'Eine Straße wird benötigt'),
   zip: z.string().min(1, 'Eine Postleitzahl wird benötigt'),
   city: z.string().min(1, 'Ein Ort wird benötigt'),

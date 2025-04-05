@@ -30,8 +30,8 @@ const contactLink = `${router.currentRoute.value.fullPath}#contact`
             <div class="font-bold">
               {{ company.name }}
             </div>
-            <div class="text-website-500 text-sm">
-              {{ company.name }}
+            <div class="text-website-500 text-sm" v-if="company.slogan">
+              {{ company.slogan }}
             </div>
           </div>
         </div>

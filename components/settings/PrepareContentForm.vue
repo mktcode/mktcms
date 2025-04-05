@@ -146,7 +146,7 @@ onMounted(load)
         <UTextarea class="w-full" size="xl" v-model="state.communicationTone" />
       </UFormField>
 
-      <UFormField label="Leitspruch" name="slogan" description="Optionaler Leitspruch, der im Werbematerial zusammen mit Ihrem Firmennamen angezeigt wird.">
+      <UFormField label="Leitspruch" name="slogan" description="Optionaler Leitspruch, der im Werbematerial zusammen mit Ihrem Firmennamen angezeigt werden kann.">
         <UInput class="w-full" size="xl" v-model="state.slogan">
           <template #trailing>
             <UButton

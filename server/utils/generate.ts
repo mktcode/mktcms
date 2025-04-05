@@ -80,7 +80,7 @@ export async function suggestSloganFromUserInfo(prepareContent: PrepareContent) 
   const response = await openai.responses.create({
     store: false,
     model: 'gpt-4o-mini',
-    instructions: "Erstelle bitte drei kurze und prägnante Slogan-Vorschläge, die zur Beschreibung des Kundenunternehmens passen. Die Slogans sollen die Zielgruppe ansprechen und gut mit dem Firmennamen kombinierbar sein. Jeder Slogan soll für sich alleine stehen, ohne zweiteiligen Aufbau (z. B. keine Slogans mit Gedankenstrich, Doppelpunkt oder zwei klar getrennten Phrasen). Die drei Varianten sollen sich in Tonalität und Aussage deutlich unterscheiden.",
+    instructions: "Erstelle bitte drei kurze und prägnante Slogan-Vorschläge, die zur Beschreibung des Kundenunternehmens passen. Die Slogans sollen die Zielgruppe ansprechen und gut mit dem Firmennamen kombinierbar sein (2 bis maximal 5 Wörter). Jeder Slogan soll für sich alleine stehen, ohne zweiteiligen Aufbau (z. B. KEINE Slogans mit Gedankenstrich, Doppelpunkt oder zwei klar getrennten Phrasen). Die drei Varianten sollen sich in Tonalität und Aussage deutlich unterscheiden.",
     input: messages,
     text: {
       format: {
