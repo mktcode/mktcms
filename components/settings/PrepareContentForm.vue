@@ -1,18 +1,12 @@
 <script setup lang="ts">
 import type { ButtonProps } from '@nuxt/ui';
 import { z } from 'zod';
+import { prepareContentFormSchema } from '~/types';
 
-const formSchema = z.object({
-  aboutTargetGroup: z.string().optional(),
-  offerShortDescription: z.string().optional(),
-  offerDetails: z.string().optional(),
-  companyValues: z.string().optional(),
-  communicationTone: z.string().optional(),
-});
-
-type FormSchema = z.infer<typeof formSchema>;
+type FormSchema = z.infer<typeof prepareContentFormSchema>;
 
 const state = reactive<FormSchema>({
+  slogan: '',
   aboutTargetGroup: '',
   offerShortDescription: '',
   offerDetails: '',
@@ -28,6 +22,7 @@ const isUpdating = ref(false)
 async function load() {
   const existingPrepareContent = await $fetch('/api/prepareContent')
   if (existingPrepareContent) {
+    state.slogan = existingPrepareContent.slogan || ''
     state.aboutTargetGroup = existingPrepareContent.aboutTargetGroup || ''
     state.offerShortDescription = existingPrepareContent.offerShortDescription || ''
     state.offerDetails = existingPrepareContent.offerDetails || ''
@@ -85,6 +80,25 @@ async function update() {
   })
 }
 
+const isSuggestingSlogan = ref(false)
+const sloganSuggestions = ref<string[]>([])
+async function suggestSlogan() {
+  if (isSuggestingSlogan.value) return
+  isSuggestingSlogan.value = true
+  const { suggestions } = await $fetch('/api/prepareContent/suggestSlogan', {
+    method: 'POST',
+    body: {
+      ...state,
+    },
+  })
+  sloganSuggestions.value = suggestions
+  isSuggestingSlogan.value = false
+}
+
+function selectSloganSugestions(slogan: string) {
+  state.slogan = slogan
+}
+
 onMounted(load)
 </script>
 
@@ -103,16 +117,16 @@ onMounted(load)
         <strong>Tipp:</strong> Schreibe aus Ich- oder Wir-Perspektive und es wird so auch in den generierten Inhalten übernommen.
       </p>
     </div>
-    <UForm class="flex flex-col gap-4 p-6" @submit="update" :state="state" :schema="formSchema">
-      <UFormField label="Wer sind deine typischen Kunden?" name="aboutTargetGroup" help="Beschreibe deine Zielgruppe. Wen möchtest du ansprechen?">
+    <UForm class="flex flex-col gap-4 p-6" @submit="update" :state="state" :schema="prepareContentFormSchema">
+      <UFormField label="Wer sind deine typischen Kunden?" name="aboutTargetGroup" description="Beschreibe deine Zielgruppe. Wen möchtest du ansprechen?">
         <UTextarea class="w-full" size="xl" v-model="state.aboutTargetGroup" />
       </UFormField>
 
-      <UFormField label="Dein Angebot in einem Satz" name="offerShortDescription" help="Kurz und knapp, was machst du?">
+      <UFormField label="Dein Angebot in einem Satz" name="offerShortDescription" description="Kurz und knapp, was machst du?">
         <UInput class="w-full" size="xl" v-model="state.offerShortDescription" />
       </UFormField>
 
-      <UFormField label="Dein Angebot im Detail" name="offerDetails" help="Gehe hier genauer auf dein Angebot und spezielle Produkte bzw. Dienstleistungen ein. Gerne auch mit Preisen. Gibt es etwas, das du ganz besonders hervorheben möchtest?">
+      <UFormField label="Dein Angebot im Detail" name="offerDetails" description="Gehe hier genauer auf dein Angebot und spezielle Produkte bzw. Dienstleistungen ein. Gerne auch mit Preisen. Gibt es etwas, das du ganz besonders hervorheben möchtest?">
         <UTextarea
           class="w-full"
           size="xl"
@@ -124,15 +138,43 @@ onMounted(load)
         />
       </UFormField>
 
-      <UFormField label="Werte und Philosophie" name="companyValues" help="Was ist dir wichtig? Was treibt dich an?">
+      <UFormField label="Werte und Philosophie" name="companyValues" description="Was ist dir wichtig? Was treibt dich an?">
         <UTextarea class="w-full" size="xl" v-model="state.companyValues" />
       </UFormField>
 
-      <UFormField label="Kommunikationsstil" name="communicationTone" help="Per du? Per Sie? Locker oder förmlich?">
+      <UFormField label="Kommunikationsstil" name="communicationTone" description="Per du? Per Sie? Locker oder förmlich?">
         <UTextarea class="w-full" size="xl" v-model="state.communicationTone" />
       </UFormField>
 
-      <UFormField label="Dateien und Bilder" name="files" help="Lade Bilder von dir, deinem Unternehmen, deinen Produkten oder Dienstleistung hoch.">
+      <UFormField label="Leitspruch" name="slogan" description="Optionaler Leitspruch, der im Werbematerial zusammen mit Ihrem Firmennamen angezeigt wird.">
+        <UInput class="w-full" size="xl" v-model="state.slogan">
+          <template #trailing>
+            <UButton
+              :color="isSuggestingSlogan ? 'neutral' : 'primary'"
+              :loading="isSuggestingSlogan"
+              variant="link"
+              size="sm"
+              :label="isSuggestingSlogan ? '' : `${sloganSuggestions.length ? 'Neue ' : ''}Vorschläge`"
+              icon="i-heroicons-sparkles"
+              @click="suggestSlogan"
+            />
+        </template>
+        </UInput>
+        <div v-if="sloganSuggestions.length" class="flex flex-wrap gap-2 mt-2">
+          <UButton
+            v-for="(slogan, index) in sloganSuggestions"
+            :key="index"
+            size="sm"
+            variant="outline"
+            @click="selectSloganSugestions(slogan)"
+          >
+            {{ slogan }}
+          </UButton>
+        </div>
+      </UFormField>
+
+
+      <UFormField label="Dateien und Bilder" name="files" description="Lade Bilder von dir, deinem Unternehmen, deinen Produkten oder Dienstleistung hoch.">
         <div class="flex items-center justify-center w-full">
           <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
             <div class="flex flex-col items-center justify-center pt-5 pb-6">

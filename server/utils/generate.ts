@@ -2,6 +2,124 @@ import OpenAI from 'openai';
 import { ResponseInput } from 'openai/resources/responses/responses.mjs';
 import { PrepareContent } from '~/types';
 
+export async function suggestSloganFromUserInfo(prepareContent: PrepareContent) {
+  const { openaiApiKey } = useRuntimeConfig()
+
+  const openai = new OpenAI({
+    apiKey: openaiApiKey
+  });
+
+  const messages: ResponseInput = [
+    {
+      role: 'developer',
+      content: [{
+        type: 'input_text',
+        text: `Wer sind deine typischen Kunden?`
+      }]
+    },
+    {
+      role: 'user',
+      content: [
+        { type: 'input_text', text: prepareContent.aboutTargetGroup || 'Keine Angabe' },
+      ]
+    },
+    {
+      role: 'developer',
+      content: [{
+        type: 'input_text',
+        text: `Dein Angebot in einem Satz`
+      }]
+    },
+    {
+      role: 'user',
+      content: [
+        { type: 'input_text', text: prepareContent.offerShortDescription || 'Keine Angabe' },
+      ]
+    },
+    {
+      role: 'developer',
+      content: [{
+        type: 'input_text',
+        text: `Dein Angebot im Detail`
+      }]
+    },
+    {
+      role: 'user',
+      content: [
+        { type: 'input_text', text: prepareContent.offerDetails || 'Keine Angabe' },
+      ]
+    },
+    {
+      role: 'developer',
+      content: [{
+        type: 'input_text',
+        text: `Werte und Philosophie`
+      }]
+    },
+    {
+      role: 'user',
+      content: [
+        { type: 'input_text', text: prepareContent.companyValues || 'Keine Angabe' },
+      ]
+    },
+    {
+      role: 'developer',
+      content: [{
+        type: 'input_text',
+        text: `Kommunikationsstil`
+      }]
+    },
+    {
+      role: 'user',
+      content: [
+        { type: 'input_text', text: prepareContent.communicationTone || 'Keine Angabe' },
+      ]
+    },
+  ]
+
+  const response = await openai.responses.create({
+    store: false,
+    model: 'gpt-4o-mini',
+    instructions: "Erstelle bitte drei kurze und prägnante Slogan-Vorschläge, die zur Beschreibung des Kundenunternehmens passen. Die Slogans sollen die Zielgruppe ansprechen und gut mit dem Firmennamen kombinierbar sein. Jeder Slogan soll für sich alleine stehen, ohne zweiteiligen Aufbau (z. B. keine Slogans mit Gedankenstrich, Doppelpunkt oder zwei klar getrennten Phrasen). Die drei Varianten sollen sich in Tonalität und Aussage deutlich unterscheiden.",
+    input: messages,
+    text: {
+      format: {
+        type: "json_schema",
+        name: "slogan",
+        schema: {
+          type: "object",
+          properties: {
+            suggestions: {
+              type: "array",
+              description: "Eine Liste von drei Slogans, die zu den Angaben des Kunden passen.",
+              items: {
+                type: "string",
+              },
+            },
+          },
+          required: [
+            'suggestions',
+          ],
+          additionalProperties: false,
+        },
+      },
+    },
+  })
+
+  const result = JSON.parse(response.output_text) as {
+    suggestions: string[]
+  }
+
+  if (!Array.isArray(result.suggestions)) {
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'Fehler beim Erstellen der Slogans',
+    })
+  }
+
+  return result.suggestions
+}
+
 export async function generateWebsiteFromUserInfo(prepareContent: PrepareContent) {
   const { openaiApiKey } = useRuntimeConfig()
   const db = await getDatabaseConnection()
@@ -15,8 +133,14 @@ export async function generateWebsiteFromUserInfo(prepareContent: PrepareContent
       role: 'developer',
       content: [{
         type: 'input_text',
-        text: `Erstelle eine Webseite für einen Kunden.`
+        text: `Slogan`
       }]
+    },
+    {
+      role: 'user',
+      content: [
+        { type: 'input_text', text: prepareContent.slogan || 'Keine Angabe' },
+      ]
     },
     {
       role: 'developer',

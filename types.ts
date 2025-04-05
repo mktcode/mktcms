@@ -407,6 +407,7 @@ export const smtpFormSchema = z.object({
 // Prepare Content
 export interface PrepareContentTable {
   userId: number
+  slogan: string
   aboutTargetGroup: string
   offerShortDescription: string
   offerDetails: string
@@ -417,6 +418,7 @@ export type PrepareContent = Selectable<PrepareContentTable>
 export type NewPrepareContent = Insertable<PrepareContentTable>
 export type PrepareContentUpdate = Updateable<PrepareContentTable>
 export const prepareContentFormSchema = z.object({
+  slogan: z.string(),
   aboutTargetGroup: z.string(),
   offerShortDescription: z.string(),
   offerDetails: z.string(),
