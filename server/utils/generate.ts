@@ -212,7 +212,7 @@ export async function generateWebsiteFromUserInfo(prepareContent: PrepareContent
   const response = await openai.responses.create({
     store: false,
     model: 'gpt-4o-mini',
-    instructions: "Erstelle aus den Angaben des Kunden bitte sinnvolle Texte und Einstellungen für die Website. Der Baukasten gibt die Struktur der Website grundlegend vor. Eine genaue Analyse der Angaben ist erforderlich, um anschließend profesisonelle und sinnvoll strukturierte Inhalte für den Kunden zu verfassen. Entscheide selbst, welche Sektionen, Elemente und Funktionen am sinnvollsten sind. Lass im Zweifel Felder leer anstatt dir etwas auszudenken, aber versuche auch, alle inhaltlichen Möglichekeiten auszuschöpfen. Bitte achte darauf, dass die Texte gut lesbar sind und dem Kunden gefallen könnten. Verwende keine Emojis oder andere nicht professionelle Elemente, wenn der Kunde das nicht wünscht.",
+    instructions: "Erstelle aus den Angaben des Kunden bitte sinnvolle Texte und Einstellungen für die Website. Der Baukasten gibt die Struktur der Website grundlegend vor. Eine genaue Analyse der Angaben ist erforderlich, um anschließend profesisonelle und sinnvolle Inhalte für den Kunden zu verfassen. Entscheide selbst, welche Sektionen, Elemente und Funktionen am sinnvollsten sind. Lass im Zweifel Felder leer anstatt dir etwas auszudenken, aber versuche auch, alle inhaltlichen Möglichekeiten auszuschöpfen. Bitte achte darauf, dass die Texte gut lesbar sind und dem Kunden gefallen könnten. Schreibt der Kunde aus Ich- oder Wir-Perspektive, dann übernehme das auch so für die Website. Wenn der Kunde keine Angaben macht, gehe davon aus, dass er eine professionelle und seriöse Webseite möchte.",
     input: messages,
     text: {
       format: {
