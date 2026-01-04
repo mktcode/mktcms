@@ -76,10 +76,9 @@ async function addPage() {
         <p class="mb-2">
           Slug: {{ page.slug }}
         </p>
-        <div
-          class="mb-2"
-          v-html="page.body"
-        />
+        <div class="mb-2">
+          {{ page.body }}
+        </div>
         <div class="flex gap-2">
           <button
             class="admin-button"
