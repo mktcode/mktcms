@@ -1,8 +1,12 @@
-import { defineNuxtModule, addPlugin, createResolver, extendPages, addImportsDir, addComponent, addServerHandler } from '@nuxt/kit'
+import { defineNuxtModule, createResolver, extendPages, addImportsDir, addComponent, addServerHandler } from '@nuxt/kit'
 import { defu } from 'defu'
 
 // Module options TypeScript interface definition
-export interface ModuleOptions {}
+export interface ModuleOptions {
+  s3Bucket?: string
+  s3AccessKeyId?: string
+  s3SecretAccessKey?: string
+}
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
@@ -17,8 +21,8 @@ export default defineNuxtModule<ModuleOptions>({
         mktcmsUploads: {
           driver: 'fs',
           base: './.mktcms/uploads/',
-        }
-      }
+        },
+      },
     })
 
     nuxt.options.runtimeConfig.mktcms = {

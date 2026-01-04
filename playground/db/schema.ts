@@ -1,14 +1,14 @@
-import { int, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { int, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 
-export const categoryTable = sqliteTable("categories", {
+export const categoryTable = sqliteTable('categories', {
   id: int().primaryKey({ autoIncrement: true }),
   name: text().notNull(),
   slug: text().notNull(),
   createdAt: text().notNull(),
   updatedAt: text().notNull(),
-});
+})
 
-export const contentTable = sqliteTable("content", {
+export const contentTable = sqliteTable('content', {
   id: int().primaryKey({ autoIncrement: true }),
   title: text().notNull(),
   slug: text().notNull(),
@@ -16,13 +16,13 @@ export const contentTable = sqliteTable("content", {
   date: text(),
   createdAt: text().notNull(),
   updatedAt: text().notNull(),
-});
+})
 
-export const contentCategoryTable = sqliteTable("content_categories", {
+export const contentCategoryTable = sqliteTable('content_categories', {
   contentId: int()
     .notNull()
-    .references(() => contentTable.id, { onDelete: "cascade" }),
+    .references(() => contentTable.id, { onDelete: 'cascade' }),
   categoryId: int()
     .notNull()
-    .references(() => categoryTable.id, { onDelete: "cascade" }),
-});
+    .references(() => categoryTable.id, { onDelete: 'cascade' }),
+})
