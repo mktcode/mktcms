@@ -1,0 +1,7 @@
+.admin-input {
+  @apply w-full mb-2 p-2 border border-gray-400 rounded font-sans;
+}
+
+.admin-button {
+  @apply bg-rose-800 text-white font-bold py-2 px-4 rounded hover:bg-rose-900 transition cursor-pointer font-sans;
+}

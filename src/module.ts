@@ -72,9 +72,6 @@ export default defineNuxtModule<ModuleOptions>({
     // Composables
     addImportsDir(resolver.resolve('runtime/app/composables'))
 
-    // Vue plugins
-    addPlugin(resolver.resolve('./runtime/app/plugins/gsap'))
-
     // Pages
     extendPages((pages) => {
       pages.push({

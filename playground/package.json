@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "nuxi dev",
     "build": "nuxi build",
-    "generate": "nuxi generate"
+    "generate": "nuxi generate",
+    "db:push": "drizzle-kit push",
+    "db:seed": "npx tsx ./db/seed.ts"
   },
   "dependencies": {
     "nuxt": "^4.2.2"
