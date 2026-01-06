@@ -105,6 +105,15 @@ write_files:
       # Certbot SSL Zertifikat
       nuxtapp_certbot.sh "${DOMAIN_NAME}"
 
+  - path: /etc/fail2ban/jail.d/sshd.local
+    permissions: "0644"
+    content: |
+      [sshd]
+      enabled = true
+      maxretry = 5
+      bantime  = 24h
+      findtime = 10m
+
 runcmd:
   - systemctl enable --now nginx
   - systemctl enable --now supervisor
@@ -125,7 +134,3 @@ runcmd:
   - rm -f /etc/nginx/sites-enabled/default
   - nginx -t
   - systemctl reload nginx
-
-  # Supervisor (Config liegt schon) einmal laden
-  - supervisorctl reread
-  - supervisorctl update
