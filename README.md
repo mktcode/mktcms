@@ -60,6 +60,17 @@ export const pagesTable = sqliteTable("pages", {
 });
 ```
 
+Create a `db/index.ts` file with the following content:
+
+```ts
+import 'dotenv/config'
+import { drizzle } from 'drizzle-orm/libsql'
+
+const db = drizzle(process.env.DB_FILE_NAME!)
+
+export default db
+```
+
 Create a `.env` file in your project root with the following content:
 
 ```bash
