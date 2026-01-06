@@ -1,0 +1,131 @@
+#cloud-config
+package_update: true
+package_upgrade: false
+
+packages:
+  - nginx
+  - supervisor
+  - curl
+  - ca-certificates
+  - xz-utils
+  - git
+  - certbot
+  - python3-certbot-nginx
+  - fail2ban
+
+users:
+  - default
+  - name: nuxtapps
+    system: true
+    home: /var/www/nuxtapps
+    shell: /bin/bash
+    create_home: true
+    lock_passwd: true
+
+write_files:
+  - path: /etc/nginx/sites-available/nuxtapp.conf.template
+    permissions: "0644"
+    content: |
+      server {
+        listen 80;
+        listen [::]:80;
+
+        server_name {{DOMAIN_NAME}} www.{{DOMAIN_NAME}};
+
+        client_max_body_size 20m;
+
+        location / {
+          proxy_pass http://127.0.0.1:{{APP_PORT}};
+          proxy_http_version 1.1;
+
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "upgrade";
+        }
+      }
+
+  - path: /etc/supervisor/conf.d/nuxtapp.conf.template
+    permissions: "0644"
+    content: |
+      [program:{{DOMAIN_NAME}}]
+      directory=/var/www/nuxtapps/{{DOMAIN_NAME}}/app
+      command=/usr/local/bin/node /var/www/nuxtapps/{{DOMAIN_NAME}}/app/server/index.mjs
+      user=nuxtapps
+
+      autostart=true
+      autorestart=true
+      startsecs=10
+      startretries=10
+
+      stopsignal=INT
+      stopasgroup=true
+      killasgroup=true
+
+      environment=NODE_ENV="production",HOST="127.0.0.1",PORT="{{APP_PORT}}"
+
+      stdout_logfile=/var/log/nuxtapps/{{DOMAIN_NAME}}.out.log
+      stderr_logfile=/var/log/nuxtapps/{{DOMAIN_NAME}}.err.log
+      stdout_logfile_maxbytes=20MB
+      stderr_logfile_maxbytes=20MB
+      stdout_logfile_backups=5
+      stderr_logfile_backups=5
+
+  - path: /usr/local/sbin/nuxtapp_certbot.sh
+    permissions: "0755"
+    content: |
+      #!/usr/bin/env bash
+      set -euo pipefail
+
+      DOMAIN_NAME=$1
+      DOMAINS=(-d "${DOMAIN_NAME}" -d "www.${DOMAIN_NAME}")
+      EMAIL="kontakt@markus-kottlaender.de"
+      certbot --nginx "${DOMAINS[@]}" -m "${EMAIL}" --agree-tos --non-interactive --redirect
+  
+  - path: /usr/local/sbin/nuxtapp_setup.sh
+    permissions: "0755"
+    content: |
+      #!/usr/bin/env bash
+      set -euo pipefail
+      DOMAIN_NAME=$1
+      APP_PORT=$2
+
+      # App-Verzeichnisse
+      install -d -o nuxtapps -g nuxtapps "/var/www/nuxtapps/${DOMAIN_NAME}/app"
+
+      # Nginx Config
+      sed "s/{{DOMAIN_NAME}}/${DOMAIN_NAME}/g; s/{{APP_PORT}}/${APP_PORT}/g" /etc/nginx/sites-available/nuxtapp.conf.template > /etc/nginx/sites-available/${DOMAIN_NAME}.conf
+
+      # Supervisor Config
+      sed "s/{{DOMAIN_NAME}}/${DOMAIN_NAME}/g; s/{{APP_PORT}}/${APP_PORT}/g" /etc/supervisor/conf.d/nuxtapp.conf.template > /etc/supervisor/conf.d/${DOMAIN_NAME}.conf
+
+      # Certbot SSL Zertifikat
+      nuxtapp_certbot.sh "${DOMAIN_NAME}"
+
+runcmd:
+  - systemctl enable --now nginx
+  - systemctl enable --now supervisor
+  - systemctl enable --now fail2ban
+
+  # App-User + Verzeichnisse
+  - install -d -o nuxtapps -g nuxtapps /var/www/nuxtapps
+  - install -d -o nuxtapps -g nuxtapps /var/log/nuxtapps
+
+  # Node.js global – Version: 24.12.0 (LTS)
+  - curl -fsSL https://nodejs.org/dist/v24.12.0/node-v24.12.0-linux-x64.tar.xz -o /tmp/node-v24.12.0-linux-x64.tar.xz
+  - tar -xJf /tmp/node-v24.12.0-linux-x64.tar.xz -C /usr/local --strip-components=1
+  - rm -f /tmp/node-v24.12.0-linux-x64.tar.xz
+  - /usr/local/bin/node -v
+  - /usr/local/bin/npm -v
+
+  # Nginx Site aktivieren
+  - rm -f /etc/nginx/sites-enabled/default
+  - nginx -t
+  - systemctl reload nginx
+
+  # Supervisor (Config liegt schon) einmal laden
+  - supervisorctl reread
+  - supervisorctl update
