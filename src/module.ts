@@ -1,4 +1,4 @@
-import { defineNuxtModule, addServerPlugin, createResolver, addServerHandler } from '@nuxt/kit'
+import { defineNuxtModule, addServerPlugin, createResolver, addServerHandler, extendPages } from '@nuxt/kit'
 import defu from 'defu'
 
 export default defineNuxtModule({
@@ -26,6 +26,27 @@ export default defineNuxtModule({
     addServerHandler({
       middleware: true,
       handler: resolver.resolve('./runtime/server/middleware/auth')
+    })
+
+    // Admin API Routes
+    addServerHandler({
+      route: '/api/admin/login',
+      handler: resolver.resolve('./runtime/server/api/admin/login')
+    })
+
+    // Admin Pages
+    extendPages((pages) => {
+      pages.push({
+        name: 'Admin Dashboard',
+        path: '/admin',
+        file: resolver.resolve('./runtime/app/pages/admin/index.vue'),
+      })
+
+      pages.push({
+        name: 'Admin Login',
+        path: '/admin/login',
+        file: resolver.resolve('./runtime/app/pages/admin/login.vue'),
+      })
     })
   },
 })
