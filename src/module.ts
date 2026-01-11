@@ -19,6 +19,7 @@ export default defineNuxtModule({
       s3Region: '',
     }))
 
+    // S3 Storage Plugin
     addServerPlugin(resolver.resolve('./runtime/server/plugins/storage'))
 
     // Auth Middleware
