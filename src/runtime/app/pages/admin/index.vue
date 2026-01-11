@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import Admin from '../../components/admin.vue'
+</script>
+
 <template>
-  <h1>Admin Dashboard</h1>
+  <Admin>
+    <h1>Admin Dashboard</h1>
+  </Admin>
 </template>
