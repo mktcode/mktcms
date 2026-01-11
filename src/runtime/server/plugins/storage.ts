@@ -1,7 +1,6 @@
 import createS3Driver from 'unstorage/drivers/s3'
 import createFsDriver from 'unstorage/drivers/fs'
-import { useRuntimeConfig } from '#imports'
-import { defineNitroPlugin, useStorage } from '#build/types/nitro-imports'
+import { defineNitroPlugin, useStorage, useRuntimeConfig } from 'nitropack/runtime'
 
 export default defineNitroPlugin(() => {
   const storage = useStorage()

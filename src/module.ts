@@ -1,4 +1,4 @@
-import { defineNuxtModule, addPlugin, createResolver } from '@nuxt/kit'
+import { defineNuxtModule, addServerPlugin, createResolver } from '@nuxt/kit'
 import defu from 'defu'
 
 // Module options TypeScript interface definition
@@ -23,6 +23,6 @@ export default defineNuxtModule<ModuleOptions>({
       s3Region: '',
     }))
 
-    addPlugin(resolver.resolve('./runtime/server/plugins/storage'))
+    addServerPlugin(resolver.resolve('./runtime/server/plugins/storage'))
   },
 })
