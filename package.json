@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "@nuxt/kit": "^4.2.2",
+    "aws4fetch": "^1.0.20",
     "defu": "^6.1.4"
   },
   "devDependencies": {
