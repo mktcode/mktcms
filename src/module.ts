@@ -12,6 +12,7 @@ export default defineNuxtModule({
     // Runtime Config
     _nuxt.options.runtimeConfig.mktcms = defu((_nuxt.options.runtimeConfig.mktcms, {
       adminAuthKey: '',
+      filesPathPrefix: '',
       s3AccessKey: '',
       s3SecretKey: '',
       s3Endpoint: '',
@@ -37,6 +38,19 @@ export default defineNuxtModule({
       route: '/api/admin/logout',
       handler: resolver.resolve('./runtime/server/api/admin/logout')
     })
+    addServerHandler({
+      route: '/api/admin/content/upload',
+      handler: resolver.resolve('./runtime/server/api/admin/content/upload')
+    })
+    addServerHandler({
+      route: '/api/content/list',
+      handler: resolver.resolve('./runtime/server/api/content/list')
+    })
+    addServerHandler({
+      route: '/api/content/[path]',
+      handler: resolver.resolve('./runtime/server/api/content/[path]')
+    })
+
 
     // Admin Pages
     extendPages((pages) => {
