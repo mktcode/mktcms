@@ -33,6 +33,10 @@ export default defineNuxtModule({
       route: '/api/admin/login',
       handler: resolver.resolve('./runtime/server/api/admin/login')
     })
+    addServerHandler({
+      route: '/api/admin/logout',
+      handler: resolver.resolve('./runtime/server/api/admin/logout')
+    })
 
     // Admin Pages
     extendPages((pages) => {

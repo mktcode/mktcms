@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
 
   const { mktcms: { adminAuthKey } } = useRuntimeConfig()
 
-  const authKeyCookie = getCookie(event, 'admin_auth_key')
+  const authKeyCookie = getCookie(event, 'mktcms_admin_auth_key')
 
   if (!authKeyCookie || authKeyCookie !== adminAuthKey.toString() || adminAuthKey === '') {
     if (isAdminApiRoute) {

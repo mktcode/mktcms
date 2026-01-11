@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 401, statusMessage: 'Unauthorized' })
   }
 
-  setCookie(event, 'admin_auth_key', adminAuthKey.toString(), {
+  setCookie(event, 'mktcms_admin_auth_key', adminAuthKey.toString(), {
     httpOnly: true,
     maxAge: 7 * 24 * 60 * 60,
   })
