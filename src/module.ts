@@ -18,6 +18,9 @@ export default defineNuxtModule<ModuleOptions>({
     _nuxt.options.runtimeConfig.mktcms = defu((_nuxt.options.runtimeConfig.mktcms, {
       s3AccessKey: '',
       s3SecretKey: '',
+      s3Endpoint: '',
+      s3Bucket: '',
+      s3Region: '',
     }))
 
     addPlugin(resolver.resolve('./runtime/server/plugins/storage'))

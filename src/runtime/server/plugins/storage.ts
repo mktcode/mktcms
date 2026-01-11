@@ -9,9 +9,9 @@ export default defineNitroPlugin(() => {
   const s3Driver = createS3Driver({
     accessKeyId: useRuntimeConfig().mktcms.s3AccessKey,
     secretAccessKey: useRuntimeConfig().mktcms.s3SecretKey,
-    endpoint: "https://nbg1.your-objectstorage.com",
-    bucket: "mktcode-websites",
-    region: "eu-central",
+    endpoint: useRuntimeConfig().mktcms.s3Endpoint,
+    bucket: useRuntimeConfig().mktcms.s3Bucket,
+    region: useRuntimeConfig().mktcms.s3Region,
   })
 
   const fsDriver = createFsDriver({
