@@ -1,4 +1,4 @@
-import { defineNuxtModule, addServerPlugin, createResolver } from '@nuxt/kit'
+import { defineNuxtModule, addServerPlugin, createResolver, addServerHandler } from '@nuxt/kit'
 import defu from 'defu'
 
 export default defineNuxtModule({
@@ -9,8 +9,9 @@ export default defineNuxtModule({
   setup(_options, _nuxt) {
     const resolver = createResolver(import.meta.url)
 
-    // S3
+    // Runtime Config
     _nuxt.options.runtimeConfig.mktcms = defu((_nuxt.options.runtimeConfig.mktcms, {
+      adminAuthKey: '',
       s3AccessKey: '',
       s3SecretKey: '',
       s3Endpoint: '',
@@ -19,5 +20,11 @@ export default defineNuxtModule({
     }))
 
     addServerPlugin(resolver.resolve('./runtime/server/plugins/storage'))
+
+    // Auth Middleware
+    addServerHandler({
+      middleware: true,
+      handler: resolver.resolve('./runtime/server/middleware/auth')
+    })
   },
 })
