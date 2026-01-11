@@ -6,7 +6,7 @@ export interface ModuleOptions {}
 export default defineNuxtModule<ModuleOptions>({
   meta: {
     name: 'mktcms',
-    configKey: 'myModule',
+    configKey: 'mktcms',
   },
   // Default configuration options of the Nuxt module
   defaults: {},
