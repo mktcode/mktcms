@@ -1,5 +1,0 @@
-@import "tailwindcss" prefix(mktcms);
-
-#mktcms-admin {
-  @apply mktcms:bg-gray-100 mktcms:text-gray-900 mktcms:font-sans;
-}

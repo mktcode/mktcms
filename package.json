@@ -25,7 +25,6 @@
   "scripts": {
     "prepack": "nuxt-module-build build",
     "dev": "npm run dev:prepare && nuxi dev playground",
-    "css": "npx @tailwindcss/cli -i ./src/runtime/app/assets/css/admin.css -o ./src/runtime/app/assets/css/admin.min.css",
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
     "release": "npm run lint && npm run test && npm run prepack && changelogen --release && npm publish && git push --follow-tags",
@@ -37,10 +36,8 @@
   },
   "dependencies": {
     "@nuxt/kit": "^4.2.2",
-    "@tailwindcss/cli": "^4.1.18",
     "aws4fetch": "^1.0.20",
     "defu": "^6.1.4",
-    "tailwindcss": "^4.1.18",
     "zod": "^4.3.5"
   },
   "devDependencies": {
