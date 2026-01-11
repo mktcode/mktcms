@@ -1,16 +1,11 @@
 import { defineNuxtModule, addServerPlugin, createResolver } from '@nuxt/kit'
 import defu from 'defu'
 
-// Module options TypeScript interface definition
-export interface ModuleOptions {}
-
-export default defineNuxtModule<ModuleOptions>({
+export default defineNuxtModule({
   meta: {
     name: 'mktcms',
     configKey: 'mktcms',
   },
-  // Default configuration options of the Nuxt module
-  defaults: {},
   setup(_options, _nuxt) {
     const resolver = createResolver(import.meta.url)
 
