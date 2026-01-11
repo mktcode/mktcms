@@ -19,7 +19,8 @@ export default defineNitroPlugin(() => {
 
   if (process.env.NODE_ENV === 'production') {
     storage.mount('content', s3Driver)
-  } else {
+  }
+  else {
     storage.mount('content', fsDriver)
   }
 })
