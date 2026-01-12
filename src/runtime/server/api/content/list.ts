@@ -3,7 +3,7 @@ import { useStorage, useRuntimeConfig } from 'nitropack/runtime'
 import { defineEventHandler, getValidatedQuery } from 'h3'
 
 const querySchema = z.object({
-  path: z.string().optional()
+  path: z.string().optional(),
 })
 
 export default defineEventHandler(async (event) => {

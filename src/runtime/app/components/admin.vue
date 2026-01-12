@@ -14,7 +14,7 @@ body {
   background-color: #f9f9f9;
   max-width: 800px;
   margin: 0 auto;
-  
+
   h1 {
     color: #333;
   }

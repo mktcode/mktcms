@@ -1,4 +1,4 @@
-import { defineEventHandler, deleteCookie } from "h3"
+import { defineEventHandler, deleteCookie } from 'h3'
 
 export default defineEventHandler(async (event) => {
   deleteCookie(event, 'mktcms_admin_auth_key')

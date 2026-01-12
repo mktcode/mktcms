@@ -26,31 +26,30 @@ export default defineNuxtModule({
     // Auth Middleware
     addServerHandler({
       middleware: true,
-      handler: resolver.resolve('./runtime/server/middleware/auth')
+      handler: resolver.resolve('./runtime/server/middleware/auth'),
     })
 
     // Admin API Routes
     addServerHandler({
       route: '/api/admin/login',
-      handler: resolver.resolve('./runtime/server/api/admin/login')
+      handler: resolver.resolve('./runtime/server/api/admin/login'),
     })
     addServerHandler({
       route: '/api/admin/logout',
-      handler: resolver.resolve('./runtime/server/api/admin/logout')
+      handler: resolver.resolve('./runtime/server/api/admin/logout'),
     })
     addServerHandler({
       route: '/api/admin/content/upload',
-      handler: resolver.resolve('./runtime/server/api/admin/content/upload')
+      handler: resolver.resolve('./runtime/server/api/admin/content/upload'),
     })
     addServerHandler({
       route: '/api/content/list',
-      handler: resolver.resolve('./runtime/server/api/content/list')
+      handler: resolver.resolve('./runtime/server/api/content/list'),
     })
     addServerHandler({
       route: '/api/content/[path]',
-      handler: resolver.resolve('./runtime/server/api/content/[path]')
+      handler: resolver.resolve('./runtime/server/api/content/[path]'),
     })
-
 
     // Admin Pages
     extendPages((pages) => {

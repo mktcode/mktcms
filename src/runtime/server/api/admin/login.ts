@@ -1,6 +1,6 @@
 import { useRuntimeConfig } from 'nitropack/runtime'
-import { createError, defineEventHandler, readValidatedBody, setCookie } from "h3"
-import z from "zod"
+import { createError, defineEventHandler, readValidatedBody, setCookie } from 'h3'
+import z from 'zod'
 
 const bodySchema = z.object({
   adminAuthKey: z.string(),

@@ -1,9 +1,9 @@
-import z from "zod"
+import z from 'zod'
 import { createError, defineEventHandler, getValidatedQuery, readMultipartFormData } from 'h3'
 import { useRuntimeConfig, useStorage } from 'nitropack/runtime'
 
 function sanitizeFilename(filename: string): string {
-  return filename.replace(/[^a-zA-Z0-9.\-_]/g, '_')
+  return filename.replace(/[^\w.\-]/g, '_')
 }
 
 const querySchema = z.object({
@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const file = form.find((item) => item.name === 'file')
+  const file = form.find(item => item.name === 'file')
 
   if (!file) {
     throw createError({
@@ -43,14 +43,14 @@ export default defineEventHandler(async (event) => {
   // TODO: allow all image types and convert to webp on the fly
   const allowedExtensions = ['.pdf', '.jpg', '.jpeg', '.png', '.gif', '.svg', '.webp', '.md', '.docx', '.txt']
   const fileExtension = file.filename.toLowerCase().slice(file.filename.lastIndexOf('.'))
-  
+
   if (!allowedExtensions.includes(fileExtension)) {
     throw createError({
       statusCode: 400,
       statusMessage: 'Invalid file type. Only PDF, JPG, JPEG, and PNG files are allowed.',
     })
   }
-  
+
   const filePath = [filesPathPrefix, sanePath, sanitizeFilename(file.filename)].filter(Boolean).join('/')
   await useStorage('content').setItemRaw(filePath, Buffer.from(file.data))
 
