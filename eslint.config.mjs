@@ -16,5 +16,18 @@ export default createConfigForNuxt({
   },
 })
   .append(
-    // your custom flat config here...
+    // disable vue mulsti-word-component-names rule
+    {
+      files: ['**/*.vue'],
+      rules: {
+        'vue/multi-word-component-names': 'off',
+      },
+    },
+    // allow unexpected any
+    {
+      files: ['**/*.ts', '**/*.vue'],
+      rules: {
+        '@typescript-eslint/no-explicit-any': 'off',
+      },
+    },
   )
