@@ -5,7 +5,7 @@
   </script>
   
   <template>
-    <div>
+    <div style="display: flex; gap: 8px; margin: 16px 0;">
       <input
         v-model="path"
         type="text"

@@ -39,9 +39,52 @@ body {
   textarea {
     padding: 10px;
     font-size: 16px;
-    margin-right: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+  }
+
+  .breadcrumbs {
+    margin: 20px 0;
+    color: #888;
+    font-size: 1.5rem;
+
+    a {
+      color: #888;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .files,
+  .dirs {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .files a,
+  .dirs a {
+    display: block;
+    padding: 8px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .files a {
+    color: #555;
+    background-color: #fff;
+  }
+
+  .dirs a {
+    color: #fff;
+    background-color: #555;
+    display: flex;
+    justify-content: space-between;
   }
 }
 </style>
