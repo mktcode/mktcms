@@ -56,7 +56,7 @@ export default defineNuxtModule({
     extendPages((pages) => {
       pages.push({
         name: 'Admin Dashboard',
-        path: '/admin',
+        path: '/admin/:path(.*)?',
         file: resolver.resolve('./runtime/app/pages/admin/index.vue'),
       })
 
