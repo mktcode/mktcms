@@ -39,6 +39,11 @@ export default defineNuxtModule({
       handler: resolver.resolve('./runtime/server/api/admin/logout'),
     })
     addServerHandler({
+      route: '/api/admin/content/:path',
+      method: 'post',
+      handler: resolver.resolve('./runtime/server/api/admin/content/[path].post'),
+    })
+    addServerHandler({
       route: '/api/admin/content/upload',
       handler: resolver.resolve('./runtime/server/api/admin/content/upload'),
     })

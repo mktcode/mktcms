@@ -5,6 +5,13 @@ const path = useRoute().params.path as string || ''
 const pathParts = path.split(':')
 
 const { data: content } = await useFetch<string>(`/api/content/${path}`)
+
+async function saveContent() {
+  await $fetch(`/api/admin/content/${path}`, {
+    method: 'POST',
+    body: { content: content.value },
+  })
+}
 </script>
 
 <template>
@@ -27,6 +34,12 @@ const { data: content } = await useFetch<string>(`/api/content/${path}`)
         style="width: 100%; resize: vertical;"
         v-model="content"
       ></textarea>
+      <button
+        style="margin-top: 10px;"
+        @click="saveContent"
+      >
+        Speichern
+      </button>
     </div>
   </div>
 </template>
