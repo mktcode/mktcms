@@ -1,13 +1,6 @@
-<!--
-Get your module up and running quickly.
+# Simple CMS module for Nuxt (pre-alpha)
 
-Find and replace all on all files (CMD+SHIFT+F):
-- Name: My Module
-- Package name: mktcms
-- Description: My new Nuxt module
--->
-
-# Simple CMS module for Nuxt
+This module is my personal, minimalist, opinionated, independent alternative to @nuxt/content and to a large portion of the WordPress projects I’ve worked on.
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
@@ -20,21 +13,73 @@ Find and replace all on all files (CMD+SHIFT+F):
 
 ## Features
 
-<!-- Highlight some of the features your module provide here -->
-- ⛰ &nbsp;Foo
-- 🚠 &nbsp;Bar
-- 🌲 &nbsp;Baz
+- S3 bucket explorer/editor at `/admin`
+- API routes at `/api/admin`
+- `ADMIN_AUTH_KEY` env var to set a password
+- `useContent` composable
 
-## Quick Setup
-
-Install the module to your Nuxt application with one command:
+## Setup
 
 ```bash
 npx nuxi module add mktcms
 ```
 
-That's it! You can now use My Module in your Nuxt app ✨
+```bash
+MKTCMS_ADMIN_AUTH_KEY="your-admin-auth-key"
+MKTCMS_S3_ACCESS_KEY_ID=your-s3-access-key-id
+MKTCMS_S3_SECRET_ACCESS_KEY=your-s3-secret-access-key
+MKTCMS_S3_BUCKET=your-s3-bucket-name
+MKTCMS_S3_REGION=your-s3-bucket-region
+MKTCMS_S3_PREFIX="your-project"
+```
 
+## Usage
+
+Assuming json files in S3 like `your-project:articles:article-1.json`:
+
+```vue
+<script setup lang="ts">
+import { useContent } from 'mktcms'
+
+type Article = {
+  id: string
+  title: string
+  content: string
+}
+
+const { data: articles } = await useContent<Article[]>('articles')
+</script>
+
+<template>
+  <article v-for="article in articles" :key="article.id">
+    <h2>{{ article.title }}</h2>
+    <p>{{ article.content }}</p>
+  </article>
+</template>
+```
+
+For a specific article:
+
+```vue
+<script setup lang="ts">
+import { useContent } from 'mktcms'
+
+type Article = {
+  id: string
+  title: string
+  content: string
+}
+
+const { data: article } = await useContent<Article>('articles/article-1.json')
+</script>
+
+<template>
+  <article>
+    <h2>{{ article.title }}</h2>
+    <p>{{ article.content }}</p>
+  </article>
+</template>
+```
 
 ## Contribution
 
