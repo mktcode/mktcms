@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { createError, defineEventHandler, getValidatedRouterParams } from 'h3'
-import { useStorage } from 'nitropack/runtime'
+import { useRuntimeConfig, useStorage } from 'nitropack/runtime'
 
 const paramsSchema = z.object({
   path: z.string().min(1),
@@ -9,8 +9,13 @@ const paramsSchema = z.object({
 export default defineEventHandler(async (event) => {
   const { path } = await getValidatedRouterParams(event, params => paramsSchema.parse(params))
 
+  const { mktcms: { filesPathPrefix } } = useRuntimeConfig()
+  const fullPath = filesPathPrefix + ':' + path
+
   const storage = useStorage('content')
-  const file = await storage.getItem(path)
+  const file = await storage.getItem(fullPath)
+
+  console.log('Requested file:', fullPath, file)
 
   if (!file) {
     throw createError({

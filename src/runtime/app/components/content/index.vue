@@ -3,7 +3,7 @@ import { useFetch, useRoute } from '#app'
 import { computed } from 'vue'
 
 const path = useRoute().params.path as string || ''
-const pathParts = path.split('/')
+const pathParts = path.split(':')
 
 const { data: keys } = await useFetch('/api/content/list', {
   query: { path },
@@ -42,7 +42,7 @@ const dirs = computed(() => {
         :key="index"
       >
         /
-        <a :href="`/admin/${pathParts.slice(0, index + 1).join('/')}`">
+        <a :href="`/admin/${pathParts.slice(0, index + 1).join(':')}`">
           {{ part }}
         </a>
       </span>
@@ -55,7 +55,7 @@ const dirs = computed(() => {
       <a
         v-for="file in files"
         :key="file"
-        :href="`/admin/${path ? path + '/' : ''}${file}`"
+        :href="`/admin/edit/${path ? path + ':' : ''}${file}`"
       >{{ file }}</a>
     </div>
 
@@ -67,10 +67,10 @@ const dirs = computed(() => {
       <a
         v-for="dir in dirs"
         :key="dir"
-        :href="`/admin/${path ? path + '/' : ''}${dir}`"
+        :href="`/admin/${path ? path + ':' : ''}${dir}`"
       >
         <span>
-          {{ dir.replace(/:/g, '/').replace(path, '') }}
+          {{ dir }}
         </span>
         <span>
           <svg

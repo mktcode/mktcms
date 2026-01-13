@@ -47,7 +47,7 @@ export default defineNuxtModule({
       handler: resolver.resolve('./runtime/server/api/content/list'),
     })
     addServerHandler({
-      route: '/api/content/[path]',
+      route: '/api/content/:path',
       handler: resolver.resolve('./runtime/server/api/content/[path]'),
     })
 
@@ -55,8 +55,14 @@ export default defineNuxtModule({
     extendPages((pages) => {
       pages.push({
         name: 'Admin Dashboard',
-        path: '/admin/:path(.*)?',
+        path: '/admin/:path?',
         file: resolver.resolve('./runtime/app/pages/admin/index.vue'),
+      })
+
+      pages.push({
+        name: 'Admin Editor',
+        path: '/admin/edit/:path',
+        file: resolver.resolve('./runtime/app/pages/admin/edit/[path].vue'),
       })
 
       pages.push({
