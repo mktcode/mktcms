@@ -15,8 +15,6 @@ export default defineEventHandler(async (event) => {
   const storage = useStorage('content')
   const file = await storage.getItem(fullPath)
 
-  console.log('Requested file:', fullPath, file)
-
   if (!file) {
     throw createError({
       statusCode: 404,
