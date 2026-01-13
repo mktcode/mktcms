@@ -24,7 +24,7 @@ const { data: content } = await useFetch<string>(`/api/content/${path}`)
 
     <div v-if="content !== undefined">
       <textarea
-        style="width: 100%;"
+        style="width: 100%; resize: vertical;"
         v-model="content"
       ></textarea>
     </div>
