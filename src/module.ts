@@ -71,6 +71,12 @@ export default defineNuxtModule({
       })
 
       pages.push({
+        name: 'Admin New Content',
+        path: '/admin/new',
+        file: resolver.resolve('./runtime/app/pages/admin/new.vue'),
+      })
+
+      pages.push({
         name: 'Admin Login',
         path: '/admin/login',
         file: resolver.resolve('./runtime/app/pages/admin/login.vue'),
