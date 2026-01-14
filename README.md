@@ -15,7 +15,7 @@ This module is my personal, minimalist, opinionated, independent alternative to 
 
 - S3 bucket explorer/editor at `/admin`
 - API routes at `/api/admin`
-- `ADMIN_AUTH_KEY` env var to set a password
+- `MKTCMS_ADMIN_AUTH_KEY` env var to set a password
 - `useContent` composable
 
 ## Setup
