@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.1.8
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.7...v0.1.8)
+
+### 📖 Documentation
+
+- Correct environment variable name in README ([45e535c](https://github.com/mktcode/mktcms/commit/45e535c))
+
+### 🏡 Chore
+
+- Note in readme to add .storage to .gitignore for local development ([5296a07](https://github.com/mktcode/mktcms/commit/5296a07))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.7
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.6...v0.1.7)
