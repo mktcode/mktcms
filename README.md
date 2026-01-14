@@ -31,6 +31,13 @@ MKTCMS_S3_SECRET_ACCESS_KEY=your-s3-secret-access-key
 MKTCMS_S3_BUCKET=your-s3-bucket-name
 MKTCMS_S3_REGION=your-s3-bucket-region
 MKTCMS_S3_PREFIX="your-project"
+MKTCMS_SMTP_HOST="your-smtp-host"
+MKTCMS_SMTP_PORT=465
+MKTCMS_SMTP_SECURE=true
+MKTCMS_SMTP_USER="your-smtp-user"
+MKTCMS_SMTP_PASS="your-smtp-pass"
+MKTCMS_MAILER_FROM="your-mailer-from-address"
+MKTCMS_MAILER_TO="your-mailer-to-address"
 ```
 
 ## Usage
