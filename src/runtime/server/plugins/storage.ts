@@ -15,7 +15,8 @@ export default defineNitroPlugin(() => {
       bucket: s3Bucket,
       region: s3Region,
     }))
-  } else {
+  }
+  else {
     storage.mount('content', createFsDriver({
       base: './.storage',
     }))
