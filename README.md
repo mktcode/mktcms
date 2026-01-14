@@ -40,6 +40,14 @@ MKTCMS_MAILER_FROM="your-mailer-from-address"
 MKTCMS_MAILER_TO="your-mailer-to-address"
 ```
 
+Add local development storage folder in `.gitignore`:
+
+```
+.storage
+```
+
+(S3 is only used if `NODE_ENV=production`.)
+
 ## Usage
 
 Assuming json files in S3 like `your-project:articles:article-1.json`:
