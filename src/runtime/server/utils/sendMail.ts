@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer'
 import { useRuntimeConfig } from 'nitropack/runtime'
 
-export async function sendMail({ subject, fields }: { subject: string, fields: Record<string, any> }) {
+export async function sendMail({ subject, fields, replyTo }: { subject: string, fields: Record<string, any>, replyTo?: string }) {
   const { mktcms: { smtpHost, smtpPort, smtpUser, smtpPass, smtpSecure, mailerFrom, mailerTo } } = useRuntimeConfig()
 
   const transporter = nodemailer.createTransport({
@@ -17,6 +17,7 @@ export async function sendMail({ subject, fields }: { subject: string, fields: R
   const mailOptions = {
     from: mailerFrom,
     to: mailerTo,
+    replyTo: replyTo || undefined,
     subject: subject,
     html: Object.entries(fields).map(([key, value]) => `<p><strong>${key}:</strong> ${value}</p>`).join(''),
     text: Object.entries(fields).map(([key, value]) => `${key}: ${value}`).join('\n'),
