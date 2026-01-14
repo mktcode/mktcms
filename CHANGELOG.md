@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v0.1.13
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.12...v0.1.13)
+
+### 🚀 Enhancements
+
+- Implement fallback storage mechanism for content retrieval ([486d004](https://github.com/mktcode/mktcms/commit/486d004))
+- Add fallback content retrieval from local storage in README ([c715150](https://github.com/mktcode/mktcms/commit/c715150))
+
+### 📖 Documentation
+
+- Update README to include usage examples for sendMail utility ([add5dc7](https://github.com/mktcode/mktcms/commit/add5dc7))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.12
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.11...v0.1.12)
