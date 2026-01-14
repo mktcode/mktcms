@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.1.12
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.11...v0.1.12)
+
+### 🚀 Enhancements
+
+- Add optional replyTo parameter to sendMail function ([1ae5d52](https://github.com/mktcode/mktcms/commit/1ae5d52))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.11
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.10...v0.1.11)
