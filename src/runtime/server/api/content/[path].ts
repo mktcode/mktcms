@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
   if (!file) {
     const fallbackStorage = useStorage('fallback')
     const fallbackFile = await fallbackStorage.getItem(path)
-    
+
     if (fallbackFile) {
       return fallbackFile
     }

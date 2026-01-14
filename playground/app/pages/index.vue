@@ -36,8 +36,8 @@ async function sendMessage() {
 
 <template>
   <h1>Welcome to MKT CMS</h1>
-  
-  <div v-html="content" />
+
+  <div>{{ content }}</div>
 
   <input
     v-model="subject"
