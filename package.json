@@ -37,7 +37,9 @@
   "dependencies": {
     "@nuxt/kit": "^4.2.2",
     "aws4fetch": "^1.0.20",
+    "csv-parse": "^6.1.0",
     "defu": "^6.1.4",
+    "marked": "^17.0.1",
     "nodemailer": "^7.0.12",
     "zod": "^4.3.5"
   },

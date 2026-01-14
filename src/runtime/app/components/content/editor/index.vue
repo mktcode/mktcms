@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { useFetch, useRoute } from '#app'
+import Csv from './csv.vue'
+import Markdown from './markdown.vue'
 
 const path = useRoute().params.path as string || ''
 const pathParts = path.split(':')
 
-const { data: content } = await useFetch<string>(`/api/content/${path}`)
+const { data: content } = await useFetch<string>(`/api/admin/content/${path}`)
 
 async function saveContent() {
   await $fetch(`/api/admin/content/${path}`, {
@@ -30,9 +32,13 @@ async function saveContent() {
     </div>
 
     <div v-if="content !== undefined">
-      <textarea
-        v-model="content"
-        style="width: 100%; resize: vertical;"
+      <Markdown
+        v-if="path.endsWith('.md')"
+        v-model:content="content"
+      />
+      <Csv
+        v-else-if="path.endsWith('.csv')"
+        v-model:content="content"
       />
       <button
         style="margin-top: 10px;"

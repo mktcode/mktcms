@@ -1,5 +1,6 @@
 <script setup lang="ts">
-const { data: content } = await useFetch('/api/content/home.md')
+const { data: home } = await useFetch<string>('/api/content/home.md')
+const { data: csv } = await useFetch<{ title: string, description: string, price: string, quantity: string }[]>('/api/content/test.csv')
 
 const isSending = ref(false)
 const sendingError = ref<string | null>(null)
@@ -37,7 +38,20 @@ async function sendMessage() {
 <template>
   <h1>Welcome to MKT CMS</h1>
 
-  <div>{{ content }}</div>
+  <div>
+    <h2>Home.md Content</h2>
+    <div v-html="home" />
+  </div>
+
+  <div>
+    <h2>Test.csv Content</h2>
+    <div v-for="row in csv" :key="row.title" style="margin-bottom: 10px;">
+      <strong>{{ row.title }}</strong><br>
+      Description: {{ row.description }}<br>
+      Price: {{ row.price }}<br>
+      Quantity: {{ row.quantity }}<br>
+    </div>
+  </div>
 
   <input
     v-model="subject"
