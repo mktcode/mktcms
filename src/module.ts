@@ -12,12 +12,12 @@ export default defineNuxtModule({
     // Runtime Config
     _nuxt.options.runtimeConfig.mktcms = defu((_nuxt.options.runtimeConfig.mktcms, {
       adminAuthKey: '',
-      filesPathPrefix: '',
       s3AccessKey: '',
       s3SecretKey: '',
       s3Endpoint: '',
       s3Bucket: '',
       s3Region: '',
+      s3Prefix: '',
       smtpHost: '',
       smtpPort: 465,
       smtpSecure: true,

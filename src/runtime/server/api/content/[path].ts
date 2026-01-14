@@ -9,8 +9,8 @@ const paramsSchema = z.object({
 export default defineEventHandler(async (event) => {
   const { path } = await getValidatedRouterParams(event, params => paramsSchema.parse(params))
 
-  const { mktcms: { filesPathPrefix } } = useRuntimeConfig()
-  const fullPath = filesPathPrefix + ':' + path
+  const { mktcms: { s3Prefix } } = useRuntimeConfig()
+  const fullPath = s3Prefix + ':' + path
 
   const storage = useStorage('content')
   const file = await storage.getItem(fullPath)
