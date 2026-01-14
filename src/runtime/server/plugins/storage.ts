@@ -5,28 +5,23 @@ import { defineNitroPlugin, useStorage, useRuntimeConfig } from 'nitropack/runti
 export default defineNitroPlugin(() => {
   const storage = useStorage()
 
-  const s3Driver = createS3Driver({
-    accessKeyId: useRuntimeConfig().mktcms.s3AccessKey,
-    secretAccessKey: useRuntimeConfig().mktcms.s3SecretKey,
-    endpoint: useRuntimeConfig().mktcms.s3Endpoint,
-    bucket: useRuntimeConfig().mktcms.s3Bucket,
-    region: useRuntimeConfig().mktcms.s3Region,
-  })
+  const { mktcms: { s3AccessKey, s3SecretKey, s3Endpoint, s3Bucket, s3Region } } = useRuntimeConfig()
 
-  const fsDriver = createFsDriver({
-    base: './.storage',
-  })
+  if (s3AccessKey && s3SecretKey && s3Endpoint && s3Bucket && s3Region) {
+    storage.mount('content', createS3Driver({
+      accessKeyId: s3AccessKey,
+      secretAccessKey: s3SecretKey,
+      endpoint: s3Endpoint,
+      bucket: s3Bucket,
+      region: s3Region,
+    }))
+  } else {
+    storage.mount('content', createFsDriver({
+      base: './.storage',
+    }))
+  }
 
-  const fallbackDriver = createFsDriver({
+  storage.mount('fallback', createFsDriver({
     base: './content',
-  })
-
-  storage.mount('fallback', fallbackDriver)
-
-  if (process.env.NODE_ENV === 'production') {
-    storage.mount('content', s3Driver)
-  }
-  else {
-    storage.mount('content', fsDriver)
-  }
+  }))
 })
