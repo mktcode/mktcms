@@ -17,6 +17,7 @@ This module is my personal, minimalist, opinionated, independent alternative to 
 - API routes at `/api/admin`
 - `MKTCMS_ADMIN_AUTH_KEY` env var to set a password
 - `useContent` composable
+- `sendMail` utility to send emails via SMTP
 
 ## Setup
 
@@ -94,6 +95,33 @@ const { data: article } = await useContent<Article>('articles/article-1.json')
     <p>{{ article.content }}</p>
   </article>
 </template>
+```
+
+Mailer:
+
+```ts
+await sendMail({
+  subject: 'Notification from MKT CMS',
+  fields: {
+    'Error': 'Something went wrong',
+  },
+})
+```
+
+If you have an email from a user, you can use the `replyTo` field:
+
+```ts
+const name = 'John Doe'
+const email = 'john.doe@example.com'
+
+await sendMail({
+  subject: 'Contact Form Submission',
+  fields: {
+    'Name': name,
+    'Email': email,
+  },
+  replyTo: email,
+})
 ```
 
 ## Contribution
