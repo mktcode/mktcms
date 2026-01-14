@@ -1,4 +1,4 @@
-import { defineNuxtModule, addServerPlugin, createResolver, addServerHandler, extendPages, addImports, addImportsDir, addServerImportsDir } from '@nuxt/kit'
+import { defineNuxtModule, addServerPlugin, createResolver, addServerHandler, extendPages, addServerImportsDir } from '@nuxt/kit'
 import defu from 'defu'
 
 export default defineNuxtModule({
@@ -18,6 +18,13 @@ export default defineNuxtModule({
       s3Endpoint: '',
       s3Bucket: '',
       s3Region: '',
+      smtpHost: '',
+      smtpPort: 465,
+      smtpSecure: true,
+      smtpUser: '',
+      smtpPass: '',
+      mailerFrom: '',
+      mailerTo: '',
     }))
 
     // Add utils
