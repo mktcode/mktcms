@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const { data: content } = await useFetch('/api/content/home.md')
+
 const isSending = ref(false)
 const sendingError = ref<string | null>(null)
 const sendingSuccess = ref(false)
@@ -34,6 +36,8 @@ async function sendMessage() {
 
 <template>
   <h1>Welcome to MKT CMS</h1>
+  
+  <div v-html="content" />
 
   <input
     v-model="subject"

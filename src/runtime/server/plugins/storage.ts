@@ -17,6 +17,12 @@ export default defineNitroPlugin(() => {
     base: './.storage',
   })
 
+  const fallbackDriver = createFsDriver({
+    base: './content',
+  })
+
+  storage.mount('fallback', fallbackDriver)
+
   if (process.env.NODE_ENV === 'production') {
     storage.mount('content', s3Driver)
   }

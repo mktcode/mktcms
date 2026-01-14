@@ -16,6 +16,13 @@ export default defineEventHandler(async (event) => {
   const file = await storage.getItem(fullPath)
 
   if (!file) {
+    const fallbackStorage = useStorage('fallback')
+    const fallbackFile = await fallbackStorage.getItem(path)
+    
+    if (fallbackFile) {
+      return fallbackFile
+    }
+
     throw createError({
       statusCode: 404,
       statusMessage: 'File not found',
