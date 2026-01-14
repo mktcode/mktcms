@@ -1,4 +1,4 @@
-import { defineNuxtModule, addServerPlugin, createResolver, addServerHandler, extendPages } from '@nuxt/kit'
+import { defineNuxtModule, addServerPlugin, createResolver, addServerHandler, extendPages, addImports, addImportsDir, addServerImportsDir } from '@nuxt/kit'
 import defu from 'defu'
 
 export default defineNuxtModule({
@@ -19,6 +19,9 @@ export default defineNuxtModule({
       s3Bucket: '',
       s3Region: '',
     }))
+
+    // Add utils
+    addServerImportsDir(resolver.resolve('runtime/server/utils'))
 
     // S3 Storage Plugin
     addServerPlugin(resolver.resolve('./runtime/server/plugins/storage'))
