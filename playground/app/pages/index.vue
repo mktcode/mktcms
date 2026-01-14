@@ -23,7 +23,7 @@ async function sendMessage() {
     })
     sendingSuccess.value = true
   }
-  catch (error) {
+  catch {
     sendingError.value = 'Failed to send message.'
   }
   finally {
