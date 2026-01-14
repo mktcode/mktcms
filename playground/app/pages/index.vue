@@ -3,6 +3,9 @@ const isSending = ref(false);
 const sendingError = ref<string | null>(null);
 const sendingSuccess = ref(false);
 
+const subject = ref('');
+const message = ref('');
+
 async function sendMessage() {
   isSending.value = true;
   sendingError.value = null;
@@ -12,9 +15,9 @@ async function sendMessage() {
     await $fetch('/api/send-message', {
       method: 'POST',
       body: {
-        subject: 'Test Subject',
+        subject: subject.value,
         fields: {
-          message: 'This is a test message.',
+          message: message.value,
         },
       },
     });
@@ -30,8 +33,8 @@ async function sendMessage() {
 <template>
   <h1>Welcome to MKT CMS</h1>
 
-  <input type="text" placeholder="Subject" />
-  <textarea placeholder="Your message"></textarea>
+  <input type="text" placeholder="Subject" v-model="subject" />
+  <textarea placeholder="Your message" v-model="message"></textarea>
   <button
     @click="sendMessage"
     :disabled="isSending"
