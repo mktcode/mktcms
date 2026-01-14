@@ -97,7 +97,16 @@ const { data: article } = await useContent<Article>('articles/article-1.json')
 </template>
 ```
 
-Mailer:
+The storage falls back to a `content` folder that you can include in your repo as default content.
+
+```ts
+const { data: article } = await useContent<Article>('articles/article-1.json')
+```
+
+This will check S3 at `your-project:articles:article-1.json` first, and if not found, `~~/content/articles/article-1.json`.
+(In development `.storage/` is used instead of S3.)
+
+### Mailer
 
 ```ts
 await sendMail({
