@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.1.11
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.10...v0.1.11)
+
+### 🩹 Fixes
+
+- Change sendMail to named export for consistency ([2976a31](https://github.com/mktcode/mktcms/commit/2976a31))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.10
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.9...v0.1.10)
