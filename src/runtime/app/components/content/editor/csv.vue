@@ -94,6 +94,7 @@ const headers = ref<string[]>([])
 const rows = ref<string[][]>([])
 
 const columnCount = computed(() => headers.value.length)
+const tableColspan = computed(() => Math.max(headers.value.length, 1) + 1)
 
 let isApplyingFromContent = false
 let isApplyingToContent = false
@@ -134,9 +135,24 @@ watch(
   { deep: true }
 )
 
-function addRow() {
+function insertRow(atIndex: number) {
   if (columnCount.value === 0) return
-  rows.value.push(Array.from({ length: columnCount.value }, () => ''))
+  const clamped = Math.max(0, Math.min(atIndex, rows.value.length))
+  rows.value.splice(clamped, 0, Array.from({ length: columnCount.value }, () => ''))
+}
+
+function moveRowUp(index: number) {
+  if (index <= 0) return
+  const tmp = rows.value[index - 1]
+  rows.value[index - 1] = rows.value[index]!
+  rows.value[index] = tmp!
+}
+
+function moveRowDown(index: number) {
+  if (index < 0 || index >= rows.value.length - 1) return
+  const tmp = rows.value[index + 1]
+  rows.value[index + 1] = rows.value[index]!
+  rows.value[index] = tmp!
 }
 
 function removeRow(index: number) {
@@ -153,11 +169,14 @@ function onCellInput(rowIndex: number, colIndex: number, value: string) {
 <template>
   <div style="width: 100%;">
     <div style="display: flex; gap: 8px; margin-bottom: 10px; align-items: center;">
-      <button type="button" @click="addRow">
-        + Row
+      <button type="button" :disabled="headers.length === 0" @click="insertRow(0)">
+        + Zeile (oben)
+      </button>
+      <button type="button" :disabled="headers.length === 0" @click="insertRow(rows.length)">
+        + Zeile (unten)
       </button>
       <span v-if="headers.length === 0" style="opacity: 0.7;">
-        No headers found. Provide a CSV with a header row to edit rows.
+        Keine Kopfzeile gefunden. Bitte eine CSV mit Kopfzeile bereitstellen, um Zeilen zu bearbeiten.
       </span>
     </div>
 
@@ -169,7 +188,7 @@ function onCellInput(rowIndex: number, colIndex: number, value: string) {
               v-for="(h, colIndex) in headers"
               :key="colIndex"
               style="text-align: left; padding: 8px; border-bottom: 1px solid #d0d0d0; background: #f6f6f6; position: sticky; top: 0;"
-              title="Header (not editable)"
+              title="Kopfzeile (nicht editierbar)"
             >
               <span>{{ h }}</span>
             </th>
@@ -178,25 +197,41 @@ function onCellInput(rowIndex: number, colIndex: number, value: string) {
         </thead>
 
         <tbody>
-          <tr v-for="(r, rowIndex) in rows" :key="rowIndex">
-            <td
-              v-for="(cell, colIndex) in r"
-              :key="colIndex"
-              style="padding: 6px; border-bottom: 1px solid #eee;"
-            >
-              <input
-                :value="cell"
-                type="text"
-                @input="onCellInput(rowIndex, colIndex, ($event.target as HTMLInputElement).value)"
-                style="width: 100%; box-sizing: border-box; padding: 6px; border: 1px solid #cfcfcf;"
-              />
-            </td>
-            <td style="padding: 6px; border-bottom: 1px solid #eee; white-space: nowrap;">
-              <button type="button" @click="removeRow(rowIndex)">
-                Delete
-              </button>
-            </td>
-          </tr>
+          <template v-for="(r, rowIndex) in rows" :key="rowIndex">
+            <tr>
+              <td
+                v-for="(cell, colIndex) in r"
+                :key="colIndex"
+                style="padding: 6px; border-bottom: 1px solid #eee;"
+              >
+                <input
+                  :value="cell"
+                  type="text"
+                  @input="onCellInput(rowIndex, colIndex, ($event.target as HTMLInputElement).value)"
+                  style="width: 100%; box-sizing: border-box; padding: 6px; border: 1px solid #cfcfcf;"
+                />
+              </td>
+              <td style="padding: 6px; border-bottom: 1px solid #eee; white-space: nowrap;">
+                <button type="button" :disabled="rowIndex === 0" @click="moveRowUp(rowIndex)">
+                  ↑
+                </button>
+                <button type="button" :disabled="rowIndex === rows.length - 1" @click="moveRowDown(rowIndex)">
+                  ↓
+                </button>
+                <button type="button" @click="removeRow(rowIndex)">
+                  Löschen
+                </button>
+              </td>
+            </tr>
+
+            <tr>
+              <td :colspan="tableColspan" style="padding: 6px; border-bottom: 1px solid #eee; background: #fafafa;">
+                <button type="button" @click="insertRow(rowIndex + 1)">
+                  + Zeile hier einfügen
+                </button>
+              </td>
+            </tr>
+          </template>
         </tbody>
       </table>
     </div>
