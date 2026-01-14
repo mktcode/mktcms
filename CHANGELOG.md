@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.1.9
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.8...v0.1.9)
+
+### 🩹 Fixes
+
+- Fixed import... hopefully ([9ecb932](https://github.com/mktcode/mktcms/commit/9ecb932))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.8
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.7...v0.1.8)
