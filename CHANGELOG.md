@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.1.10
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.9...v0.1.10)
+
+### 🩹 Fixes
+
+- Replace addServerImportsDir with addServerImports to avoid nitro directory scanning ([94b92ae](https://github.com/mktcode/mktcms/commit/94b92ae))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.9
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.8...v0.1.9)
