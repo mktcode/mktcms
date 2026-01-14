@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v0.1.14
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.13...v0.1.14)
+
+### 🩹 Fixes
+
+- Retrieve fallback file using full path in content API ([37a77cf](https://github.com/mktcode/mktcms/commit/37a77cf))
+- Update file path separator from '/' to ':' in upload handler ([5fa2fb4](https://github.com/mktcode/mktcms/commit/5fa2fb4))
+
+### 💅 Refactors
+
+- Simplify storage driver initialization in Nitro plugin ([a40dac9](https://github.com/mktcode/mktcms/commit/a40dac9))
+- Linter ([f9c2110](https://github.com/mktcode/mktcms/commit/f9c2110))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.13
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.12...v0.1.13)
