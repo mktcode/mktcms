@@ -1,4 +1,4 @@
-import { defineNuxtModule, addServerPlugin, createResolver, addServerHandler, extendPages, addServerImportsDir } from '@nuxt/kit'
+import { defineNuxtModule, addServerPlugin, createResolver, addServerHandler, extendPages, addServerImports } from '@nuxt/kit'
 import defu from 'defu'
 
 export default defineNuxtModule({
@@ -27,8 +27,11 @@ export default defineNuxtModule({
       mailerTo: '',
     }))
 
-    // Add utils
-    addServerImportsDir(resolver.resolve('runtime/server/utils'))
+    // Add server utils (avoid scanning directories that may contain generated .d.ts files)
+    addServerImports({
+      name: 'sendMail',
+      from: resolver.resolve('runtime/server/utils/sendMail'),
+    })
 
     // S3 Storage Plugin
     addServerPlugin(resolver.resolve('./runtime/server/plugins/storage'))
