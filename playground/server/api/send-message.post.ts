@@ -8,7 +8,7 @@ const bodySchema = z.object({
 
 export default defineEventHandler(async (event) => {
   const { subject, fields } = await readValidatedBody(event, body => bodySchema.parse(body))
-  
+
   await sendMail({
     subject,
     fields,

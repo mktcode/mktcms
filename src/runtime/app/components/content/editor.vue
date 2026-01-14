@@ -31,9 +31,9 @@ async function saveContent() {
 
     <div v-if="content !== undefined">
       <textarea
-        style="width: 100%; resize: vertical;"
         v-model="content"
-      ></textarea>
+        style="width: 100%; resize: vertical;"
+      />
       <button
         style="margin-top: 10px;"
         @click="saveContent"

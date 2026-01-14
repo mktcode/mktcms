@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer'
-import { useRuntimeConfig } from '#imports';
+import { useRuntimeConfig } from '#imports'
 
-export default async function sendMail({ subject, fields }: { subject: string; fields: Record<string, any> }) {
+export default async function sendMail({ subject, fields }: { subject: string, fields: Record<string, any> }) {
   const { mktcms: { smtpHost, smtpPort, smtpUser, smtpPass, smtpSecure, mailerFrom, mailerTo } } = useRuntimeConfig()
 
   const transporter = nodemailer.createTransport({
