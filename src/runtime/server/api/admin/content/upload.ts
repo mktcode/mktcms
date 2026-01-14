@@ -51,10 +51,8 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const filePath = [s3Prefix, sanePath, sanitizeFilename(file.filename)].filter(Boolean).join('/')
+  const filePath = [s3Prefix, sanePath, sanitizeFilename(file.filename)].filter(Boolean).join(':')
   await useStorage('content').setItemRaw(filePath, Buffer.from(file.data))
 
-  const returnFileName = filePath
-
-  return { success: true, path: returnFileName }
+  return { success: true, path: filePath }
 })
