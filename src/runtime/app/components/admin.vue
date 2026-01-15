@@ -36,6 +36,12 @@ body {
     }
   }
 
+  .button-icon {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+  }
+
   input[type="text"],
   input[type="password"],
   input[type="email"],
