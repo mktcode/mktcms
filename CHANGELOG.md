@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.1.17
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.16...v0.1.17)
+
+### 🚀 Enhancements
+
+- Implement fallback content ([abb8a61](https://github.com/mktcode/mktcms/commit/abb8a61))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.16
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.15...v0.1.16)
