@@ -55,7 +55,7 @@ const dirs = computed(() => {
       <a
         v-for="file in files"
         :key="file"
-        :href="`/admin/edit/${path ? path + ':' : ''}${file}`"
+        :href="`/admin/edit/${file.match(/\.md$|\.csv$|\.txt$/i) ? 'text' : 'blob'}/${path ? path + ':' : ''}${file}`"
       >{{ file }}</a>
     </div>
 

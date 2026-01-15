@@ -87,9 +87,15 @@ export default defineNuxtModule({
       })
 
       pages.push({
-        name: 'Admin Editor',
-        path: '/admin/edit/:path',
-        file: resolver.resolve('./runtime/app/pages/admin/edit/[path].vue'),
+        name: 'Admin Text Editor',
+        path: '/admin/edit/text/:path',
+        file: resolver.resolve('./runtime/app/pages/admin/edit/text/[path].vue'),
+      })
+
+      pages.push({
+        name: 'Admin Blob Editor',
+        path: '/admin/edit/blob/:path',
+        file: resolver.resolve('./runtime/app/pages/admin/edit/blob/[path].vue'),
       })
 
       pages.push({
