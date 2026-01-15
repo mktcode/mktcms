@@ -45,7 +45,11 @@ async function sendMessage() {
 
   <div>
     <h2>Test.csv Content</h2>
-    <div v-for="row in csv" :key="row.title" style="margin-bottom: 10px;">
+    <div
+      v-for="row in csv"
+      :key="row.title"
+      style="margin-bottom: 10px;"
+    >
       <strong>{{ row.title }}</strong><br>
       Description: {{ row.description }}<br>
       Price: {{ row.price }}<br>

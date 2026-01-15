@@ -28,10 +28,12 @@ function parseSemicolonCsv(text: string): CsvGrid {
         if (next === '"') {
           field += '"'
           i++
-        } else {
+        }
+        else {
           inQuotes = false
         }
-      } else {
+      }
+      else {
         field += ch
       }
       continue
@@ -105,7 +107,8 @@ function applyFromContent() {
     const grid = parseSemicolonCsv(content.value)
     headers.value = grid.headers
     rows.value = grid.rows
-  } finally {
+  }
+  finally {
     isApplyingFromContent = false
   }
 }
@@ -115,7 +118,8 @@ function applyToContent() {
   isApplyingToContent = true
   try {
     content.value = serializeSemicolonCsv({ headers: headers.value, rows: rows.value })
-  } finally {
+  }
+  finally {
     isApplyingToContent = false
   }
 }
@@ -126,13 +130,13 @@ watch(
     if (isApplyingToContent) return
     applyFromContent()
   },
-  { immediate: true }
+  { immediate: true },
 )
 
 watch(
   () => [headers.value, rows.value] as const,
   () => applyToContent(),
-  { deep: true }
+  { deep: true },
 )
 
 function insertRow(atIndex: number) {
@@ -169,13 +173,24 @@ function onCellInput(rowIndex: number, colIndex: number, value: string) {
 <template>
   <div style="width: 100%;">
     <div style="display: flex; gap: 8px; margin-bottom: 10px; align-items: center;">
-      <button type="button" :disabled="headers.length === 0" @click="insertRow(0)">
+      <button
+        type="button"
+        :disabled="headers.length === 0"
+        @click="insertRow(0)"
+      >
         + Zeile (oben)
       </button>
-      <button type="button" :disabled="headers.length === 0" @click="insertRow(rows.length)">
+      <button
+        type="button"
+        :disabled="headers.length === 0"
+        @click="insertRow(rows.length)"
+      >
         + Zeile (unten)
       </button>
-      <span v-if="headers.length === 0" style="opacity: 0.7;">
+      <span
+        v-if="headers.length === 0"
+        style="opacity: 0.7;"
+      >
         Keine Kopfzeile gefunden. Bitte eine CSV mit Kopfzeile bereitstellen, um Zeilen zu bearbeiten.
       </span>
     </div>
@@ -197,7 +212,10 @@ function onCellInput(rowIndex: number, colIndex: number, value: string) {
         </thead>
 
         <tbody>
-          <template v-for="(r, rowIndex) in rows" :key="rowIndex">
+          <template
+            v-for="(r, rowIndex) in rows"
+            :key="rowIndex"
+          >
             <tr>
               <td
                 v-for="(cell, colIndex) in r"
@@ -207,26 +225,43 @@ function onCellInput(rowIndex: number, colIndex: number, value: string) {
                 <input
                   :value="cell"
                   type="text"
-                  @input="onCellInput(rowIndex, colIndex, ($event.target as HTMLInputElement).value)"
                   style="width: 100%; box-sizing: border-box; padding: 6px; border: 1px solid #cfcfcf;"
-                />
+                  @input="onCellInput(rowIndex, colIndex, ($event.target as HTMLInputElement).value)"
+                >
               </td>
               <td style="padding: 6px; border-bottom: 1px solid #eee; white-space: nowrap;">
-                <button type="button" :disabled="rowIndex === 0" @click="moveRowUp(rowIndex)">
+                <button
+                  type="button"
+                  :disabled="rowIndex === 0"
+                  @click="moveRowUp(rowIndex)"
+                >
                   ↑
                 </button>
-                <button type="button" :disabled="rowIndex === rows.length - 1" @click="moveRowDown(rowIndex)">
+                <button
+                  type="button"
+                  :disabled="rowIndex === rows.length - 1"
+                  @click="moveRowDown(rowIndex)"
+                >
                   ↓
                 </button>
-                <button type="button" @click="removeRow(rowIndex)">
+                <button
+                  type="button"
+                  @click="removeRow(rowIndex)"
+                >
                   Löschen
                 </button>
               </td>
             </tr>
 
             <tr>
-              <td :colspan="tableColspan" style="padding: 6px; border-bottom: 1px solid #eee; background: #fafafa;">
-                <button type="button" @click="insertRow(rowIndex + 1)">
+              <td
+                :colspan="tableColspan"
+                style="padding: 6px; border-bottom: 1px solid #eee; background: #fafafa;"
+              >
+                <button
+                  type="button"
+                  @click="insertRow(rowIndex + 1)"
+                >
                   + Zeile hier einfügen
                 </button>
               </td>

@@ -1,8 +1,8 @@
 import { z } from 'zod'
 import { createError, defineEventHandler, getValidatedRouterParams } from 'h3'
 import { useRuntimeConfig, useStorage } from 'nitropack/runtime'
-import { parse } from 'csv-parse/sync';
-import { marked } from 'marked';
+import { parse } from 'csv-parse/sync'
+import { marked } from 'marked'
 
 const paramsSchema = z.object({
   path: z.string().min(1),
@@ -34,7 +34,8 @@ export default defineEventHandler(async (event) => {
   if (fullPath.endsWith('.json') && typeof file === 'string') {
     try {
       return JSON.parse(file)
-    } catch (e) {
+    }
+    catch (e) {
       throw createError({
         statusCode: 500,
         statusMessage: 'Invalid JSON file',
@@ -49,7 +50,8 @@ export default defineEventHandler(async (event) => {
         skip_empty_lines: true,
         delimiter: ';',
       })
-    } catch (e) {
+    }
+    catch (e) {
       throw createError({
         statusCode: 500,
         statusMessage: 'Invalid CSV file',
@@ -61,7 +63,8 @@ export default defineEventHandler(async (event) => {
     try {
       const html = marked.parse(file)
       return html
-    } catch (e) {
+    }
+    catch (e) {
       throw createError({
         statusCode: 500,
         statusMessage: 'Invalid Markdown file',

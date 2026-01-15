@@ -22,7 +22,8 @@ function isSafeHref(href: string): boolean {
   try {
     const url = new URL(h)
     return ['http:', 'https:', 'mailto:', 'tel:'].includes(url.protocol)
-  } catch {
+  }
+  catch {
     return false
   }
 }
@@ -62,7 +63,10 @@ const renderedHtml = computed(() => {
 <template>
   <div style="width: 100%;">
     <div style="display: flex; gap: 8px; margin-bottom: 10px; align-items: center;">
-      <button type="button" @click="mode = mode === 'edit' ? 'preview' : 'edit'">
+      <button
+        type="button"
+        @click="mode = mode === 'edit' ? 'preview' : 'edit'"
+      >
         {{ mode === 'edit' ? 'Vorschau' : 'Bearbeiten' }}
       </button>
     </div>
