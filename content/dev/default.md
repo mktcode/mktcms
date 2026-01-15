@@ -1,3 +1,3 @@
 # Default
 
-This is default content
+This is default content.

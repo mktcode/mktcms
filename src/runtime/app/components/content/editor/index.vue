@@ -40,6 +40,11 @@ async function saveContent() {
         v-else-if="path.endsWith('.csv')"
         v-model:content="content"
       />
+      <textarea
+        v-else-if="path.endsWith('.txt')"
+        v-model="content"
+        style="width: 100%; height: 400px; font-family: monospace; resize: vertical;"
+      />
       <button
         style="margin-top: 10px;"
         @click="saveContent"
