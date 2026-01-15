@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.1.18
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.17...v0.1.18)
+
+### 🚀 Enhancements
+
+- Add default content files and support for text file editing in the content editor ([15f4a83](https://github.com/mktcode/mktcms/commit/15f4a83))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.17
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.16...v0.1.17)
