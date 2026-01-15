@@ -1,6 +1,25 @@
 # Changelog
 
 
+## v0.1.15
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.14...v0.1.15)
+
+### 🚀 Enhancements
+
+- Different editors for different filetypes ([09ce0a0](https://github.com/mktcode/mktcms/commit/09ce0a0))
+- Enhance CSV editor with row insertion and movement functionality ([e2158f4](https://github.com/mktcode/mktcms/commit/e2158f4))
+- Add markdown editor with preview functionality and improved styling ([fbcea52](https://github.com/mktcode/mktcms/commit/fbcea52))
+
+### 💅 Refactors
+
+- Linter ([57ff06b](https://github.com/mktcode/mktcms/commit/57ff06b))
+- Linter ([74d7dda](https://github.com/mktcode/mktcms/commit/74d7dda))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.14
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.13...v0.1.14)
