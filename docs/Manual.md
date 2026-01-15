@@ -76,3 +76,31 @@ Guidelines:
 - Keep JSON files small and focused (one concern per file).
 - Treat the JSON shape as a contract; version it deliberately if the frontend depends on it.
 - Prefer referencing assets (image filenames/paths) instead of embedding large blobs.
+
+## Rendering Content (API)
+
+The module sets up a content API that allows your frontend code to fetch content by file or directory path.
+
+```vue
+<script setup lang="ts">
+const homepageText = await useContent<string>('Text-Homepage.txt')
+const teamMembers = await useContent<{ name: string; role: string; photoUrl: string }[]>('Team.csv')
+const imageGallery = await useContent<string[]>('Gallery')
+</script>
+
+<template>
+  <div>
+    <h1>{{ homepageText }}</h1>
+    <ul>
+      <li v-for="member in teamMembers" :key="member.name">
+        <img :src="member.photoUrl" :alt="member.name" />
+        <h2>{{ member.name }}</h2>
+        <p>{{ member.role }}</p>
+      </li>
+    </ul>
+    <div class="gallery">
+      <img v-for="image in imageGallery" :key="image" :src="image" />
+    </div>
+  </div>
+</template>
+```
