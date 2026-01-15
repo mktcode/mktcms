@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.1.16
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.15...v0.1.16)
+
+### 🩹 Fixes
+
+- Fix file parsing on public single content endpoint ([e1f31ab](https://github.com/mktcode/mktcms/commit/e1f31ab))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.15
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.14...v0.1.15)
