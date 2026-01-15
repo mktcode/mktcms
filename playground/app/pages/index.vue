@@ -39,6 +39,8 @@ async function sendMessage() {
 <template>
   <h1>Welcome to MKT CMS</h1>
 
+  <img src="http://localhost:3000/api/content/images:default.jpg" alt="Default Image" style="max-width: 300px;">
+
   <div>
     <h2>Markdown Content</h2>
     <div v-html="md" />
