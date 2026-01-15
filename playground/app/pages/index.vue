@@ -2,6 +2,7 @@
 const { data: md } = await useFetch<string>('/api/content/default.md')
 const { data: csv } = await useFetch<{ Title: string, Description: string }[]>('/api/content/default.csv')
 const { data: txt } = await useFetch<string>('/api/content/default.txt')
+const { data: margherita } = await useFetch<{ name: string, description: string, price: number, ingredients: string[], vegetarian: boolean, image: string }>('/api/content/products:food:margherita.json')
 
 const isSending = ref(false)
 const sendingError = ref<string | null>(null)
@@ -38,6 +39,15 @@ async function sendMessage() {
 
 <template>
   <h1>Welcome to MKT CMS</h1>
+
+  <h2>Margherita</h2>
+  <div v-if="margherita">
+    <strong>{{ margherita.name }}</strong><br>
+    {{ margherita.description }}<br>
+    Price: {{ margherita.price }} EUR<br>
+    Ingredients: {{ margherita.ingredients.join(', ') }}<br>
+    Vegetarian: {{ margherita.vegetarian ? 'Yes' : 'No' }}<br>
+  </div>
 
   <img src="http://localhost:3000/api/content/images:default.jpg" alt="Default Image" style="max-width: 300px;">
 
