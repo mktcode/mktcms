@@ -27,6 +27,10 @@ export default defineNuxtModule({
       mailerTo: '',
     }))
 
+    _nuxt.options.runtimeConfig.public.mktcms = defu((_nuxt.options.runtimeConfig.public.mktcms, {
+      siteUrl: '',
+    }))
+
     // Add server utils (avoid scanning directories that may contain generated .d.ts files)
     addServerImports({
       name: 'sendMail',
