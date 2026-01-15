@@ -2,6 +2,8 @@
 import { useFetch, useRoute } from '#app'
 import { computed } from 'vue'
 import Breadcrumb from './breadcrumb.vue'
+import Files from './files.vue'
+import Dirs from './dirs.vue'
 
 const path = useRoute().params.path as string || ''
 const pathParts = path.split(':')
@@ -45,55 +47,17 @@ const dirs = computed(() => {
       Datei hochladen
     </NuxtLink>
 
-    <div
+    <Files
       v-if="files.length"
-      class="files"
-    >
-      <NuxtLink
-        v-for="file in files"
-        :key="file"
-        :to="`/admin/edit/${file.match(/\.md$|\.csv$|\.txt$|\.json$/i) ? 'text' : 'blob'}/${path ? path + ':' : ''}${file}`"
-      >
-        <img
-          v-if="file.match(/\.png$|\.jpg$|\.jpeg$|\.gif$|\.svg$|\.webp$/i)"
-          :src="`/api/content/${path ? path + ':' : ''}${file}`"
-          alt="Vorschaubild"
-          style="width: 64px; height: 64px; vertical-align: middle; margin-right: 4px; object-fit: cover;"
-        />
-        {{ file }}
-      </NuxtLink>
-    </div>
+      :path="path"
+      :files="files"
+    />
 
-    <div
+    <Dirs
       v-if="dirs.length"
-      class="dirs"
+      :path="path"
+      :dirs="dirs"
       style="margin-top: 8px;"
-    >
-      <NuxtLink
-        v-for="dir in dirs"
-        :key="dir"
-        :to="`/admin/${path ? path + ':' : ''}${dir}`"
-      >
-        <span>
-          {{ dir }}
-        </span>
-        <span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            style="width: 16px; height: 16px; vertical-align: middle;"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="m8.25 4.5 7.5 7.5-7.5 7.5"
-            />
-          </svg>
-        </span>
-      </NuxtLink>
-    </div>
+    />
   </div>
 </template>
