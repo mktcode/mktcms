@@ -55,11 +55,14 @@ body {
   .breadcrumbs {
     margin: 20px 0;
     color: #888;
-    font-size: 1.5rem;
+    font-size: 1rem;
 
     a {
       color: #888;
+      background-color: #eee;
       text-decoration: none;
+      border-radius: 4px;
+      padding: 2px 6px;
       &:hover {
         text-decoration: underline;
       }
