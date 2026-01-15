@@ -4,33 +4,7 @@ import { useRuntimeConfig, useStorage } from 'nitropack/runtime'
 import { parse } from 'csv-parse/sync'
 import { marked } from 'marked'
 
-const paramsSchema = z.object({
-  path: z.string().min(1),
-})
-
-export default defineEventHandler(async (event) => {
-  const { path } = await getValidatedRouterParams(event, params => paramsSchema.parse(params))
-
-  const { mktcms: { s3Prefix } } = useRuntimeConfig()
-  const fullPath = s3Prefix + ':' + path
-
-  const storage = useStorage('content')
-  const file = await storage.getItem(fullPath)
-
-  if (!file) {
-    const fallbackStorage = useStorage('fallback')
-    const fallbackFile = await fallbackStorage.getItem(fullPath)
-
-    if (fallbackFile) {
-      return fallbackFile
-    }
-
-    throw createError({
-      statusCode: 404,
-      statusMessage: 'File not found',
-    })
-  }
-
+function parsedFile(fullPath: string, file: string | number | boolean | object) {
   if (fullPath.endsWith('.json') && typeof file === 'string') {
     try {
       return JSON.parse(file)
@@ -73,4 +47,34 @@ export default defineEventHandler(async (event) => {
   }
 
   return file
+}
+
+const paramsSchema = z.object({
+  path: z.string().min(1),
+})
+
+export default defineEventHandler(async (event) => {
+  const { path } = await getValidatedRouterParams(event, params => paramsSchema.parse(params))
+
+  const { mktcms: { s3Prefix } } = useRuntimeConfig()
+  const fullPath = s3Prefix + ':' + path
+
+  const storage = useStorage('content')
+  const file = await storage.getItem(fullPath)
+
+  if (!file) {
+    const fallbackStorage = useStorage('fallback')
+    const fallbackFile = await fallbackStorage.getItem(fullPath)
+
+    if (fallbackFile) {
+      return parsedFile(fullPath, fallbackFile)
+    }
+
+    throw createError({
+      statusCode: 404,
+      statusMessage: 'File not found',
+    })
+  }
+
+  return parsedFile(fullPath, file)
 })
