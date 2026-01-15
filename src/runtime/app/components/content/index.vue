@@ -52,7 +52,7 @@ const dirs = computed(() => {
       <NuxtLink
         v-for="file in files"
         :key="file"
-        :to="`/admin/edit/${file.match(/\.md$|\.csv$|\.txt$/i) ? 'text' : 'blob'}/${path ? path + ':' : ''}${file}`"
+        :to="`/admin/edit/${file.match(/\.md$|\.csv$|\.txt$|\.json$/i) ? 'text' : 'blob'}/${path ? path + ':' : ''}${file}`"
       >
         <img
           v-if="file.match(/\.png$|\.jpg$|\.jpeg$|\.gif$|\.svg$|\.webp$/i)"

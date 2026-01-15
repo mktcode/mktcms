@@ -16,6 +16,8 @@ export default defineEventHandler(async (event) => {
   
   if (isImage) {
     event.node.res.setHeader('Content-Type', 'image/' + path.split('.').pop()?.toLowerCase())
+  } else {
+    event.node.res.setHeader('Content-Type', 'text/plain; charset=utf-8')
   }
 
   const storage = useStorage('content')

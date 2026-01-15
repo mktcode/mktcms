@@ -45,7 +45,7 @@ async function saveContent() {
         v-model:content="content"
       />
       <textarea
-        v-else-if="path.endsWith('.txt')"
+        v-if="path.match(/\.(txt|json)$/i)"
         v-model="content"
         style="width: 100%; height: 400px; font-family: monospace; resize: vertical;"
       />
