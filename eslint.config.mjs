@@ -30,4 +30,11 @@ export default createConfigForNuxt({
         '@typescript-eslint/no-explicit-any': 'off',
       },
     },
+    // allow v-html directive
+    {
+      files: ['**/*.vue'],
+      rules: {
+        'vue/no-v-html': 'off',
+      },
+    },
   )

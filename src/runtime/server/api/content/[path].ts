@@ -35,7 +35,7 @@ export default defineEventHandler(async (event) => {
     try {
       return JSON.parse(file)
     }
-    catch (e) {
+    catch {
       throw createError({
         statusCode: 500,
         statusMessage: 'Invalid JSON file',
@@ -51,7 +51,7 @@ export default defineEventHandler(async (event) => {
         delimiter: ';',
       })
     }
-    catch (e) {
+    catch {
       throw createError({
         statusCode: 500,
         statusMessage: 'Invalid CSV file',
@@ -64,7 +64,7 @@ export default defineEventHandler(async (event) => {
       const html = marked.parse(file)
       return html
     }
-    catch (e) {
+    catch {
       throw createError({
         statusCode: 500,
         statusMessage: 'Invalid Markdown file',
