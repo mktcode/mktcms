@@ -1,6 +1,7 @@
 <script setup lang="ts">
-const { data: home } = await useFetch<string>('/api/content/home.md')
-const { data: csv } = await useFetch<{ title: string, description: string, price: string, quantity: string }[]>('/api/content/test.csv')
+const { data: md } = await useFetch<string>('/api/content/default.md')
+const { data: csv } = await useFetch<{ Title: string, Description: string }[]>('/api/content/default.csv')
+const { data: txt } = await useFetch<string>('/api/content/default.txt')
 
 const isSending = ref(false)
 const sendingError = ref<string | null>(null)
@@ -39,22 +40,25 @@ async function sendMessage() {
   <h1>Welcome to MKT CMS</h1>
 
   <div>
-    <h2>Home.md Content</h2>
-    <div v-html="home" />
+    <h2>Markdown Content</h2>
+    <div v-html="md" />
   </div>
 
   <div>
-    <h2>Test.csv Content</h2>
+    <h2>CSV Content</h2>
     <div
       v-for="row in csv"
-      :key="row.title"
+      :key="row.Title"
       style="margin-bottom: 10px;"
     >
-      <strong>{{ row.title }}</strong><br>
-      Description: {{ row.description }}<br>
-      Price: {{ row.price }}<br>
-      Quantity: {{ row.quantity }}<br>
+      <strong>{{ row.Title }}</strong><br>
+      Description: {{ row.Description }}<br>
     </div>
+  </div>
+
+  <div>
+    <h2>Text Content</h2>
+    <pre>{{ txt }}</pre>
   </div>
 
   <input
