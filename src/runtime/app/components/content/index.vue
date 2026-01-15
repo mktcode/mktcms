@@ -36,26 +36,42 @@ const dirs = computed(() => {
 <template>
   <div>
     <div class="breadcrumbs">
-      <a href="/admin">Hauptverzeichnis</a>
+      <NuxtLink to="/admin">Hauptverzeichnis</NuxtLink>
       <span
         v-for="(part, index) in pathParts"
         :key="index"
       >
         /
-        <a :href="`/admin/${pathParts.slice(0, index + 1).join(':')}`">
+        <NuxtLink
+          v-if="index < pathParts.length - 1"
+          :to="`/admin/${pathParts.slice(0, index + 1).join(':')}`"
+        >
           {{ part }}
-        </a>
+        </NuxtLink>
+        <span
+          v-else
+          style="font-weight: bold;"
+        >
+          {{ part }}
+        </span>
       </span>
     </div>
+
+    <NuxtLink
+      to="/admin/new"
+      style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px;"
+    >
+      Datei hochladen
+    </NuxtLink>
 
     <div
       v-if="files.length"
       class="files"
     >
-      <a
+      <NuxtLink
         v-for="file in files"
         :key="file"
-        :href="`/admin/edit/${file.match(/\.md$|\.csv$|\.txt$/i) ? 'text' : 'blob'}/${path ? path + ':' : ''}${file}`"
+        :to="`/admin/edit/${file.match(/\.md$|\.csv$|\.txt$/i) ? 'text' : 'blob'}/${path ? path + ':' : ''}${file}`"
       >
         <img
           v-if="file.match(/\.png$|\.jpg$|\.jpeg$|\.gif$|\.svg$|\.webp$/i)"
@@ -64,7 +80,7 @@ const dirs = computed(() => {
           style="width: 64px; height: 64px; vertical-align: middle; margin-right: 4px; object-fit: cover;"
         />
         {{ file }}
-      </a>
+      </NuxtLink>
     </div>
 
     <div
@@ -72,10 +88,10 @@ const dirs = computed(() => {
       class="dirs"
       style="margin-top: 8px;"
     >
-      <a
+      <NuxtLink
         v-for="dir in dirs"
         :key="dir"
-        :href="`/admin/${path ? path + ':' : ''}${dir}`"
+        :to="`/admin/${path ? path + ':' : ''}${dir}`"
       >
         <span>
           {{ dir }}
@@ -96,7 +112,7 @@ const dirs = computed(() => {
             />
           </svg>
         </span>
-      </a>
+      </NuxtLink>
     </div>
   </div>
 </template>
