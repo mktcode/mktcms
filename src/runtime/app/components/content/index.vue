@@ -5,7 +5,7 @@ import { computed } from 'vue'
 const path = useRoute().params.path as string || ''
 const pathParts = path.split(':')
 
-const { data: keys } = await useFetch('/api/content/list', {
+const { data: keys } = await useFetch('/api/admin/content/list', {
   query: { path },
 })
 
