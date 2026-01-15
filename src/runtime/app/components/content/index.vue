@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useFetch, useRoute } from '#app'
 import { computed } from 'vue'
+import Breadcrumb from './breadcrumb.vue'
 
 const path = useRoute().params.path as string || ''
 const pathParts = path.split(':')
@@ -35,27 +36,7 @@ const dirs = computed(() => {
 
 <template>
   <div>
-    <div class="breadcrumbs">
-      <NuxtLink to="/admin">Hauptverzeichnis</NuxtLink>
-      <span
-        v-for="(part, index) in pathParts"
-        :key="index"
-      >
-        /
-        <NuxtLink
-          v-if="index < pathParts.length - 1"
-          :to="`/admin/${pathParts.slice(0, index + 1).join(':')}`"
-        >
-          {{ part }}
-        </NuxtLink>
-        <span
-          v-else
-          style="font-weight: bold;"
-        >
-          {{ part }}
-        </span>
-      </span>
-    </div>
+    <Breadcrumb :parts="pathParts" />
 
     <NuxtLink
       to="/admin/new"

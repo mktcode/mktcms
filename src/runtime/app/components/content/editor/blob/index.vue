@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { useFetch, useRoute } from '#app'
-import { ref, watch } from 'vue'
+import { useRoute } from '#app'
+import { ref } from 'vue'
 import Image from './image.vue'
+import Breadcrumb from '../../breadcrumb.vue'
 
 const path = useRoute().params.path as string || ''
 const pathParts = path.split(':')
@@ -23,18 +24,7 @@ async function saveContent() {
 
 <template>
   <div>
-    <div class="breadcrumbs">
-      <a href="/admin">Hauptverzeichnis</a>
-      <span
-        v-for="(part, index) in pathParts"
-        :key="index"
-      >
-        /
-        <a :href="`/admin/${pathParts.slice(0, index + 1).join(':')}`">
-          {{ part }}
-        </a>
-      </span>
-    </div>
+    <Breadcrumb :parts="pathParts" />
 
     <div>
       <Image
