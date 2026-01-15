@@ -56,7 +56,15 @@ const dirs = computed(() => {
         v-for="file in files"
         :key="file"
         :href="`/admin/edit/${file.match(/\.md$|\.csv$|\.txt$/i) ? 'text' : 'blob'}/${path ? path + ':' : ''}${file}`"
-      >{{ file }}</a>
+      >
+        <img
+          v-if="file.match(/\.png$|\.jpg$|\.jpeg$|\.gif$|\.svg$|\.webp$/i)"
+          :src="`/api/content/${path ? path + ':' : ''}${file}`"
+          alt="Vorschaubild"
+          style="width: 64px; height: 64px; vertical-align: middle; margin-right: 4px; object-fit: cover;"
+        />
+        {{ file }}
+      </a>
     </div>
 
     <div
