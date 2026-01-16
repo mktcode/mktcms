@@ -26,19 +26,20 @@ npx nuxi module add mktcms
 ```
 
 ```bash
-MKTCMS_ADMIN_AUTH_KEY="your-admin-auth-key"
-MKTCMS_S3_ACCESS_KEY_ID=your-s3-access-key-id
-MKTCMS_S3_SECRET_ACCESS_KEY=your-s3-secret-access-key
-MKTCMS_S3_BUCKET=your-s3-bucket-name
-MKTCMS_S3_REGION=your-s3-bucket-region
-MKTCMS_S3_PREFIX="your-project"
-MKTCMS_SMTP_HOST="your-smtp-host"
-MKTCMS_SMTP_PORT=465
-MKTCMS_SMTP_SECURE=true
-MKTCMS_SMTP_USER="your-smtp-user"
-MKTCMS_SMTP_PASS="your-smtp-pass"
-MKTCMS_MAILER_FROM="your-mailer-from-address"
-MKTCMS_MAILER_TO="your-mailer-to-address"
+NUXT_PUBLIC_MKTCMS_SITE_URL="http://localhost:3000"
+NUXT_MKTCMS_ADMIN_AUTH_KEY="your-admin-auth-key"
+NUXT_MKTCMS_S3_ACCESS_KEY_ID=your-s3-access-key-id
+NUXT_MKTCMS_S3_SECRET_ACCESS_KEY=your-s3-secret-access-key
+NUXT_MKTCMS_S3_BUCKET=your-s3-bucket-name
+NUXT_MKTCMS_S3_REGION=your-s3-bucket-region
+NUXT_MKTCMS_S3_PREFIX="your-project"
+NUXT_MKTCMS_SMTP_HOST="your-smtp-host"
+NUXT_MKTCMS_SMTP_PORT=465
+NUXT_MKTCMS_SMTP_SECURE=true
+NUXT_MKTCMS_SMTP_USER="your-smtp-user"
+NUXT_MKTCMS_SMTP_PASS="your-smtp-pass"
+NUXT_MKTCMS_MAILER_FROM="your-mailer-from-address"
+NUXT_MKTCMS_MAILER_TO="your-mailer-to-address"
 ```
 
 Add local development storage folder in `.gitignore`:
