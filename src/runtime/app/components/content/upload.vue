@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, useFetch, useRoute } from '#imports';
+import { computed, onMounted, ref, useFetch, useRoute } from '#imports'
 import useAdminUpload from '../../composables/useAdminUpload'
 
 const { data: keys } = await useFetch('/api/admin/content/list')
@@ -41,8 +41,13 @@ onMounted(() => {
         <h3 style="margin-bottom: 4px;">
           Ordner
         </h3>
-        <select v-model="dir" @change="path = dir">
-          <option value="">Hauptordner</option>
+        <select
+          v-model="dir"
+          @change="path = dir"
+        >
+          <option value="">
+            Hauptordner
+          </option>
           <option
             v-for="d in dirs"
             :key="d"
@@ -58,13 +63,13 @@ onMounted(() => {
         </h3>
         <input
           v-model="newSubdir"
-          @change="path = dir ? dir.replace(/\//g, ':') + ':' + newSubdir : newSubdir"
           type="text"
           placeholder="Unterordner (z.B. 'Produkte')"
+          @change="path = dir ? dir.replace(/\//g, ':') + ':' + newSubdir : newSubdir"
         >
       </div>
     </div>
-    
+
     <button
       :disabled="isUploading"
       @click="fileInputImg?.click()"

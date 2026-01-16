@@ -15,7 +15,7 @@ async function saveContent() {
   savingSuccessful.value = false
 
   // simulate saving delay
-  await new Promise((resolve) => setTimeout(resolve, 1000))
+  await new Promise(resolve => setTimeout(resolve, 1000))
 
   isSaving.value = false
   savingSuccessful.value = true
@@ -38,7 +38,10 @@ async function saveContent() {
         <span v-if="isSaving">Speichern...</span>
         <span v-else>Speichern</span>
       </button>
-      <span v-if="savingSuccessful" style="color: green; margin-left: 10px;">✔️ Gespeichert</span>
+      <span
+        v-if="savingSuccessful"
+        style="color: green; margin-left: 10px;"
+      >✔️ Gespeichert</span>
     </div>
   </div>
 </template>

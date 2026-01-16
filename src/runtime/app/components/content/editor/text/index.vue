@@ -56,7 +56,10 @@ async function saveContent() {
         <span v-if="isSaving">Speichern...</span>
         <span v-else>Speichern</span>
       </button>
-      <span v-if="savingSuccessful" style="color: green; margin-left: 10px;">✔️ Gespeichert</span>
+      <span
+        v-if="savingSuccessful"
+        style="color: green; margin-left: 10px;"
+      >✔️ Gespeichert</span>
     </div>
   </div>
 </template>

@@ -49,7 +49,11 @@ async function sendMessage() {
     Vegetarian: {{ margherita.vegetarian ? 'Yes' : 'No' }}<br>
   </div>
 
-  <img src="http://localhost:3000/api/content/images:default.jpg" alt="Default Image" style="max-width: 300px;">
+  <img
+    src="http://localhost:3000/api/content/images:default.jpg"
+    alt="Default Image"
+    style="max-width: 300px;"
+  >
 
   <div>
     <h2>Markdown Content</h2>

@@ -60,7 +60,7 @@ export default defineEventHandler(async (event) => {
   const fullPath = s3Prefix + ':' + path
 
   const isImage = path.match(/\.(png|jpg|jpeg|gif|svg|webp)$/i)
-  
+
   if (isImage) {
     event.node.res.setHeader('Content-Type', 'image/' + path.split('.').pop()?.toLowerCase())
   }

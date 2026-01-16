@@ -4,6 +4,9 @@ const path = defineModel<string>('path')
 
 <template>
   <div class="image-editor">
-    <img :src="`/api/admin/content/${path}`" alt="Image Preview" />
+    <img
+      :src="`/api/admin/content/${path}`"
+      alt="Image Preview"
+    >
   </div>
 </template>
