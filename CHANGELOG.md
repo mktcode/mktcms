@@ -1,6 +1,50 @@
 # Changelog
 
 
+## v0.1.19
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.18...v0.1.19)
+
+### 🚀 Enhancements
+
+- Enhance content editor with saving state and success feedback ([b1b3d17](https://github.com/mktcode/mktcms/commit/b1b3d17))
+- Add default image for content editor ([04b2ec5](https://github.com/mktcode/mktcms/commit/04b2ec5))
+- Implement text and blob editors with CSV, TXT, Markdown and image support ([5caa2c4](https://github.com/mktcode/mktcms/commit/5caa2c4))
+- Add image support and enhance image handling in API ([0cecb97](https://github.com/mktcode/mktcms/commit/0cecb97))
+- Add image preview for supported file types in content list ([3600533](https://github.com/mktcode/mktcms/commit/3600533))
+- Add siteUrl to runtime config and update header component to display it ([94cb482](https://github.com/mktcode/mktcms/commit/94cb482))
+- Replace anchor tags with NuxtLink for improved routing in content index ([f3f8a23](https://github.com/mktcode/mktcms/commit/f3f8a23))
+- Add breadcrumb component for improved navigation ([45833bf](https://github.com/mktcode/mktcms/commit/45833bf))
+- Json support ([e6fa0b5](https://github.com/mktcode/mktcms/commit/e6fa0b5))
+- Implement Dirs and Files components for content management ([69018f3](https://github.com/mktcode/mktcms/commit/69018f3))
+- Enhance file management UI with button icons and improved layout ([9ff868f](https://github.com/mktcode/mktcms/commit/9ff868f))
+- Add Developer Manual for CMS usage guidelines ([2fd3caf](https://github.com/mktcode/mktcms/commit/2fd3caf))
+- Add content rendering guidelines and example API usage to Developer Manual ([fffc899](https://github.com/mktcode/mktcms/commit/fffc899))
+- Add copy link functionality for image files in file list ([f06de7e](https://github.com/mktcode/mktcms/commit/f06de7e))
+- Enhance button styles and layout in admin and header components ([b42f636](https://github.com/mktcode/mktcms/commit/b42f636))
+- Enhance file upload functionality with separate image and PDF inputs ([458171f](https://github.com/mktcode/mktcms/commit/458171f))
+- Enhance upload component with directory selection and improved layout ([c08e50c](https://github.com/mktcode/mktcms/commit/c08e50c))
+
+### 🩹 Fixes
+
+- Adjust breadcrumb styling for improved readability ([17f9452](https://github.com/mktcode/mktcms/commit/17f9452))
+- Update environment variable prefixes for consistency ([1700f26](https://github.com/mktcode/mktcms/commit/1700f26))
+
+### 💅 Refactors
+
+- Simplify header component structure and improve link styling ([2acec22](https://github.com/mktcode/mktcms/commit/2acec22))
+- Linter ([761467d](https://github.com/mktcode/mktcms/commit/761467d))
+
+### 📖 Documentation
+
+- Updated playground ([3ad808e](https://github.com/mktcode/mktcms/commit/3ad808e))
+- Add Margherita details section to the homepage ([dcb9582](https://github.com/mktcode/mktcms/commit/dcb9582))
+- Enhance module description for clarity and detail ([13f6797](https://github.com/mktcode/mktcms/commit/13f6797))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.18
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.17...v0.1.18)
