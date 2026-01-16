@@ -4,6 +4,8 @@ export default function useAdminUpload() {
   const uploadError = ref<string | null>(null)
   const files = ref<string[]>([])
   const fileInput = ref<HTMLInputElement | null>(null)
+  const fileInputImg = ref<HTMLInputElement | null>(null)
+  const fileInputPdf = ref<HTMLInputElement | null>(null)
   const isUploading = ref(false)
   const path = ref<string | null>(null)
   const sanePath = computed(() => {
@@ -67,6 +69,8 @@ export default function useAdminUpload() {
     path,
     files,
     fileInput,
+    fileInputImg,
+    fileInputPdf,
     uploadFiles,
     deleteFile,
   }
