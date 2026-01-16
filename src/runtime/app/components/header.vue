@@ -1,35 +1,43 @@
 <script setup lang="ts">
-import { useRuntimeConfig } from '#imports';
+import { useRoute, useRuntimeConfig } from '#imports';
 
 const { public: { mktcms: { siteUrl } } } = useRuntimeConfig()
+
+const route = useRoute()
 </script>
 
 <template>
-  <div style="display: flex; justify-content: space-between; align-items: center;">
-    <h1 style="margin: 0;">
-      <NuxtLink
-        to="/admin"
-        style="text-decoration: none; color: inherit;"
-      >
-        Website Verwaltung
-      </NuxtLink>
-    </h1>
-    <div>
-      <NuxtLink
-        :to="siteUrl"
-        external
-        target="_blank"
-        style="background-color: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-right: 10px;"
-      >
-        Website ansehen
-      </NuxtLink>
-      <NuxtLink
-        external
-        to="/api/admin/logout"
-        style="background-color: #ccc; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;"
-      >
-        Abmelden
-      </NuxtLink>
-    </div>
+  <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
+    <NuxtLink
+      v-if="route.fullPath != '/admin'"
+      to="/admin"
+      class="button soft"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="button-icon">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+      </svg>
+    </NuxtLink>
+    <NuxtLink
+      to="/admin/new"
+      class="button"
+      style="margin-left: auto;"
+    >
+      Datei hochladen
+    </NuxtLink>
+    <NuxtLink
+      :to="siteUrl"
+      external
+      target="_blank"
+      class="button soft"
+    >
+      zur Website
+    </NuxtLink>
+    <NuxtLink
+      external
+      to="/api/admin/logout"
+      class="button soft"
+    >
+      Abmelden
+    </NuxtLink>
   </div>
 </template>

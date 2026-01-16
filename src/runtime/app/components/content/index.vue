@@ -40,13 +40,6 @@ const dirs = computed(() => {
   <div>
     <Breadcrumb :parts="pathParts" />
 
-    <NuxtLink
-      to="/admin/new"
-      style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px;"
-    >
-      Datei hochladen
-    </NuxtLink>
-
     <Files
       v-if="files.length"
       :path="path"

@@ -13,6 +13,9 @@ body {
   font-family: Arial, sans-serif;
 }
 #mktcms-admin {
+  --mktcms-primary-color: mediumseagreen;
+  --mktcms-primary-color-hover: #45a049;
+
   padding: 20px;
   background-color: #f9f9f9;
   max-width: 800px;
@@ -22,8 +25,11 @@ body {
     color: #333;
   }
 
-  button {
-    background-color: mediumseagreen;
+  button,
+  .button {
+    text-decoration: none;
+    text-align: center;
+    background-color: var(--mktcms-primary-color);
     color: white;
     border: none;
     padding: 10px 20px;
@@ -32,7 +38,15 @@ body {
     border-radius: 5px;
     transition: background-color 0.3s;
     &:hover {
-      background-color: #45a049;
+      background-color: var(--mktcms-primary-color-hover);
+    }
+
+    &.soft {
+      background-color: #eee;
+      color: #666;
+      &:hover {
+        background-color: #ddd;
+      }
     }
   }
 
