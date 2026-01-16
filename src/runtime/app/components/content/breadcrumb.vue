@@ -6,7 +6,7 @@ defineProps<{
 
 <template>
   <div class="breadcrumbs">
-    <NuxtLink to="/admin">Hauptverzeichnis</NuxtLink>
+    <NuxtLink to="/admin">Hauptordner</NuxtLink>
     <span
       v-for="(part, index) in parts"
       :key="index"

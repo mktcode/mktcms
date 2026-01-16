@@ -56,10 +56,13 @@ body {
     vertical-align: middle;
   }
 
+  select,
   input[type="text"],
   input[type="password"],
   input[type="email"],
   textarea {
+    width: 100%;
+    background-color: #fff;
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
