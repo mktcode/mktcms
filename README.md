@@ -1,6 +1,8 @@
 # Simple CMS module for Nuxt (pre-alpha)
 
-This module is my personal, minimalist, opinionated, independent alternative to @nuxt/content and to a large portion of the WordPress projects I’ve worked on.
+This module is my personal, minimalist, opinionated, independent alternative to @nuxt/content and to a large portion of the WordPress projects I’ve worked on. I want to build projects with Nuxt and customers need the simplest possible admin interface to manage content without getting overwhelmed by buttons and features they don’t need.
+
+I don't want to decide on a database schema or limit myself to json. All editable content is stored as a file of supported format (json, markdown, csv, jpg, webp, pdf, etc.) in an S3 bucket. The admin interface is a simple file explorer/editor. The module provides a `useContent` composable to read content files and a `sendMail` utility to send emails via SMTP.
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
