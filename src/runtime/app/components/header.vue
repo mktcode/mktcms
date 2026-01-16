@@ -6,25 +6,30 @@ const { public: { mktcms: { siteUrl } } } = useRuntimeConfig()
 
 <template>
   <div style="display: flex; justify-content: space-between; align-items: center;">
+    <h1 style="margin: 0;">
+      <NuxtLink
+        to="/admin"
+        style="text-decoration: none; color: inherit;"
+      >
+        Website Verwaltung
+      </NuxtLink>
+    </h1>
     <div>
-      <h1 style="margin-bottom: 0;">
-        <NuxtLink
-          to="/admin"
-          style="text-decoration: none; color: inherit;"
-        >
-          Website Verwaltung
-        </NuxtLink>
-      </h1>
-      <a :href="siteUrl" target="_blank" style="font-size: 0.9em; color: #666;">
+      <NuxtLink
+        :to="siteUrl"
+        external
+        target="_blank"
+        style="background-color: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-right: 10px;"
+      >
         Website ansehen
-      </a>
+      </NuxtLink>
+      <NuxtLink
+        external
+        to="/api/admin/logout"
+        style="background-color: #ccc; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;"
+      >
+        Abmelden
+      </NuxtLink>
     </div>
-    <NuxtLink
-      external
-      to="/api/admin/logout"
-      style="background-color: #ccc; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;"
-    >
-      Abmelden
-    </NuxtLink>
   </div>
 </template>
