@@ -61,12 +61,17 @@ export default defineEventHandler(async (event) => {
 
   const isImage = path.match(/\.(png|jpg|jpeg|gif|svg|webp)$/i)
   const isPdf = path.endsWith('.pdf')
+  const isJson = path.endsWith('.json')
+  const isCSV = path.endsWith('.csv')
 
   if (isImage) {
     event.node.res.setHeader('Content-Type', 'image/' + path.split('.').pop()?.toLowerCase())
   }
   else if (isPdf) {
     event.node.res.setHeader('Content-Type', 'application/pdf')
+  }
+  else if (isJson || isCSV) {
+    event.node.res.setHeader('Content-Type', 'application/json; charset=utf-8')
   }
   else {
     event.node.res.setHeader('Content-Type', 'text/plain; charset=utf-8')
