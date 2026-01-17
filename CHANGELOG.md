@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.1.21
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.20...v0.1.21)
+
+### 🩹 Fixes
+
+- Add content type handling for JSON and CSV files ([5fe93ad](https://github.com/mktcode/mktcms/commit/5fe93ad))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.20
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.19...v0.1.20)
