@@ -5,5 +5,5 @@
 </template>
 
 <style>
-@import '../admin.css';
+@import '../styles/admin.min.css';
 </style>
