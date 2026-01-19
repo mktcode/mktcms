@@ -205,21 +205,6 @@ function saveEdit() {
   row[cell.colIndex] = editBuffer.value
   cancelEdit()
 }
-
-function onModalKeydown(e: KeyboardEvent) {
-  if (e.key === 'Escape') {
-    e.preventDefault()
-    cancelEdit()
-  }
-  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-    e.preventDefault()
-    saveEdit()
-  }
-}
-
-function isEditing(rowIndex: number, colIndex: number) {
-  return editingCell.value?.rowIndex === rowIndex && editingCell.value?.colIndex === colIndex
-}
 </script>
 
 <template>
@@ -341,7 +326,6 @@ function isEditing(rowIndex: number, colIndex: number) {
         class="fixed inset-0 bg-black/45 flex items-center justify-center p-4 z-9999"
         role="presentation"
         @click.self="cancelEdit()"
-        @keydown.capture="onModalKeydown"
       >
         <div
           class="w-full max-w-180 bg-white rounded-[10px] border border-black/10 shadow-[0_10px_40px_rgba(0,0,0,0.28)] p-3.5 flex flex-col gap-2.5"
@@ -378,10 +362,6 @@ function isEditing(rowIndex: number, colIndex: number) {
             >
               Abbrechen
             </button>
-          </div>
-
-          <div class="opacity-75 text-xs">
-            Tipp: <span class="inline-block border border-gray-300 border-b-gray-400 px-1.5 rounded-md bg-gray-50 font-mono text-[11px] leading-4.5">Esc</span> zum Schließen, <span class="inline-block border border-gray-300 border-b-gray-400 px-1.5 rounded-md bg-gray-50 font-mono text-[11px] leading-4.5">Strg</span>+<span class="inline-block border border-gray-300 border-b-gray-400 px-1.5 rounded-md bg-gray-50 font-mono text-[11px] leading-4.5">Enter</span> zum Speichern.
           </div>
         </div>
       </div>
