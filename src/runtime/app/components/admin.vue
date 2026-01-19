@@ -41,6 +41,10 @@ body {
       background-color: var(--mktcms-primary-color-hover);
     }
 
+    &:disabled {
+      opacity: 0.3;
+    }
+
     &.soft {
       background-color: #eee;
       color: #666;
