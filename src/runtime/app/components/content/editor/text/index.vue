@@ -50,7 +50,8 @@ async function saveContent() {
         style="width: 100%; height: 400px; font-family: monospace; resize: vertical;"
       />
       <button
-        style="margin-top: 10px;"
+        type="button"
+        class="button mt-2.5"
         @click="saveContent"
       >
         <span v-if="isSaving">Speichern...</span>
@@ -58,7 +59,7 @@ async function saveContent() {
       </button>
       <span
         v-if="savingSuccessful"
-        style="color: green; margin-left: 10px;"
+        class="ml-2.5 text-emerald-700"
       >✔️ Gespeichert</span>
     </div>
   </div>

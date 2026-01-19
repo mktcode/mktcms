@@ -4,22 +4,13 @@ body {
   @apply m-0 font-sans;
 }
 #mktcms-admin {
-  --mktcms-primary-color: mediumseagreen;
-  --mktcms-primary-color-hover: #45a049;
+  --mktcms-primary-color: #047857;
+  --mktcms-primary-color-hover: #065f46;
 
   @apply p-5 bg-gray-50 max-w-200 mx-auto;
 
   h1 {
     @apply text-gray-800;
-  }
-
-  button,
-  .button {
-    @apply no-underline text-center bg-(--mktcms-primary-color) text-white border-0 py-2.5 px-5 cursor-pointer text-base rounded transition-colors duration-300 hover:bg-(--mktcms-primary-color-hover) disabled:opacity-30;
-
-    &.soft {
-      @apply bg-gray-200 text-gray-600 hover:bg-gray-300;
-    }
   }
 
   .button-icon {
@@ -59,4 +50,35 @@ body {
   .dirs a {
     @apply text-white bg-gray-600 flex justify-between;
   }
+}
+
+.button {
+  @apply inline-flex items-center justify-center gap-2 no-underline text-center font-medium cursor-pointer select-none rounded-md border px-4 py-2 text-base transition-colors duration-200;
+  @apply focus:outline-none focus:ring-2 focus:ring-emerald-500/30 disabled:opacity-30 disabled:cursor-not-allowed;
+  @apply bg-emerald-700 border-emerald-700 text-white hover:bg-emerald-800 hover:border-emerald-800;
+}
+
+.button.soft {
+  @apply bg-gray-200 border-gray-200 text-gray-700 hover:bg-gray-300 hover:border-gray-300;
+}
+
+.button.secondary {
+  @apply bg-white border-gray-300 text-gray-900 hover:bg-gray-100;
+}
+
+.button.small {
+  @apply px-2.5 py-1.5 text-xs;
+}
+
+.icon-button {
+  @apply inline-flex items-center justify-center w-8.5 h-8.5 p-0 rounded-md border border-gray-300 bg-white text-emerald-700 cursor-pointer;
+  @apply hover:bg-gray-100 disabled:opacity-45 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-emerald-500/20;
+}
+
+.icon-button.danger {
+  @apply text-red-800 border-red-200 hover:bg-red-50 focus:ring-red-500/20;
+}
+
+.button-icon {
+  @apply w-5 h-5 align-middle;
 }

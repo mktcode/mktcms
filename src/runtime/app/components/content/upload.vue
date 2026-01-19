@@ -71,18 +71,24 @@ onMounted(() => {
     </div>
 
     <button
+      type="button"
+      class="button"
       :disabled="isUploading"
       @click="fileInputImg?.click()"
     >
       Bild hochladen
     </button>
     <button
+      type="button"
+      class="button"
       :disabled="isUploading"
       @click="fileInputPdf?.click()"
     >
       PDF hochladen
     </button>
     <button
+      type="button"
+      class="button"
       :disabled="isUploading"
       @click="fileInput?.click()"
     >

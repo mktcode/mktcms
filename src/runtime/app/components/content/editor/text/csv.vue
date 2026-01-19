@@ -222,7 +222,7 @@ function saveEdit() {
       <div class="p-1.5 bg-gray-50 border-b border-gray-200">
         <button
           type="button"
-          class="appearance-none border rounded-md px-3 py-2 font-[inherit] text-[13px] leading-[1.1] cursor-pointer select-none bg-emerald-700 border-emerald-700 text-white hover:bg-emerald-800 hover:border-emerald-800 disabled:opacity-55 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+          class="button"
           :disabled="headers.length === 0"
           @click="insertRow(0)"
         >
@@ -257,7 +257,7 @@ function saveEdit() {
                     </div>
                     <button
                       type="button"
-                      class="appearance-none border rounded-md px-2.5 py-1.5 font-[inherit] text-xs leading-[1.1] cursor-pointer select-none bg-emerald-700 border-emerald-700 text-white hover:bg-emerald-800 hover:border-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+                      class="button small"
                       @click="startEdit(rowIndex, colIndex)"
                     >
                       Bearbeiten
@@ -270,36 +270,36 @@ function saveEdit() {
             <div class="flex-none flex items-start gap-1 p-1.5 border-l border-gray-200 bg-white max-[640px]:px-1 max-[640px]:gap-0.5">
               <button
                 type="button"
-                class="inline-flex items-center justify-center w-8.5 h-8.5 rounded-md p-0 border border-gray-300 bg-white text-emerald-700 cursor-pointer hover:bg-gray-100 disabled:opacity-45 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-emerald-500/20 max-[640px]:w-9 max-[640px]:h-9"
+                class="icon-button max-[640px]:w-9 max-[640px]:h-9"
                 :disabled="rowIndex === 0"
                 aria-label="Zeile nach oben"
                 title="Nach oben"
                 @click="moveRowUp(rowIndex)"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4.5 h-4.5 block">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="button-icon">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
                 </svg>
               </button>
               <button
                 type="button"
-                class="inline-flex items-center justify-center w-8.5 h-8.5 rounded-md p-0 border border-gray-300 bg-white text-emerald-700 cursor-pointer hover:bg-gray-100 disabled:opacity-45 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-emerald-500/20 max-[640px]:w-9 max-[640px]:h-9"
+                class="icon-button max-[640px]:w-9 max-[640px]:h-9"
                 :disabled="rowIndex === rows.length - 1"
                 aria-label="Zeile nach unten"
                 title="Nach unten"
                 @click="moveRowDown(rowIndex)"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4.5 h-4.5 block">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="button-icon">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
                 </svg>
               </button>
               <button
                 type="button"
-                class="inline-flex items-center justify-center w-8.5 h-8.5 rounded-md p-0 border border-red-200 bg-white text-red-800 cursor-pointer hover:bg-red-50 disabled:opacity-45 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-red-500/20 max-[640px]:w-9 max-[640px]:h-9"
+                class="icon-button danger max-[640px]:w-9 max-[640px]:h-9"
                 aria-label="Zeile löschen"
                 title="Löschen"
                 @click="removeRow(rowIndex)"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4.5 h-4.5 block">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="button-icon">
                   <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                 </svg>
               </button>
@@ -309,7 +309,7 @@ function saveEdit() {
           <div class="p-1.5 bg-gray-50 border-b border-gray-200">
             <button
               type="button"
-              class="appearance-none border rounded-md px-3 py-2 font-[inherit] text-[13px] leading-[1.1] cursor-pointer select-none bg-emerald-700 border-emerald-700 text-white hover:bg-emerald-800 hover:border-emerald-800 disabled:opacity-55 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+              class="button"
               :disabled="headers.length === 0"
               @click="insertRow(rowIndex + 1)"
             >
@@ -350,14 +350,14 @@ function saveEdit() {
           <div class="flex justify-end gap-2">
             <button
               type="button"
-              class="appearance-none border rounded-md px-3 py-2 font-[inherit] text-[13px] leading-[1.1] cursor-pointer select-none bg-emerald-700 border-emerald-700 text-white hover:bg-emerald-800 hover:border-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+              class="button"
               @click="saveEdit()"
             >
               Speichern
             </button>
             <button
               type="button"
-              class="appearance-none border rounded-md px-3 py-2 font-[inherit] text-[13px] leading-[1.1] cursor-pointer select-none bg-white border-gray-300 text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-400/30"
+              class="button secondary"
               @click="cancelEdit()"
             >
               Abbrechen

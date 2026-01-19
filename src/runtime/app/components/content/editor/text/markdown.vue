@@ -65,6 +65,7 @@ const renderedHtml = computed(() => {
     <div style="display: flex; gap: 8px; margin-bottom: 10px; align-items: center;">
       <button
         type="button"
+        class="button"
         @click="mode = mode === 'edit' ? 'preview' : 'edit'"
       >
         {{ mode === 'edit' ? 'Vorschau' : 'Bearbeiten' }}
