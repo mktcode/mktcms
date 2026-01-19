@@ -24,8 +24,6 @@ async function saveContent() {
 
 <template>
   <div>
-    <Breadcrumb :parts="pathParts" />
-
     <div>
       <Image
         v-if="path.match(/\.(png|jpg|jpeg|gif|svg|webp)$/i)"

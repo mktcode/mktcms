@@ -3,10 +3,8 @@ import { useFetch, useRoute } from '#app'
 import { ref, watch } from 'vue'
 import Csv from './csv.vue'
 import Markdown from './markdown.vue'
-import Breadcrumb from '../../breadcrumb.vue'
 
 const path = useRoute().params.path as string || ''
-const pathParts = path.split(':')
 
 const { data: content } = await useFetch<string>(`/api/admin/content/${path}`)
 
@@ -33,8 +31,6 @@ async function saveContent() {
 
 <template>
   <div>
-    <Breadcrumb :parts="pathParts" />
-
     <div v-if="content !== undefined">
       <Markdown
         v-if="path.endsWith('.md')"
