@@ -31,14 +31,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <div style="display: flex; flex-direction: column; gap: 8px; margin: 16px 0;">
-    <h1 style="margin-bottom: 0;">
+  <div class="flex flex-col gap-2 my-4">
+    <h1 class="my-6">
       Datei hochladen
     </h1>
 
-    <div style="display: flex; gap: 16px; align-items: center;">
-      <div style="flex-grow: 1;">
-        <h3 style="margin-bottom: 4px;">
+    <div class="flex gap-4 items-center">
+      <div class="flex-1">
+        <h3 class="mb-1">
           Ordner
         </h3>
         <select
@@ -57,8 +57,8 @@ onMounted(() => {
           </option>
         </select>
       </div>
-      <div style="flex-grow: 1;">
-        <h3 style="margin-bottom: 4px;">
+      <div class="flex-1">
+        <h3 class="mb-1">
           Neuen Unterordner erstellen
         </h3>
         <input
@@ -96,21 +96,21 @@ onMounted(() => {
     </button>
     <input
       ref="fileInput"
-      style="display: none"
+      class="hidden"
       type="file"
       accept=".pdf,.jpg,.jpeg,.png,.gif,.svg,.webp,.md,.docx,.txt"
       @change="async (e) => { await uploadFiles(e); }"
     >
     <input
       ref="fileInputImg"
-      style="display: none"
+      class="hidden"
       type="file"
       accept=".jpg,.jpeg,.png,.gif,.svg,.webp"
       @change="async (e) => { await uploadFiles(e); }"
     >
     <input
       ref="fileInputPdf"
-      style="display: none"
+      class="hidden"
       type="file"
       accept=".pdf"
       @change="async (e) => { await uploadFiles(e); }"

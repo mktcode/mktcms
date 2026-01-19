@@ -6,6 +6,33 @@ import { navigateTo, useRuntimeConfig } from '#app'
 const { public: { mktcms: { siteUrl } } } = useRuntimeConfig()
 
 const adminAuthKey = ref('')
+const adminAuthKeyFileInput = ref<HTMLInputElement | null>(null)
+
+function openAdminAuthKeyFilePicker() {
+  adminAuthKeyFileInput.value?.click()
+}
+
+async function onAdminAuthKeyFileSelected(event: Event) {
+  const input = event.target as HTMLInputElement | null
+  const file = input?.files?.[0]
+
+  if (!file) {
+    return
+  }
+
+  const isTxt = file.name.toLowerCase().endsWith('.txt') || file.type === 'text/plain'
+  if (!isTxt) {
+    if (input)
+      input.value = ''
+    return
+  }
+
+  const content = await file.text()
+  adminAuthKey.value = content.replace(/^\uFEFF/, '').trim()
+
+  if (input)
+    input.value = ''
+}
 
 async function login() {
   await $fetch('/api/admin/login', {
@@ -30,18 +57,35 @@ async function login() {
       </h2>
       <div class="mt-6">
         <label
-          for="authKey"
+          for="adminAuthKey"
           class="text-gray-700"
         >
           Schlüssel:
         </label>
-        <input
-          id="adminAuthKey"
-          v-model="adminAuthKey"
-          type="password"
-          class="border border-gray-300 rounded-md p-2 mt-2"
-          @keyup.enter="login"
-        >
+        <div class="flex gap-2 mt-2">
+          <input
+            id="adminAuthKey"
+            v-model="adminAuthKey"
+            type="password"
+            class="border border-gray-300 rounded-md p-2 flex-1"
+            autocomplete="one-time-code"
+            @keyup.enter="login"
+          >
+          <input
+            ref="adminAuthKeyFileInput"
+            type="file"
+            accept=".txt,text/plain"
+            class="hidden"
+            @change="onAdminAuthKeyFileSelected"
+          >
+          <button
+            type="button"
+            class="button secondary"
+            @click="openAdminAuthKeyFilePicker"
+          >
+            Datei wählen
+          </button>
+        </div>
         <button
           type="button"
           class="button w-full justify-center mt-2.5"

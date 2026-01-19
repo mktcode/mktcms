@@ -8,7 +8,7 @@ const { public: { mktcms: { siteUrl } } } = useRuntimeConfig()
   <div class="flex items-start justify-between gap-2">
     <div class="flex flex-col gap-1 items-start">
       <NuxtLink to="/admin" class="font-bold text-xl">
-        rittergut-sonnenberg.de
+        {{ siteUrl.replace(/https?:\/\//, '') }}
       </NuxtLink>
       <NuxtLink :to="siteUrl" class="font-bold button small secondary justify-between">
         zur Website
