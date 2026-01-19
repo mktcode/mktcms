@@ -14,14 +14,5 @@ export default defineEventHandler(async (event) => {
   const storage = useStorage('content')
   const keys = await storage.getKeys(s3Prefix + (path ? ':' + path : ''))
 
-  const fallbackStorage = useStorage('fallback')
-  const fallbackKeys = await fallbackStorage.getKeys(s3Prefix + (path ? ':' + path : ''))
-
-  for (const key of fallbackKeys) {
-    if (!keys.includes(key)) {
-      keys.push(key)
-    }
-  }
-
   return keys.map(key => key.replace(s3Prefix + ':', ''))
 })

@@ -21,8 +21,4 @@ export default defineNitroPlugin(() => {
       base: './.storage',
     }))
   }
-
-  storage.mount('fallback', createFsDriver({
-    base: './content',
-  }))
 })

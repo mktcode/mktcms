@@ -29,12 +29,6 @@ export default defineEventHandler(async (event) => {
   const file = isImage || isPdf ? await storage.getItemRaw(fullPath) : await storage.getItem(fullPath)
 
   if (!file) {
-    const fallbackStorage = useStorage('fallback')
-    const fallbackFile = isImage || isPdf ? await fallbackStorage.getItemRaw(fullPath) : await fallbackStorage.getItem(fullPath)
-    if (fallbackFile) {
-      return fallbackFile
-    }
-
     throw createError({
       statusCode: 404,
       statusMessage: 'File not found',
