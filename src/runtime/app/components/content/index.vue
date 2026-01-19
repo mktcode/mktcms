@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useFetch, useRoute } from '#app'
 import { computed } from 'vue'
-import Breadcrumb from './breadcrumb.vue'
 import Files from './files.vue'
 import Dirs from './dirs.vue'
 
@@ -38,8 +37,6 @@ const dirs = computed(() => {
 
 <template>
   <div>
-    <Breadcrumb :parts="pathParts" />
-
     <Files
       v-if="files.length"
       :path="path"

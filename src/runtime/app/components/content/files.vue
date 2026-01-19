@@ -6,15 +6,15 @@ defineProps<{
 </script>
 
 <template>
-  <div class="files">
+  <div>
     <div
       v-for="file in files"
       :key="file"
-      style="display: flex; align-items: center;"
+      class="flex items-center gap-2 mb-2"
     >
       <NuxtLink
         :to="`/admin/edit/${file.match(/\.md$|\.csv$|\.txt$|\.json$/i) ? 'text' : 'blob'}/${path ? path + ':' : ''}${file}`"
-        style="flex-grow: 1;"
+        class="flex-1 button secondary"
       >
         <img
           v-if="file.match(/\.png$|\.jpg$|\.jpeg$|\.gif$|\.svg$|\.webp$/i)"
@@ -26,7 +26,7 @@ defineProps<{
       </NuxtLink>
       <NuxtLink
         v-if="file.match(/\.png$|\.jpg$|\.jpeg$|\.gif$|\.svg$|\.webp$/i)"
-        style="margin-left: 8px;"
+        class="button secondary"
         title="Link kopieren"
       >
         <svg
@@ -35,7 +35,7 @@ defineProps<{
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="button-icon"
+          class="size-4"
         >
           <path
             stroke-linecap="round"
@@ -46,7 +46,7 @@ defineProps<{
       </NuxtLink>
       <NuxtLink
         :to="`/admin/move/${path ? path + ':' : ''}${file}`"
-        style="margin-left: 8px;"
+        class="button secondary"
         title="verschieben / umbenennen"
       >
         <svg
@@ -55,7 +55,7 @@ defineProps<{
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="button-icon"
+          class="size-4"
         >
           <path
             stroke-linecap="round"
@@ -66,7 +66,7 @@ defineProps<{
       </NuxtLink>
       <NuxtLink
         :to="`/admin/copy/${path ? path + ':' : ''}${file}`"
-        style="margin-left: 8px;"
+        class="button secondary"
         title="kopieren"
       >
         <svg
@@ -75,7 +75,7 @@ defineProps<{
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="button-icon"
+          class="size-4"
         >
           <path
             stroke-linecap="round"
@@ -86,7 +86,7 @@ defineProps<{
       </NuxtLink>
       <NuxtLink
         :to="`/admin/delete/${path ? path + ':' : ''}${file}`"
-        style="margin-left: 8px;"
+        class="button secondary"
         title="löschen"
       >
         <svg
@@ -95,7 +95,7 @@ defineProps<{
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="button-icon"
+          class="size-4"
         >
           <path
             stroke-linecap="round"

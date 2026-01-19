@@ -1,20 +1,10 @@
 @import "tailwindcss";
 
-body {
-  @apply m-0 font-sans;
-}
 #mktcms-admin {
-  --mktcms-primary-color: #047857;
-  --mktcms-primary-color-hover: #065f46;
-
-  @apply p-5 bg-gray-50 max-w-200 mx-auto;
+  @apply p-4 max-w-2xl mx-auto;
 
   h1 {
-    @apply text-gray-800;
-  }
-
-  .button-icon {
-    @apply w-5 h-5 align-middle;
+    @apply text-gray-800 text-3xl font-semibold;
   }
 
   select,
@@ -25,60 +15,19 @@ body {
     @apply w-full bg-white p-2.5 text-base border border-gray-300 rounded;
   }
 
-  .breadcrumbs {
-    @apply my-5 text-gray-500 text-base;
+  .button {
+    @apply inline-flex items-center gap-2 px-4 py-2.5 bg-emerald-600 text-white rounded hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed;
 
-    a {
-      @apply text-gray-500 bg-gray-200 no-underline rounded px-1.5 py-0.5 hover:underline;
+    &.secondary {
+      @apply bg-white text-gray-700 border border-gray-300 hover:bg-gray-100;
+    }
+
+    &.small {
+      @apply px-2.5 py-1.5 text-sm;
+    }
+
+    :disabled {
+      @apply cursor-not-allowed opacity-50;
     }
   }
-
-  .files,
-  .dirs {
-    @apply flex flex-col gap-2;
-  }
-
-  .files a,
-  .dirs a {
-    @apply block py-2 px-3 rounded no-underline hover:underline;
-  }
-
-  .files a {
-    @apply text-gray-600 bg-white;
-  }
-
-  .dirs a {
-    @apply text-white bg-gray-600 flex justify-between;
-  }
-}
-
-.button {
-  @apply inline-flex items-center justify-center gap-2 no-underline text-center font-medium cursor-pointer select-none rounded-md border px-4 py-2 text-base transition-colors duration-200;
-  @apply focus:outline-none focus:ring-2 focus:ring-emerald-500/30 disabled:opacity-30 disabled:cursor-not-allowed;
-  @apply bg-emerald-700 border-emerald-700 text-white hover:bg-emerald-800 hover:border-emerald-800;
-}
-
-.button.soft {
-  @apply bg-gray-200 border-gray-200 text-gray-700 hover:bg-gray-300 hover:border-gray-300;
-}
-
-.button.secondary {
-  @apply bg-white border-gray-300 text-gray-900 hover:bg-gray-100;
-}
-
-.button.small {
-  @apply px-2.5 py-1.5 text-xs;
-}
-
-.icon-button {
-  @apply inline-flex items-center justify-center w-8.5 h-8.5 p-0 rounded-md border border-gray-300 bg-white text-emerald-700 cursor-pointer;
-  @apply hover:bg-gray-100 disabled:opacity-45 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-emerald-500/20;
-}
-
-.icon-button.danger {
-  @apply text-red-800 border-red-200 hover:bg-red-50 focus:ring-red-500/20;
-}
-
-.button-icon {
-  @apply w-5 h-5 align-middle;
 }

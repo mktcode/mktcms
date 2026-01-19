@@ -162,12 +162,6 @@ function removeRow(index: number) {
   rows.value.splice(index, 1)
 }
 
-function onCellInput(rowIndex: number, colIndex: number, value: string) {
-  const row = rows.value[rowIndex]
-  if (!row) return
-  row[colIndex] = value
-}
-
 type EditingCell = { rowIndex: number, colIndex: number }
 
 const editingCell = ref<EditingCell | null>(null)
@@ -218,14 +212,17 @@ function saveEdit() {
       </span>
     </div>
 
-    <div class="rounded-md overflow-hidden bg-white">
-      <div class="p-1.5 bg-gray-50 border-b border-gray-200">
+    <div class="bg-white">
+      <div class="p-1.5 flex items-center justify-center">
         <button
           type="button"
-          class="button"
+          class="button small soft"
           :disabled="headers.length === 0"
           @click="insertRow(0)"
         >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+          </svg>
           Zeile einfügen
         </button>
       </div>
@@ -236,7 +233,7 @@ function saveEdit() {
           :key="rowIndex"
         >
           <div
-            class="flex items-stretch border-b border-gray-200"
+            class="flex items-stretch rounded-sm border border-gray-200"
           >
             <div class="flex-1 min-w-0 overflow-x-auto overflow-y-hidden">
               <div class="grid grid-flow-col auto-cols-[minmax(160px,1fr)] max-[640px]:auto-cols-[minmax(220px,1fr)]">
@@ -245,74 +242,69 @@ function saveEdit() {
                   :key="colIndex"
                   class="p-1.5 border-r border-gray-200 box-border last:border-r-0"
                 >
-                  <div class="text-xs opacity-75 mb-1.5 leading-tight wrap-break-word">
+                  <div class="text-xs mb-1.5 leading-tight wrap-break-word flex items-center justify-between gap-1">
                     {{ getHeaderLabel(colIndex) }}
                   </div>
-                  <div class="flex flex-col gap-2">
-                    <div
-                      class="text-xs whitespace-pre-line wrap-break-word border border-gray-300/70 rounded bg-gray-50 p-1.5 min-h-9.5 leading-[1.35] box-border overflow-hidden line-clamp-4 h-[calc(4*1.35*1em+12px)] max-[640px]:line-clamp-3 max-[640px]:h-[calc(3*1.35*1em+12px)]"
-                      :title="cell"
-                    >
-                      {{ cell || '—' }}
-                    </div>
-                    <button
-                      type="button"
-                      class="button small"
-                      @click="startEdit(rowIndex, colIndex)"
-                    >
-                      Bearbeiten
-                    </button>
+                  <div
+                    class="text-xs whitespace-pre-line wrap-break-word border border-gray-300/70 rounded bg-gray-50 p-1.5 min-h-9.5 leading-[1.35] box-border overflow-hidden line-clamp-4 h-[calc(4*1.35*1em+12px)] max-[640px]:line-clamp-3 max-[640px]:h-[calc(3*1.35*1em+12px)] cursor-pointer"
+                    :title="cell"
+                    @click="startEdit(rowIndex, colIndex)"
+                  >
+                    {{ cell || '—' }}
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="flex-none flex items-start gap-1 p-1.5 border-l border-gray-200 bg-white max-[640px]:px-1 max-[640px]:gap-0.5">
+            <div class="flex-none flex flex-col items-start gap-1 p-1.5 border-l border-gray-200 bg-white max-[640px]:px-1 max-[640px]:gap-0.5">
               <button
                 type="button"
-                class="icon-button max-[640px]:w-9 max-[640px]:h-9"
+                class="button small"
                 :disabled="rowIndex === 0"
                 aria-label="Zeile nach oben"
                 title="Nach oben"
                 @click="moveRowUp(rowIndex)"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="button-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
                 </svg>
               </button>
               <button
                 type="button"
-                class="icon-button max-[640px]:w-9 max-[640px]:h-9"
+                class="button small"
                 :disabled="rowIndex === rows.length - 1"
                 aria-label="Zeile nach unten"
                 title="Nach unten"
                 @click="moveRowDown(rowIndex)"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="button-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
                 </svg>
               </button>
               <button
                 type="button"
-                class="icon-button danger max-[640px]:w-9 max-[640px]:h-9"
+                class="button small"
                 aria-label="Zeile löschen"
                 title="Löschen"
                 @click="removeRow(rowIndex)"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="button-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                   <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                 </svg>
               </button>
             </div>
           </div>
 
-          <div class="p-1.5 bg-gray-50 border-b border-gray-200">
+          <div class="p-1.5 flex items-center justify-center">
             <button
               type="button"
-              class="button"
+              class="button small"
               :disabled="headers.length === 0"
               @click="insertRow(rowIndex + 1)"
             >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              </svg>
               Zeile einfügen
             </button>
           </div>
@@ -320,7 +312,7 @@ function saveEdit() {
       </div>
     </div>
 
-    <Teleport to="body">
+    <Teleport to="#mktcms-admin">
       <div
         v-if="editingCell"
         class="fixed inset-0 bg-black/45 flex items-center justify-center p-4 z-9999"
