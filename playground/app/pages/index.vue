@@ -50,7 +50,7 @@ async function sendMessage() {
   </div>
 
   <img
-    src="http://localhost:3000/api/content/images:default.jpg"
+    src="http://localhost:3000/api/content/default.jpg"
     alt="Default Image"
     style="max-width: 300px;"
   >
