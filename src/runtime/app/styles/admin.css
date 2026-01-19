@@ -1,55 +1,29 @@
 @import "tailwindcss";
 
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
+  @apply m-0 font-sans;
 }
 #mktcms-admin {
   --mktcms-primary-color: mediumseagreen;
   --mktcms-primary-color-hover: #45a049;
 
-  padding: 20px;
-  background-color: #f9f9f9;
-  max-width: 800px;
-  margin: 0 auto;
+  @apply p-5 bg-gray-50 max-w-200 mx-auto;
 
   h1 {
-    color: #333;
+    @apply text-gray-800;
   }
 
   button,
   .button {
-    text-decoration: none;
-    text-align: center;
-    background-color: var(--mktcms-primary-color);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-    &:hover {
-      background-color: var(--mktcms-primary-color-hover);
-    }
-
-    &:disabled {
-      opacity: 0.3;
-    }
+    @apply no-underline text-center bg-(--mktcms-primary-color) text-white border-0 py-2.5 px-5 cursor-pointer text-base rounded transition-colors duration-300 hover:bg-(--mktcms-primary-color-hover) disabled:opacity-30;
 
     &.soft {
-      background-color: #eee;
-      color: #666;
-      &:hover {
-        background-color: #ddd;
-      }
+      @apply bg-gray-200 text-gray-600 hover:bg-gray-300;
     }
   }
 
   .button-icon {
-    width: 20px;
-    height: 20px;
-    vertical-align: middle;
+    @apply w-5 h-5 align-middle;
   }
 
   select,
@@ -57,58 +31,32 @@ body {
   input[type="password"],
   input[type="email"],
   textarea {
-    width: 100%;
-    background-color: #fff;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    @apply w-full bg-white p-2.5 text-base border border-gray-300 rounded;
   }
 
   .breadcrumbs {
-    margin: 20px 0;
-    color: #888;
-    font-size: 1rem;
+    @apply my-5 text-gray-500 text-base;
 
     a {
-      color: #888;
-      background-color: #eee;
-      text-decoration: none;
-      border-radius: 4px;
-      padding: 2px 6px;
-      &:hover {
-        text-decoration: underline;
-      }
+      @apply text-gray-500 bg-gray-200 no-underline rounded px-1.5 py-0.5 hover:underline;
     }
   }
 
   .files,
   .dirs {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+    @apply flex flex-col gap-2;
   }
 
   .files a,
   .dirs a {
-    display: block;
-    padding: 8px 12px;
-    border-radius: 4px;
-    text-decoration: none;
-    &:hover {
-      text-decoration: underline;
-    }
+    @apply block py-2 px-3 rounded no-underline hover:underline;
   }
 
   .files a {
-    color: #555;
-    background-color: #fff;
+    @apply text-gray-600 bg-white;
   }
 
   .dirs a {
-    color: #fff;
-    background-color: #555;
-    display: flex;
-    justify-content: space-between;
+    @apply text-white bg-gray-600 flex justify-between;
   }
 }
