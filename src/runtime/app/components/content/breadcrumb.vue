@@ -21,7 +21,7 @@ parts.unshift('Hauptordner')
       </svg>
       <NuxtLink
         v-if="index < parts.length - 1"
-        :to="`/admin/${index > 0 ? parts.slice(0, index + 1).join(':') : ''}`"
+        :to="`/admin/${index > 0 ? parts.slice(1, index + 1).join(':') : ''}`"
         class="button secondary small"
       >
         {{ part }}
