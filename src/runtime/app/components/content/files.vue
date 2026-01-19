@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import usePathParam from '../../composables/usePathParam';
+import FileIcon from './fileIcon.vue';
 
 defineProps<{
   files: string[]
@@ -13,18 +14,13 @@ const { path } = usePathParam()
     <div
       v-for="file in files"
       :key="file"
-      class="flex items-center gap-2 mb-2"
+      class="flex gap-2 mb-2"
     >
       <NuxtLink
         :to="`/admin/edit/${path ? path + ':' : ''}${file}`"
         class="flex-1 button secondary"
       >
-        <img
-          v-if="file.match(/\.png$|\.jpg$|\.jpeg$|\.gif$|\.svg$|\.webp$/i)"
-          :src="`/api/content/${path ? path + ':' : ''}${file}`"
-          alt="Vorschaubild"
-          style="width: 64px; height: 64px; vertical-align: middle; margin-right: 4px; object-fit: cover;"
-        >
+        <FileIcon :filePath="`${path ? path + ':' : ''}${file}`" />
         {{ file }}
       </NuxtLink>
       <NuxtLink

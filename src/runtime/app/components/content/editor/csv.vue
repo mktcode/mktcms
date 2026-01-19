@@ -83,7 +83,7 @@ function cancelEdit() {
     </div>
 
     <div class="bg-white">
-      <div class="p-1.5 flex items-center justify-center">
+      <div class="flex items-center h-0 justify-center border border-gray-200 rounded-sm mb-6">
         <button
           type="button"
           class="button small soft"
@@ -93,11 +93,10 @@ function cancelEdit() {
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
           </svg>
-          Zeile einfügen
         </button>
       </div>
 
-      <div class="block">
+      <div>
         <template
           v-for="(r, rowIndex) in rows"
           :key="rowIndex"
@@ -165,7 +164,7 @@ function cancelEdit() {
             </div>
           </div>
 
-          <div class="p-1.5 flex items-center justify-center">
+          <div class="h-0 flex items-center justify-center border border-gray-200 rounded-sm my-6">
             <button
               type="button"
               class="button small"
@@ -175,7 +174,6 @@ function cancelEdit() {
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
               </svg>
-              Zeile einfügen
             </button>
           </div>
         </template>
@@ -184,16 +182,18 @@ function cancelEdit() {
 
     <button
       type="button"
-      class="button mt-2.5"
+      class="button w-full mt-3 justify-center"
       @click="saveCsv"
     >
       <span v-if="isSaving">Speichern...</span>
-      <span v-else>Speichern</span>
+      <span v-else>Tabelle speichern</span>
     </button>
-    <span
+    <div
       v-if="savingSuccessful && !hasUnsavedChanges"
-      class="ml-2.5 text-emerald-700"
-    >✔️ Gespeichert</span>
+      class="text-emerald-700 text-center my-3"
+    >
+      ✔️ Gespeichert
+    </div>
 
     <div
       v-if="editingCell"
