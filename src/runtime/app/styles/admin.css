@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 #mktcms-admin {
-  @apply p-4 max-w-2xl mx-auto;
+  @apply p-4 max-w-3xl mx-auto;
 
   h1 {
     @apply text-gray-800 text-3xl font-semibold;
