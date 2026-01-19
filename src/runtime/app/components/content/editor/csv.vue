@@ -1,204 +1,73 @@
 <script setup lang="ts">
-import { computed, nextTick, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 import useSaveContent from '../../../composables/useSaveContent'
+import { parseSemicolonCsv, serializeSemicolonCsv } from '../../../util/csv'
 
 const { content, saveContent, isSaving, savingSuccessful } = await useSaveContent()
+const parsedCsv = parseSemicolonCsv(content.value)
 
-type CsvGrid = {
-  headers: string[]
-  rows: string[][]
-}
-
-function parseSemicolonCsv(text: string): CsvGrid {
-  const normalized = (text ?? '').replace(/\r\n/g, '\n').replace(/\r/g, '\n')
-  if (!normalized.trim()) {
-    return { headers: [], rows: [] }
-  }
-
-  const rows: string[][] = []
-  let row: string[] = []
-  let field = ''
-  let inQuotes = false
-
-  for (let i = 0; i < normalized.length; i++) {
-    const ch = normalized[i]
-
-    if (inQuotes) {
-      if (ch === '"') {
-        const next = normalized[i + 1]
-        if (next === '"') {
-          field += '"'
-          i++
-        }
-        else {
-          inQuotes = false
-        }
-      }
-      else {
-        field += ch
-      }
-      continue
-    }
-
-    if (ch === '"') {
-      inQuotes = true
-      continue
-    }
-
-    if (ch === ';') {
-      row.push(field)
-      field = ''
-      continue
-    }
-
-    if (ch === '\n') {
-      row.push(field)
-      field = ''
-      // Skip trailing empty line at EOF
-      if (!(row.length === 1 && row[0] === '' && i === normalized.length - 1)) {
-        rows.push(row)
-      }
-      row = []
-      continue
-    }
-
-    field += ch
-  }
-
-  row.push(field)
-  rows.push(row)
-
-  const headers = rows[0] ?? []
-  const dataRows = rows.slice(1)
-
-  const columnCount = Math.max(headers.length, ...dataRows.map(r => r.length), 0)
-  const paddedHeaders = Array.from({ length: columnCount }, (_, i) => headers[i] ?? '')
-  const paddedRows = dataRows.map(r => Array.from({ length: columnCount }, (_, i) => r[i] ?? ''))
-
-  return { headers: paddedHeaders, rows: paddedRows }
-}
-
-function escapeSemicolonCsvField(value: string): string {
-  const v = value ?? ''
-  if (/[";\n]/.test(v)) {
-    return `"${v.replace(/"/g, '""')}"`
-  }
-  return v
-}
-
-function serializeSemicolonCsv(grid: CsvGrid): string {
-  const allRows = [grid.headers, ...grid.rows]
-  return allRows
-    .map(r => r.map(escapeSemicolonCsvField).join(';'))
-    .join('\n')
-}
-
-const headers = ref<string[]>([])
-const rows = ref<string[][]>([])
-
+const headers = ref<string[]>(parsedCsv.headers)
+const rows = ref<string[][]>(parsedCsv.rows)
+const hasUnsavedChanges = ref(false)
 const columnCount = computed(() => headers.value.length)
 
-let isApplyingFromContent = false
-let isApplyingToContent = false
-
-function applyFromContent() {
-  isApplyingFromContent = true
-  try {
-    const grid = parseSemicolonCsv(content.value)
-    headers.value = grid.headers
-    rows.value = grid.rows
-  }
-  finally {
-    isApplyingFromContent = false
-  }
+async function saveCsv() {
+  const serializedCsv = serializeSemicolonCsv({ headers: headers.value, rows: rows.value })
+  content.value = serializedCsv
+  await saveContent()
+  hasUnsavedChanges.value = false
 }
 
-function applyToContent() {
-  if (isApplyingFromContent) return
-  isApplyingToContent = true
-  try {
-    content.value = serializeSemicolonCsv({ headers: headers.value, rows: rows.value })
-  }
-  finally {
-    isApplyingToContent = false
-  }
+function getHeaderLabel(colIndex: number): string {
+  return headers.value[colIndex] || `Spalte ${colIndex + 1}`
 }
-
-watch(
-  () => content.value,
-  () => {
-    if (isApplyingToContent) return
-    applyFromContent()
-  },
-  { immediate: true },
-)
-
-watch(
-  () => [headers.value, rows.value] as const,
-  () => applyToContent(),
-  { deep: true },
-)
 
 function insertRow(atIndex: number) {
-  if (columnCount.value === 0) return
-  const clamped = Math.max(0, Math.min(atIndex, rows.value.length))
-  rows.value.splice(clamped, 0, Array.from({ length: columnCount.value }, () => ''))
+  const newRow = Array(columnCount.value).fill('')
+  rows.value.splice(atIndex, 0, newRow)
+  hasUnsavedChanges.value = true
 }
 
-function moveRowUp(index: number) {
-  if (index <= 0) return
-  const tmp = rows.value[index - 1]
-  rows.value[index - 1] = rows.value[index]!
-  rows.value[index] = tmp!
+function removeRow(rowIndex: number) {
+  rows.value.splice(rowIndex, 1)
+  hasUnsavedChanges.value = true
 }
 
-function moveRowDown(index: number) {
-  if (index < 0 || index >= rows.value.length - 1) return
-  const tmp = rows.value[index + 1]
-  rows.value[index + 1] = rows.value[index]!
-  rows.value[index] = tmp!
+function moveRowUp(rowIndex: number) {
+  if (rowIndex <= 0) return
+  const row = rows.value.splice(rowIndex, 1)[0]
+  if (!row) return
+  rows.value.splice(rowIndex - 1, 0, row)
+  hasUnsavedChanges.value = true
 }
 
-function removeRow(index: number) {
-  rows.value.splice(index, 1)
+function moveRowDown(rowIndex: number) {
+  if (rowIndex >= rows.value.length - 1) return
+  const row = rows.value.splice(rowIndex, 1)[0]
+  if (!row) return
+  rows.value.splice(rowIndex + 1, 0, row)
+  hasUnsavedChanges.value = true
 }
 
-type EditingCell = { rowIndex: number, colIndex: number }
-
-const editingCell = ref<EditingCell | null>(null)
+const editingCell = ref<{ rowIndex: number; colIndex: number } | null>(null)
 const editBuffer = ref('')
-const editOriginal = ref('')
-
-function getHeaderLabel(colIndex: number) {
-  const label = headers.value[colIndex] ?? ''
-  return label.trim() ? label : `Spalte ${colIndex + 1}`
-}
 
 function startEdit(rowIndex: number, colIndex: number) {
-  const current = rows.value[rowIndex]?.[colIndex] ?? ''
   editingCell.value = { rowIndex, colIndex }
-  editOriginal.value = current
-  editBuffer.value = current
-  nextTick(() => {
-    const el = document.getElementById('csv-edit-textarea') as HTMLTextAreaElement | null
-    el?.focus()
-    el?.select()
-  })
+  editBuffer.value = rows.value[rowIndex]![colIndex] || ''
+}
+
+function saveEdit() {
+  if (!editingCell.value) return
+  const { rowIndex, colIndex } = editingCell.value
+  rows.value[rowIndex]![colIndex] = editBuffer.value
+  hasUnsavedChanges.value = true
+  cancelEdit()
 }
 
 function cancelEdit() {
   editingCell.value = null
   editBuffer.value = ''
-  editOriginal.value = ''
-}
-
-function saveEdit() {
-  const cell = editingCell.value
-  if (!cell) return
-  const row = rows.value[cell.rowIndex]
-  if (!row) return
-  row[cell.colIndex] = editBuffer.value
-  cancelEdit()
 }
 </script>
 
@@ -316,61 +185,59 @@ function saveEdit() {
     <button
       type="button"
       class="button mt-2.5"
-      @click="saveContent"
+      @click="saveCsv"
     >
       <span v-if="isSaving">Speichern...</span>
       <span v-else>Speichern</span>
     </button>
     <span
-      v-if="savingSuccessful"
+      v-if="savingSuccessful && !hasUnsavedChanges"
       class="ml-2.5 text-emerald-700"
     >✔️ Gespeichert</span>
 
-    <Teleport to="#mktcms-admin">
+    <div
+      v-if="editingCell"
+      class="fixed inset-0 bg-black/45 flex items-center justify-center p-4 z-9999"
+      role="presentation"
+      @click.self="cancelEdit()"
+    >
       <div
-        v-if="editingCell"
-        class="fixed inset-0 bg-black/45 flex items-center justify-center p-4 z-9999"
-        role="presentation"
-        @click.self="cancelEdit()"
+        class="w-full max-w-180 bg-white rounded-[10px] border border-black/10 shadow-[0_10px_40px_rgba(0,0,0,0.28)] p-3.5 flex flex-col gap-2.5"
+        role="dialog"
+        aria-modal="true"
+        :aria-label="`CSV-Zelle bearbeiten: ${getHeaderLabel(editingCell.colIndex)}`"
       >
-        <div
-          class="w-full max-w-180 bg-white rounded-[10px] border border-black/10 shadow-[0_10px_40px_rgba(0,0,0,0.28)] p-3.5 flex flex-col gap-2.5"
-          role="dialog"
-          aria-modal="true"
-          :aria-label="`CSV-Zelle bearbeiten: ${getHeaderLabel(editingCell.colIndex)}`"
-        >
-          <div class="flex flex-col gap-0.5">
-            <div class="font-bold">Zelle bearbeiten</div>
-            <div class="opacity-75 text-[13px]">
-              {{ getHeaderLabel(editingCell.colIndex) }} · Zeile {{ editingCell.rowIndex + 1 }}
-            </div>
-          </div>
-
-          <textarea
-            id="csv-edit-textarea"
-            v-model="editBuffer"
-            class="w-full box-border p-2.5 border border-gray-300 rounded-lg resize-y min-h-40 font-[inherit] focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
-            rows="8"
-          />
-
-          <div class="flex justify-end gap-2">
-            <button
-              type="button"
-              class="button"
-              @click="saveEdit()"
-            >
-              Speichern
-            </button>
-            <button
-              type="button"
-              class="button secondary"
-              @click="cancelEdit()"
-            >
-              Abbrechen
-            </button>
+        <div class="flex flex-col gap-0.5">
+          <div class="font-bold">Zelle bearbeiten</div>
+          <div class="opacity-75 text-[13px]">
+            {{ getHeaderLabel(editingCell.colIndex) }} · Zeile {{ editingCell.rowIndex + 1 }}
           </div>
         </div>
+
+        <textarea
+          id="csv-edit-textarea"
+          v-model="editBuffer"
+          class="w-full box-border p-2.5 border border-gray-300 rounded-lg resize-y min-h-40 font-[inherit] focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+          rows="8"
+        />
+
+        <div class="flex justify-end gap-2">
+          <button
+            type="button"
+            class="button"
+            @click="saveEdit()"
+          >
+            Speichern
+          </button>
+          <button
+            type="button"
+            class="button secondary"
+            @click="cancelEdit()"
+          >
+            Abbrechen
+          </button>
+        </div>
       </div>
-    </Teleport>
+    </div>
   </div>
 </template>
