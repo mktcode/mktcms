@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useRoute, useRuntimeConfig } from '#imports'
+import { useRuntimeConfig } from '#imports'
 
 const { public: { mktcms: { siteUrl } } } = useRuntimeConfig()
 </script>
