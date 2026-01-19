@@ -9,12 +9,12 @@ const { content, saveContent, isSaving, savingSuccessful } = await useSaveConten
   <div>
     <textarea
       v-model="content"
-      class="w-full h-96 resize-y border border-gray-300 p-2 box-border font-mono"
+      class="w-full h-24 resize-y border border-gray-300 p-2 box-border font-mono"
     />
 
     <button
       type="button"
-      class="button mt-2.5"
+      class="button w-full justify-center mt-3"
       @click="saveContent"
     >
       <span v-if="isSaving">Speichern...</span>
