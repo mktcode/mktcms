@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Saved from '../saved.vue'
 import useSaveContent from '../../../composables/useSaveContent'
 
 const { content, saveContent, isSaving, savingSuccessful } = await useSaveContent()
@@ -19,10 +20,7 @@ const { content, saveContent, isSaving, savingSuccessful } = await useSaveConten
       <span v-if="isSaving">Speichern...</span>
       <span v-else>Speichern</span>
     </button>
-    <span
-      v-if="savingSuccessful"
-      class="ml-2.5 text-emerald-700"
-    >✔️ Gespeichert</span>
+    <Saved v-if="savingSuccessful" />
   </div>
 </template>
   

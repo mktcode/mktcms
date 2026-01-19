@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import useSaveContent from '../../../composables/useSaveContent'
 import { parseSemicolonCsv, serializeSemicolonCsv } from '../../../util/csv'
+import Saved from '../saved.vue'
 
 const { content, saveContent, isSaving, savingSuccessful } = await useSaveContent()
 const parsedCsv = parseSemicolonCsv(content.value)
@@ -186,14 +187,9 @@ function cancelEdit() {
       @click="saveCsv"
     >
       <span v-if="isSaving">Speichern...</span>
-      <span v-else>Tabelle speichern</span>
+      <span v-else>Speichern</span>
     </button>
-    <div
-      v-if="savingSuccessful && !hasUnsavedChanges"
-      class="text-emerald-700 text-center my-3"
-    >
-      ✔️ Gespeichert
-    </div>
+    <Saved v-if="savingSuccessful && !hasUnsavedChanges" />
 
     <div
       v-if="editingCell"
@@ -227,14 +223,14 @@ function cancelEdit() {
             class="button"
             @click="saveEdit()"
           >
-            Speichern
+            schließen
           </button>
           <button
             type="button"
             class="button secondary"
             @click="cancelEdit()"
           >
-            Abbrechen
+            zurücksetzen
           </button>
         </div>
       </div>

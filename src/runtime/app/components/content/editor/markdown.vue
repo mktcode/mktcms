@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import { marked, type Tokens } from 'marked'
 import useSaveContent from '../../../composables/useSaveContent'
+import Saved from '../saved.vue'
 
 const { content, saveContent, isSaving, savingSuccessful } = await useSaveContent()
 
@@ -41,7 +42,7 @@ const renderedHtml = computed(() => {
     if (!safe) return text
 
     const t = token.title ? ` title="${escapeHtml(token.title)}"` : ''
-    const target = safe.startsWith('http') ? ' target="_blank" rel="noopener noreferrer"' : ''
+    const target = ' target="_blank" rel="noopener noreferrer"'
     return `<a href="${escapeHtml(safe)}"${t}${target}>${text}</a>`
   }
 
@@ -62,40 +63,46 @@ const renderedHtml = computed(() => {
 </script>
 
 <template>
-  <div style="width: 100%;">
-    <div style="display: flex; gap: 8px; margin-bottom: 10px; align-items: center;">
+  <div>
+    <div class="flex gap-2 mb-2">
       <button
         type="button"
-        class="button"
-        @click="mode = mode === 'edit' ? 'preview' : 'edit'"
+        class="button secondary flex-1"
+        :disabled="mode === 'edit'"
+        @click="mode = 'edit'"
       >
-        {{ mode === 'edit' ? 'Vorschau' : 'Bearbeiten' }}
+        Bearbeiten
+      </button>
+      <button
+        type="button"
+        class="button secondary flex-1"
+        :disabled="mode === 'preview'"
+        @click="mode = 'preview'"
+      >
+        Vorschau
       </button>
     </div>
 
     <textarea
       v-if="mode === 'edit'"
       v-model="content"
-      style="width: 100%; height: 400px; resize: vertical; border: 1px solid #d0d0d0; padding: 10px; box-sizing: border-box;"
+      class="w-full min-h-72"
     />
 
     <div
       v-else
-      style="width: 100%; min-height: 400px; border: 1px solid #d0d0d0; padding: 10px; box-sizing: border-box; overflow: auto;"
+      class="prose max-w-full min-h-72 border border-gray-200 rounded-sm p-4"
       v-html="renderedHtml"
     />
 
     <button
       type="button"
-      class="button mt-2.5"
+      class="button w-full justify-center mt-3"
       @click="saveContent"
     >
       <span v-if="isSaving">Speichern...</span>
       <span v-else>Speichern</span>
     </button>
-    <span
-      v-if="savingSuccessful"
-      class="ml-2.5 text-emerald-700"
-    >✔️ Gespeichert</span>
+    <Saved v-if="savingSuccessful" />
   </div>
 </template>
