@@ -59,12 +59,12 @@ onMounted(() => {
       </div>
       <div class="flex-1">
         <h3 class="mb-1">
-          Neuen Unterordner erstellen
+          Unterordner erstellen
         </h3>
         <input
           v-model="newSubdir"
           type="text"
-          placeholder="Unterordner (z.B. 'Produkte')"
+          placeholder="z.B. Produkte"
           @change="path = dir ? dir.replace(/\//g, ':') + ':' + newSubdir : newSubdir"
         >
       </div>

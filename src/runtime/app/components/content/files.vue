@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import usePathParam from '../../composables/usePathParam';
+
 defineProps<{
-  path: string
   files: string[]
 }>()
+
+const { path } = usePathParam()
 </script>
 
 <template>
@@ -13,7 +16,7 @@ defineProps<{
       class="flex items-center gap-2 mb-2"
     >
       <NuxtLink
-        :to="`/admin/edit/${file.match(/\.md$|\.csv$|\.txt$|\.json$/i) ? 'text' : 'blob'}/${path ? path + ':' : ''}${file}`"
+        :to="`/admin/edit/${path ? path + ':' : ''}${file}`"
         class="flex-1 button secondary"
       >
         <img

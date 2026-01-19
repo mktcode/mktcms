@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { useFetch, useRoute } from '#app'
+import { useFetch } from '#app'
 import { computed } from 'vue'
 import Files from './files.vue'
 import Dirs from './dirs.vue'
+import usePathParam from '../../composables/usePathParam'
 
-const path = useRoute().params.path as string || ''
-const pathParts = path.split(':')
+const { path, pathParts } = usePathParam()
 
 const { data: keys } = await useFetch('/api/admin/content/list', {
   query: { path },
@@ -39,13 +39,11 @@ const dirs = computed(() => {
   <div>
     <Files
       v-if="files.length"
-      :path="path"
       :files="files"
     />
 
     <Dirs
       v-if="dirs.length"
-      :path="path"
       :dirs="dirs"
       style="margin-top: 8px;"
     />

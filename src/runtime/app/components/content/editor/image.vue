@@ -1,5 +1,7 @@
 <script setup lang="ts">
-const path = defineModel<string>('path')
+import usePathParam from '../../../composables/usePathParam';
+
+const { path } = usePathParam();
 </script>
 
 <template>

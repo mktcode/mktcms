@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { marked, type Tokens } from 'marked'
+import useSaveContent from '../../../composables/useSaveContent'
 
-const content = defineModel<string>('content', { default: '' })
+const { content, saveContent, isSaving, savingSuccessful } = await useSaveContent()
 
 const mode = ref<'edit' | 'preview'>('edit')
 
@@ -83,5 +84,18 @@ const renderedHtml = computed(() => {
       style="width: 100%; min-height: 400px; border: 1px solid #d0d0d0; padding: 10px; box-sizing: border-box; overflow: auto;"
       v-html="renderedHtml"
     />
+
+    <button
+      type="button"
+      class="button mt-2.5"
+      @click="saveContent"
+    >
+      <span v-if="isSaving">Speichern...</span>
+      <span v-else>Speichern</span>
+    </button>
+    <span
+      v-if="savingSuccessful"
+      class="ml-2.5 text-emerald-700"
+    >✔️ Gespeichert</span>
   </div>
 </template>

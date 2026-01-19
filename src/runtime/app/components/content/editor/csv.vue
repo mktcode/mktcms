@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed, nextTick, ref, watch } from 'vue'
+import useSaveContent from '../../../composables/useSaveContent'
 
-const content = defineModel<string>('content', { default: '' })
+const { content, saveContent, isSaving, savingSuccessful } = await useSaveContent()
 
 type CsvGrid = {
   headers: string[]
@@ -311,6 +312,19 @@ function saveEdit() {
         </template>
       </div>
     </div>
+
+    <button
+      type="button"
+      class="button mt-2.5"
+      @click="saveContent"
+    >
+      <span v-if="isSaving">Speichern...</span>
+      <span v-else>Speichern</span>
+    </button>
+    <span
+      v-if="savingSuccessful"
+      class="ml-2.5 text-emerald-700"
+    >✔️ Gespeichert</span>
 
     <Teleport to="#mktcms-admin">
       <div
