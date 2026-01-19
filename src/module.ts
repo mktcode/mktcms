@@ -97,6 +97,24 @@ export default defineNuxtModule({
       })
 
       pages.push({
+        name: 'Admin Delete',
+        path: '/admin/delete/:path',
+        file: resolver.resolve('./runtime/app/pages/admin/delete/[path].vue'),
+      })
+
+      pages.push({
+        name: 'Admin Move',
+        path: '/admin/move/:path',
+        file: resolver.resolve('./runtime/app/pages/admin/move/[path].vue'),
+      })
+
+      pages.push({
+        name: 'Admin Copy',
+        path: '/admin/copy/:path',
+        file: resolver.resolve('./runtime/app/pages/admin/copy/[path].vue'),
+      })
+
+      pages.push({
         name: 'Admin New Content',
         path: '/admin/new',
         file: resolver.resolve('./runtime/app/pages/admin/new.vue'),
