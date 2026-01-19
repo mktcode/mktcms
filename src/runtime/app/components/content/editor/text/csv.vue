@@ -223,21 +223,21 @@ function isEditing(rowIndex: number, colIndex: number) {
 </script>
 
 <template>
-  <div class="csv-editor">
-    <div class="csv-toolbar">
+  <div class="w-full">
+    <div class="flex items-center gap-2 mb-2.5">
       <span
         v-if="headers.length === 0"
-        class="csv-hint"
+        class="opacity-70 text-sm"
       >
         Keine Kopfzeile gefunden. Bitte eine CSV mit Kopfzeile bereitstellen, um Zeilen zu bearbeiten.
       </span>
     </div>
 
-    <div class="csv-frame">
-      <div class="csv-insert csv-insert--top">
+    <div class="rounded-md overflow-hidden bg-white">
+      <div class="p-1.5 bg-gray-50 border-b border-gray-200">
         <button
           type="button"
-          class="csv-btn csv-btn--primary"
+          class="appearance-none border rounded-md px-3 py-2 font-[inherit] text-[13px] leading-[1.1] cursor-pointer select-none bg-emerald-700 border-emerald-700 text-white hover:bg-emerald-800 hover:border-emerald-800 disabled:opacity-55 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
           :disabled="headers.length === 0"
           @click="insertRow(0)"
         >
@@ -245,32 +245,34 @@ function isEditing(rowIndex: number, colIndex: number) {
         </button>
       </div>
 
-      <div class="csv-body">
+      <div class="block">
         <template
           v-for="(r, rowIndex) in rows"
           :key="rowIndex"
         >
           <div
-            class="csv-row"
-            :style="{ '--cols': columnCount }"
+            class="flex items-stretch border-b border-gray-200"
           >
-            <div class="csv-scroll">
-              <div class="csv-cells">
+            <div class="flex-1 min-w-0 overflow-x-auto overflow-y-hidden">
+              <div class="grid grid-flow-col auto-cols-[minmax(160px,1fr)] max-[640px]:auto-cols-[minmax(220px,1fr)]">
                 <div
                   v-for="(cell, colIndex) in r"
                   :key="colIndex"
-                  class="csv-cell"
+                  class="p-1.5 border-r border-gray-200 box-border last:border-r-0"
                 >
-                  <div class="csv-cell-label">
+                  <div class="text-xs opacity-75 mb-1.5 leading-tight wrap-break-word">
                     {{ getHeaderLabel(colIndex) }}
                   </div>
-                  <div class="csv-preview">
-                    <div class="csv-preview-text" :title="cell">
+                  <div class="flex flex-col gap-2">
+                    <div
+                      class="text-xs whitespace-pre-line wrap-break-word border border-gray-300/70 rounded bg-gray-50 p-1.5 min-h-9.5 leading-[1.35] box-border overflow-hidden line-clamp-4 h-[calc(4*1.35*1em+12px)] max-[640px]:line-clamp-3 max-[640px]:h-[calc(3*1.35*1em+12px)]"
+                      :title="cell"
+                    >
                       {{ cell || '—' }}
                     </div>
                     <button
                       type="button"
-                      class="csv-btn csv-btn--primary csv-btn--small"
+                      class="appearance-none border rounded-md px-2.5 py-1.5 font-[inherit] text-xs leading-[1.1] cursor-pointer select-none bg-emerald-700 border-emerald-700 text-white hover:bg-emerald-800 hover:border-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
                       @click="startEdit(rowIndex, colIndex)"
                     >
                       Bearbeiten
@@ -280,49 +282,49 @@ function isEditing(rowIndex: number, colIndex: number) {
               </div>
             </div>
 
-            <div class="csv-actions">
+            <div class="flex-none flex items-start gap-1 p-1.5 border-l border-gray-200 bg-white max-[640px]:px-1 max-[640px]:gap-0.5">
               <button
                 type="button"
-                class="csv-action"
+                class="inline-flex items-center justify-center w-8.5 h-8.5 rounded-md p-0 border border-gray-300 bg-white text-emerald-700 cursor-pointer hover:bg-gray-100 disabled:opacity-45 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-emerald-500/20 max-[640px]:w-9 max-[640px]:h-9"
                 :disabled="rowIndex === 0"
                 aria-label="Zeile nach oben"
                 title="Nach oben"
                 @click="moveRowUp(rowIndex)"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="button-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4.5 h-4.5 block">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
                 </svg>
               </button>
               <button
                 type="button"
-                class="csv-action"
+                class="inline-flex items-center justify-center w-8.5 h-8.5 rounded-md p-0 border border-gray-300 bg-white text-emerald-700 cursor-pointer hover:bg-gray-100 disabled:opacity-45 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-emerald-500/20 max-[640px]:w-9 max-[640px]:h-9"
                 :disabled="rowIndex === rows.length - 1"
                 aria-label="Zeile nach unten"
                 title="Nach unten"
                 @click="moveRowDown(rowIndex)"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="button-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4.5 h-4.5 block">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
                 </svg>
               </button>
               <button
                 type="button"
-                class="csv-action csv-action--danger"
+                class="inline-flex items-center justify-center w-8.5 h-8.5 rounded-md p-0 border border-red-200 bg-white text-red-800 cursor-pointer hover:bg-red-50 disabled:opacity-45 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-red-500/20 max-[640px]:w-9 max-[640px]:h-9"
                 aria-label="Zeile löschen"
                 title="Löschen"
                 @click="removeRow(rowIndex)"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="button-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4.5 h-4.5 block">
                   <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                 </svg>
               </button>
             </div>
           </div>
 
-          <div class="csv-insert csv-insert--after">
+          <div class="p-1.5 bg-gray-50 border-b border-gray-200">
             <button
               type="button"
-              class="csv-btn csv-btn--primary"
+              class="appearance-none border rounded-md px-3 py-2 font-[inherit] text-[13px] leading-[1.1] cursor-pointer select-none bg-emerald-700 border-emerald-700 text-white hover:bg-emerald-800 hover:border-emerald-800 disabled:opacity-55 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
               :disabled="headers.length === 0"
               @click="insertRow(rowIndex + 1)"
             >
@@ -336,20 +338,20 @@ function isEditing(rowIndex: number, colIndex: number) {
     <Teleport to="body">
       <div
         v-if="editingCell"
-        class="csv-modal-overlay"
+        class="fixed inset-0 bg-black/45 flex items-center justify-center p-4 z-9999"
         role="presentation"
         @click.self="cancelEdit()"
         @keydown.capture="onModalKeydown"
       >
         <div
-          class="csv-modal"
+          class="w-full max-w-180 bg-white rounded-[10px] border border-black/10 shadow-[0_10px_40px_rgba(0,0,0,0.28)] p-3.5 flex flex-col gap-2.5"
           role="dialog"
           aria-modal="true"
           :aria-label="`CSV-Zelle bearbeiten: ${getHeaderLabel(editingCell.colIndex)}`"
         >
-          <div class="csv-modal-header">
-            <div class="csv-modal-title">Zelle bearbeiten</div>
-            <div class="csv-modal-subtitle">
+          <div class="flex flex-col gap-0.5">
+            <div class="font-bold">Zelle bearbeiten</div>
+            <div class="opacity-75 text-[13px]">
               {{ getHeaderLabel(editingCell.colIndex) }} · Zeile {{ editingCell.rowIndex + 1 }}
             </div>
           </div>
@@ -357,330 +359,32 @@ function isEditing(rowIndex: number, colIndex: number) {
           <textarea
             id="csv-edit-textarea"
             v-model="editBuffer"
-            class="csv-modal-textarea"
+            class="w-full box-border p-2.5 border border-gray-300 rounded-lg resize-y min-h-40 font-[inherit] focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
             rows="8"
           />
 
-          <div class="csv-modal-actions">
-            <button type="button" class="csv-btn csv-btn--primary" @click="saveEdit()">Speichern</button>
-            <button type="button" class="csv-btn csv-btn--secondary" @click="cancelEdit()">Abbrechen</button>
+          <div class="flex justify-end gap-2">
+            <button
+              type="button"
+              class="appearance-none border rounded-md px-3 py-2 font-[inherit] text-[13px] leading-[1.1] cursor-pointer select-none bg-emerald-700 border-emerald-700 text-white hover:bg-emerald-800 hover:border-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+              @click="saveEdit()"
+            >
+              Speichern
+            </button>
+            <button
+              type="button"
+              class="appearance-none border rounded-md px-3 py-2 font-[inherit] text-[13px] leading-[1.1] cursor-pointer select-none bg-white border-gray-300 text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-400/30"
+              @click="cancelEdit()"
+            >
+              Abbrechen
+            </button>
           </div>
 
-          <div class="csv-modal-hint">
-            Tipp: <span class="csv-kbd">Esc</span> zum Schließen, <span class="csv-kbd">Strg</span>+<span class="csv-kbd">Enter</span> zum Speichern.
+          <div class="opacity-75 text-xs">
+            Tipp: <span class="inline-block border border-gray-300 border-b-gray-400 px-1.5 rounded-md bg-gray-50 font-mono text-[11px] leading-4.5">Esc</span> zum Schließen, <span class="inline-block border border-gray-300 border-b-gray-400 px-1.5 rounded-md bg-gray-50 font-mono text-[11px] leading-4.5">Strg</span>+<span class="inline-block border border-gray-300 border-b-gray-400 px-1.5 rounded-md bg-gray-50 font-mono text-[11px] leading-4.5">Enter</span> zum Speichern.
           </div>
         </div>
       </div>
     </Teleport>
   </div>
 </template>
-
-<style scoped>
-.csv-editor {
-  width: 100%;
-}
-
-.csv-toolbar {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 10px;
-  align-items: center;
-}
-
-.csv-hint {
-  opacity: 0.7;
-}
-
-.csv-frame {
-  border: none;
-  border-radius: 6px;
-  overflow: clip;
-  background: #fff;
-}
-
-.csv-body {
-  display: block;
-}
-
-.csv-row {
-  display: flex;
-  align-items: stretch;
-  border-bottom: 1px solid #eee;
-}
-
-.csv-scroll {
-  flex: 1 1 auto;
-  min-width: 0;
-  overflow-x: auto;
-  overflow-y: hidden;
-}
-
-.csv-cells {
-  display: grid;
-  grid-template-columns: repeat(var(--cols), minmax(160px, 1fr));
-}
-
-.csv-cell {
-  padding: 6px;
-  border-right: 1px solid #eee;
-  box-sizing: border-box;
-}
-
-.csv-cell:last-child {
-  border-right: none;
-}
-
-
-.csv-cell-label {
-  font-size: 12px;
-  opacity: 0.75;
-  margin-bottom: 6px;
-  line-height: 1.2;
-  word-break: break-word;
-}
-
-.csv-preview {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.csv-preview-text {
-  --preview-lines: 4;
-  --preview-line-height: 1.35;
-  font-size: 12px;
-  white-space: pre-line;
-  word-break: break-word;
-  border: 1px solid #e3e3e3;
-  border-radius: 4px;
-  background: #fbfbfb;
-  padding: 6px;
-  min-height: 38px;
-  line-height: var(--preview-line-height);
-  box-sizing: border-box;
-  height: calc(var(--preview-lines) * var(--preview-line-height) * 1em + 12px);
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: var(--preview-lines);
-  line-clamp: var(--preview-lines);
-  overflow: hidden;
-}
-
-.csv-btn {
-  appearance: none;
-  border: 1px solid transparent;
-  border-radius: 6px;
-  padding: 8px 12px;
-  font: inherit;
-  font-size: 13px;
-  line-height: 1.1;
-  cursor: pointer;
-  user-select: none;
-}
-
-.csv-btn--small {
-  padding: 6px 10px;
-  font-size: 12px;
-}
-
-.csv-btn--primary {
-  background: #1f7a4a;
-  border-color: #1f7a4a;
-  color: #fff;
-}
-
-.csv-btn--primary:hover {
-  background: #17633c;
-  border-color: #17633c;
-}
-
-.csv-btn--secondary {
-  background: #fff;
-  border-color: #cfcfcf;
-  color: #222;
-}
-
-.csv-btn--secondary:hover {
-  background: #f4f4f4;
-}
-
-.csv-btn:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
-}
-
-.csv-modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-  z-index: 9999;
-}
-
-.csv-modal {
-  width: min(720px, 100%);
-  background: #fff;
-  border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.28);
-  padding: 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.csv-modal-header {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.csv-modal-title {
-  font-weight: 700;
-}
-
-.csv-modal-subtitle {
-  opacity: 0.75;
-  font-size: 13px;
-}
-
-.csv-modal-textarea {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 10px;
-  border: 1px solid #cfcfcf;
-  border-radius: 8px;
-  resize: vertical;
-  min-height: 160px;
-  font: inherit;
-}
-
-.csv-modal-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-}
-
-.csv-modal-hint {
-  opacity: 0.75;
-  font-size: 12px;
-}
-
-.csv-kbd {
-  display: inline-block;
-  border: 1px solid #ddd;
-  border-bottom-color: #bbb;
-  padding: 0 6px;
-  border-radius: 6px;
-  background: #fafafa;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  font-size: 11px;
-  line-height: 18px;
-}
-
-.csv-input {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 6px;
-  border: 1px solid #cfcfcf;
-  border-radius: 4px;
-  resize: vertical;
-  min-height: 38px;
-  font: inherit;
-}
-
-.csv-actions {
-  flex: 0 0 auto;
-  display: flex;
-  align-items: flex-start;
-  gap: 4px;
-  padding: 6px;
-  border-left: 1px solid #eee;
-  background: #fff;
-}
-
-.csv-action {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 6px;
-  padding: 0;
-  border: 1px solid #cfcfcf;
-  background: #fff;
-  color: #1f7a4a;
-  cursor: pointer;
-}
-
-.csv-action:hover:not(:disabled) {
-  background: #f4f4f4;
-}
-
-.csv-action:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
-.csv-action .button-icon {
-  width: 18px;
-  height: 18px;
-  display: block;
-}
-
-.csv-action--danger {
-  color: #a30000;
-  border-color: #e4b7b7;
-}
-
-.csv-action--danger:hover:not(:disabled) {
-  background: #fff2f2;
-}
-
-.csv-insert {
-  padding: 6px;
-  background: #fafafa;
-  border-bottom: 1px solid #eee;
-}
-
-.csv-insert--top {
-  border-bottom: 1px solid #eee;
-}
-
-.csv-insert--after {
-  border-bottom: 1px solid #eee;
-}
-
-@media (max-width: 640px) {
-  .csv-cells {
-    grid-template-columns: repeat(var(--cols), minmax(220px, 1fr));
-  }
-
-  .csv-actions {
-    padding: 6px 4px;
-    gap: 2px;
-  }
-
-  .csv-action {
-    width: 36px;
-    height: 36px;
-  }
-
-  .csv-preview-text {
-    --preview-lines: 3;
-  }
-
-  .csv-btn {
-    padding: 10px 12px;
-    font-size: 14px;
-  }
-
-  .csv-btn--small {
-    padding: 8px 10px;
-    font-size: 13px;
-  }
-}
-</style>

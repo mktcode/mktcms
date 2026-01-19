@@ -7,7 +7,7 @@ const route = useRoute()
 </script>
 
 <template>
-  <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
+  <div class="flex items-center justify-between gap-2">
     <NuxtLink
       v-if="route.fullPath != '/admin'"
       to="/admin"
@@ -30,8 +30,7 @@ const route = useRoute()
     </NuxtLink>
     <NuxtLink
       to="/admin/new"
-      class="button"
-      style="margin-left: auto;"
+      class="button ml-auto"
     >
       Datei hochladen
     </NuxtLink>
