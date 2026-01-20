@@ -1,0 +1,25 @@
+import z from 'zod'
+import { useStorage, useRuntimeConfig } from 'nitropack/runtime'
+import { defineEventHandler, getValidatedQuery } from 'h3'
+
+const querySchema = z.object({
+  path: z.string().optional(),
+})
+
+export default defineEventHandler(async (event) => {
+  const { path } = await getValidatedQuery(event, query => querySchema.parse(query))
+
+  const { mktcms: { s3Prefix } } = useRuntimeConfig()
+
+  const pathPrefix = s3Prefix + (path ? ':' + path : '')
+
+  const storage = useStorage('content')
+  const keys = await storage.getKeys(pathPrefix)
+  const keysWithoutPrefix = keys.map(key => key.replace(pathPrefix + ':', ''))
+
+  const files = keysWithoutPrefix.filter((key: string) => !key.includes(':'))
+  const dirs = keysWithoutPrefix.filter((key: string) => key.includes(':')).map((key: string) => key.split(':')[0]!)
+  const uniqueDirs = Array.from(new Set(dirs))
+  
+  return { files, dirs: uniqueDirs }
+})

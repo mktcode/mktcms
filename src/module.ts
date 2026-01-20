@@ -62,8 +62,8 @@ export default defineNuxtModule({
 
     // List
     addServerHandler({
-      route: '/api/admin/content/list',
-      handler: resolver.resolve('./runtime/server/api/admin/content/list'),
+      route: '/api/admin/list',
+      handler: resolver.resolve('./runtime/server/api/admin/list'),
     })
 
     // CSV
