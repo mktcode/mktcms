@@ -45,8 +45,5 @@ async function deleteContent() {
         Datei löschen
       </button>
     </div>
-    <div class="mt-6 text-sm text-gray-600 border border-gray-200 rounded-sm p-4 bg-gray-50">
-      Dateien, die Sie nicht selbst hochgeladen haben, können nicht vollständig gelöscht, sondern nur in ihren Ursprungszustand zurückgesetzt werden.
-    </div>
   </div>
 </template>
