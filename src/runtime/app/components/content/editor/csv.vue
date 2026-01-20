@@ -1,68 +1,115 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import useSaveContent from '../../../composables/useSaveContent'
-import { parseSemicolonCsv, serializeSemicolonCsv } from '../../../util/csv'
+import { ref } from 'vue'
 import Saved from '../saved.vue'
+import usePathParam from '../../../composables/usePathParam'
+import { useFetch } from '#imports'
 
-const { content, saveContent, isSaving, savingSuccessful } = await useSaveContent()
-const parsedCsv = parseSemicolonCsv(content.value)
+const { path } = usePathParam()
+const { data: table } = await useFetch<{ headers: string[], rows: string[][] }>(`/api/admin/content/${path}/csv`, {
+  method: 'GET',
+})
 
-const headers = ref<string[]>(parsedCsv.headers)
-const rows = ref<string[][]>(parsedCsv.rows)
-const hasUnsavedChanges = ref(false)
-const columnCount = computed(() => headers.value.length)
+const isSaving = ref(false)
+const savingSuccessful = ref(false)
 
 async function saveCsv() {
-  const serializedCsv = serializeSemicolonCsv({ headers: headers.value, rows: rows.value })
-  content.value = serializedCsv
-  await saveContent()
-  hasUnsavedChanges.value = false
-}
+  if (!table.value) return
 
-function getHeaderLabel(colIndex: number): string {
-  return headers.value[colIndex] || `Spalte ${colIndex + 1}`
+  isSaving.value = true
+  savingSuccessful.value = false
+
+  try {
+    await useFetch(`/api/admin/content/${path}/csv`, {
+      method: 'POST',
+      body: {
+        table: table.value,
+      },
+    })
+
+    savingSuccessful.value = true
+  } catch (e) {
+    console.error('Fehler beim Speichern der CSV-Datei:', e)
+  } finally {
+    isSaving.value = false
+  }
 }
 
 function insertRow(atIndex: number) {
-  const newRow = Array(columnCount.value).fill('')
-  rows.value.splice(atIndex, 0, newRow)
-  hasUnsavedChanges.value = true
+  if (!table.value) return
+
+  const newRow: string[] = []
+  const headerCount = table.value.headers.length
+  for (let i = 0; i < headerCount; i++) {
+    newRow[i] = '-'
+  }
+
+  table.value = {
+    headers: table.value.headers,
+    rows: [
+      ...table.value.rows.slice(0, atIndex),
+      newRow,
+      ...table.value.rows.slice(atIndex),
+    ],
+  }
 }
 
 function removeRow(rowIndex: number) {
-  rows.value.splice(rowIndex, 1)
-  hasUnsavedChanges.value = true
+  if (!table.value) return
+
+  table.value = {
+    headers: table.value.headers,
+    rows: table.value.rows.filter((_, index) => index !== rowIndex),
+  }
 }
 
 function moveRowUp(rowIndex: number) {
-  if (rowIndex <= 0) return
-  const row = rows.value.splice(rowIndex, 1)[0]
+  if (!table.value || rowIndex <= 0) return
+
+  const row = table.value.rows.splice(rowIndex, 1)[0]
   if (!row) return
-  rows.value.splice(rowIndex - 1, 0, row)
-  hasUnsavedChanges.value = true
+
+  table.value = {
+    headers: table.value.headers,
+    rows: [
+      ...table.value.rows.slice(0, rowIndex - 1),
+      row,
+      ...table.value.rows.slice(rowIndex - 1),
+    ],
+  }
 }
 
 function moveRowDown(rowIndex: number) {
-  if (rowIndex >= rows.value.length - 1) return
-  const row = rows.value.splice(rowIndex, 1)[0]
+  if (!table.value || rowIndex >= table.value.rows.length - 1) return
+
+  const row = table.value.rows.splice(rowIndex, 1)[0]
   if (!row) return
-  rows.value.splice(rowIndex + 1, 0, row)
-  hasUnsavedChanges.value = true
+  
+  table.value = {
+    headers: table.value.headers,
+    rows: [
+      ...table.value.rows.slice(0, rowIndex + 1),
+      row,
+      ...table.value.rows.slice(rowIndex + 1),
+    ],
+  }
 }
 
 const editingCell = ref<{ rowIndex: number, colIndex: number } | null>(null)
 const editBuffer = ref('')
 
 function startEdit(rowIndex: number, colIndex: number) {
+  if (!table.value) return
+
   editingCell.value = { rowIndex, colIndex }
-  editBuffer.value = rows.value[rowIndex]![colIndex] || ''
+  editBuffer.value = table.value.rows[rowIndex]![colIndex] || ''
 }
 
 function saveEdit() {
+  if (!table.value) return
   if (!editingCell.value) return
+
   const { rowIndex, colIndex } = editingCell.value
-  rows.value[rowIndex]![colIndex] = editBuffer.value
-  hasUnsavedChanges.value = true
+  table.value.rows[rowIndex]![colIndex] = editBuffer.value
   cancelEdit()
 }
 
@@ -74,21 +121,14 @@ function cancelEdit() {
 
 <template>
   <div class="w-full">
-    <div class="flex items-center gap-2 mb-2.5">
-      <span
-        v-if="headers.length === 0"
-        class="opacity-70 text-sm"
-      >
-        Keine Kopfzeile gefunden. Bitte eine CSV mit Kopfzeile bereitstellen, um Zeilen zu bearbeiten.
-      </span>
-    </div>
-
-    <div class="bg-white">
+    <div
+      v-if="table"
+      class="bg-white"
+    >
       <div class="flex items-center h-0 justify-center border border-gray-200 rounded-sm mb-6">
         <button
           type="button"
           class="button small soft"
-          :disabled="headers.length === 0"
           @click="insertRow(0)"
         >
           <svg
@@ -110,7 +150,7 @@ function cancelEdit() {
 
       <div>
         <template
-          v-for="(r, rowIndex) in rows"
+          v-for="(r, rowIndex) in table.rows"
           :key="rowIndex"
         >
           <div
@@ -124,7 +164,9 @@ function cancelEdit() {
                   class="p-1.5 border-r border-gray-200 box-border last:border-r-0"
                 >
                   <div class="text-xs mb-1.5 leading-tight wrap-break-word flex items-center justify-between gap-1">
-                    {{ getHeaderLabel(colIndex) }}
+                    <div class="font-bold">
+                      {{ table.headers[colIndex] || 'Spalte ' + (colIndex + 1) }}
+                    </div>
                   </div>
                   <div
                     class="text-xs whitespace-pre-line wrap-break-word border border-gray-300/70 rounded bg-gray-50 p-1.5 min-h-9.5 leading-[1.35] box-border overflow-hidden line-clamp-4 h-[calc(4*1.35*1em+12px)] max-[640px]:line-clamp-3 max-[640px]:h-[calc(3*1.35*1em+12px)] cursor-pointer"
@@ -164,7 +206,7 @@ function cancelEdit() {
               <button
                 type="button"
                 class="button small"
-                :disabled="rowIndex === rows.length - 1"
+                :disabled="rowIndex === table.rows.length - 1"
                 aria-label="Zeile nach unten"
                 title="Nach unten"
                 @click="moveRowDown(rowIndex)"
@@ -213,7 +255,7 @@ function cancelEdit() {
             <button
               type="button"
               class="button small"
-              :disabled="headers.length === 0"
+              :disabled="table.headers.length === 0"
               @click="insertRow(rowIndex + 1)"
             >
               <svg
@@ -244,7 +286,7 @@ function cancelEdit() {
       <span v-if="isSaving">Speichern...</span>
       <span v-else>Speichern</span>
     </button>
-    <Saved v-if="savingSuccessful && !hasUnsavedChanges" />
+    <Saved v-if="savingSuccessful" />
 
     <div
       v-if="editingCell"
@@ -256,14 +298,11 @@ function cancelEdit() {
         class="w-full max-w-180 bg-white rounded-[10px] border border-black/10 shadow-[0_10px_40px_rgba(0,0,0,0.28)] p-3.5 flex flex-col gap-2.5"
         role="dialog"
         aria-modal="true"
-        :aria-label="`CSV-Zelle bearbeiten: ${getHeaderLabel(editingCell.colIndex)}`"
+        aria-label="Zelle bearbeiten"
       >
         <div class="flex flex-col gap-0.5">
           <div class="font-bold">
-            Zelle bearbeiten
-          </div>
-          <div class="opacity-75 text-[13px]">
-            {{ getHeaderLabel(editingCell.colIndex) }} · Zeile {{ editingCell.rowIndex + 1 }}
+            {{ table?.headers[editingCell.colIndex] || 'Spalte ' + (editingCell.colIndex + 1) }}
           </div>
         </div>
 

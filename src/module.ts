@@ -46,7 +46,11 @@ export default defineNuxtModule({
       handler: resolver.resolve('./runtime/server/middleware/auth'),
     })
 
-    // Admin API Routes
+    /*
+     * Admin API Routes
+     */
+
+    // Auth
     addServerHandler({
       route: '/api/admin/login',
       handler: resolver.resolve('./runtime/server/api/admin/login'),
@@ -55,10 +59,26 @@ export default defineNuxtModule({
       route: '/api/admin/logout',
       handler: resolver.resolve('./runtime/server/api/admin/logout'),
     })
+
+    // List
     addServerHandler({
       route: '/api/admin/content/list',
       handler: resolver.resolve('./runtime/server/api/admin/content/list'),
     })
+
+    // CSV
+    addServerHandler({
+      route: '/api/admin/content/:path/csv/',
+      method: 'get',
+      handler: resolver.resolve('./runtime/server/api/admin/content/[path]/csv.get'),
+    })
+    addServerHandler({
+      route: '/api/admin/content/:path/csv/',
+      method: 'post',
+      handler: resolver.resolve('./runtime/server/api/admin/content/[path]/csv.post'),
+    })
+
+    
     addServerHandler({
       route: '/api/admin/content/:path',
       method: 'get',
