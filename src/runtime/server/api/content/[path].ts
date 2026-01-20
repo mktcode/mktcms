@@ -20,11 +20,16 @@ function parsedFile(fullPath: string, file: string | number | boolean | object) 
 
   if (fullPath.endsWith('.csv') && typeof file === 'string') {
     try {
-      return parse(file, {
-        columns: true,
+      const table = parse(file, {
         skip_empty_lines: true,
         delimiter: ';',
       })
+    
+      const headers = Array.isArray(table[0]) ? table[0].map(cell => String(cell ?? '')) : []
+    
+      const rows = table.slice(1)
+
+      return { headers, rows }
     }
     catch {
       throw createError({
