@@ -1,6 +1,55 @@
 # Changelog
 
 
+## v0.1.22
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.21...v0.1.22)
+
+### 🚀 Enhancements
+
+- Enhance CSV editor with improved row insertion and textarea for cell input ([7f2d0f4](https://github.com/mktcode/mktcms/commit/7f2d0f4))
+- Implement inline editing for CSV cells with modal support ([694de2a](https://github.com/mktcode/mktcms/commit/694de2a))
+- Move CSS styles to a separate admin.css file for better organization ([c88b2c4](https://github.com/mktcode/mktcms/commit/c88b2c4))
+- Add Tailwind CSS integration ([1299476](https://github.com/mktcode/mktcms/commit/1299476))
+- Refactor admin CSS to utilize Tailwind CSS for improved styling consistency ([306901a](https://github.com/mktcode/mktcms/commit/306901a))
+- Add watch script for Tailwind CSS compilation ([18d9995](https://github.com/mktcode/mktcms/commit/18d9995))
+- Add Breadcrumb component to editor pages and remove unused imports ([5e583d1](https://github.com/mktcode/mktcms/commit/5e583d1))
+- Admin styles ([ef801c6](https://github.com/mktcode/mktcms/commit/ef801c6))
+- Enhance upload and login components with improved styling and functionality ([cf48670](https://github.com/mktcode/mktcms/commit/cf48670))
+- Add admin delete, move, and copy pages with shared layout ([df12080](https://github.com/mktcode/mktcms/commit/df12080))
+- Integrate papaparse for CSV handling and refactor csv component ([8195a62](https://github.com/mktcode/mktcms/commit/8195a62))
+- Enhance CSV editor UI and add file type icons ([eecb94a](https://github.com/mktcode/mktcms/commit/eecb94a))
+- Add file buttons component for enhanced file management ([370f252](https://github.com/mktcode/mktcms/commit/370f252))
+- Add danger button style for improved UI feedback ([007e343](https://github.com/mktcode/mktcms/commit/007e343))
+- **api:** Add delete endpoint for content management ([d9737cc](https://github.com/mktcode/mktcms/commit/d9737cc))
+- Remove copy/move functionality ([094fc54](https://github.com/mktcode/mktcms/commit/094fc54))
+- Remove fallback mechanic ([78c370a](https://github.com/mktcode/mktcms/commit/78c370a))
+
+### 🩹 Fixes
+
+- Update text for delete confirmation to improve clarity ([40f5a95](https://github.com/mktcode/mktcms/commit/40f5a95))
+- Update image paths in default CSV and index.vue ([490dee5](https://github.com/mktcode/mktcms/commit/490dee5))
+- Remove outdated information about file deletion restrictions ([e6d5ab0](https://github.com/mktcode/mktcms/commit/e6d5ab0))
+
+### 💅 Refactors
+
+- Update header component styles and improve CSS structure ([18a1683](https://github.com/mktcode/mktcms/commit/18a1683))
+- Remove unused modal keydown handling and related instructions ([77787ae](https://github.com/mktcode/mktcms/commit/77787ae))
+- Remove unused import of useRoute in header component ([498bfdf](https://github.com/mktcode/mktcms/commit/498bfdf))
+- Update max-width for admin layout in CSS files ([927f36b](https://github.com/mktcode/mktcms/commit/927f36b))
+
+### 🏡 Chore
+
+- Linter ([11e72cf](https://github.com/mktcode/mktcms/commit/11e72cf))
+
+### 🎨 Styles
+
+- Update button styles across components and pages ([fe2d47c](https://github.com/mktcode/mktcms/commit/fe2d47c))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.21
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.20...v0.1.21)
