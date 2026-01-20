@@ -21,5 +21,8 @@ const { isImage, isPdf, isMarkdown, isCsv, isText } = usePathParam()
     <Markdown v-else-if="isMarkdown" />
     <Csv v-else-if="isCsv" />
     <Txt v-else-if="isText" />
+    <div v-else>
+      Unbekannter Dateityp.
+    </div>
   </Admin>
 </template>
