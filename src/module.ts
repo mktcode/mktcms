@@ -89,18 +89,20 @@ export default defineNuxtModule({
       method: 'post',
       handler: resolver.resolve('./runtime/server/api/admin/content/[path]/markdown.post'),
     })
+
+    // Txt
+    addServerHandler({
+      route: '/api/admin/content/:path/txt',
+      method: 'get',
+      handler: resolver.resolve('./runtime/server/api/admin/content/[path]/txt.get'),
+    })
+    addServerHandler({
+      route: '/api/admin/content/:path/txt',
+      method: 'post',
+      handler: resolver.resolve('./runtime/server/api/admin/content/[path]/txt.post'),
+    })
     
     // Misc
-    addServerHandler({
-      route: '/api/admin/content/:path',
-      method: 'get',
-      handler: resolver.resolve('./runtime/server/api/admin/content/[path]'),
-    })
-    addServerHandler({
-      route: '/api/admin/content/:path',
-      method: 'post',
-      handler: resolver.resolve('./runtime/server/api/admin/content/[path].post'),
-    })
     addServerHandler({
       route: '/api/admin/content/:path',
       method: 'delete',

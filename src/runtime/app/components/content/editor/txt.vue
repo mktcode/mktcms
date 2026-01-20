@@ -1,8 +1,32 @@
 <script setup lang="ts">
 import Saved from '../saved.vue'
-import useSaveContent from '../../../composables/useSaveContent'
+import usePathParam from '../../../composables/usePathParam'
+import { ref, useFetch } from '#imports'
 
-const { content, saveContent, isSaving, savingSuccessful } = await useSaveContent()
+const { path } = usePathParam()
+const { data: content } = await useFetch<string>(`/api/admin/content/${path}/txt`, {
+  method: 'GET',
+})
+
+const isSaving = ref(false)
+const savingSuccessful = ref(false)
+
+async function saveContent() {
+  if (content.value === undefined) return
+
+  isSaving.value = true
+  savingSuccessful.value = false
+
+  await useFetch(`/api/admin/content/${path}/txt`, {
+    method: 'POST',
+    body: {
+      content: content.value,
+    },
+  })
+
+  isSaving.value = false
+  savingSuccessful.value = true
+}
 </script>
 
 <template>
