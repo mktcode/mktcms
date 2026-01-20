@@ -1,8 +1,16 @@
 <script setup lang="ts">
-const { data: md } = await useFetch<string>('/api/content/default.md')
+const { public: { mktcms: { siteUrl } } } = useRuntimeConfig()
+
+const { data: md } = await useFetch<{ frontmatter: Record<string, any>, markdown: string, html: string }>('/api/content/default.md')
 const { data: csv } = await useFetch<{ Title: string, Description: string }[]>('/api/content/default.csv')
 const { data: txt } = await useFetch<string>('/api/content/default.txt')
 const { data: margherita } = await useFetch<{ name: string, description: string, price: number, ingredients: string[], vegetarian: boolean, image: string }>('/api/content/products:food:margherita.json')
+const { data: products } = await useFetch<{ key: string, value: { frontmatter: Record<string, any>, markdown: string, html: string } }[]>('/api/content/list', {
+  query: {
+    path: 'Meine Produkte',
+    type: 'md',
+  },
+})
 
 const isSending = ref(false)
 const sendingError = ref<string | null>(null)
@@ -55,9 +63,18 @@ async function sendMessage() {
     style="max-width: 300px;"
   >
 
-  <div>
+  <div v-if="md">
     <h2>Markdown Content</h2>
-    <div v-html="md" />
+    <img :src="`${siteUrl}/api/content/${md.frontmatter.Bild.replace(/\//g, ':')}`" alt="Bild aus Frontmatter" style="max-width: 200px;"/>
+    <div v-html="md.html" />
+  </div>
+
+  <div v-if="products">
+    <div v-for="(product, index) in products" :key="index">
+      <h2>Markdown Content</h2>
+      <img :src="`${siteUrl}/api/content/${product.value.frontmatter.Bild.replace(/\//g, ':')}`" alt="Bild aus Frontmatter" style="max-width: 200px;"/>
+      <div v-html="product.value.html" />
+    </div>
   </div>
 
   <div>

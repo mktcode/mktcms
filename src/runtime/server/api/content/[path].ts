@@ -3,6 +3,7 @@ import { createError, defineEventHandler, getValidatedRouterParams } from 'h3'
 import { useRuntimeConfig, useStorage } from 'nitropack/runtime'
 import { parse } from 'csv-parse/sync'
 import { marked } from 'marked'
+import { parseFrontmatter } from '../../utils/parseFrontmatter'
 
 function parsedFile(fullPath: string, file: string | number | boolean | object) {
   if (fullPath.endsWith('.json') && typeof file === 'string') {
@@ -35,8 +36,11 @@ function parsedFile(fullPath: string, file: string | number | boolean | object) 
 
   if (fullPath.endsWith('.md') && typeof file === 'string') {
     try {
-      const html = marked.parse(file)
-      return html
+      const markdownItem = parseFrontmatter(file)
+      return {
+        ...markdownItem,
+        html: marked.parse(markdownItem.markdown),
+      }
     }
     catch {
       throw createError({
@@ -64,6 +68,7 @@ export default defineEventHandler(async (event) => {
   const isPdf = decodedPath.endsWith('.pdf')
   const isJson = decodedPath.endsWith('.json')
   const isCSV = decodedPath.endsWith('.csv')
+  const isMarkdown = decodedPath.endsWith('.md')
 
   if (isImage) {
     event.node.res.setHeader('Content-Type', 'image/' + decodedPath.split('.').pop()?.toLowerCase())
@@ -71,7 +76,7 @@ export default defineEventHandler(async (event) => {
   else if (isPdf) {
     event.node.res.setHeader('Content-Type', 'application/pdf')
   }
-  else if (isJson || isCSV) {
+  else if (isJson || isCSV || isMarkdown) {
     event.node.res.setHeader('Content-Type', 'application/json; charset=utf-8')
   }
   else {
