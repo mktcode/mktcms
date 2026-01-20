@@ -1,6 +1,43 @@
 # Changelog
 
 
+## v0.1.23
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.22...v0.1.23)
+
+### 🚀 Enhancements
+
+- Frontmatter support for markdown files ([e918dde](https://github.com/mktcode/mktcms/commit/e918dde))
+- Implement txt content handling with new API endpoints ([fb6382e](https://github.com/mktcode/mktcms/commit/fb6382e))
+- Add blob retrieval for content and update image/pdf components ([8572c5f](https://github.com/mktcode/mktcms/commit/8572c5f))
+- Add default content file and initial ODT document ([5934539](https://github.com/mktcode/mktcms/commit/5934539))
+- Update API endpoints for content listing and refactor response structure ([e973167](https://github.com/mktcode/mktcms/commit/e973167))
+- Add delete API endpoint for content removal ([3112113](https://github.com/mktcode/mktcms/commit/3112113))
+- Add fallback message for unknown file types in editor ([be8c168](https://github.com/mktcode/mktcms/commit/be8c168))
+- File select in frontmatter form ([8374f20](https://github.com/mktcode/mktcms/commit/8374f20))
+- Style ([e414605](https://github.com/mktcode/mktcms/commit/e414605))
+- Add breadcrumb component for file selection navigation ([8ab384f](https://github.com/mktcode/mktcms/commit/8ab384f))
+- Allow whitespaces and special characters in file and dir names ([d69883d](https://github.com/mktcode/mktcms/commit/d69883d))
+- Add download button ([2dc485f](https://github.com/mktcode/mktcms/commit/2dc485f))
+- Implement frontmatter parsing and enhance content fetching ([973e0e6](https://github.com/mktcode/mktcms/commit/973e0e6))
+- Add download functionality for content files ([c171291](https://github.com/mktcode/mktcms/commit/c171291))
+
+### 💅 Refactors
+
+- Csv handling ([77076e3](https://github.com/mktcode/mktcms/commit/77076e3))
+- Api structure ([9980f4d](https://github.com/mktcode/mktcms/commit/9980f4d))
+- Remove old files ([c72f1af](https://github.com/mktcode/mktcms/commit/c72f1af))
+- Update upload API route and implement file upload handling ([b2bbe5b](https://github.com/mktcode/mktcms/commit/b2bbe5b))
+- Remove debug log from pathParts watcher ([6032a9f](https://github.com/mktcode/mktcms/commit/6032a9f))
+
+### 🏡 Chore
+
+- Linter ([fcd0b0b](https://github.com/mktcode/mktcms/commit/fcd0b0b))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.22
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.21...v0.1.22)
