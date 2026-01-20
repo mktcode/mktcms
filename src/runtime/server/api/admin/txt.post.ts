@@ -14,8 +14,10 @@ export default defineEventHandler(async (event) => {
   const { path } = await getValidatedQuery(event, query => querySchema.parse(query))
   const { text } = await readValidatedBody(event, body => bodySchema.parse(body))
 
+  const decodedPath = decodeURIComponent(path)
+
   const { mktcms: { s3Prefix } } = useRuntimeConfig()
-  const fullPath = s3Prefix + ':' + path
+  const fullPath = s3Prefix + ':' + decodedPath
 
   const storage = useStorage('content')
   await storage.setItem(fullPath, text)

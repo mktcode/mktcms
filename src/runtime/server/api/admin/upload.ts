@@ -3,7 +3,7 @@ import { createError, defineEventHandler, getValidatedQuery, readMultipartFormDa
 import { useRuntimeConfig, useStorage } from 'nitropack/runtime'
 
 function sanitizeFilename(filename: string): string {
-  return filename.replace(/[^\w.-]/g, '_')
+  return filename.replace(/[\/:\\]/g, '_')
 }
 
 const querySchema = z.object({

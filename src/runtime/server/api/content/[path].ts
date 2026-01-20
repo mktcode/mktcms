@@ -55,17 +55,18 @@ const paramsSchema = z.object({
 
 export default defineEventHandler(async (event) => {
   const { path } = await getValidatedRouterParams(event, params => paramsSchema.parse(params))
+  const decodedPath = decodeURIComponent(path)
 
   const { mktcms: { s3Prefix } } = useRuntimeConfig()
-  const fullPath = s3Prefix + ':' + path
+  const fullPath = s3Prefix + ':' + decodedPath
 
-  const isImage = path.match(/\.(png|jpg|jpeg|gif|svg|webp)$/i)
-  const isPdf = path.endsWith('.pdf')
-  const isJson = path.endsWith('.json')
-  const isCSV = path.endsWith('.csv')
+  const isImage = decodedPath.match(/\.(png|jpg|jpeg|gif|svg|webp)$/i)
+  const isPdf = decodedPath.endsWith('.pdf')
+  const isJson = decodedPath.endsWith('.json')
+  const isCSV = decodedPath.endsWith('.csv')
 
   if (isImage) {
-    event.node.res.setHeader('Content-Type', 'image/' + path.split('.').pop()?.toLowerCase())
+    event.node.res.setHeader('Content-Type', 'image/' + decodedPath.split('.').pop()?.toLowerCase())
   }
   else if (isPdf) {
     event.node.res.setHeader('Content-Type', 'application/pdf')
