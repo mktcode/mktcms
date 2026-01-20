@@ -32,7 +32,7 @@ export default function useAdminUpload() {
     formData.append('file', file)
 
     try {
-      const res = await $fetch<{ success: boolean, path: string }>('/api/admin/content/upload', {
+      const res = await $fetch<{ success: boolean, path: string }>('/api/admin/upload', {
         method: 'POST',
         body: formData,
         query: { path: sanePath.value },
@@ -49,20 +49,6 @@ export default function useAdminUpload() {
     isUploading.value = false
   }
 
-  async function deleteFile(path: string) {
-    uploadError.value = null
-    try {
-      await $fetch('/api/content/remove', {
-        method: 'DELETE',
-        body: { path },
-      })
-      files.value = files.value.filter(p => p !== path)
-    }
-    catch (error: any) {
-      uploadError.value = error.data?.statusMessage || 'Fehler beim Löschen der Datei'
-    }
-  }
-
   return {
     uploadError,
     isUploading,
@@ -72,6 +58,5 @@ export default function useAdminUpload() {
     fileInputImg,
     fileInputPdf,
     uploadFiles,
-    deleteFile,
   }
 }

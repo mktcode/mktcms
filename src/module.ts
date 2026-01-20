@@ -113,8 +113,8 @@ export default defineNuxtModule({
     
     // Upload
     addServerHandler({
-      route: '/api/admin/content/upload',
-      handler: resolver.resolve('./runtime/server/api/admin/content/upload'),
+      route: '/api/admin/upload',
+      handler: resolver.resolve('./runtime/server/api/admin/upload'),
     })
 
     // Public API Routes

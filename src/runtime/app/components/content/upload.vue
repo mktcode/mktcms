@@ -1,22 +1,8 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, useFetch, useRoute } from '#imports'
+import { onMounted, ref, useFetch, useRoute } from '#imports'
 import useAdminUpload from '../../composables/useAdminUpload'
 
-const { data: keys } = await useFetch('/api/admin/content/list')
-
-const dirs = computed(() => {
-  const dirSet = new Set<string>()
-  keys.value?.forEach((key: string) => {
-    const parts = key.split(':')
-    if (parts.length > 1) {
-      for (let i = 0; i < parts.length - 1; i++) {
-        const dir = parts.slice(0, i + 1).join('/')
-        dirSet.add(dir)
-      }
-    }
-  })
-  return Array.from(dirSet).sort()
-})
+const { data: list } = await useFetch('/api/admin/list')
 
 const route = useRoute()
 const dir = ref(route.query.dir as string || '')
@@ -49,7 +35,7 @@ onMounted(() => {
             Hauptordner
           </option>
           <option
-            v-for="d in dirs"
+            v-for="d in list?.dirs"
             :key="d"
             :value="d"
           >
