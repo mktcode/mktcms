@@ -101,17 +101,21 @@ export default defineNuxtModule({
       method: 'post',
       handler: resolver.resolve('./runtime/server/api/admin/content/[path]/txt.post'),
     })
-    
-    // Misc
+
+    // Blob
     addServerHandler({
-      route: '/api/admin/content/:path',
-      method: 'delete',
-      handler: resolver.resolve('./runtime/server/api/admin/content/[path].delete'),
+      route: '/api/admin/content/:path/blob',
+      method: 'get',
+      handler: resolver.resolve('./runtime/server/api/admin/content/[path]/blob.get'),
     })
+    
+    // Upload
     addServerHandler({
       route: '/api/admin/content/upload',
       handler: resolver.resolve('./runtime/server/api/admin/content/upload'),
     })
+
+    // Public API Routes
     addServerHandler({
       route: '/api/content/list',
       handler: resolver.resolve('./runtime/server/api/content/list'),
