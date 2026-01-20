@@ -1,3 +1,4 @@
+import { navigateTo } from '#imports'
 import { computed, ref } from 'vue'
 
 export default function useAdminUpload() {
@@ -40,6 +41,7 @@ export default function useAdminUpload() {
       if (res?.success && res.path) {
         files.value.push(res.path)
       }
+      await navigateTo(`/admin/${sanePath.value ? sanePath.value : ''}`)
     }
     catch (error: any) {
       uploadError.value = error.data?.statusMessage || 'Fehler beim Hochladen der Datei'
