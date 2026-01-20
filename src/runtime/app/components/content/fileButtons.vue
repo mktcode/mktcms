@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import { useRuntimeConfig } from '#app'
-import useFileType from '../../composables/useFileType'
 import { useClipboard } from '@vueuse/core'
 
 const { filePath } = defineProps<{ filePath: string }>()
 
 const { public: { mktcms: { siteUrl } } } = useRuntimeConfig()
-const { isImage, isPdf } = useFileType(filePath)
 
 const { copy, copied } = useClipboard()
 </script>
@@ -50,7 +48,7 @@ const { copy, copied } = useClipboard()
       </svg>
     </NuxtLink>
     <NuxtLink
-      :to="`/api/content/${filePath}`"
+      :to="`/api/admin/download?path=${filePath}`"
       class="button secondary"
       title="herunterladen"
       external

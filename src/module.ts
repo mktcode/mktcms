@@ -116,6 +116,11 @@ export default defineNuxtModule({
       route: '/api/admin/upload',
       handler: resolver.resolve('./runtime/server/api/admin/upload'),
     })
+    // Download
+    addServerHandler({
+      route: '/api/admin/download',
+      handler: resolver.resolve('./runtime/server/api/admin/download'),
+    })
 
     // Public API Routes
     addServerHandler({
