@@ -24,9 +24,9 @@ function parsedFile(fullPath: string, file: string | number | boolean | object) 
         skip_empty_lines: true,
         delimiter: ';',
       })
-    
+
       const headers = Array.isArray(table[0]) ? table[0].map(cell => String(cell ?? '')) : []
-    
+
       const rows = table.slice(1)
 
       return { headers, rows }
