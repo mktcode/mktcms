@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import usePathParam from '../../composables/usePathParam';
+import usePathParam from '../../composables/usePathParam'
 
 defineProps<{
   dirs: string[]

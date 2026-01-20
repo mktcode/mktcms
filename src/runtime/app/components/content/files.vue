@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import usePathParam from '../../composables/usePathParam';
-import FileIcon from './fileIcon.vue';
-import FileButtons from './fileButtons.vue';
+import usePathParam from '../../composables/usePathParam'
+import FileIcon from './fileIcon.vue'
+import FileButtons from './fileButtons.vue'
 
 defineProps<{
   files: string[]
 }>()
 
-const { path } = usePathParam();
+const { path } = usePathParam()
 </script>
 
 <template>
@@ -21,7 +21,7 @@ const { path } = usePathParam();
         :to="`/admin/edit/${path ? path + ':' : ''}${file}`"
         class="flex-1 button secondary"
       >
-        <FileIcon :filePath="`${path ? path + ':' : ''}${file}`" />
+        <FileIcon :file-path="`${path ? path + ':' : ''}${file}`" />
         {{ file }}
       </NuxtLink>
       <FileButtons :file-path="`${path ? path + ':' : ''}${file}`" />

@@ -1,15 +1,21 @@
 <script setup lang="ts">
-import usePathParam from '../../../composables/usePathParam';
+import usePathParam from '../../../composables/usePathParam'
 
-const { path } = usePathParam();
+const { path } = usePathParam()
 </script>
 
 <template>
   <div>
-    <button class="button secondary w-full justify-center mb-2" type="button">
+    <button
+      class="button secondary w-full justify-center mb-2"
+      type="button"
+    >
       Link kopieren
     </button>
-    <button class="button w-full justify-center mb-4" type="button">
+    <button
+      class="button w-full justify-center mb-4"
+      type="button"
+    >
       Bild austauschen
     </button>
 

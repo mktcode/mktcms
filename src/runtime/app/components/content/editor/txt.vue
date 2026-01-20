@@ -4,7 +4,7 @@ import useSaveContent from '../../../composables/useSaveContent'
 
 const { content, saveContent, isSaving, savingSuccessful } = await useSaveContent()
 </script>
-  
+
 <template>
   <div>
     <textarea
@@ -23,4 +23,3 @@ const { content, saveContent, isSaving, savingSuccessful } = await useSaveConten
     <Saved v-if="savingSuccessful" />
   </div>
 </template>
-  

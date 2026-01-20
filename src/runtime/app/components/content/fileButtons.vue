@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { useRuntimeConfig } from '#app';
-import useFileType from '../../composables/useFileType';
-import { useClipboard } from '@vueuse/core';
+import { useRuntimeConfig } from '#app'
+import useFileType from '../../composables/useFileType'
+import { useClipboard } from '@vueuse/core'
 
 const { filePath } = defineProps<{ filePath: string }>()
 
-const { public: { mktcms: { siteUrl } } } = useRuntimeConfig();
-const { isImage, isPdf } = useFileType(filePath);
+const { public: { mktcms: { siteUrl } } } = useRuntimeConfig()
+const { isImage, isPdf } = useFileType(filePath)
 
-const { copy, copied } = useClipboard();
+const { copy, copied } = useClipboard()
 </script>
 
 <template>
@@ -19,8 +19,20 @@ const { copy, copied } = useClipboard();
       title="Link kopieren"
       @click.prevent="copy(siteUrl + '/api/content/' + filePath)"
     >
-      <svg v-if="copied" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+      <svg
+        v-if="copied"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="size-4"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="m4.5 12.75 6 6 9-13.5"
+        />
       </svg>
       <svg
         v-else
