@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.1.24
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.23...v0.1.24)
+
+### 🚀 Enhancements
+
+- Enhance CSV parsing to return headers and rows ([d820719](https://github.com/mktcode/mktcms/commit/d820719))
+
+### 🏡 Chore
+
+- Linter ([daa2f29](https://github.com/mktcode/mktcms/commit/daa2f29))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.23
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.22...v0.1.23)
