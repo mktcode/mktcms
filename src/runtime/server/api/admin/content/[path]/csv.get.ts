@@ -23,8 +23,6 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  event.node.res.setHeader('Content-Type', 'application/json; charset=utf-8')
-
   const table = parse(file, {
     skip_empty_lines: true,
     delimiter: ';',

@@ -68,17 +68,29 @@ export default defineNuxtModule({
 
     // CSV
     addServerHandler({
-      route: '/api/admin/content/:path/csv/',
+      route: '/api/admin/content/:path/csv',
       method: 'get',
       handler: resolver.resolve('./runtime/server/api/admin/content/[path]/csv.get'),
     })
     addServerHandler({
-      route: '/api/admin/content/:path/csv/',
+      route: '/api/admin/content/:path/csv',
       method: 'post',
       handler: resolver.resolve('./runtime/server/api/admin/content/[path]/csv.post'),
     })
 
+    // Markdown
+    addServerHandler({
+      route: '/api/admin/content/:path/markdown',
+      method: 'get',
+      handler: resolver.resolve('./runtime/server/api/admin/content/[path]/markdown.get'),
+    })
+    addServerHandler({
+      route: '/api/admin/content/:path/markdown',
+      method: 'post',
+      handler: resolver.resolve('./runtime/server/api/admin/content/[path]/markdown.post'),
+    })
     
+    // Misc
     addServerHandler({
       route: '/api/admin/content/:path',
       method: 'get',

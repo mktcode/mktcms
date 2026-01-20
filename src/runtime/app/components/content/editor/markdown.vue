@@ -1,10 +1,36 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { marked, type Tokens } from 'marked'
-import useSaveContent from '../../../composables/useSaveContent'
 import Saved from '../saved.vue'
+import usePathParam from '../../../composables/usePathParam'
+import { useFetch } from '#imports'
+import FrontmatterForm from './frontmatterForm.vue'
 
-const { content, saveContent, isSaving, savingSuccessful } = await useSaveContent()
+const { path } = usePathParam()
+const { data: content } = await useFetch<{ frontmatter: Record<string, any>, markdown: string }>(`/api/admin/content/${path}/markdown`, {
+  method: 'GET',
+})
+
+const isSaving = ref(false)
+const savingSuccessful = ref(false)
+
+async function saveMarkdown() {
+  if (!content.value) return
+
+  isSaving.value = true
+  savingSuccessful.value = false
+
+  await useFetch(`/api/admin/content/${path}/markdown`, {
+    method: 'POST',
+    body: {
+      frontmatter: content.value.frontmatter,
+      markdown: content.value.markdown,
+    },
+  })
+
+  isSaving.value = false
+  savingSuccessful.value = true
+}
 
 const mode = ref<'edit' | 'preview'>('edit')
 
@@ -31,6 +57,8 @@ function isSafeHref(href: string): boolean {
 }
 
 const renderedHtml = computed(() => {
+  if (!content.value) return ''
+
   const renderer = new marked.Renderer()
 
   // Do not render raw HTML from markdown.
@@ -54,7 +82,7 @@ const renderedHtml = computed(() => {
     return `<img src="${escapeHtml(safe)}" alt="${alt}"${t} />`
   }
 
-  return marked.parse(content.value ?? '', {
+  return marked.parse(content.value.markdown ?? '', {
     renderer,
     gfm: true,
     breaks: true,
@@ -63,8 +91,9 @@ const renderedHtml = computed(() => {
 </script>
 
 <template>
-  <div>
-    <div class="flex gap-2 mb-2">
+  <div v-if="content">
+    <FrontmatterForm v-model:frontmatter="content.frontmatter" />
+    <div class="flex gap-2 my-2">
       <button
         type="button"
         class="button secondary flex-1"
@@ -85,7 +114,7 @@ const renderedHtml = computed(() => {
 
     <textarea
       v-if="mode === 'edit'"
-      v-model="content"
+      v-model="content.markdown"
       class="w-full min-h-72"
     />
 
@@ -98,7 +127,7 @@ const renderedHtml = computed(() => {
     <button
       type="button"
       class="button w-full justify-center mt-3"
-      @click="saveContent"
+      @click="saveMarkdown"
     >
       <span v-if="isSaving">Speichern...</span>
       <span v-else>Speichern</span>
