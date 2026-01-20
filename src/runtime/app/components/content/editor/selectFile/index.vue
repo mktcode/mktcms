@@ -33,7 +33,6 @@ async function loadList() {
 }
 
 watch(() => pathParts.value, async () => {
-  console.log('Path parts changed:', pathParts.value)
   await loadList()
 }, { immediate: true })
 </script>
