@@ -1,13 +1,13 @@
 import { z } from 'zod'
-import { defineEventHandler, getValidatedRouterParams } from 'h3'
+import { defineEventHandler, getValidatedQuery } from 'h3'
 import { useRuntimeConfig, useStorage } from 'nitropack/runtime'
 
-const paramsSchema = z.object({
+const querySchema = z.object({
   path: z.string().min(1),
 })
 
 export default defineEventHandler(async (event) => {
-  const { path } = await getValidatedRouterParams(event, params => paramsSchema.parse(params))
+  const { path } = await getValidatedQuery(event, query => querySchema.parse(query))
 
   const { mktcms: { s3Prefix } } = useRuntimeConfig()
   const fullPath = s3Prefix + ':' + path

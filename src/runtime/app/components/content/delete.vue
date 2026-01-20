@@ -7,7 +7,7 @@ const { path, pathParts } = usePathParam()
 const parentPath = pathParts.slice(0, -1).join(':')
 
 async function deleteContent() {
-  await fetch(`/api/admin/content/${path}`, {
+  await fetch(`/api/admin/delete?path=${path}`, {
     method: 'DELETE',
   })
 
