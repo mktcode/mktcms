@@ -33,7 +33,10 @@ function fileExtension(filename: string): string {
         <FileIcon :file-path="`${path ? path + ':' : ''}${file}`" />
         <div class="w-full flex">
           {{ filenameWithoutExtension(file) }}
-          <span v-if="fileExtension(file)" class="text-sm text-gray-400 ml-auto">
+          <span
+            v-if="fileExtension(file)"
+            class="text-sm text-gray-400 ml-auto"
+          >
             .{{ fileExtension(file) }}
           </span>
         </div>

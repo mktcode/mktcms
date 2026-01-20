@@ -25,9 +25,9 @@ export default defineEventHandler(async (event) => {
 
   const dirs = keysWithoutPrefix.filter((key: string) => key.includes(':')).map((key: string) => key.split(':')[0]!)
   const uniqueDirs = Array.from(new Set(dirs))
-  
+
   return {
     files: filteredFiles,
-    dirs: uniqueDirs
+    dirs: uniqueDirs,
   }
 })

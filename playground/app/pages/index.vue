@@ -65,14 +65,25 @@ async function sendMessage() {
 
   <div v-if="md">
     <h2>Markdown Content</h2>
-    <img :src="`${siteUrl}/api/content/${md.frontmatter.Bild.replace(/\//g, ':')}`" alt="Bild aus Frontmatter" style="max-width: 200px;"/>
+    <img
+      :src="`${siteUrl}/api/content/${md.frontmatter.Bild.replace(/\//g, ':')}`"
+      alt="Bild aus Frontmatter"
+      style="max-width: 200px;"
+    >
     <div v-html="md.html" />
   </div>
 
   <div v-if="products">
-    <div v-for="(product, index) in products" :key="index">
+    <div
+      v-for="(product, index) in products"
+      :key="index"
+    >
       <h2>Markdown Content</h2>
-      <img :src="`${siteUrl}/api/content/${product.value.frontmatter.Bild.replace(/\//g, ':')}`" alt="Bild aus Frontmatter" style="max-width: 200px;"/>
+      <img
+        :src="`${siteUrl}/api/content/${product.value.frontmatter.Bild.replace(/\//g, ':')}`"
+        alt="Bild aus Frontmatter"
+        style="max-width: 200px;"
+      >
       <div v-html="product.value.html" />
     </div>
   </div>

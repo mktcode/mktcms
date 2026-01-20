@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
   const storage = useStorage('content')
   const keys = await storage.getKeys(s3Prefix + (decodedPath ? ':' + decodedPath : ''))
 
-  const filteredKeys = keys.filter(key => {
+  const filteredKeys = keys.filter((key) => {
     if (type === 'md') {
       return key.endsWith('.md')
     }
@@ -35,8 +35,8 @@ export default defineEventHandler(async (event) => {
   })
 
   const items = await storage.getItems(filteredKeys)
-  
-  return items.map(item => {
+
+  return items.map((item) => {
     if (type === 'md' && typeof item.value === 'string') {
       const markdownItem = parseFrontmatter(item.value)
 
@@ -45,7 +45,7 @@ export default defineEventHandler(async (event) => {
         value: {
           ...markdownItem,
           html: marked.parse(markdownItem.markdown),
-        }
+        },
       }
     }
     return item

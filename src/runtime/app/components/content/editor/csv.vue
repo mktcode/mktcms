@@ -25,9 +25,11 @@ async function saveCsv() {
     })
 
     savingSuccessful.value = true
-  } catch (e) {
+  }
+  catch (e) {
     console.error('Fehler beim Speichern der CSV-Datei:', e)
-  } finally {
+  }
+  finally {
     isSaving.value = false
   }
 }
@@ -81,7 +83,7 @@ function moveRowDown(rowIndex: number) {
 
   const row = table.value.rows.splice(rowIndex, 1)[0]
   if (!row) return
-  
+
   table.value = {
     headers: table.value.headers,
     rows: [

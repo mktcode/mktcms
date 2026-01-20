@@ -11,8 +11,8 @@ const frontmatter = defineModel<Record<string, any>>('frontmatter', {
     <FrontmatterInput
       v-for="key in Object.keys(frontmatter)"
       :key="key"
-      :label="key"
       v-model:value="frontmatter[key]"
+      :label="key"
     />
   </div>
 </template>
