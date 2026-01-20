@@ -14,7 +14,6 @@ const { copy, copied } = useClipboard()
 <template>
   <div class="flex gap-2">
     <NuxtLink
-      v-if="isImage || isPdf"
       class="button secondary"
       title="Link kopieren"
       @click.prevent="copy(siteUrl + '/api/content/' + filePath)"

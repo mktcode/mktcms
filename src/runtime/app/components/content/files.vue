@@ -8,6 +8,15 @@ defineProps<{
 }>()
 
 const { path } = usePathParam()
+
+function filenameWithoutExtension(filename: string): string {
+  return filename.replace(/\.[^/.]+$/, '')
+}
+
+function fileExtension(filename: string): string {
+  const match = filename.match(/\.([^.]+)$/)
+  return match && match[1] ? match[1] : ''
+}
 </script>
 
 <template>
@@ -22,7 +31,12 @@ const { path } = usePathParam()
         class="flex-1 button secondary"
       >
         <FileIcon :file-path="`${path ? path + ':' : ''}${file}`" />
-        {{ file }}
+        <div class="w-full flex">
+          {{ filenameWithoutExtension(file) }}
+          <span v-if="fileExtension(file)" class="text-sm text-gray-400 ml-auto">
+            .{{ fileExtension(file) }}
+          </span>
+        </div>
       </NuxtLink>
       <FileButtons :file-path="`${path ? path + ':' : ''}${file}`" />
     </div>
