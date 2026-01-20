@@ -5,9 +5,7 @@ import usePathParam from '../../../composables/usePathParam'
 import { useFetch } from '#imports'
 
 const { path } = usePathParam()
-const { data: table } = await useFetch<{ headers: string[], rows: string[][] }>(`/api/admin/content/${path}/csv`, {
-  method: 'GET',
-})
+const { data: table } = await useFetch<{ headers: string[], rows: string[][] }>(`/api/admin/csv?path=${path}`)
 
 const isSaving = ref(false)
 const savingSuccessful = ref(false)
@@ -19,7 +17,7 @@ async function saveCsv() {
   savingSuccessful.value = false
 
   try {
-    await useFetch(`/api/admin/content/${path}/csv`, {
+    await useFetch(`/api/admin/csv?path=${path}`, {
       method: 'POST',
       body: {
         table: table.value,

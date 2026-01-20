@@ -19,7 +19,7 @@ const { path } = usePathParam()
       PDF austauschen
     </button>
     <embed
-      :src="`/api/admin/content/${path}/blob`"
+      :src="`/api/admin/blob?path=${path}`"
       type="application/pdf"
       class="w-full h-auto aspect-[5.5/8] border border-gray-200 rounded-sm"
     >

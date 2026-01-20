@@ -7,9 +7,7 @@ import { useFetch } from '#imports'
 import FrontmatterForm from './frontmatterForm.vue'
 
 const { path } = usePathParam()
-const { data: content } = await useFetch<{ frontmatter: Record<string, any>, markdown: string }>(`/api/admin/content/${path}/markdown`, {
-  method: 'GET',
-})
+const { data: content } = await useFetch<{ frontmatter: Record<string, any>, markdown: string }>(`/api/admin/md?path=${path}`)
 
 const isSaving = ref(false)
 const savingSuccessful = ref(false)
@@ -20,7 +18,7 @@ async function saveMarkdown() {
   isSaving.value = true
   savingSuccessful.value = false
 
-  await useFetch(`/api/admin/content/${path}/markdown`, {
+  await useFetch(`/api/admin/md?path=${path}`, {
     method: 'POST',
     body: {
       frontmatter: content.value.frontmatter,

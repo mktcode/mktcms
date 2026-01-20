@@ -74,45 +74,41 @@ export default defineNuxtModule({
 
     // CSV
     addServerHandler({
-      route: '/api/admin/content/:path/csv',
-      method: 'get',
-      handler: resolver.resolve('./runtime/server/api/admin/content/[path]/csv.get'),
+      route: '/api/admin/csv',
+      handler: resolver.resolve('./runtime/server/api/admin/csv'),
     })
     addServerHandler({
-      route: '/api/admin/content/:path/csv',
+      route: '/api/admin/csv',
       method: 'post',
-      handler: resolver.resolve('./runtime/server/api/admin/content/[path]/csv.post'),
+      handler: resolver.resolve('./runtime/server/api/admin/csv.post'),
     })
 
     // Markdown
     addServerHandler({
-      route: '/api/admin/content/:path/markdown',
-      method: 'get',
-      handler: resolver.resolve('./runtime/server/api/admin/content/[path]/markdown.get'),
+      route: '/api/admin/md',
+      handler: resolver.resolve('./runtime/server/api/admin/md'),
     })
     addServerHandler({
-      route: '/api/admin/content/:path/markdown',
+      route: '/api/admin/md',
       method: 'post',
-      handler: resolver.resolve('./runtime/server/api/admin/content/[path]/markdown.post'),
+      handler: resolver.resolve('./runtime/server/api/admin/md.post'),
     })
 
     // Txt
     addServerHandler({
-      route: '/api/admin/content/:path/txt',
-      method: 'get',
-      handler: resolver.resolve('./runtime/server/api/admin/content/[path]/txt.get'),
+      route: '/api/admin/txt',
+      handler: resolver.resolve('./runtime/server/api/admin/txt'),
     })
     addServerHandler({
-      route: '/api/admin/content/:path/txt',
+      route: '/api/admin/txt',
       method: 'post',
-      handler: resolver.resolve('./runtime/server/api/admin/content/[path]/txt.post'),
+      handler: resolver.resolve('./runtime/server/api/admin/txt.post'),
     })
 
     // Blob
     addServerHandler({
-      route: '/api/admin/content/:path/blob',
-      method: 'get',
-      handler: resolver.resolve('./runtime/server/api/admin/content/[path]/blob.get'),
+      route: '/api/admin/blob',
+      handler: resolver.resolve('./runtime/server/api/admin/blob'),
     })
     
     // Upload

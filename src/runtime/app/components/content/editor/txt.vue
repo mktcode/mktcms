@@ -4,9 +4,7 @@ import usePathParam from '../../../composables/usePathParam'
 import { ref, useFetch } from '#imports'
 
 const { path } = usePathParam()
-const { data: content } = await useFetch<string>(`/api/admin/content/${path}/txt`, {
-  method: 'GET',
-})
+const { data: content } = await useFetch<string>(`/api/admin/txt?path=${path}`)
 
 const isSaving = ref(false)
 const savingSuccessful = ref(false)
@@ -17,10 +15,10 @@ async function saveContent() {
   isSaving.value = true
   savingSuccessful.value = false
 
-  await useFetch(`/api/admin/content/${path}/txt`, {
+  await useFetch(`/api/admin/txt?path=${path}`, {
     method: 'POST',
     body: {
-      content: content.value,
+      text: content.value,
     },
   })
 

@@ -20,7 +20,7 @@ const { path } = usePathParam()
     </button>
 
     <img
-      :src="`/api/admin/content/${path}/blob`"
+      :src="`/api/admin/blob?path=${path}`"
       alt="Image Preview"
       class="w-full h-auto border border-gray-200 rounded-sm p-1"
     >
