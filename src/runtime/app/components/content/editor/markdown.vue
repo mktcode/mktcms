@@ -4,10 +4,13 @@ import { marked, type Tokens } from 'marked'
 import Saved from '../saved.vue'
 import usePathParam from '../../../composables/usePathParam'
 import { useFetch } from '#imports'
-import FrontmatterForm from './frontmatterForm.vue'
+import FrontmatterForm from './frontmatter/form.vue'
 
 const { path } = usePathParam()
 const { data: content } = await useFetch<{ frontmatter: Record<string, any>, markdown: string }>(`/api/admin/md?path=${path}`)
+
+const frontmatter = ref<Record<string, any>>(content.value?.frontmatter ?? {})
+const markdown = ref<string>(content.value?.markdown ?? '')
 
 const isSaving = ref(false)
 const savingSuccessful = ref(false)
@@ -21,8 +24,8 @@ async function saveMarkdown() {
   await useFetch(`/api/admin/md?path=${path}`, {
     method: 'POST',
     body: {
-      frontmatter: content.value.frontmatter,
-      markdown: content.value.markdown,
+      frontmatter: frontmatter.value,
+      markdown: markdown.value,
     },
   })
 
@@ -90,7 +93,7 @@ const renderedHtml = computed(() => {
 
 <template>
   <div v-if="content">
-    <FrontmatterForm v-model:frontmatter="content.frontmatter" />
+    <FrontmatterForm v-model:frontmatter="frontmatter" />
     <div class="flex gap-2 my-2">
       <button
         type="button"
@@ -112,7 +115,7 @@ const renderedHtml = computed(() => {
 
     <textarea
       v-if="mode === 'edit'"
-      v-model="content.markdown"
+      v-model="markdown"
       class="w-full min-h-72"
     />
 
