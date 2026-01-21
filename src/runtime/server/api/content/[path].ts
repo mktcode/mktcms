@@ -4,6 +4,15 @@ import { useRuntimeConfig, useStorage } from 'nitropack/runtime'
 import { toNodeBuffer } from '../../utils/toNodeBuffer'
 import { parsedFile } from '../../utils/parsedFile'
 
+function getFileType(path: string) {
+  const isImage = path.match(/\.(png|jpg|jpeg|gif|svg|webp)$/i)
+  const isPdf = path.endsWith('.pdf')
+  const isJson = path.endsWith('.json')
+  const isCSV = path.endsWith('.csv')
+  const isMarkdown = path.endsWith('.md')
+  return { isImage, isPdf, isJson, isCSV, isMarkdown }
+}
+
 const paramsSchema = z.object({
   path: z.string().min(1),
 })
@@ -15,12 +24,8 @@ export default defineEventHandler(async (event) => {
   const { mktcms: { s3Prefix } } = useRuntimeConfig()
   const fullPath = s3Prefix + ':' + decodedPath
 
-  const isImage = decodedPath.match(/\.(png|jpg|jpeg|gif|svg|webp)$/i)
-  const isPdf = decodedPath.endsWith('.pdf')
-  const isJson = decodedPath.endsWith('.json')
-  const isCSV = decodedPath.endsWith('.csv')
-  const isMarkdown = decodedPath.endsWith('.md')
-
+  const { isImage, isPdf, isJson, isCSV, isMarkdown } = getFileType(decodedPath)
+  
   if (isImage) {
     const ext = decodedPath.split('.').pop()?.toLowerCase()
 
