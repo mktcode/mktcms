@@ -13,6 +13,33 @@ function getFileType(path: string) {
   return { isImage, isPdf, isJson, isCSV, isMarkdown }
 }
 
+function getContentType(path: string) {
+  const { isImage, isPdf, isJson, isCSV, isMarkdown } = getFileType(path)
+
+  if (isImage) {
+    const ext = path.split('.').pop()?.toLowerCase()
+
+    if (ext === 'svg') {
+      return 'image/svg+xml'
+    }
+    else if (ext === 'jpg') {
+      return 'image/jpeg'
+    }
+    else {
+      return 'image/' + ext
+    }
+  }
+  else if (isPdf) {
+    return 'application/pdf'
+  }
+  else if (isJson || isCSV || isMarkdown) {
+    return 'application/json; charset=utf-8'
+  }
+  else {
+    return 'text/plain; charset=utf-8'
+  }
+}
+
 const paramsSchema = z.object({
   path: z.string().min(1),
 })
@@ -24,30 +51,9 @@ export default defineEventHandler(async (event) => {
   const { mktcms: { s3Prefix } } = useRuntimeConfig()
   const fullPath = s3Prefix + ':' + decodedPath
 
-  const { isImage, isPdf, isJson, isCSV, isMarkdown } = getFileType(decodedPath)
-  
-  if (isImage) {
-    const ext = decodedPath.split('.').pop()?.toLowerCase()
+  const { isImage, isPdf } = getFileType(decodedPath)
 
-    if (ext === 'svg') {
-      event.node.res.setHeader('Content-Type', 'image/svg+xml')
-    }
-    else if (ext === 'jpg') {
-      event.node.res.setHeader('Content-Type', 'image/jpeg')
-    }
-    else {
-      event.node.res.setHeader('Content-Type', 'image/' + ext)
-    }
-  }
-  else if (isPdf) {
-    event.node.res.setHeader('Content-Type', 'application/pdf')
-  }
-  else if (isJson || isCSV || isMarkdown) {
-    event.node.res.setHeader('Content-Type', 'application/json; charset=utf-8')
-  }
-  else {
-    event.node.res.setHeader('Content-Type', 'text/plain; charset=utf-8')
-  }
+  event.node.res.setHeader('Content-Type', getContentType(decodedPath))
 
   const storage = useStorage('content')
 
