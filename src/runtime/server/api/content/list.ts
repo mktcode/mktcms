@@ -31,6 +31,9 @@ export default defineEventHandler(async (event) => {
     if (type === 'txt') {
       return key.endsWith('.txt')
     }
+    if (type === 'image') {
+      return key.match(/\.(png|jpg|jpeg|gif|svg|webp)$/i)
+    }
     return false
   })
 
