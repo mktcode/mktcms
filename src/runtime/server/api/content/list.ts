@@ -34,6 +34,10 @@ export default defineEventHandler(async (event) => {
     return false
   })
 
+  if (type === 'image') {
+    return filteredKeys.map((key) => key.replace(s3Prefix + ':', ''))
+  }
+
   const items = await storage.getItems(filteredKeys)
 
   return items.map((item) => {
