@@ -4,25 +4,7 @@ import { useRuntimeConfig, useStorage } from 'nitropack/runtime'
 import { parse } from 'csv-parse/sync'
 import { marked } from 'marked'
 import { parseFrontmatter } from '../../utils/parseFrontmatter'
-
-function toNodeBuffer(raw: unknown): Buffer {
-  if (Buffer.isBuffer(raw)) {
-    return raw
-  }
-
-  if (raw instanceof ArrayBuffer) {
-    return Buffer.from(raw)
-  }
-
-  if (ArrayBuffer.isView(raw)) {
-    return Buffer.from(raw.buffer, raw.byteOffset, raw.byteLength)
-  }
-
-  throw createError({
-    statusCode: 500,
-    statusMessage: 'Invalid binary file',
-  })
-}
+import { toNodeBuffer } from '../../utils/toNodeBuffer'
 
 function parsedFile(fullPath: string, file: string | number | boolean | object) {
   if (fullPath.endsWith('.json') && typeof file === 'string') {

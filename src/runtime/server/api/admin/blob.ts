@@ -1,29 +1,7 @@
 import { z } from 'zod'
 import { createError, defineEventHandler, getValidatedQuery, send } from 'h3'
 import { useRuntimeConfig, useStorage } from 'nitropack/runtime'
-
-function toNodeBuffer(raw: unknown): Buffer {
-  if (Buffer.isBuffer(raw)) {
-    return raw
-  }
-
-  if (typeof raw === 'string') {
-    return Buffer.from(raw)
-  }
-
-  if (raw instanceof ArrayBuffer) {
-    return Buffer.from(raw)
-  }
-
-  if (ArrayBuffer.isView(raw)) {
-    return Buffer.from(raw.buffer, raw.byteOffset, raw.byteLength)
-  }
-
-  throw createError({
-    statusCode: 500,
-    statusMessage: 'Invalid binary file',
-  })
-}
+import { toNodeBuffer } from '../../utils/toNodeBuffer'
 
 const querySchema = z.object({
   path: z.string().min(1),
