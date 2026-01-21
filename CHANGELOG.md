@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.1.27
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.26...v0.1.27)
+
+### 🩹 Fixes
+
+- Ensure image type filtering works correctly in content list ([3626f4f](https://github.com/mktcode/mktcms/commit/3626f4f))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.26
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.25...v0.1.26)
