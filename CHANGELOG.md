@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.1.26
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.25...v0.1.26)
+
+### 🚀 Enhancements
+
+- Add support for returning image keys in content list ([6ac34b2](https://github.com/mktcode/mktcms/commit/6ac34b2))
+
+### 🏡 Chore
+
+- Linter ([52baab5](https://github.com/mktcode/mktcms/commit/52baab5))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.25
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.24...v0.1.25)
