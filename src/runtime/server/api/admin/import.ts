@@ -17,7 +17,7 @@ function zipPathToColonKey(entryPath: string): string {
   let p = original.replace(/^\.\//, '')
 
   // Reject Windows drive-letter absolute paths (e.g. C:/foo).
-  if (/^[a-zA-Z]:\//.test(p)) {
+  if (/^[a-z]:\//i.test(p)) {
     return ''
   }
 

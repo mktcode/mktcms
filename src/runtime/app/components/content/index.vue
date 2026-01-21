@@ -27,18 +27,24 @@ const { fileInput, uploadFile } = useImport()
       style="margin-top: 8px;"
     />
 
-    <div v-if="list?.files.length === 0 && list.dirs.length === 0" class="flex flex-col gap-4">
+    <div
+      v-if="list?.files.length === 0 && list.dirs.length === 0"
+      class="flex flex-col gap-4"
+    >
       <p>Keine Dateien oder Verzeichnisse gefunden.</p>
-      <button class="button" @click="fileInput?.click()">
+      <button
+        class="button"
+        @click="fileInput?.click()"
+      >
         Dateien importieren
       </button>
       <input
-        type="file"
         ref="fileInput"
+        type="file"
         class="hidden"
         accept=".zip"
         @change="async (e) => { await uploadFile(e); await refresh(); }"
-      />
+      >
     </div>
   </div>
 </template>
