@@ -45,6 +45,7 @@
     "defu": "^6.1.4",
     "marked": "^17.0.1",
     "nodemailer": "^7.0.12",
+    "unzipper": "^0.12.3",
     "yaml": "^2.8.2",
     "zod": "^4.3.5"
   },
@@ -58,6 +59,7 @@
     "@tailwindcss/typography": "^0.5.19",
     "@types/node": "latest",
     "@types/nodemailer": "^7.0.5",
+    "@types/unzipper": "^0.10.11",
     "changelogen": "^0.6.2",
     "eslint": "^9.39.2",
     "nuxt": "^4.2.2",

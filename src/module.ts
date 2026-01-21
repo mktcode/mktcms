@@ -111,6 +111,12 @@ export default defineNuxtModule({
       handler: resolver.resolve('./runtime/server/api/admin/blob'),
     })
 
+    // Import
+    addServerHandler({
+      route: '/api/admin/import',
+      method: 'post',
+      handler: resolver.resolve('./runtime/server/api/admin/import'),
+    })
     // Upload
     addServerHandler({
       route: '/api/admin/upload',
