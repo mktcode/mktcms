@@ -1,4 +1,7 @@
-# Default
+---
+Bild: katze 2ä.jpg
+---
+# Artikel 1
 
 This is default content.
 
