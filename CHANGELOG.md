@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.1.28
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.27...v0.1.28)
+
+### 🚀 Enhancements
+
+- Import ([ed0f47e](https://github.com/mktcode/mktcms/commit/ed0f47e))
+
+### 🏡 Chore
+
+- Linter ([c1f0733](https://github.com/mktcode/mktcms/commit/c1f0733))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.27
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.26...v0.1.27)
