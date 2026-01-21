@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.1.30
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.29...v0.1.30)
+
+### 🩹 Fixes
+
+- File type issues with s3 ([eeeb011](https://github.com/mktcode/mktcms/commit/eeeb011))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.29
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.28...v0.1.29)
