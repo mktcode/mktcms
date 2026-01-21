@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v0.1.29
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.28...v0.1.29)
+
+### 🩹 Fixes
+
+- File handling with toNodeBuffer function and improved response management ([3880906](https://github.com/mktcode/mktcms/commit/3880906))
+
+### 💅 Refactors
+
+- Move toNodeBuffer to own util file ([6f7d74e](https://github.com/mktcode/mktcms/commit/6f7d74e))
+
+### 🏡 Chore
+
+- Linter ([e799692](https://github.com/mktcode/mktcms/commit/e799692))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.28
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.27...v0.1.28)
