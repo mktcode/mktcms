@@ -41,13 +41,13 @@ export default defineEventHandler(async (event) => {
   }
 
   // TODO: allow all image types and convert to webp on the fly
-  const allowedExtensions = ['.pdf', '.jpg', '.jpeg', '.png', '.gif', '.svg', '.webp', '.md', '.docx', '.txt']
+  const allowedExtensions = ['.pdf', '.jpg', '.jpeg', '.png', '.gif', '.svg', '.webp', '.md', '.docx', '.txt', '.csv', '.json']
   const fileExtension = file.filename.toLowerCase().slice(file.filename.lastIndexOf('.'))
 
   if (!allowedExtensions.includes(fileExtension)) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Invalid file type. Only PDF, JPG, JPEG, and PNG files are allowed.',
+      statusMessage: 'Invalid file type. Only PDF, JPG, JPEG, PNG, GIF, SVG, WEBP, MD, DOCX, TXT, CSV, and JSON files are allowed.',
     })
   }
 

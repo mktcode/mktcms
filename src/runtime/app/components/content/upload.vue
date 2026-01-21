@@ -103,7 +103,7 @@ onMounted(() => {
       ref="fileInput"
       class="hidden"
       type="file"
-      accept=".pdf,.jpg,.jpeg,.png,.gif,.svg,.webp,.md,.docx,.txt"
+      accept=".pdf,.jpg,.jpeg,.png,.gif,.svg,.webp,.md,.docx,.txt,.csv,.json"
       @change="async (e) => { await uploadFiles(e); }"
     >
     <input

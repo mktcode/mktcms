@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
   const fullPath = s3Prefix + ':' + decodedPath
 
   const storage = useStorage('content')
-  const file = await storage.getItemRaw(fullPath)
+  const file = await storage.getItem<string>(fullPath)
 
   if (!file) {
     throw createError({
@@ -23,5 +23,5 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  return file.toString('utf-8')
+  return file
 })
