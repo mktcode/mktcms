@@ -1,9 +1,28 @@
 import { z } from 'zod'
-import { createError, defineEventHandler, getValidatedRouterParams } from 'h3'
+import { createError, defineEventHandler, getValidatedRouterParams, send } from 'h3'
 import { useRuntimeConfig, useStorage } from 'nitropack/runtime'
 import { parse } from 'csv-parse/sync'
 import { marked } from 'marked'
 import { parseFrontmatter } from '../../utils/parseFrontmatter'
+
+function toNodeBuffer(raw: unknown): Buffer {
+  if (Buffer.isBuffer(raw)) {
+    return raw
+  }
+
+  if (raw instanceof ArrayBuffer) {
+    return Buffer.from(raw)
+  }
+
+  if (ArrayBuffer.isView(raw)) {
+    return Buffer.from(raw.buffer, raw.byteOffset, raw.byteLength)
+  }
+
+  throw createError({
+    statusCode: 500,
+    statusMessage: 'Invalid binary file',
+  })
+}
 
 function parsedFile(fullPath: string, file: string | number | boolean | object) {
   if (fullPath.endsWith('.json') && typeof file === 'string') {
@@ -76,7 +95,17 @@ export default defineEventHandler(async (event) => {
   const isMarkdown = decodedPath.endsWith('.md')
 
   if (isImage) {
-    event.node.res.setHeader('Content-Type', 'image/' + decodedPath.split('.').pop()?.toLowerCase())
+    const ext = decodedPath.split('.').pop()?.toLowerCase()
+
+    if (ext === 'svg') {
+      event.node.res.setHeader('Content-Type', 'image/svg+xml')
+    }
+    else if (ext === 'jpg') {
+      event.node.res.setHeader('Content-Type', 'image/jpeg')
+    }
+    else {
+      event.node.res.setHeader('Content-Type', 'image/' + ext)
+    }
   }
   else if (isPdf) {
     event.node.res.setHeader('Content-Type', 'application/pdf')
@@ -89,7 +118,23 @@ export default defineEventHandler(async (event) => {
   }
 
   const storage = useStorage('content')
-  const file = isImage || isPdf ? await storage.getItemRaw(fullPath) : await storage.getItem(fullPath)
+
+  if (isImage || isPdf) {
+    const raw = await storage.getItemRaw(fullPath)
+
+    if (!raw) {
+      throw createError({
+        statusCode: 404,
+        statusMessage: 'File not found',
+      })
+    }
+
+    const body = toNodeBuffer(raw)
+    event.node.res.setHeader('Content-Length', String(body.byteLength))
+    return send(event, body)
+  }
+
+  const file = await storage.getItem(fullPath)
 
   if (!file) {
     throw createError({

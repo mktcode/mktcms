@@ -1,6 +1,29 @@
 import { z } from 'zod'
-import { createError, defineEventHandler, getValidatedQuery } from 'h3'
+import { createError, defineEventHandler, getValidatedQuery, send } from 'h3'
 import { useRuntimeConfig, useStorage } from 'nitropack/runtime'
+
+function toNodeBuffer(raw: unknown): Buffer {
+  if (Buffer.isBuffer(raw)) {
+    return raw
+  }
+
+  if (typeof raw === 'string') {
+    return Buffer.from(raw)
+  }
+
+  if (raw instanceof ArrayBuffer) {
+    return Buffer.from(raw)
+  }
+
+  if (ArrayBuffer.isView(raw)) {
+    return Buffer.from(raw.buffer, raw.byteOffset, raw.byteLength)
+  }
+
+  throw createError({
+    statusCode: 500,
+    statusMessage: 'Invalid binary file',
+  })
+}
 
 const querySchema = z.object({
   path: z.string().min(1),
@@ -40,5 +63,7 @@ export default defineEventHandler(async (event) => {
   const contentType = mimeTypes[extension] || 'application/octet-stream'
   event.node.res.setHeader('Content-Type', contentType)
 
-  return file
+  const body = toNodeBuffer(file)
+  event.node.res.setHeader('Content-Length', String(body.byteLength))
+  return send(event, body)
 })
