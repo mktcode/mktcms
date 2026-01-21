@@ -45,10 +45,9 @@ const paramsSchema = z.object({
 })
 
 export default defineEventHandler(async (event) => {
+  const { mktcms: { s3Prefix } } = useRuntimeConfig()
   const { path } = await getValidatedRouterParams(event, params => paramsSchema.parse(params))
   const decodedPath = decodeURIComponent(path)
-
-  const { mktcms: { s3Prefix } } = useRuntimeConfig()
   const fullPath = s3Prefix + ':' + decodedPath
 
   const { isImage, isPdf } = getFileType(decodedPath)
