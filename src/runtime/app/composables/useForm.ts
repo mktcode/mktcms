@@ -40,7 +40,9 @@ export function useForm(
 
     validate(body)
 
-    if (validationErrors.value) return
+    if (Object.keys(validationErrors.value).length > 0) {
+      return
+    }
 
     isSending.value = true
 
