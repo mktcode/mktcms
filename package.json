@@ -39,7 +39,6 @@
   "dependencies": {
     "@nuxt/kit": "^4.2.2",
     "@vueuse/core": "^14.1.0",
-    "aws4fetch": "^1.0.20",
     "csv-parse": "^6.1.0",
     "csv-stringify": "^6.6.0",
     "defu": "^6.1.4",
