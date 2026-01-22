@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v0.1.33
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.32...v0.1.33)
+
+### 🚀 Enhancements
+
+- Add useForm composable for form handling ([5dc873c](https://github.com/mktcode/mktcms/commit/5dc873c))
+- Enhance useForm composable with validation schema and error handling ([a48c6fd](https://github.com/mktcode/mktcms/commit/a48c6fd))
+
+### 🏡 Chore
+
+- Linter ([116eb46](https://github.com/mktcode/mktcms/commit/116eb46))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.32
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.31...v0.1.32)
