@@ -51,6 +51,10 @@ export default defineNuxtModule({
         name: 'useTxtContents',
         as: 'useTxtContents',
         from: resolver.resolve('runtime/app/composables/useTxtContents'),
+      }, {
+        name: 'useForm',
+        as: 'useForm',
+        from: resolver.resolve('runtime/app/composables/useForm'),
       },
     ])
 
