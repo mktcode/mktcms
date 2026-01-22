@@ -1,6 +1,34 @@
 # Changelog
 
 
+## v0.1.31
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.30...v0.1.31)
+
+### 🚀 Enhancements
+
+- Remove s3 ([afaf24b](https://github.com/mktcode/mktcms/commit/afaf24b))
+
+### 🩹 Fixes
+
+- Path handling ([2387628](https://github.com/mktcode/mktcms/commit/2387628))
+
+### 💅 Refactors
+
+- Move parsedFile function to its own utility file ([ab0f4b5](https://github.com/mktcode/mktcms/commit/ab0f4b5))
+- Put code to function ([f72ce67](https://github.com/mktcode/mktcms/commit/f72ce67))
+- Extract content type logic into separate function ([ec2ba50](https://github.com/mktcode/mktcms/commit/ec2ba50))
+- Move s3Prefix extraction to the top of the event handler ([489ac7d](https://github.com/mktcode/mktcms/commit/489ac7d))
+
+### 🏡 Chore
+
+- Update version to 0.1.30 and remove aws4fetch dependency ([5184b04](https://github.com/mktcode/mktcms/commit/5184b04))
+- Linter ([6c7f6db](https://github.com/mktcode/mktcms/commit/6c7f6db))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.30
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.29...v0.1.30)
