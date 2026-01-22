@@ -1,16 +1,12 @@
 <script setup lang="ts">
-const { public: { mktcms: { siteUrl } } } = useRuntimeConfig()
+const siteUrl = useSiteUrl()
 
-const { data: md } = await useFetch<{ frontmatter: Record<string, any>, markdown: string, html: string }>('/api/content/default.md')
-const { data: csv } = await useFetch<{ Title: string, Description: string }[]>('/api/content/default.csv')
-const { data: txt } = await useFetch<string>('/api/content/default.txt')
+const md = await useMdContent('default.md')
+const csv = await useCsvContent('default.csv')
+const txt = await useTxtContent('default.txt')
+const products = await useMdContents('Meine Produkte')
+
 const { data: margherita } = await useFetch<{ name: string, description: string, price: number, ingredients: string[], vegetarian: boolean, image: string }>('/api/content/products:food:margherita.json')
-const { data: products } = await useFetch<{ key: string, value: { frontmatter: Record<string, any>, markdown: string, html: string } }[]>('/api/content/list', {
-  query: {
-    path: 'Meine Produkte',
-    type: 'md',
-  },
-})
 
 const isSending = ref(false)
 const sendingError = ref<string | null>(null)
@@ -92,12 +88,12 @@ async function sendMessage() {
   <div>
     <h2>CSV Content</h2>
     <div
-      v-for="row in csv"
-      :key="row.Title"
+      v-for="row in csv.rows"
+      :key="row[0]"
       style="margin-bottom: 10px;"
     >
-      <strong>{{ row.Title }}</strong><br>
-      Description: {{ row.Description }}<br>
+      <strong>{{ row[0] }}</strong><br>
+      Description: {{ row[1] }}<br>
     </div>
   </div>
 

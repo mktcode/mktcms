@@ -1,4 +1,4 @@
-import { defineNuxtModule, addServerPlugin, createResolver, addServerHandler, extendPages, addServerImports } from '@nuxt/kit'
+import { defineNuxtModule, addServerPlugin, createResolver, addServerHandler, extendPages, addServerImports, addImports } from '@nuxt/kit'
 import defu from 'defu'
 
 export default defineNuxtModule({
@@ -24,6 +24,35 @@ export default defineNuxtModule({
     _nuxt.options.runtimeConfig.public.mktcms = defu((_nuxt.options.runtimeConfig.public.mktcms, {
       siteUrl: '',
     }))
+
+    // Add frontend composables
+    addImports([
+      {
+        name: 'useSiteUrl',
+        as: 'useSiteUrl',
+        from: resolver.resolve('runtime/app/composables/useSiteUrl'),
+      }, {
+        name: 'useMdContent',
+        as: 'useMdContent',
+        from: resolver.resolve('runtime/app/composables/useMdContent'),
+      }, {
+        name: 'useMdContents',
+        as: 'useMdContents',
+        from: resolver.resolve('runtime/app/composables/useMdContents'),
+      }, {
+        name: 'useCsvContent',
+        as: 'useCsvContent',
+        from: resolver.resolve('runtime/app/composables/useCsvContent'),
+      }, {
+        name: 'useTxtContent',
+        as: 'useTxtContent',
+        from: resolver.resolve('runtime/app/composables/useTxtContent'),
+      }, {
+        name: 'useTxtContents',
+        as: 'useTxtContents',
+        from: resolver.resolve('runtime/app/composables/useTxtContents'),
+      },
+    ])
 
     // Add server utils (avoid scanning directories that may contain generated .d.ts files)
     addServerImports({
