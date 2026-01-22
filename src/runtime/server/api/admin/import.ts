@@ -1,5 +1,5 @@
 import { createError, defineEventHandler, readMultipartFormData } from 'h3'
-import { useRuntimeConfig, useStorage } from 'nitropack/runtime'
+import { useStorage } from 'nitropack/runtime'
 import path from 'node:path'
 import unzipper from 'unzipper'
 

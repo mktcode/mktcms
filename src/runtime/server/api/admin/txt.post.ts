@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { defineEventHandler, getValidatedQuery, readValidatedBody } from 'h3'
-import { useRuntimeConfig, useStorage } from 'nitropack/runtime'
+import { useStorage } from 'nitropack/runtime'
 
 const querySchema = z.object({
   path: z.string().min(1),

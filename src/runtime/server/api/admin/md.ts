@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { createError, defineEventHandler, getValidatedQuery } from 'h3'
-import { useRuntimeConfig, useStorage } from 'nitropack/runtime'
+import { useStorage } from 'nitropack/runtime'
 import { parseFrontmatter } from '../../utils/parseFrontmatter'
 
 const querySchema = z.object({

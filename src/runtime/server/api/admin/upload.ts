@@ -1,6 +1,6 @@
 import z from 'zod'
 import { createError, defineEventHandler, getValidatedQuery, readMultipartFormData } from 'h3'
-import { useRuntimeConfig, useStorage } from 'nitropack/runtime'
+import { useStorage } from 'nitropack/runtime'
 
 function sanitizeFilename(filename: string): string {
   return filename.replace(/[/:\\]/g, '_')

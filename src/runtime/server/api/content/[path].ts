@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { createError, defineEventHandler, getValidatedRouterParams, send } from 'h3'
-import { useRuntimeConfig, useStorage } from 'nitropack/runtime'
+import { useStorage } from 'nitropack/runtime'
 import { toNodeBuffer } from '../../utils/toNodeBuffer'
 import { parsedFile } from '../../utils/parsedFile'
 

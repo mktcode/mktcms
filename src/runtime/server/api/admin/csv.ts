@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { createError, defineEventHandler, getValidatedQuery } from 'h3'
-import { useRuntimeConfig, useStorage } from 'nitropack/runtime'
+import { useStorage } from 'nitropack/runtime'
 import { parse } from 'csv-parse/sync'
 
 const querySchema = z.object({
