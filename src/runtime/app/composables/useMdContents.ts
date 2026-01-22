@@ -5,6 +5,6 @@ export async function useMdContents(path: string) {
       type: 'md',
     },
   })
-  
+
   return contents
 }

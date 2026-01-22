@@ -5,6 +5,6 @@ export async function useTxtContents(path: string) {
       type: 'txt',
     },
   })
-  
+
   return contents
 }
