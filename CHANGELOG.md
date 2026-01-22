@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v0.1.32
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.31...v0.1.32)
+
+### 🚀 Enhancements
+
+- Add composables for content fetching and update index page ([67755fc](https://github.com/mktcode/mktcms/commit/67755fc))
+
+### 🏡 Chore
+
+- Playground ([4faa3bd](https://github.com/mktcode/mktcms/commit/4faa3bd))
+- Linter ([8bae18c](https://github.com/mktcode/mktcms/commit/8bae18c))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.31
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.30...v0.1.31)
