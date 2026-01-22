@@ -29,11 +29,8 @@ export default defineEventHandler(async (event) => {
 
   const content = buildContent(frontmatter, markdown)
 
-  const { mktcms: { s3Prefix } } = useRuntimeConfig()
-  const fullPath = s3Prefix + ':' + decodedPath
-
   const storage = useStorage('content')
-  await storage.setItem(fullPath, content)
+  await storage.setItem(decodedPath, content)
 
   return { success: true }
 })

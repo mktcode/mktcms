@@ -45,10 +45,8 @@ const paramsSchema = z.object({
 })
 
 export default defineEventHandler(async (event) => {
-  const { mktcms: { s3Prefix } } = useRuntimeConfig()
   const { path } = await getValidatedRouterParams(event, params => paramsSchema.parse(params))
   const decodedPath = decodeURIComponent(path)
-  const fullPath = s3Prefix + ':' + decodedPath
 
   const { isImage, isPdf } = getFileType(decodedPath)
 
@@ -57,7 +55,7 @@ export default defineEventHandler(async (event) => {
   const storage = useStorage('content')
 
   if (isImage || isPdf) {
-    const raw = await storage.getItemRaw(fullPath)
+    const raw = await storage.getItemRaw(decodedPath)
 
     if (!raw) {
       throw createError({
@@ -71,7 +69,7 @@ export default defineEventHandler(async (event) => {
     return send(event, body)
   }
 
-  const file = await storage.getItem(fullPath)
+  const file = await storage.getItem(decodedPath)
 
   if (!file) {
     throw createError({
@@ -80,5 +78,5 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  return parsedFile(fullPath, file)
+  return parsedFile(decodedPath, file)
 })

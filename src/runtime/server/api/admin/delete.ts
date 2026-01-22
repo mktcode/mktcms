@@ -10,11 +10,8 @@ export default defineEventHandler(async (event) => {
   const { path } = await getValidatedQuery(event, query => querySchema.parse(query))
   const decodedPath = decodeURIComponent(path)
 
-  const { mktcms: { s3Prefix } } = useRuntimeConfig()
-  const fullPath = s3Prefix + ':' + decodedPath
-
   const storage = useStorage('content')
-  await storage.removeItem(fullPath)
+  await storage.removeItem(decodedPath)
 
   return { success: true }
 })

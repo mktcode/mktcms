@@ -40,13 +40,8 @@ function zipPathToColonKey(entryPath: string): string {
   return sanitizedParts.join(':')
 }
 
-function withPrefix(s3Prefix: string, colonKey: string): string {
-  return [s3Prefix, colonKey].filter(Boolean).join(':')
-}
-
 export default defineEventHandler(async (event) => {
   const form = await readMultipartFormData(event)
-  const { mktcms: { s3Prefix } } = useRuntimeConfig()
 
   if (!form) {
     throw createError({
@@ -111,10 +106,9 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    const fullKey = withPrefix(s3Prefix, fileColonKey)
     const data = await entry.buffer()
-    await storage.setItemRaw(fullKey, data)
-    written.add(fullKey)
+    await storage.setItemRaw(fileColonKey, data)
+    written.add(fileColonKey)
   }
 
   return { success: true, count: written.size }

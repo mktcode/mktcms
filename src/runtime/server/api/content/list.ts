@@ -1,5 +1,5 @@
 import z from 'zod'
-import { useStorage, useRuntimeConfig } from 'nitropack/runtime'
+import { useStorage } from 'nitropack/runtime'
 import { defineEventHandler, getValidatedQuery } from 'h3'
 import { marked } from 'marked'
 import { parseFrontmatter } from '../../utils/parseFrontmatter'
@@ -13,10 +13,8 @@ export default defineEventHandler(async (event) => {
   const { path, type } = await getValidatedQuery(event, query => querySchema.parse(query))
   const decodedPath = path ? decodeURIComponent(path) : undefined
 
-  const { mktcms: { s3Prefix } } = useRuntimeConfig()
-
   const storage = useStorage('content')
-  const keys = await storage.getKeys(s3Prefix + (decodedPath ? ':' + decodedPath : ''))
+  const keys = await storage.getKeys(decodedPath)
 
   const filteredKeys = keys.filter((key) => {
     if (type === 'md') {
@@ -38,7 +36,7 @@ export default defineEventHandler(async (event) => {
   })
 
   if (type === 'image') {
-    return filteredKeys.map(key => key.replace(s3Prefix + ':', ''))
+    return filteredKeys
   }
 
   const items = await storage.getItems(filteredKeys)
@@ -48,7 +46,7 @@ export default defineEventHandler(async (event) => {
       const markdownItem = parseFrontmatter(item.value)
 
       return {
-        key: item.key.replace(s3Prefix + ':', ''),
+        key: item.key,
         value: {
           ...markdownItem,
           html: marked.parse(markdownItem.markdown),

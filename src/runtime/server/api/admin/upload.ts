@@ -12,7 +12,6 @@ const querySchema = z.object({
 
 export default defineEventHandler(async (event) => {
   const form = await readMultipartFormData(event)
-  const { mktcms: { s3Prefix } } = useRuntimeConfig()
 
   const { path } = await getValidatedQuery(event, query => querySchema.parse(query))
   const sanePath = path ? path.replace(/^\//, '').replace(/\/$/, '') : undefined
@@ -51,7 +50,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const filePath = [s3Prefix, sanePath, sanitizeFilename(file.filename)].filter(Boolean).join(':')
+  const filePath = [sanePath, sanitizeFilename(file.filename)].filter(Boolean).join(':')
   await useStorage('content').setItemRaw(filePath, Buffer.from(file.data))
 
   return { success: true, path: filePath }

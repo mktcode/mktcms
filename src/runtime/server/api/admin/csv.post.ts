@@ -20,9 +20,6 @@ export default defineEventHandler(async (event) => {
 
   const decodedPath = decodeURIComponent(path)
 
-  const { mktcms: { s3Prefix } } = useRuntimeConfig()
-  const fullPath = s3Prefix + ':' + decodedPath
-
   const content = stringify(table.rows, {
     header: true,
     columns: table.headers,
@@ -30,7 +27,7 @@ export default defineEventHandler(async (event) => {
   })
 
   const storage = useStorage('content')
-  await storage.setItem(fullPath, content)
+  await storage.setItem(decodedPath, content)
 
   return { success: true }
 })

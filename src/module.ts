@@ -12,12 +12,6 @@ export default defineNuxtModule({
     // Runtime Config
     _nuxt.options.runtimeConfig.mktcms = defu((_nuxt.options.runtimeConfig.mktcms, {
       adminAuthKey: '',
-      s3AccessKey: '',
-      s3SecretKey: '',
-      s3Endpoint: '',
-      s3Bucket: '',
-      s3Region: '',
-      s3Prefix: '',
       smtpHost: '',
       smtpPort: 465,
       smtpSecure: true,
@@ -37,7 +31,7 @@ export default defineNuxtModule({
       from: resolver.resolve('runtime/server/utils/sendMail'),
     })
 
-    // S3 Storage Plugin
+    // Storage Plugin
     addServerPlugin(resolver.resolve('./runtime/server/plugins/storage'))
 
     // Auth Middleware

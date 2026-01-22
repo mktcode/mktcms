@@ -11,9 +11,7 @@ export default defineEventHandler(async (event) => {
   const { path, type } = await getValidatedQuery(event, query => querySchema.parse(query))
   const decodedPath = path ? decodeURIComponent(path) : ''
 
-  const { mktcms: { s3Prefix } } = useRuntimeConfig()
-
-  const pathPrefix = s3Prefix + (decodedPath ? ':' + decodedPath : '')
+  const pathPrefix = decodedPath ? decodedPath : ''
   const storage = useStorage('content')
   const keys = await storage.getKeys(pathPrefix)
   const keysWithoutPrefix = keys.map(key => key.replace(pathPrefix + ':', ''))
