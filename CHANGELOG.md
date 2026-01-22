@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.1.34
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.33...v0.1.34)
+
+### 🩹 Fixes
+
+- Send function in useForm ([c71ccc4](https://github.com/mktcode/mktcms/commit/c71ccc4))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.33
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.32...v0.1.33)
