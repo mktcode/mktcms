@@ -5,7 +5,7 @@ export function useForm(
   endpoint: string,
   successMessageText: string,
   errorMessageText: string,
-  validationSchema: z.ZodObject<any>
+  validationSchema: z.ZodObject<any>,
 ) {
   const isSending = ref(false)
   const successMessage = ref('')
@@ -15,11 +15,12 @@ export function useForm(
 
   function validate(body: Record<string, any>) {
     const parseResult = validationSchema.safeParse(body)
-    
+
     if (parseResult.success) {
       validationErrors.value = {}
       return true
-    } else {
+    }
+    else {
       validationErrors.value = z.flattenError(parseResult.error).fieldErrors
       return false
     }
@@ -33,7 +34,7 @@ export function useForm(
 
   async function send(body: Record<string, any>) {
     if (isSending.value) return
-    
+
     successMessage.value = ''
     errorMessage.value = ''
 
@@ -48,9 +49,10 @@ export function useForm(
         method: 'POST',
         body,
       })
-  
+
       successMessage.value = successMessageText
-    } catch (error) {
+    }
+    catch {
       errorMessage.value = errorMessageText
     }
 
