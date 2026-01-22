@@ -78,7 +78,8 @@ async function sendMessage() {
       v-for="(product, index) in products"
       :key="index"
     >
-      <h2>Markdown Content</h2>
+      <h2>{{ product.value.frontmatter.Title }}</h2>
+      <h3>{{ product.key }}</h3>
       <img
         :src="`${siteUrl}/api/content/${product.value.frontmatter.Bild.replace(/\//g, ':')}`"
         alt="Bild aus Frontmatter"
