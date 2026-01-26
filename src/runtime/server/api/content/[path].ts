@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import { createError, getValidatedRouterParams, send } from 'h3'
-import { useStorage, defineCachedEventHandler } from 'nitropack/runtime'
+import { createError, defineEventHandler, getValidatedRouterParams, send } from 'h3'
+import { useStorage } from 'nitropack/runtime'
 import { createHash } from 'node:crypto'
 import { toNodeBuffer } from '../../utils/toNodeBuffer'
 import { parsedFile } from '../../utils/parsedFile'
@@ -45,7 +45,7 @@ const paramsSchema = z.object({
   path: z.string().min(1),
 })
 
-export default defineCachedEventHandler(async (event) => {
+export default defineEventHandler(async (event) => {
   const { path } = await getValidatedRouterParams(event, params => paramsSchema.parse(params))
   const decodedPath = decodeURIComponent(path)
 
@@ -80,7 +80,4 @@ export default defineCachedEventHandler(async (event) => {
   }
 
   return parsedFile(decodedPath, file)
-}, {
-  maxAge: 30,
-  getKey: event => `mktcms${createHash('sha256').update(decodeURIComponent(event.context.params!.path) || '').digest('hex')}`,
 })

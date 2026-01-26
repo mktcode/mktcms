@@ -33,9 +33,10 @@ export default defineEventHandler(async (event) => {
   const storage = useStorage('content')
   await storage.setItem(decodedPath, content)
 
-  const cache = useStorage('cache')
-  const cacheKey = `nitro:handlers:_:mktcms${createHash('sha256').update(decodedPath || '').digest('hex')}.json`
-  await cache.removeItem(cacheKey)
+  // Reactivate when caching is fixed (defineCachedEventHandler doesn't work with images/pdfs)
+  // const cache = useStorage('cache')
+  // const cacheKey = `nitro:handlers:_:mktcms${createHash('sha256').update(decodedPath || '').digest('hex')}.json`
+  // await cache.removeItem(cacheKey)
 
   return { success: true }
 })
