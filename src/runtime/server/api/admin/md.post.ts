@@ -2,6 +2,7 @@ import { z } from 'zod'
 import { defineEventHandler, getValidatedQuery, readValidatedBody } from 'h3'
 import { useStorage } from 'nitropack/runtime'
 import { stringify } from 'yaml'
+import { createHash } from 'node:crypto'
 
 const querySchema = z.object({
   path: z.string().min(1),
@@ -31,6 +32,10 @@ export default defineEventHandler(async (event) => {
 
   const storage = useStorage('content')
   await storage.setItem(decodedPath, content)
+
+  const cache = useStorage('cache')
+  const cacheKey = `nitro:handlers:_:mktcms${createHash('sha256').update(decodedPath || '').digest('hex')}.json`
+  await cache.removeItem(cacheKey)
 
   return { success: true }
 })
