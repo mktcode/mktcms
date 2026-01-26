@@ -2,7 +2,6 @@ import { z } from 'zod'
 import { defineEventHandler, getValidatedQuery, readValidatedBody } from 'h3'
 import { useStorage } from 'nitropack/runtime'
 import { stringify } from 'yaml'
-import { createHash } from 'node:crypto'
 
 const querySchema = z.object({
   path: z.string().min(1),
