@@ -119,10 +119,10 @@ const renderedHtml = computed(() => {
       class="w-full min-h-72"
     />
 
-    <div
+    <MDC
       v-else
       class="prose max-w-full min-h-72 border border-gray-200 rounded-sm p-4"
-      v-html="renderedHtml"
+      :value="markdown"
     />
 
     <button
