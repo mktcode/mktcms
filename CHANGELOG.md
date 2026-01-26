@@ -1,6 +1,30 @@
 # Changelog
 
 
+## v0.1.35
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.34...v0.1.35)
+
+### 🚀 Enhancements
+
+- Update markdown rendering to use MDC component ([199bd81](https://github.com/mktcode/mktcms/commit/199bd81))
+
+### 💅 Refactors
+
+- Remove unused code ([99dc1fd](https://github.com/mktcode/mktcms/commit/99dc1fd))
+
+### 🏡 Chore
+
+- Update package-lock.json version to 0.1.34 and add module dependencies in module.ts ([bc60c43](https://github.com/mktcode/mktcms/commit/bc60c43))
+- Update demo content ([eb01185](https://github.com/mktcode/mktcms/commit/eb01185))
+- Added demo mdc component ([8de3ded](https://github.com/mktcode/mktcms/commit/8de3ded))
+- Simplified playground page ([1686076](https://github.com/mktcode/mktcms/commit/1686076))
+- Add @nuxtjs/mdc dependency to package.json in playground ([6ab4b80](https://github.com/mktcode/mktcms/commit/6ab4b80))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.34
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.33...v0.1.34)
