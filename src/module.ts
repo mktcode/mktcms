@@ -6,6 +6,11 @@ export default defineNuxtModule({
     name: 'mktcms',
     configKey: 'mktcms',
   },
+  moduleDependencies: {
+    '@nuxtjs/mdc': {
+      version: '^0.20.0',
+    }
+  },
   setup(_options, _nuxt) {
     const resolver = createResolver(import.meta.url)
 
