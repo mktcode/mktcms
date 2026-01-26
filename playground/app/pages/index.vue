@@ -2,62 +2,10 @@
 const siteUrl = useSiteUrl()
 
 const md = await useMdContent('default.md')
-const csv = await useCsvContent('default.csv')
-const txt = await useTxtContent('default.txt')
-const products = await useMdContents('Meine Produkte')
-
-const { data: margherita } = await useFetch<{ name: string, description: string, price: number, ingredients: string[], vegetarian: boolean, image: string }>('/api/content/products:food:margherita.json')
-
-const isSending = ref(false)
-const sendingError = ref<string | null>(null)
-const sendingSuccess = ref(false)
-
-const subject = ref('')
-const message = ref('')
-
-async function sendMessage() {
-  isSending.value = true
-  sendingError.value = null
-  sendingSuccess.value = false
-
-  try {
-    await $fetch('/api/send-message', {
-      method: 'POST',
-      body: {
-        subject: subject.value,
-        fields: {
-          message: message.value,
-        },
-      },
-    })
-    sendingSuccess.value = true
-  }
-  catch {
-    sendingError.value = 'Failed to send message.'
-  }
-  finally {
-    isSending.value = false
-  }
-}
 </script>
 
 <template>
   <h1>Welcome to MKT CMS</h1>
-
-  <h2>Margherita</h2>
-  <div v-if="margherita">
-    <strong>{{ margherita.name }}</strong><br>
-    {{ margherita.description }}<br>
-    Price: {{ margherita.price }} EUR<br>
-    Ingredients: {{ margherita.ingredients.join(', ') }}<br>
-    Vegetarian: {{ margherita.vegetarian ? 'Yes' : 'No' }}<br>
-  </div>
-
-  <img
-    src="http://localhost:3000/api/content/default.jpg"
-    alt="Default Image"
-    style="max-width: 300px;"
-  >
 
   <div v-if="md">
     <h2>Markdown Content</h2>
@@ -66,55 +14,6 @@ async function sendMessage() {
       alt="Bild aus Frontmatter"
       style="max-width: 200px;"
     >
-    <div v-html="md.html" />
+    <MDC :value="md.markdown" tag="article" class="prose max-w-none" />
   </div>
-
-  <div v-if="products">
-    <div
-      v-for="(product, index) in products"
-      :key="index"
-    >
-      <h2>{{ product.value.frontmatter.Title }}</h2>
-      <h3>{{ product.key }}</h3>
-      <img
-        :src="`${siteUrl}/api/content/${product.value.frontmatter.Bild.replace(/\//g, ':')}`"
-        alt="Bild aus Frontmatter"
-        style="max-width: 200px;"
-      >
-      <div v-html="product.value.html" />
-    </div>
-  </div>
-
-  <div>
-    <h2>CSV Content</h2>
-    <div
-      v-for="row in csv.rows"
-      :key="row[0]"
-      style="margin-bottom: 10px;"
-    >
-      <strong>{{ row[0] }}</strong><br>
-      Description: {{ row[1] }}<br>
-    </div>
-  </div>
-
-  <div>
-    <h2>Text Content</h2>
-    <pre>{{ txt }}</pre>
-  </div>
-
-  <input
-    v-model="subject"
-    type="text"
-    placeholder="Subject"
-  >
-  <textarea
-    v-model="message"
-    placeholder="Your message"
-  />
-  <button
-    :disabled="isSending"
-    @click="sendMessage"
-  >
-    Send
-  </button>
 </template>
