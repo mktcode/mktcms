@@ -14,6 +14,10 @@ const md = await useMdContent('default.md')
       alt="Bild aus Frontmatter"
       style="max-width: 200px;"
     >
-    <MDC :value="md.markdown" tag="article" class="prose max-w-none" />
+    <MDC
+      :value="md.markdown"
+      tag="article"
+      class="prose max-w-none"
+    />
   </div>
 </template>
