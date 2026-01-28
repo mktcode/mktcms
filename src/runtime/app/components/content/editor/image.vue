@@ -63,7 +63,7 @@ const { isUploading, fileInput, uploadFiles } = useImageUpload()
       ref="fileInput"
       class="hidden"
       type="file"
-      accept=".jpg,.jpeg,.png,.gif,.svg,.webp"
+      accept=".jpg,.jpeg,.png,.gif,.webp"
       @change="async (e) => { await uploadFiles(e, path); }"
     >
 

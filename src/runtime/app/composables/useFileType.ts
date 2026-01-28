@@ -1,5 +1,5 @@
 export default function useFileType(path: string) {
-  const isImage = path.match(/\.(png|jpg|jpeg|gif|svg|webp)$/i) !== null
+  const isImage = path.match(/\.(png|jpg|jpeg|gif|webp)$/i) !== null
   const isPdf = path.endsWith('.pdf')
   const isMarkdown = path.endsWith('.md')
   const isCsv = path.endsWith('.csv')

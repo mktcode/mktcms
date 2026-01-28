@@ -6,7 +6,7 @@ import { toNodeBuffer } from '../../utils/toNodeBuffer'
 import { parsedFile } from '../../utils/parsedFile'
 
 function getFileType(path: string) {
-  const isImage = path.match(/\.(png|jpg|jpeg|gif|svg|webp)$/i)
+  const isImage = path.match(/\.(png|jpg|jpeg|gif|webp)$/i)
   const isPdf = path.endsWith('.pdf')
   const isJson = path.endsWith('.json')
   const isCSV = path.endsWith('.csv')
@@ -20,10 +20,7 @@ function getContentType(path: string) {
   if (isImage) {
     const ext = path.split('.').pop()?.toLowerCase()
 
-    if (ext === 'svg') {
-      return 'image/svg+xml'
-    }
-    else if (ext === 'jpg') {
+    if (ext === 'jpg') {
       return 'image/jpeg'
     }
     else {

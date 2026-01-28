@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
   const storage = useStorage('content')
   const file = await storage.getItemRaw(decodedPath)
 
-  const isImage = decodedPath.match(/\.(png|jpg|jpeg|gif|svg|webp)$/i)
+  const isImage = decodedPath.match(/\.(png|jpg|jpeg|gif|webp)$/i)
   const isPdf = decodedPath.endsWith('.pdf')
   const isJson = decodedPath.endsWith('.json')
   const isCSV = decodedPath.endsWith('.csv')

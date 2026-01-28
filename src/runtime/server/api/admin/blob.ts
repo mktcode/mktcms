@@ -27,7 +27,6 @@ export default defineEventHandler(async (event) => {
     jpg: 'image/jpeg',
     jpeg: 'image/jpeg',
     gif: 'image/gif',
-    svg: 'image/svg+xml',
     webp: 'image/webp',
     pdf: 'application/pdf',
     txt: 'text/plain; charset=utf-8',

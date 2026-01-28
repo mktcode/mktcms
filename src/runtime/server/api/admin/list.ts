@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
 
   const files = keysWithoutPath.filter((key: string) => !key.includes(':'))
   const filteredFiles = type === 'image'
-    ? files.filter((file: string) => file.match(/\.(png|jpg|jpeg|gif|svg|webp)$/i))
+    ? files.filter((file: string) => file.match(/\.(png|jpg|jpeg|gif|webp)$/i))
     : files
 
   const dirs = keysWithoutPath.filter((key: string) => key.includes(':')).map((key: string) => key.split(':')[0]!)
