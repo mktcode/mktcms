@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useClipboard } from '@vueuse/core';
+import { useClipboard } from '@vueuse/core'
 import usePathParam from '../../../composables/usePathParam'
-import { ref, useSiteUrl } from '#imports';
-import useImageUpload from '../../../composables/useImageUpload';
+import { ref, useSiteUrl } from '#imports'
+import useImageUpload from '../../../composables/useImageUpload'
 
 const { path } = usePathParam()
 const refreshTimestamp = ref(0)
@@ -13,9 +13,9 @@ const { copy, copied } = useClipboard()
 const { isUploading, fileInput, uploadFiles } = useImageUpload()
 
 async function uploadAndReloadPage(event: Event) {
-  await uploadFiles(event, path);
+  await uploadFiles(event, path)
 
-  refreshTimestamp.value = Date.now();
+  refreshTimestamp.value = Date.now()
 }
 </script>
 

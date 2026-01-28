@@ -1,7 +1,6 @@
 import { z } from 'zod'
 import { createError, defineEventHandler, getValidatedRouterParams, send } from 'h3'
 import { useStorage } from 'nitropack/runtime'
-import { createHash } from 'node:crypto'
 import { toNodeBuffer } from '../../utils/toNodeBuffer'
 import { parsedFile } from '../../utils/parsedFile'
 
