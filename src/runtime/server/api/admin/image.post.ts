@@ -1,6 +1,7 @@
 import z from 'zod'
 import { createError, defineEventHandler, getValidatedQuery, readMultipartFormData } from 'h3'
 import { useStorage } from 'nitropack/runtime'
+import sharp from 'sharp'
 
 const querySchema = z.object({
   path: z.string().min(1),
@@ -40,11 +41,28 @@ export default defineEventHandler(async (event) => {
   if (!allowedExtensions.includes(fileExtension)) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Invalid file type. Only PDF, JPG, JPEG, PNG, GIF, SVG, WEBP, MD, DOCX, TXT, CSV, and JSON files are allowed.',
+      statusMessage: 'Invalid file type. Only JPG, JPEG, PNG, GIF, SVG, WEBP files are allowed.',
     })
   }
 
-  await useStorage('content').setItemRaw(path, Buffer.from(file.data))
+  const image = sharp(file.data)
+  const metadata = await image.metadata()
+
+  if (metadata.width && metadata.height) {
+    if (metadata.width > 1920 || metadata.height > 1920) {
+      image.resize({
+        width: metadata.width > metadata.height ? 1920 : undefined,
+        height: metadata.height >= metadata.width ? 1920 : undefined,
+        fit: 'inside',
+      })
+    }
+  }
+
+  image.webp({ quality: 60 })
+
+  const webpBuffer = await image.toBuffer()
+
+  await useStorage('content').setItemRaw(path, webpBuffer)
 
   return { success: true, path }
 })
