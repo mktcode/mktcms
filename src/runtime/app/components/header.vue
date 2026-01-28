@@ -9,7 +9,7 @@ const { public: { mktcms: { siteUrl } } } = useRuntimeConfig()
     <div class="flex flex-col gap-1 items-start">
       <NuxtLink
         to="/admin"
-        class="font-bold text-xl"
+        class="font-bold text-xl text-gray-950! bg-white!"
       >
         {{ siteUrl.replace(/https?:\/\//, '') }}
       </NuxtLink>
