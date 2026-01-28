@@ -2,11 +2,14 @@
 import { useClipboard } from '@vueuse/core';
 import usePathParam from '../../../composables/usePathParam'
 import { useSiteUrl } from '#imports';
+import useImageUpload from '../../../composables/useImageUpload';
 
 const { path } = usePathParam()
 const siteUrl = useSiteUrl()
 
 const { copy, copied } = useClipboard()
+
+const { isUploading, fileInput, uploadFiles } = useImageUpload()
 </script>
 
 <template>
@@ -51,9 +54,18 @@ const { copy, copied } = useClipboard()
     <button
       class="button w-full justify-center mb-4"
       type="button"
+      :disabled="isUploading"
+      @click="fileInput?.click()"
     >
       Bild austauschen
     </button>
+    <input
+      ref="fileInput"
+      class="hidden"
+      type="file"
+      accept=".jpg,.jpeg,.png,.gif,.svg,.webp"
+      @change="async (e) => { await uploadFiles(e, path); }"
+    >
 
     <img
       :src="`/api/admin/blob?path=${path}`"

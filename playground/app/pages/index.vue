@@ -10,9 +10,8 @@ const md = await useMdContent('default.md')
   <div v-if="md">
     <h2>Markdown Content</h2>
     <img
-      :src="`${siteUrl}/api/content/${md.frontmatter.Bild.replace(/\//g, ':')}`"
+      :src="`${siteUrl}${md.frontmatter.Bild}`"
       alt="Bild aus Frontmatter"
-      style="max-width: 200px;"
     >
     <MDC
       :value="md.markdown"

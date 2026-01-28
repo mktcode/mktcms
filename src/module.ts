@@ -137,6 +137,13 @@ export default defineNuxtModule({
       handler: resolver.resolve('./runtime/server/api/admin/txt.post'),
     })
 
+    // Image
+    addServerHandler({
+      route: '/api/admin/image',
+      method: 'post',
+      handler: resolver.resolve('./runtime/server/api/admin/image.post'),
+    })
+
     // Blob
     addServerHandler({
       route: '/api/admin/blob',
