@@ -16,6 +16,8 @@ const { public: { mktcms: { siteUrl } } } = useRuntimeConfig()
       <NuxtLink
         :to="siteUrl"
         class="font-bold button small secondary justify-between"
+        external
+        target="_blank"
       >
         zur Website
         <svg
