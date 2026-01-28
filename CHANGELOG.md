@@ -1,6 +1,40 @@
 # Changelog
 
 
+## v0.1.36
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.35...v0.1.36)
+
+### 🚀 Enhancements
+
+- Implement caching ([b8c9795](https://github.com/mktcode/mktcms/commit/b8c9795))
+- Harden admin styles ([9ca21b9](https://github.com/mktcode/mktcms/commit/9ca21b9))
+- Make copy link button for images work ([d7f1f0c](https://github.com/mktcode/mktcms/commit/d7f1f0c))
+- Harden admin styles ([7ac047c](https://github.com/mktcode/mktcms/commit/7ac047c))
+- Replace images ([b457824](https://github.com/mktcode/mktcms/commit/b457824))
+- Add sharp for image processing and resize images to a maximum of 1920px ([f21292c](https://github.com/mktcode/mktcms/commit/f21292c))
+- Remove svg from supported image file types ([b2aa75f](https://github.com/mktcode/mktcms/commit/b2aa75f))
+
+### 🩹 Fixes
+
+- Removed caching again ([42edc9a](https://github.com/mktcode/mktcms/commit/42edc9a))
+- Fix replace image ([1b3f842](https://github.com/mktcode/mktcms/commit/1b3f842))
+
+### 🏡 Chore
+
+- Fixed playground component ([1c25428](https://github.com/mktcode/mktcms/commit/1c25428))
+- Linter ([5da187c](https://github.com/mktcode/mktcms/commit/5da187c))
+- Linter ([1ee5756](https://github.com/mktcode/mktcms/commit/1ee5756))
+- Updated stylesheet ([02ed4d7](https://github.com/mktcode/mktcms/commit/02ed4d7))
+- Add @nuxtjs/mdc dependency to package.json ([5aa4a12](https://github.com/mktcode/mktcms/commit/5aa4a12))
+- Remove unused code ([9753eb1](https://github.com/mktcode/mktcms/commit/9753eb1))
+- Playground styless ([0c1d72c](https://github.com/mktcode/mktcms/commit/0c1d72c))
+- Linter ([7fd9f75](https://github.com/mktcode/mktcms/commit/7fd9f75))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.35
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.34...v0.1.35)
