@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+body:has(#mktcms-admin) {
+  @apply bg-gray-300;
+}
+
 #mktcms-admin {
   @apply p-4 max-w-3xl mx-auto bg-white md:rounded-lg md:mt-12;
 
