@@ -11,6 +11,7 @@ export default defineEventHandler(async (event) => {
   const form = await readMultipartFormData(event)
 
   const { path } = await getValidatedQuery(event, query => querySchema.parse(query))
+  const decodedPath = decodeURIComponent(path)
 
   if (!form) {
     throw createError({
@@ -35,13 +36,22 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.svg', '.webp']
+  const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp']
   const fileExtension = file.filename.toLowerCase().slice(file.filename.lastIndexOf('.'))
+
+  const targetExtension = decodedPath.toLowerCase().slice(decodedPath.lastIndexOf('.'))
+
+  if (!allowedExtensions.includes(targetExtension)) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Invalid target file type. Only JPG, JPEG, PNG, GIF, WEBP files are allowed.',
+    })
+  }
 
   if (!allowedExtensions.includes(fileExtension)) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Invalid file type. Only JPG, JPEG, PNG, GIF, SVG, WEBP files are allowed.',
+      statusMessage: 'Invalid file type. Only JPG, JPEG, PNG, GIF, WEBP files are allowed.',
     })
   }
 
@@ -58,11 +68,38 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  image.webp({ quality: 60 })
+  switch (targetExtension) {
+    case '.jpg':
+    case '.jpeg':
+      image.flatten({ background: '#ffffff' }).jpeg({ quality: 60, mozjpeg: true })
+      break
+    case '.png':
+      image.png({ compressionLevel: 9, adaptiveFiltering: true })
+      break
+    case '.webp':
+      image.webp({ quality: 60 })
+      break
+    case '.gif':
+      if (typeof (image as any).gif === 'function') {
+        ;(image as any).gif()
+      }
+      else {
+        throw createError({
+          statusCode: 400,
+          statusMessage: 'Target is GIF but GIF output is not supported by this server build.',
+        })
+      }
+      break
+    default:
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'Unsupported target image format.',
+      })
+  }
 
-  const webpBuffer = await image.toBuffer()
+  const outputBuffer = await image.toBuffer()
 
-  await useStorage('content').setItemRaw(path, webpBuffer)
+  await useStorage('content').setItemRaw(decodedPath, outputBuffer)
 
-  return { success: true, path }
+  return { success: true, path: decodedPath }
 })

@@ -1,15 +1,22 @@
 <script setup lang="ts">
 import { useClipboard } from '@vueuse/core';
 import usePathParam from '../../../composables/usePathParam'
-import { useSiteUrl } from '#imports';
+import { ref, useSiteUrl } from '#imports';
 import useImageUpload from '../../../composables/useImageUpload';
 
 const { path } = usePathParam()
+const refreshTimestamp = ref(0)
 const siteUrl = useSiteUrl()
 
 const { copy, copied } = useClipboard()
 
 const { isUploading, fileInput, uploadFiles } = useImageUpload()
+
+async function uploadAndReloadPage(event: Event) {
+  await uploadFiles(event, path);
+
+  refreshTimestamp.value = Date.now();
+}
 </script>
 
 <template>
@@ -64,11 +71,11 @@ const { isUploading, fileInput, uploadFiles } = useImageUpload()
       class="hidden"
       type="file"
       accept=".jpg,.jpeg,.png,.gif,.webp"
-      @change="async (e) => { await uploadFiles(e, path); }"
+      @change="uploadAndReloadPage"
     >
 
     <img
-      :src="`/api/admin/blob?path=${path}`"
+      :src="`/api/admin/blob?path=${path}&t=${refreshTimestamp}`"
       alt="Image Preview"
       class="w-full h-auto border border-gray-200 rounded-sm p-1"
     >
