@@ -6,10 +6,7 @@ const adminWasHere = useLocalStorage('mktcms_admin_was_here', false);
 
 <template>
   <ClientOnly>
-    <div
-      v-if="adminWasHere"
-      class="absolute top-5 right-5"
-    >
+    <div v-if="adminWasHere">
       <slot />
     </div>
   </ClientOnly>
