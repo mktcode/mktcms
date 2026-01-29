@@ -4,7 +4,6 @@ import Admin from '../../components/admin.vue'
 import { navigateTo, useRuntimeConfig } from '#app'
 import { useLocalStorage } from '@vueuse/core'
 
-
 const { public: { mktcms: { siteUrl } } } = useRuntimeConfig()
 
 const adminAuthKey = ref('')
