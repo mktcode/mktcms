@@ -28,7 +28,7 @@ async function onAdminAuthKeyFileSelected(event: Event) {
   }
 
   const content = await file.text()
-  adminAuthKey.value = content.replace(/^\uFEFF/, '').trim()
+  adminAuthKey.value = content.replace(/^\uFEFF/, '').trim() // Remove BOM (Byte Order Mark) if present
 
   if (input)
     input.value = ''
