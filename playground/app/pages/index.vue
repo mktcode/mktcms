@@ -7,6 +7,10 @@ const md = await useMdContent('default.md')
 <template>
   <h1>Welcome to MKT CMS</h1>
 
+  <AdminWidget>
+    <NuxtLink to="/admin/edit/default.md">Go to Admin Panel</NuxtLink>
+  </AdminWidget>
+
   <div v-if="md">
     <h2>Markdown Content</h2>
     <img
