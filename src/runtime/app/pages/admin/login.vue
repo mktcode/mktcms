@@ -2,11 +2,14 @@
 import { ref } from 'vue'
 import Admin from '../../components/admin.vue'
 import { navigateTo, useRuntimeConfig } from '#app'
+import { useLocalStorage } from '@vueuse/core'
+
 
 const { public: { mktcms: { siteUrl } } } = useRuntimeConfig()
 
 const adminAuthKey = ref('')
 const adminAuthKeyFileInput = ref<HTMLInputElement | null>(null)
+const wasHere = useLocalStorage('mktcms_admin_was_here', false)
 
 function openAdminAuthKeyFilePicker() {
   adminAuthKeyFileInput.value?.click()
@@ -42,6 +45,7 @@ async function login() {
     },
   })
 
+  wasHere.value = true
   await navigateTo('/admin')
 }
 </script>
