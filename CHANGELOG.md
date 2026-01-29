@@ -1,6 +1,35 @@
 # Changelog
 
 
+## v0.1.37
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.36...v0.1.37)
+
+### 🚀 Enhancements
+
+- Open website link in a new tab ([631c9b7](https://github.com/mktcode/mktcms/commit/631c9b7))
+- Add local storage for admin login state ([229276a](https://github.com/mktcode/mktcms/commit/229276a))
+- Admin widget component ([c38039e](https://github.com/mktcode/mktcms/commit/c38039e))
+
+### 🩹 Fixes
+
+- Add comment to clarify BOM removal in adminAuthKey assignment ([e0c0255](https://github.com/mktcode/mktcms/commit/e0c0255))
+
+### 💅 Refactors
+
+- Simplify login template structure ([f8ace71](https://github.com/mktcode/mktcms/commit/f8ace71))
+- Remove tailwind classes from widget component ([92f02ed](https://github.com/mktcode/mktcms/commit/92f02ed))
+
+### 🏡 Chore
+
+- Rebuild admin css file ([a9b9bb9](https://github.com/mktcode/mktcms/commit/a9b9bb9))
+- Show use of admin widget in playground ([527ab73](https://github.com/mktcode/mktcms/commit/527ab73))
+- Linter ([1c8836b](https://github.com/mktcode/mktcms/commit/1c8836b))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.36
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.35...v0.1.36)
