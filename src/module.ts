@@ -1,4 +1,4 @@
-import { defineNuxtModule, addServerPlugin, createResolver, addServerHandler, extendPages, addServerImports, addImports } from '@nuxt/kit'
+import { defineNuxtModule, addServerPlugin, createResolver, addServerHandler, extendPages, addServerImports, addImports, addComponent } from '@nuxt/kit'
 import defu from 'defu'
 
 export default defineNuxtModule({
@@ -29,6 +29,12 @@ export default defineNuxtModule({
     _nuxt.options.runtimeConfig.public.mktcms = defu((_nuxt.options.runtimeConfig.public.mktcms, {
       siteUrl: '',
     }))
+
+    // Add frontend components
+    addComponent({
+      name: 'AdminWidget',
+      filePath: resolver.resolve('runtime/app/components/frontend/widget.vue'),
+    })
 
     // Add frontend composables
     addImports([
