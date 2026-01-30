@@ -1,8 +1,6 @@
-# Simple CMS module for Nuxt (pre-alpha)
+# Simple CMS module for Nuxt
 
-This module is my personal, minimalist, opinionated, independent alternative to @nuxt/content and to a large portion of the WordPress projects I’ve worked on. I want to build projects with Nuxt and customers need the simplest possible admin interface to manage content without getting overwhelmed by buttons and features they don’t need.
-
-I don't want to decide on a database schema or limit myself to json. All editable content is stored as a file of supported format (json, markdown, csv, jpg, webp, pdf, etc.) in an S3 bucket. The admin interface is a simple file explorer/editor. The module provides a `useContent` composable to read content files and a `sendMail` utility to send emails via SMTP.
+This module is my personal, minimalist, opinionated, independent alternative to @nuxt/content and studio which are currently still instable and too heavy for my use cases.
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
@@ -15,11 +13,15 @@ I don't want to decide on a database schema or limit myself to json. All editabl
 
 ## Features
 
-- S3 bucket explorer/editor at `/admin`
-- API routes at `/api/admin`
-- `MKTCMS_ADMIN_AUTH_KEY` env var to set a password
-- `useContent` composable
+- Simple Admin UI to manage content files
+- Composables to use the content in your Nuxt app
 - `sendMail` utility to send emails via SMTP
+
+## What this is not
+
+- Git-based
+- horizontally scalable
+- meant to be used once @nuxt/content and studio are stable
 
 ## Setup
 
@@ -30,11 +32,6 @@ npx nuxi module add mktcms
 ```bash
 NUXT_PUBLIC_MKTCMS_SITE_URL="http://localhost:3000"
 NUXT_MKTCMS_ADMIN_AUTH_KEY="your-admin-auth-key"
-NUXT_MKTCMS_S3_ACCESS_KEY_ID=your-s3-access-key-id
-NUXT_MKTCMS_S3_SECRET_ACCESS_KEY=your-s3-secret-access-key
-NUXT_MKTCMS_S3_BUCKET=your-s3-bucket-name
-NUXT_MKTCMS_S3_REGION=your-s3-bucket-region
-NUXT_MKTCMS_S3_PREFIX="your-project"
 NUXT_MKTCMS_SMTP_HOST="your-smtp-host"
 NUXT_MKTCMS_SMTP_PORT=465
 NUXT_MKTCMS_SMTP_SECURE=true
@@ -44,70 +41,36 @@ NUXT_MKTCMS_MAILER_FROM="your-mailer-from-address"
 NUXT_MKTCMS_MAILER_TO="your-mailer-to-address"
 ```
 
-Add local development storage folder in `.gitignore`:
+Add storage directory to `.gitignore`:
 
 ```
 .storage
 ```
 
-(S3 is only used if `NODE_ENV=production`.)
-
 ## Usage
 
-Assuming json files in S3 like `your-project:articles:article-1.json`:
+```
+.storage/
+  home.md
+  articles/
+    article-1.md
+    article-2.md
+```
 
 ```vue
 <script setup lang="ts">
-import { useContent } from 'mktcms'
-
-type Article = {
-  id: string
-  title: string
-  content: string
-}
-
-const { data: articles } = await useContent<Article[]>('articles')
+const home = await useMdContents('home.md')
+const articles = await useMdContents('articles')
 </script>
 
 <template>
-  <article v-for="article in articles" :key="article.id">
-    <h2>{{ article.title }}</h2>
-    <p>{{ article.content }}</p>
+  <h1>{{ home.title }}</h1>
+  <MDC :value="home.markdown" />
+  <article v-for="article in articles" :key="article.key">
+    <MDC :value="article.markdown" />
   </article>
 </template>
 ```
-
-For a specific article:
-
-```vue
-<script setup lang="ts">
-import { useContent } from 'mktcms'
-
-type Article = {
-  id: string
-  title: string
-  content: string
-}
-
-const { data: article } = await useContent<Article>('articles/article-1.json')
-</script>
-
-<template>
-  <article>
-    <h2>{{ article.title }}</h2>
-    <p>{{ article.content }}</p>
-  </article>
-</template>
-```
-
-The storage falls back to a `content` folder that you can include in your repo as default content.
-
-```ts
-const { data: article } = await useContent<Article>('articles/article-1.json')
-```
-
-This will check S3 at `your-project:articles:article-1.json` first, and if not found, `~~/content/articles/article-1.json`.
-(In development `.storage/` is used instead of S3.)
 
 ### Mailer
 
@@ -115,24 +78,10 @@ This will check S3 at `your-project:articles:article-1.json` first, and if not f
 await sendMail({
   subject: 'Notification from MKT CMS',
   fields: {
-    'Error': 'Something went wrong',
+    Name: 'Jane Smith',
+    Message: 'Hello, this is a test message.',
   },
-})
-```
-
-If you have an email from a user, you can use the `replyTo` field:
-
-```ts
-const name = 'John Doe'
-const email = 'john.doe@example.com'
-
-await sendMail({
-  subject: 'Contact Form Submission',
-  fields: {
-    'Name': name,
-    'Email': email,
-  },
-  replyTo: email,
+  replyTo: 'jane.smith@example.com',
 })
 ```
 
