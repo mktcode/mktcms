@@ -22,7 +22,7 @@ onMounted(() => {
       Datei hochladen
     </h1>
 
-    <div class="bg-emerald-50 text-emerald-800 p-4 rounded flex gap-4 items-center">
+    <div class="bg-yellow-50 text-yellow-800 p-4 rounded flex gap-4 items-center">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
