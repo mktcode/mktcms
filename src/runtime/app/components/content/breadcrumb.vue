@@ -7,7 +7,10 @@ parts.unshift('home')
 </script>
 
 <template>
-  <div class="text-gray-500 text-base mt-12 mb-6 flex items-center gap-1">
+  <div
+    class="text-gray-500 text-base mb-6 flex items-center gap-1"
+    :class="{ 'mt-4': parts.length > 1 }"
+  >
     <div
       v-for="(part, index) in parts"
       :key="index"
