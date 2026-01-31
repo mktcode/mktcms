@@ -125,10 +125,10 @@ function cancelEdit() {
       v-if="table"
       class="bg-white"
     >
-      <div class="flex items-center h-0 justify-center border border-gray-200 rounded-sm mb-6">
+      <div class="flex items-center h-0 justify-center border border-gray-100 rounded-sm mb-6">
         <button
           type="button"
-          class="button small soft"
+          class="button small bg-white! text-gray-400! hover:bg-gray-50! hover:text-gray-600!"
           @click="insertRow(0)"
         >
           <svg
@@ -251,10 +251,10 @@ function cancelEdit() {
             </div>
           </div>
 
-          <div class="h-0 flex items-center justify-center border border-gray-200 rounded-sm my-6">
+          <div class="h-0 flex items-center justify-center border border-gray-100 rounded-sm my-6">
             <button
               type="button"
-              class="button small"
+              class="button small bg-white! text-gray-400! hover:bg-gray-50! hover:text-gray-600!"
               :disabled="table.headers.length === 0"
               @click="insertRow(rowIndex + 1)"
             >
