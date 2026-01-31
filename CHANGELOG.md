@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v0.1.38
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.37...v0.1.38)
+
+### 💅 Refactors
+
+- Update breadcrumb component to use 'home' label and improve template structure ([4bae518](https://github.com/mktcode/mktcms/commit/4bae518))
+- Update README and index page to use 'Home.md' for consistency ([00aaa95](https://github.com/mktcode/mktcms/commit/00aaa95))
+
+### 📖 Documentation
+
+- Update README ([ea67567](https://github.com/mktcode/mktcms/commit/ea67567))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.37
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.36...v0.1.37)
