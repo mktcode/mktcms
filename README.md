@@ -59,6 +59,14 @@ Add storage directory to `.gitignore`:
     Article 2.md
 ```
 
+```markdown
+<!-- Home.md -->
+---
+title: Home
+---
+Welcome to **MKT CMS**!
+```
+
 ```vue
 <script setup lang="ts">
 const home = await useMdContent('Home.md')
