@@ -18,7 +18,7 @@ const { fileInput, uploadFile } = useImport()
   <div>
     <NuxtLink
       :to="path ? `/admin/new?dir=${encodeURIComponent(path)}` : '/admin/new'"
-      class="button secondary w-full flex items-center mb-2"
+      class="button secondary w-full flex items-center border border-dashed!"
     >
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -26,10 +26,14 @@ const { fileInput, uploadFile } = useImport()
       Datei hochladen
     </NuxtLink>
 
+    <hr class="my-4 border-gray-200" />
+
     <Files
       v-if="list && list.files.length"
       :files="list.files"
     />
+
+    <hr class="my-4 border-gray-200" v-if="list && list.files.length && list.dirs.length" />
 
     <Dirs
       v-if="list && list.dirs.length"
