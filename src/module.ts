@@ -173,6 +173,12 @@ export default defineNuxtModule({
       handler: resolver.resolve('./runtime/server/api/admin/download'),
     })
 
+    // Storage usage
+    addServerHandler({
+      route: '/api/admin/storage-usage',
+      handler: resolver.resolve('./runtime/server/api/admin/storage-usage'),
+    })
+
     // Public API Routes
     addServerHandler({
       route: '/api/content/list',
