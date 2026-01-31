@@ -18,6 +18,7 @@ This module is my personal, minimalist, opinionated, independent alternative to 
 - Simple Admin UI to manage content files
 - Composables to use the content in your Nuxt app
 - `sendMail` utility to send emails via SMTP
+- [MDC](https://github.com/nuxt-content/mdc) support
 
 ## What this is not
 
