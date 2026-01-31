@@ -74,7 +74,7 @@ Your alert component.
 
 ```vue
 <script setup lang="ts">
-const home = await useMdContent('Home.md')
+const home = await useMdContent<{ title: string }>('Home.md')
 const articles = await useMdContents('Articles')
 </script>
 
