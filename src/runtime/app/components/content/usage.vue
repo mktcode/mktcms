@@ -1,7 +1,5 @@
 <template>
-  <div class="mt-6">
-    <hr class="my-4 border-gray-200">
-
+  <div class="">
     <div class="min-w-0">
         <div v-if="error" class="text-sm text-red-600 mt-1">
           Konnte Speicherbelegung nicht laden.

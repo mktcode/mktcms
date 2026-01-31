@@ -2,11 +2,11 @@
 @plugin "@tailwindcss/typography";
 
 body:has(#mktcms-admin) {
-  @apply bg-gray-100;
+  @apply bg-gray-100 p-4 md:p-12;
 }
 
 #mktcms-admin {
-  @apply p-4 max-w-3xl mx-auto bg-white md:rounded-lg md:mt-12 shadow-lg;
+  @apply p-4 max-w-3xl mx-auto bg-white md:rounded-lg shadow-lg;
 
   h1 {
     @apply text-gray-800 text-3xl font-semibold;

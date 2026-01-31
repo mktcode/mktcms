@@ -179,6 +179,12 @@ export default defineNuxtModule({
       handler: resolver.resolve('./runtime/server/api/admin/storage-usage'),
     })
 
+    // Stats
+    addServerHandler({
+      route: '/api/admin/stats-visits',
+      handler: resolver.resolve('./runtime/server/api/admin/stats-visits'),
+    })
+
     // Public API Routes
     addServerHandler({
       route: '/api/content/list',

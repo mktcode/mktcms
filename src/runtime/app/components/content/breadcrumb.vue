@@ -8,8 +8,8 @@ parts.unshift('home')
 
 <template>
   <div
-    class="text-gray-500 text-base mb-6 flex items-center gap-1"
-    :class="{ 'mt-4': parts.length > 1 }"
+    class="text-gray-500 text-base flex items-center gap-1"
+    :class="{ 'mb-4': parts.length > 1 }"
   >
     <div
       v-for="(part, index) in parts"
