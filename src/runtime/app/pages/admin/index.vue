@@ -11,9 +11,6 @@ import Stats from '../../components/content/stats.vue';
   <Admin class="bg-transparent! shadow-none! p-0! mb-12">
     <Header />
   </Admin>
-  <div class="mb-6 max-w-3xl mx-auto">
-    <Stats />
-  </div>
   <Admin>
     <Breadcrumb />
     <Content />
