@@ -4,7 +4,6 @@ import Header from '../../components/header.vue'
 import Breadcrumb from '../../components/content/breadcrumb.vue'
 import Content from '../../components/content/index.vue'
 import Usage from '../../components/content/usage.vue';
-import Stats from '../../components/content/stats.vue';
 </script>
 
 <template>
