@@ -65,6 +65,10 @@ Add storage directory to `.gitignore`:
 title: Home
 ---
 Welcome to **MKT CMS**!
+
+::alert
+Your alert component.
+::
 ```
 
 ```vue
