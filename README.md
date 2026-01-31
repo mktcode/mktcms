@@ -53,16 +53,16 @@ Add storage directory to `.gitignore`:
 
 ```
 .storage/
-  home.md
-  articles/
-    article-1.md
-    article-2.md
+  Home.md
+  Articles/
+    Article 1.md
+    Article 2.md
 ```
 
 ```vue
 <script setup lang="ts">
-const home = await useMdContents('home.md')
-const articles = await useMdContents('articles')
+const home = await useMdContent('Home.md')
+const articles = await useMdContents('Articles')
 </script>
 
 <template>
