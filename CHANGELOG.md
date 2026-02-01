@@ -1,6 +1,40 @@
 # Changelog
 
 
+## v0.1.39
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.38...v0.1.39)
+
+### 🚀 Enhancements
+
+- Add API endpoint for calculating storage usage and implement ui ([e6fcbaf](https://github.com/mktcode/mktcms/commit/e6fcbaf))
+- Add API endpoint for visits statistics over the last 30 days ([5b50bbc](https://github.com/mktcode/mktcms/commit/5b50bbc))
+- Make frontmatter type generic in useMdContent and useMdContents functions ([92e4ac1](https://github.com/mktcode/mktcms/commit/92e4ac1))
+
+### 🩹 Fixes
+
+- Specify type for home content in README example ([224e076](https://github.com/mktcode/mktcms/commit/224e076))
+- Remove unused Stats component from admin page ([495c390](https://github.com/mktcode/mktcms/commit/495c390))
+- Remove unused Stats component import from admin page ([bf8e93a](https://github.com/mktcode/mktcms/commit/bf8e93a))
+
+### 💅 Refactors
+
+- Update file names in README for consistency with casing ([9ad0c81](https://github.com/mktcode/mktcms/commit/9ad0c81))
+
+### 📖 Documentation
+
+- Add Home.md example to README for clarity ([e96c7d9](https://github.com/mktcode/mktcms/commit/e96c7d9))
+- Add alert component example to Home section in README ([753b1c7](https://github.com/mktcode/mktcms/commit/753b1c7))
+- Add MDC support to features list in README ([6f27b3d](https://github.com/mktcode/mktcms/commit/6f27b3d))
+
+### 🏡 Chore
+
+- Linter ([8ed6b43](https://github.com/mktcode/mktcms/commit/8ed6b43))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.38
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.37...v0.1.38)
