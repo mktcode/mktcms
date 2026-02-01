@@ -1,5 +1,5 @@
-export async function useMdContents(path: string) {
-  const contents = await $fetch<{ key: string, value: { frontmatter: Record<string, any>, markdown: string, html: string } }[]>('/api/content/list', {
+export async function useMdContents<T extends Record<string, any>>(path: string) {
+  const contents = await $fetch<{ key: string, value: { frontmatter: T, markdown: string, html: string } }[]>('/api/content/list', {
     query: {
       path: path,
       type: 'md',

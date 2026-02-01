@@ -1,5 +1,5 @@
-export async function useMdContent(path: string) {
-  const content = await $fetch<{ frontmatter: Record<string, any>, markdown: string, html: string }>(`/api/content/${path}`)
+export async function useMdContent<T extends Record<string, any>>(path: string) {
+  const content = await $fetch<{ frontmatter: T, markdown: string, html: string }>(`/api/content/${path}`)
 
   return content
 }
