@@ -32,11 +32,17 @@ function shortDate(isoDate: string): string {
 
 <template>
   <div>
-    <div v-if="error" class="text-sm text-red-600 mt-1">
+    <div
+      v-if="error"
+      class="text-sm text-red-600 mt-1"
+    >
       Could not load visit stats.
     </div>
 
-    <div v-else-if="pending" class="text-sm text-gray-500 mt-1">
+    <div
+      v-else-if="pending"
+      class="text-sm text-gray-500 mt-1"
+    >
       loading…
     </div>
 
@@ -46,7 +52,7 @@ function shortDate(isoDate: string): string {
         style="grid-template-columns: repeat(30, minmax(0, 1fr));"
       >
         <div
-          v-for="(d, idx) in days"
+          v-for="d in days"
           :key="d.date"
           class="w-full rounded-sm bg-gray-300"
           :style="{ height: `${Math.max(2, Math.round((d.visits / maxVisits) * 100))}%` }"

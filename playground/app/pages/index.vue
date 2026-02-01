@@ -8,7 +8,10 @@ const md = await useMdContent('Home.md')
   <h1>Welcome to MKT CMS</h1>
 
   <AdminWidget>
-    <NuxtLink to="/admin/edit/Home.md" target="_blank">
+    <NuxtLink
+      to="/admin/edit/Home.md"
+      target="_blank"
+    >
       Go to Admin Panel
     </NuxtLink>
   </AdminWidget>
