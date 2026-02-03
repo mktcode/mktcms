@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.1.40
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.39...v0.1.40)
+
+### 🚀 Enhancements
+
+- Add useImagePaths composable and integrate it in index.vue ([a26dbfb](https://github.com/mktcode/mktcms/commit/a26dbfb))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.39
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.38...v0.1.39)
