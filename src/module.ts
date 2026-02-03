@@ -63,6 +63,10 @@ export default defineNuxtModule({
         as: 'useTxtContents',
         from: resolver.resolve('runtime/app/composables/useTxtContents'),
       }, {
+        name: 'useImagePaths',
+        as: 'useImagePaths',
+        from: resolver.resolve('runtime/app/composables/useImagePaths'),
+      }, {
         name: 'useForm',
         as: 'useForm',
         from: resolver.resolve('runtime/app/composables/useForm'),
