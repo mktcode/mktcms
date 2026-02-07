@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.1.41
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.40...v0.1.41)
+
+### 🚀 Enhancements
+
+- Show checkboxes for boolean frontmatter properties ([a78f4c9](https://github.com/mktcode/mktcms/commit/a78f4c9))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.40
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.39...v0.1.40)
