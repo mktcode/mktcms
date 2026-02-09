@@ -32,7 +32,7 @@ async function saveMarkdown() {
   savingSuccessful.value = true
 }
 
-const mode = ref<'edit' | 'preview'>('edit')
+const mode = ref<'edit' | 'preview'>('preview')
 </script>
 
 <template>
@@ -42,18 +42,18 @@ const mode = ref<'edit' | 'preview'>('edit')
       <button
         type="button"
         class="button secondary flex-1"
-        :disabled="mode === 'edit'"
-        @click="mode = 'edit'"
-      >
-        Bearbeiten
-      </button>
-      <button
-        type="button"
-        class="button secondary flex-1"
         :disabled="mode === 'preview'"
         @click="mode = 'preview'"
       >
         Vorschau
+      </button>
+      <button
+        type="button"
+        class="button secondary flex-1"
+        :disabled="mode === 'edit'"
+        @click="mode = 'edit'"
+      >
+        Bearbeiten
       </button>
     </div>
 
