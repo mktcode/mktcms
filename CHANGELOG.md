@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.1.42
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.41...v0.1.42)
+
+### 🚀 Enhancements
+
+- Add touchField function to track field touch state in useForm composable ([1d814e9](https://github.com/mktcode/mktcms/commit/1d814e9))
+
+### 🩹 Fixes
+
+- Swap initial mode to 'preview' and adjust button states in markdown editor ([5871e3d](https://github.com/mktcode/mktcms/commit/5871e3d))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.41
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.40...v0.1.41)
