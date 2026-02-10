@@ -32,6 +32,13 @@ export function useForm(
     return validationErrors.value[field] || []
   }
 
+  function touchField(field: string) {
+    fieldsTouched.value = {
+      ...fieldsTouched.value,
+      [field]: true,
+    }
+  }
+
   async function send(body: Record<string, any>) {
     if (isSending.value) return
 
@@ -69,6 +76,7 @@ export function useForm(
     fieldsTouched,
     validationErrorsFor,
     validate,
+    touchField,
     send,
   }
 }
