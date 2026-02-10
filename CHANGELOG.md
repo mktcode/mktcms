@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.1.44
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.43...v0.1.44)
+
+### 🚀 Enhancements
+
+- Enhance sendMail function to support HTML and text templates using EJS ([f05f0f2](https://github.com/mktcode/mktcms/commit/f05f0f2))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.43
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.42...v0.1.43)
