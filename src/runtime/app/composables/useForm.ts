@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 export function useForm(
   endpoint: string,
@@ -12,6 +12,8 @@ export function useForm(
   const errorMessage = ref('')
   const validationErrors = ref<Record<string, string[] | undefined>>({})
   const fieldsTouched = ref<Record<string, boolean>>({})
+
+  const isValid = computed(() => Object.keys(validationErrors.value).length === 0 && Object.keys(fieldsTouched.value).length > 0)
 
   function validate(body: Record<string, any>) {
     const parseResult = validationSchema.safeParse(body)
@@ -74,6 +76,7 @@ export function useForm(
     errorMessage,
     validationErrors,
     fieldsTouched,
+    isValid,
     validationErrorsFor,
     validate,
     touchField,
