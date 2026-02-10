@@ -9,7 +9,12 @@ const imagePaths = await useImagePaths()
 <template>
   <h1>Welcome to MKT CMS</h1>
 
-  <img v-for="path in imagePaths" :key="path" :src="`${siteUrl}/api/content/${path}`" :alt="`Image at ${path}`" />
+  <img
+    v-for="path in imagePaths"
+    :key="path"
+    :src="`${siteUrl}/api/content/${path}`"
+    :alt="`Image at ${path}`"
+  >
 
   <AdminWidget>
     <NuxtLink

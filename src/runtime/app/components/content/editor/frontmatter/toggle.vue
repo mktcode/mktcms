@@ -18,7 +18,6 @@ const value = defineModel<boolean>('value', {
       >
       {{ label }}
     </label>
-    <div class="relative">
-    </div>
+    <div class="relative" />
   </div>
 </template>

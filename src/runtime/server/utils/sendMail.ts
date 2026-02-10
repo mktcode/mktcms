@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer'
-import ejs from 'ejs';
+import ejs from 'ejs'
 import { useRuntimeConfig } from 'nitropack/runtime'
 
 export async function sendMail({
@@ -9,11 +9,11 @@ export async function sendMail({
   templateHtml,
   templateText,
 }: {
-  subject: string,
-  fields: Record<string, any>,
-  replyTo?: string,
-  templateHtml?: string,
-  templateText?: string,
+  subject: string
+  fields: Record<string, any>
+  replyTo?: string
+  templateHtml?: string
+  templateText?: string
 }) {
   const { mktcms: { smtpHost, smtpPort, smtpUser, smtpPass, smtpSecure, mailerFrom, mailerTo } } = useRuntimeConfig()
 
