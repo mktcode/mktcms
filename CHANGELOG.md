@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.1.43
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.42...v0.1.43)
+
+### 🚀 Enhancements
+
+- Add isValid computed property to useForm for validation state tracking ([3601172](https://github.com/mktcode/mktcms/commit/3601172))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.42
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.41...v0.1.42)
