@@ -3,12 +3,16 @@ import ejs from 'ejs'
 import { useRuntimeConfig } from 'nitropack/runtime'
 
 export async function sendMail({
+  to,
+  from,
   subject,
   fields,
   replyTo,
   templateHtml,
   templateText,
 }: {
+  to?: string
+  from?: string
   subject: string
   fields: Record<string, any>
   replyTo?: string
@@ -31,8 +35,8 @@ export async function sendMail({
   const finalText = templateText ? ejs.render(templateText, { fields }) : Object.entries(fields).map(([key, value]) => `${key}: ${value}`).join('\n')
 
   const mailOptions = {
-    from: mailerFrom,
-    to: mailerTo,
+    from: from || mailerFrom,
+    to: to || mailerTo,
     replyTo: replyTo || undefined,
     subject: subject,
     html: finalHtml,
