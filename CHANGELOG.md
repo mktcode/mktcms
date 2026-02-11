@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.1.45
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.44...v0.1.45)
+
+### 🚀 Enhancements
+
+- Update sendMail function to allow custom 'to' and 'from' parameters ([070faee](https://github.com/mktcode/mktcms/commit/070faee))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.44
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.43...v0.1.44)
