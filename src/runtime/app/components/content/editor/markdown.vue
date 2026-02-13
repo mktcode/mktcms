@@ -62,9 +62,9 @@ const mode = ref<'edit' | 'preview'>('preview')
     </div>
 
     <div class="flex-1 min-h-0 overflow-hidden">
-      <div class="h-full min-h-0 overflow-hidden lg:grid lg:grid-cols-2 lg:gap-3">
+      <div class="h-full min-h-0 overflow-hidden flex flex-col lg:grid lg:grid-cols-2 lg:gap-3">
         <div
-          class="min-h-0 lg:block"
+          class="flex-1 min-h-0 h-full lg:block"
           :class="mode === 'edit' ? 'block' : 'hidden'"
         >
           <ClientOnly>
@@ -77,7 +77,7 @@ const mode = ref<'edit' | 'preview'>('preview')
         </div>
   
         <div
-          class="h-32 min-h-0 overflow-auto border border-gray-200 rounded-sm p-4 lg:block lg:h-full"
+          class="flex-1 min-h-0 overflow-auto border border-gray-200 rounded-sm p-4 lg:block lg:h-full"
           :class="mode === 'preview' ? 'block' : 'hidden'"
         >
           <MDC :value="debouncedMarkdown" class="prose prose-sm max-w-none" />
