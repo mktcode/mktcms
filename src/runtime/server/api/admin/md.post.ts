@@ -42,10 +42,10 @@ export default defineEventHandler(async (event) => {
   }
 
   const git = simpleGit()
-  
+
   git.addConfig('user.name', 'Kunde')
-     .addConfig('user.email', 'admin@mktcode.de')
-    
+    .addConfig('user.email', 'admin@mktcode.de')
+
   try {
     await git.add('.')
     await git.commit(commitMessage || `Änderung durch Kunden`)
