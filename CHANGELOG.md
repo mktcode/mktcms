@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.2.3
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.2.2...v0.2.3)
+
+### 🩹 Fixes
+
+- Wrap git operations in try-catch to handle errors gracefully ([3c636ac](https://github.com/mktcode/mktcms/commit/3c636ac))
+
+### 🏡 Chore
+
+- Linter ([5422d7d](https://github.com/mktcode/mktcms/commit/5422d7d))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.2.2
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.2.1...v0.2.2)
