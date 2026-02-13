@@ -40,7 +40,7 @@ const mode = ref<'edit' | 'preview'>('preview')
 </script>
 
 <template>
-  <div v-if="content">
+  <div v-if="content" class="grow min-h-0 flex flex-col">
     <FrontmatterForm v-model:frontmatter="frontmatter" class="mb-2" />
     <div class="flex gap-2 my-2 lg:hidden">
       <button
@@ -61,31 +61,36 @@ const mode = ref<'edit' | 'preview'>('preview')
       </button>
     </div>
 
-    <div class="lg:grid lg:grid-cols-2 lg:gap-3">
-      <ClientOnly>
-        <MonacoEditor
-          v-model="markdown"
-          language="markdown"
-          class="w-full min-h-72 border border-gray-200 rounded-sm lg:block"
-          :class="mode === 'edit' ? 'block' : 'hidden'"
-        />
-      </ClientOnly>
-
-      <MDC
-        class="prose max-w-full min-h-72 border border-gray-200 rounded-sm p-4 lg:block"
-        :class="mode === 'preview' ? 'block' : 'hidden'"
-        :value="debouncedMarkdown"
-      />
+    <div class="flex-1 min-h-0">
+      <div class="h-full min-h-0 lg:grid lg:grid-cols-2 lg:gap-3">
+        <ClientOnly>
+          <MonacoEditor
+            v-model="markdown"
+            language="markdown"
+            class="w-full h-full border border-gray-200 rounded-sm lg:block lg:h-full"
+            :class="mode === 'edit' ? 'block' : 'hidden'"
+          />
+        </ClientOnly>
+  
+        <div
+          class="h-32 min-h-0 overflow-auto border border-gray-200 rounded-sm p-4 lg:block lg:h-full"
+          :class="mode === 'preview' ? 'block' : 'hidden'"
+        >
+          <MDC :value="debouncedMarkdown" class="prose prose-sm max-w-none" />
+        </div>
+      </div>
     </div>
 
-    <button
-      type="button"
-      class="button w-full justify-center mt-3"
-      @click="saveMarkdown"
-    >
-      <span v-if="isSaving">Speichern...</span>
-      <span v-else>Speichern</span>
-    </button>
-    <Saved v-if="savingSuccessful" />
+    <div>
+      <button
+        type="button"
+        class="button w-full justify-center mt-3"
+        @click="saveMarkdown"
+      >
+        <span v-if="isSaving">Speichern...</span>
+        <span v-else>Speichern</span>
+      </button>
+      <Saved v-if="savingSuccessful" />
+    </div>
   </div>
 </template>
