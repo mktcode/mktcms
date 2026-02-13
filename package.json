@@ -1,6 +1,6 @@
 {
   "name": "mktcms",
-  "version": "0.1.48",
+  "version": "0.2.0",
   "description": "Simple CMS module for Nuxt",
   "repository": "mktcode/mktcms",
   "license": "MIT",
