@@ -1,6 +1,28 @@
 # Changelog
 
 
+## v0.1.46
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.45...v0.1.46)
+
+### 🚀 Enhancements
+
+- Fullscreen edit mode for markdown files ([eee074b](https://github.com/mktcode/mktcms/commit/eee074b))
+
+### 🩹 Fixes
+
+- Restore .apdisk entry in .gitignore ([f1ae4d4](https://github.com/mktcode/mktcms/commit/f1ae4d4))
+- Adjust aspect ratio for PDF embed in editor ([9a30886](https://github.com/mktcode/mktcms/commit/9a30886))
+- Editor routing ([cb170b1](https://github.com/mktcode/mktcms/commit/cb170b1))
+
+### 📖 Documentation
+
+- Update README for clarity and improved description of module purpose ([3123cd9](https://github.com/mktcode/mktcms/commit/3123cd9))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.45
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.44...v0.1.45)
