@@ -40,7 +40,7 @@ const mode = ref<'edit' | 'preview'>('preview')
 </script>
 
 <template>
-  <div v-if="content" class="grow min-h-0 flex flex-col">
+  <div v-if="content" class="flex-1 min-h-0 flex flex-col">
     <FrontmatterForm v-model:frontmatter="frontmatter" class="mb-2" />
     <div class="flex gap-2 my-2 lg:hidden">
       <button
@@ -61,16 +61,20 @@ const mode = ref<'edit' | 'preview'>('preview')
       </button>
     </div>
 
-    <div class="flex-1 min-h-0">
-      <div class="h-full min-h-0 lg:grid lg:grid-cols-2 lg:gap-3">
-        <ClientOnly>
-          <MonacoEditor
-            v-model="markdown"
-            language="markdown"
-            class="w-full h-full border border-gray-200 rounded-sm lg:block lg:h-full"
-            :class="mode === 'edit' ? 'block' : 'hidden'"
-          />
-        </ClientOnly>
+    <div class="flex-1 min-h-0 overflow-hidden">
+      <div class="h-full min-h-0 overflow-hidden lg:grid lg:grid-cols-2 lg:gap-3">
+        <div
+          class="min-h-0 lg:block"
+          :class="mode === 'edit' ? 'block' : 'hidden'"
+        >
+          <ClientOnly>
+            <MonacoEditor
+              v-model="markdown"
+              language="markdown"
+              class="w-full h-full min-h-0 border border-gray-200 rounded-sm"
+            />
+          </ClientOnly>
+        </div>
   
         <div
           class="h-32 min-h-0 overflow-auto border border-gray-200 rounded-sm p-4 lg:block lg:h-full"
@@ -81,7 +85,7 @@ const mode = ref<'edit' | 'preview'>('preview')
       </div>
     </div>
 
-    <div>
+    <div class="flex-none">
       <button
         type="button"
         class="button w-full justify-center mt-3"
