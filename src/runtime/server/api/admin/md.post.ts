@@ -41,7 +41,8 @@ export default defineEventHandler(async (event) => {
     await git.add('.')
     await git.commit(commitMessage || `Änderung durch Kunden`)
     await git.push()
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Git-Fehler:', error)
   }
 
