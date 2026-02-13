@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.1.47
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.46...v0.1.47)
+
+### 🚀 Enhancements
+
+- Integrate Monaco Editor for enhanced markdown editing ([a93b71a](https://github.com/mktcode/mktcms/commit/a93b71a))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.46
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.45...v0.1.46)
