@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.2.4
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.2.3...v0.2.4)
+
+### 🚀 Enhancements
+
+- Add GitHub authentication configuration for git operations ([af7f5e0](https://github.com/mktcode/mktcms/commit/af7f5e0))
+
+### 🏡 Chore
+
+- Linter ([11ef873](https://github.com/mktcode/mktcms/commit/11ef873))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.2.3
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.2.2...v0.2.3)
