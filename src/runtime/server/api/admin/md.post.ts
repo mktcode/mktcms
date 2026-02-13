@@ -37,8 +37,13 @@ export default defineEventHandler(async (event) => {
   const git = simpleGit({
     config: ['user.name=Kunde', 'user.email=admin@mktcode.de'],
   })
-  await git.add('.')
-  await git.commit(commitMessage || `Änderung durch Kunden`)
+  try {
+    await git.add('.')
+    await git.commit(commitMessage || `Änderung durch Kunden`)
+    await git.push()
+  } catch (error) {
+    console.error('Git-Fehler:', error)
+  }
 
   return { success: true }
 })
