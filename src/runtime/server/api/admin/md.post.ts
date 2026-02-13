@@ -2,6 +2,7 @@ import { z } from 'zod'
 import { defineEventHandler, getValidatedQuery, readValidatedBody } from 'h3'
 import { useStorage } from 'nitropack/runtime'
 import { stringify } from 'yaml'
+import { simpleGit } from 'simple-git'
 
 const querySchema = z.object({
   path: z.string().min(1),
@@ -10,6 +11,7 @@ const querySchema = z.object({
 const bodySchema = z.object({
   frontmatter: z.record(z.string(), z.any()),
   markdown: z.string(),
+  commitMessage: z.string().optional(),
 })
 
 function buildContent(frontmatter: Record<string, any>, markdown: string) {
@@ -23,7 +25,7 @@ function buildContent(frontmatter: Record<string, any>, markdown: string) {
 
 export default defineEventHandler(async (event) => {
   const { path } = await getValidatedQuery(event, query => querySchema.parse(query))
-  const { frontmatter, markdown } = await readValidatedBody(event, body => bodySchema.parse(body))
+  const { frontmatter, markdown, commitMessage } = await readValidatedBody(event, body => bodySchema.parse(body))
 
   const decodedPath = decodeURIComponent(path)
 
@@ -31,6 +33,10 @@ export default defineEventHandler(async (event) => {
 
   const storage = useStorage('content')
   await storage.setItem(decodedPath, content)
+
+  const git = simpleGit()
+  await git.add('.')
+  await git.commit(commitMessage || `Änderung durch Kunden`)
 
   return { success: true }
 })
