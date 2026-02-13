@@ -208,13 +208,13 @@ export default defineNuxtModule({
       })
 
       pages.push({
-        name: 'Admin Editor',
-        path: '/admin/edit/:path',
-        file: resolver.resolve('./runtime/app/pages/admin/edit/[path].vue'),
+        name: 'Admin File Editor',
+        path: '/admin/edit/file/:path',
+        file: resolver.resolve('./runtime/app/pages/admin/edit/file/[path].vue'),
       })
 
       pages.push({
-        name: 'Admin Editor',
+        name: 'Admin Markdown Editor',
         path: '/admin/edit/markdown/:path',
         file: resolver.resolve('./runtime/app/pages/admin/edit/markdown/[path].vue'),
       })
