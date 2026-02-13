@@ -27,7 +27,7 @@ function fileExtension(filename: string): string {
       class="flex gap-2 mb-2"
     >
       <NuxtLink
-        :to="`/admin/edit/${path ? path + ':' : ''}${file}`"
+        :to="`/admin/edit/${fileExtension(file) === 'md' ? 'markdown/' : ''}${path ? path + ':' : ''}${file}`"
         class="flex-1 button secondary"
       >
         <FileIcon :file-path="`${path ? path + ':' : ''}${file}`" />

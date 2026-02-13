@@ -18,7 +18,7 @@ const imagePaths = await useImagePaths()
 
   <AdminWidget>
     <NuxtLink
-      to="/admin/edit/Home.md"
+      to="/admin/edit/markdown/Home.md"
       target="_blank"
     >
       Go to Admin Panel

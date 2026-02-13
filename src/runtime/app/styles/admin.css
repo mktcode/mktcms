@@ -8,6 +8,10 @@ body:has(#mktcms-admin) {
 #mktcms-admin {
   @apply p-4 max-w-3xl mx-auto bg-white md:rounded-lg shadow-lg;
 
+  &.fullscreen {
+    @apply fixed inset-0 z-50 overflow-auto max-w-none rounded-none;
+  }
+
   h1 {
     @apply text-gray-800 text-3xl font-semibold;
   }

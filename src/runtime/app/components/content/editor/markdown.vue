@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { refDebounced } from '@vueuse/core'
 import Saved from '../saved.vue'
 import usePathParam from '../../../composables/usePathParam'
 import { useFetch } from '#imports'
@@ -10,6 +11,8 @@ const { data: content } = await useFetch<{ frontmatter: Record<string, any>, mar
 
 const frontmatter = ref<Record<string, any>>(content.value?.frontmatter ?? {})
 const markdown = ref<string>(content.value?.markdown ?? '')
+
+const debouncedMarkdown = refDebounced(markdown, 250)
 
 const isSaving = ref(false)
 const savingSuccessful = ref(false)
@@ -37,8 +40,8 @@ const mode = ref<'edit' | 'preview'>('preview')
 
 <template>
   <div v-if="content">
-    <FrontmatterForm v-model:frontmatter="frontmatter" />
-    <div class="flex gap-2 my-2">
+    <FrontmatterForm v-model:frontmatter="frontmatter" class="mb-2" />
+    <div class="flex gap-2 my-2 lg:hidden">
       <button
         type="button"
         class="button secondary flex-1"
@@ -57,17 +60,19 @@ const mode = ref<'edit' | 'preview'>('preview')
       </button>
     </div>
 
-    <textarea
-      v-if="mode === 'edit'"
-      v-model="markdown"
-      class="w-full min-h-72"
-    />
+    <div class="lg:grid lg:grid-cols-2 lg:gap-3">
+      <textarea
+        v-model="markdown"
+        class="w-full min-h-72 lg:block"
+        :class="mode === 'edit' ? 'block' : 'hidden'"
+      />
 
-    <MDC
-      v-else
-      class="prose max-w-full min-h-72 border border-gray-200 rounded-sm p-4"
-      :value="markdown"
-    />
+      <MDC
+        class="prose max-w-full min-h-72 border border-gray-200 rounded-sm p-4 lg:block"
+        :class="mode === 'preview' ? 'block' : 'hidden'"
+        :value="debouncedMarkdown"
+      />
+    </div>
 
     <button
       type="button"
