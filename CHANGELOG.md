@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.1.48
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.1.47...v0.1.48)
+
+### 🏡 Chore
+
+- Linter ([051fcd0](https://github.com/mktcode/mktcms/commit/051fcd0))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.1.47
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.1.46...v0.1.47)
