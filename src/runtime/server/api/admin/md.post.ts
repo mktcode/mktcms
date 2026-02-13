@@ -34,7 +34,9 @@ export default defineEventHandler(async (event) => {
   const storage = useStorage('content')
   await storage.setItem(decodedPath, content)
 
-  const git = simpleGit()
+  const git = simpleGit({
+    config: ['user.name=Kunde', 'user.email=admin@mktcode.de'],
+  })
   await git.add('.')
   await git.commit(commitMessage || `Änderung durch Kunden`)
 
