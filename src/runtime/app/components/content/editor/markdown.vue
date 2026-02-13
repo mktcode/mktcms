@@ -40,8 +40,14 @@ const mode = ref<'edit' | 'preview'>('preview')
 </script>
 
 <template>
-  <div v-if="content" class="flex-1 min-h-0 flex flex-col">
-    <FrontmatterForm v-model:frontmatter="frontmatter" class="mb-2" />
+  <div
+    v-if="content"
+    class="flex-1 min-h-0 flex flex-col"
+  >
+    <FrontmatterForm
+      v-model:frontmatter="frontmatter"
+      class="mb-2"
+    />
     <div class="flex gap-2 my-2 lg:hidden">
       <button
         type="button"
@@ -75,12 +81,15 @@ const mode = ref<'edit' | 'preview'>('preview')
             />
           </ClientOnly>
         </div>
-  
+
         <div
           class="flex-1 min-h-0 overflow-auto border border-gray-200 rounded-sm p-4 lg:block lg:h-full"
           :class="mode === 'preview' ? 'block' : 'hidden'"
         >
-          <MDC :value="debouncedMarkdown" class="prose prose-sm max-w-none" />
+          <MDC
+            :value="debouncedMarkdown"
+            class="prose prose-sm max-w-none"
+          />
         </div>
       </div>
     </div>

@@ -109,5 +109,8 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div ref="rootEl" class="w-full" />
+  <div
+    ref="rootEl"
+    class="w-full"
+  />
 </template>
