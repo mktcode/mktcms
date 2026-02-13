@@ -24,6 +24,9 @@ export default defineNuxtModule({
       smtpPass: '',
       mailerFrom: '',
       mailerTo: '',
+      gitUser: '',
+      gitRepo: '',
+      gitToken: '',
     }))
 
     _nuxt.options.runtimeConfig.public.mktcms = defu((_nuxt.options.runtimeConfig.public.mktcms, {

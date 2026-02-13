@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { defineEventHandler, getValidatedQuery, readValidatedBody } from 'h3'
-import { useStorage } from 'nitropack/runtime'
+import { useStorage, useRuntimeConfig } from 'nitropack/runtime'
 import { stringify } from 'yaml'
 import { simpleGit } from 'simple-git'
 
@@ -34,13 +34,24 @@ export default defineEventHandler(async (event) => {
   const storage = useStorage('content')
   await storage.setItem(decodedPath, content)
 
-  const git = simpleGit({
-    config: ['user.name=Kunde', 'user.email=admin@mktcode.de'],
-  })
+  // Configure git with token authentication
+  const { mktcms: { gitToken, gitUser, gitRepo } } = useRuntimeConfig()
+
+  if (!gitToken || !gitUser || !gitRepo) {
+    throw new Error('Missing Git auth config: NUXT_MKTCMS_GIT_USER, NUXT_MKTCMS_GIT_REPO, NUXT_MKTCMS_GIT_TOKEN')
+  }
+
+  const git = simpleGit()
+  
+  git.addConfig('user.name', 'Kunde')
+     .addConfig('user.email', 'admin@mktcode.de')
+    
   try {
     await git.add('.')
     await git.commit(commitMessage || `Änderung durch Kunden`)
-    await git.push()
+
+    const authUrl = `https://${encodeURIComponent(gitUser)}:${encodeURIComponent(gitToken)}@github.com/${gitRepo}`
+    await git.push([authUrl])
   }
   catch (error) {
     console.error('Git-Fehler:', error)

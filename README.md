@@ -42,7 +42,12 @@ NUXT_MKTCMS_SMTP_USER="your-smtp-user"
 NUXT_MKTCMS_SMTP_PASS="your-smtp-pass"
 NUXT_MKTCMS_MAILER_FROM="your-mailer-from-address"
 NUXT_MKTCMS_MAILER_TO="your-mailer-to-address"
+NUXT_MKTCMS_GIT_USER="your-github-username"
+NUXT_MKTCMS_GIT_REPO="owner/repository.git"
+NUXT_MKTCMS_GIT_TOKEN="your-github-personal-access-token"
 ```
+
+> **Note:** To generate a GitHub Personal Access Token, go to GitHub Settings → Developer settings → Personal access tokens → Tokens (classic) → Generate new token. Grant it `repo` scope for full repository access.
 
 ## Usage
 
