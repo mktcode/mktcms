@@ -45,6 +45,7 @@
     "csv-stringify": "^6.6.0",
     "defu": "^6.1.4",
     "ejs": "^4.0.1",
+    "monaco-editor": "^0.55.1",
     "marked": "^17.0.1",
     "nodemailer": "^7.0.12",
     "sharp": "^0.34.5",

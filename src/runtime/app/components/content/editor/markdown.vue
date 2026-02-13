@@ -5,6 +5,7 @@ import Saved from '../saved.vue'
 import usePathParam from '../../../composables/usePathParam'
 import { useFetch } from '#imports'
 import FrontmatterForm from './frontmatter/form.vue'
+import MonacoEditor from './monacoEditor.vue'
 
 const { path } = usePathParam()
 const { data: content } = await useFetch<{ frontmatter: Record<string, any>, markdown: string }>(`/api/admin/md?path=${path}`)
@@ -61,11 +62,14 @@ const mode = ref<'edit' | 'preview'>('preview')
     </div>
 
     <div class="lg:grid lg:grid-cols-2 lg:gap-3">
-      <textarea
-        v-model="markdown"
-        class="w-full min-h-72 lg:block"
-        :class="mode === 'edit' ? 'block' : 'hidden'"
-      />
+      <ClientOnly>
+        <MonacoEditor
+          v-model="markdown"
+          language="markdown"
+          class="w-full min-h-72 border border-gray-200 rounded-sm lg:block"
+          :class="mode === 'edit' ? 'block' : 'hidden'"
+        />
+      </ClientOnly>
 
       <MDC
         class="prose max-w-full min-h-72 border border-gray-200 rounded-sm p-4 lg:block"
