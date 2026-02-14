@@ -52,12 +52,13 @@ const indentStyle = {
 <template>
   <div>
     <!-- Directory Item -->
-    <div v-if="isDirectory" :style="indentStyle">
-      <button
-        class="button secondary w-full flex items-center text-left"
-        @click="toggleExpand"
-      >
-        <!-- Folder Icon -->
+    <div v-if="isDirectory">
+      <div :style="indentStyle">
+        <button
+          class="button secondary w-full flex items-center text-left"
+          @click="toggleExpand"
+        >
+          <!-- Folder Icon -->
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -92,6 +93,7 @@ const indentStyle = {
           />
         </svg>
       </button>
+      </div>
       
       <!-- Collapsible Content -->
       <div
