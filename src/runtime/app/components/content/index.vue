@@ -46,7 +46,10 @@ function fileExtension(filename: string): string {
 
     <hr class="my-4 border-gray-200">
 
-    <div v-if="list && (list.files.length > 0 || list.dirs.length > 0)" class="space-y-2">
+    <div
+      v-if="list && (list.files.length > 0 || list.dirs.length > 0)"
+      class="space-y-2"
+    >
       <!-- Root level files -->
       <div
         v-for="file in list.files"
@@ -70,7 +73,7 @@ function fileExtension(filename: string): string {
         </NuxtLink>
         <FileButtons :file-path="file" />
       </div>
-      
+
       <!-- Root level directories - collapsible -->
       <TreeNode
         v-for="dir in list.dirs"
