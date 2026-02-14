@@ -35,6 +35,10 @@ body:has(#mktcms-admin:not(.fullscreen)) {
       @apply bg-gray-50 text-gray-700 border border-gray-300 hover:bg-gray-100;
     }
 
+    &.directory {
+      @apply bg-gray-700 text-white border border-gray-600 hover:bg-gray-600;
+    }
+
     &.danger {
       @apply bg-red-600 hover:bg-red-700;
     }

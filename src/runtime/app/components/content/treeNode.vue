@@ -55,7 +55,7 @@ const indentStyle = {
     <div v-if="isDirectory">
       <div :style="indentStyle">
         <button
-          class="button secondary w-full flex items-center text-left"
+          class="button directory w-full flex items-center text-left"
           @click="toggleExpand"
         >
           <!-- Folder Icon -->
