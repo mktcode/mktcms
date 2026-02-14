@@ -52,7 +52,7 @@ const indentStyle = {
 <template>
   <div>
     <!-- Directory Item -->
-    <div v-if="isDirectory">
+    <div v-if="isDirectory" :style="indentStyle">
       <button
         class="button secondary w-full flex items-center text-left"
         @click="toggleExpand"
@@ -64,7 +64,7 @@ const indentStyle = {
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="size-6 opacity-20 ml-4"
+          class="size-6 opacity-20"
         >
           <path
             stroke-linecap="round"
