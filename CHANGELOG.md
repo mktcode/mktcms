@@ -1,6 +1,32 @@
 # Changelog
 
 
+## v0.2.5
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.2.4...v0.2.5)
+
+### 🩹 Fixes
+
+- Apply indent style to directory item in treeNode component ([4c71725](https://github.com/mktcode/mktcms/commit/4c71725))
+- Correct indentation for directory item button in treeNode component ([001b270](https://github.com/mktcode/mktcms/commit/001b270))
+
+### 💅 Refactors
+
+- Remove unnecessary include paths from tsconfig.json ([10f1c9a](https://github.com/mktcode/mktcms/commit/10f1c9a))
+- Make admin index page show all content in collapsibles ([288b35f](https://github.com/mktcode/mktcms/commit/288b35f))
+
+### 🏡 Chore
+
+- Linter ([13704a7](https://github.com/mktcode/mktcms/commit/13704a7))
+
+### 🎨 Styles
+
+- Made directory buttons be dark ([3723fe1](https://github.com/mktcode/mktcms/commit/3723fe1))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.2.4
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.2.3...v0.2.4)
