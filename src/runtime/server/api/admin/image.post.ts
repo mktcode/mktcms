@@ -103,7 +103,7 @@ export default defineEventHandler(async (event) => {
   await useStorage('content').setItemRaw(decodedPath, outputBuffer)
 
   try {
-    await syncGitContent('Bild ersetzt')
+    await syncGitContent('Bild ersetzt', [decodedPath])
   }
   catch (error) {
     console.error('Git-Fehler:', error)

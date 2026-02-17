@@ -35,7 +35,7 @@ export default defineEventHandler(async (event) => {
   await storage.setItem(decodedPath, content)
 
   try {
-    await syncGitContent(commitMessage)
+    await syncGitContent(commitMessage, [decodedPath])
   }
   catch (error) {
     console.error('Git-Fehler:', error)
