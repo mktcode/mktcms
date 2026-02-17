@@ -1,5 +1,6 @@
 import { navigateTo } from '#imports'
 import { computed, ref } from 'vue'
+import useFileType from './useFileType'
 
 export default function useAdminUpload() {
   const uploadError = ref<string | null>(null)
@@ -40,8 +41,9 @@ export default function useAdminUpload() {
       })
       if (res?.success && res.path) {
         files.value.push(res.path)
+        const { isMarkdown } = useFileType(res.path)
+        await navigateTo(`/admin/edit/${isMarkdown ? 'markdown/' : 'file/'}${res.path}`)
       }
-      await navigateTo(`/admin/${sanePath.value ? sanePath.value : ''}`)
     }
     catch (error: any) {
       uploadError.value = error.data?.statusMessage || 'Fehler beim Hochladen der Datei'
