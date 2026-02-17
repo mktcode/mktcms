@@ -157,6 +157,13 @@ export default defineNuxtModule({
       handler: resolver.resolve('./runtime/server/api/admin/image.post'),
     })
 
+    // PDF
+    addServerHandler({
+      route: '/api/admin/pdf',
+      method: 'post',
+      handler: resolver.resolve('./runtime/server/api/admin/pdf.post'),
+    })
+
     // Blob
     addServerHandler({
       route: '/api/admin/blob',

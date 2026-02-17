@@ -1,12 +1,21 @@
 <script setup lang="ts">
 import { useClipboard } from '@vueuse/core'
 import usePathParam from '../../../composables/usePathParam'
-import { useSiteUrl } from '#imports'
+import { ref, useSiteUrl } from '#imports'
+import usePdfUpload from '../../../composables/usePdfUpload'
 
 const { path } = usePathParam()
+const refreshTimestamp = ref(0)
 const siteUrl = useSiteUrl()
 
 const { copy, copied } = useClipboard()
+const { isUploading, fileInput, uploadFiles } = usePdfUpload()
+
+async function uploadAndReloadPage(event: Event) {
+  await uploadFiles(event, path)
+
+  refreshTimestamp.value = Date.now()
+}
 </script>
 
 <template>
@@ -51,11 +60,22 @@ const { copy, copied } = useClipboard()
     <button
       class="button w-full justify-center mb-4"
       type="button"
+      :disabled="isUploading"
+      @click="fileInput?.click()"
     >
       PDF austauschen
     </button>
+
+    <input
+      ref="fileInput"
+      class="hidden"
+      type="file"
+      accept=".pdf"
+      @change="uploadAndReloadPage"
+    >
+
     <embed
-      :src="`/api/admin/blob?path=${path}`"
+      :src="`/api/admin/blob?path=${path}&t=${refreshTimestamp}`"
       type="application/pdf"
       class="w-full h-auto aspect-[5.5/7] border border-gray-200 rounded-sm"
     >
