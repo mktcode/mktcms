@@ -12,6 +12,7 @@ const { data: content } = await useFetch<{ frontmatter: Record<string, any>, mar
 
 const frontmatter = ref<Record<string, any>>(content.value?.frontmatter ?? {})
 const markdown = ref<string>(content.value?.markdown ?? '')
+const commitMessage = ref<string>('Inhaltliche Änderungen')
 
 const debouncedMarkdown = refDebounced(markdown, 250)
 
@@ -29,6 +30,7 @@ async function saveMarkdown() {
     body: {
       frontmatter: frontmatter.value,
       markdown: markdown.value,
+      commitMessage: commitMessage.value,
     },
   })
 
@@ -95,9 +97,26 @@ const mode = ref<'edit' | 'preview'>('preview')
     </div>
 
     <div class="flex-none">
+      <div class="mt-3">
+        <label
+          for="commit-message"
+          class="block mb-1"
+        >
+          Kommentar / Änderungsgrund
+        </label>
+        <input
+          id="commit-message"
+          v-model="commitMessage"
+          type="text"
+          required
+          class="w-full border border-gray-200 rounded-sm px-3 py-2"
+          placeholder="Inhaltliche Änderungen"
+        >
+      </div>
       <button
         type="button"
         class="button w-full justify-center mt-3"
+        :disabled="!commitMessage.trim() || isSaving"
         @click="saveMarkdown"
       >
         <span v-if="isSaving">Speichern...</span>

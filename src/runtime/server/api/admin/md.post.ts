@@ -11,7 +11,7 @@ const querySchema = z.object({
 const bodySchema = z.object({
   frontmatter: z.record(z.string(), z.any()),
   markdown: z.string(),
-  commitMessage: z.string().optional(),
+  commitMessage: z.string().trim().min(1),
 })
 
 function buildContent(frontmatter: Record<string, any>, markdown: string) {
@@ -48,7 +48,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     await git.add('.')
-    await git.commit(commitMessage || `Änderung durch Kunden`)
+    await git.commit(commitMessage)
 
     const authUrl = `https://${encodeURIComponent(gitUser)}:${encodeURIComponent(gitToken)}@github.com/${gitRepo}`
     await git.push([authUrl])
