@@ -3,7 +3,7 @@ Bild: /api/content/header.jpg
 Sidebar: true
 Footer: true
 ---
-# Default!!!
+# Default
 
 This is default content.
 
