@@ -2,6 +2,7 @@ import z from 'zod'
 import { createError, defineEventHandler, getValidatedQuery, readMultipartFormData } from 'h3'
 import { useStorage } from 'nitropack/runtime'
 import sharp from 'sharp'
+import syncGitContent from '../../utils/syncGitContent'
 
 const querySchema = z.object({
   path: z.string().min(1),
@@ -100,6 +101,13 @@ export default defineEventHandler(async (event) => {
   const outputBuffer = await image.toBuffer()
 
   await useStorage('content').setItemRaw(decodedPath, outputBuffer)
+
+  try {
+    await syncGitContent('Bild ersetzt')
+  }
+  catch (error) {
+    console.error('Git-Fehler:', error)
+  }
 
   return { success: true, path: decodedPath }
 })

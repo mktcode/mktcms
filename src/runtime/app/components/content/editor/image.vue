@@ -64,7 +64,7 @@ async function uploadAndReloadPage(event: Event) {
       :disabled="isUploading"
       @click="fileInput?.click()"
     >
-      Bild austauschen
+      Bild auswählen und austauschen
     </button>
     <input
       ref="fileInput"
