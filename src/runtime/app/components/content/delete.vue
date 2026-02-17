@@ -11,7 +11,7 @@ async function deleteContent() {
     method: 'DELETE',
   })
 
-  await navigateTo(`/admin/${parentPath}`)
+  await navigateTo(`/admin`)
 }
 </script>
 
@@ -29,7 +29,7 @@ async function deleteContent() {
     </p>
     <div class="flex gap-2">
       <NuxtLink
-        :to="`/admin/${parentPath}`"
+        :to="`/admin`"
         class="button secondary flex-1"
       >
         <svg
