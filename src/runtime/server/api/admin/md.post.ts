@@ -34,19 +34,16 @@ export default defineEventHandler(async (event) => {
   const storage = useStorage('content')
   await storage.setItem(decodedPath, content)
 
-  // Configure git with token authentication
-  const { mktcms: { gitToken, gitUser, gitRepo } } = useRuntimeConfig()
-
-  if (!gitToken || !gitUser || !gitRepo) {
-    throw new Error('Missing Git auth config: NUXT_MKTCMS_GIT_USER, NUXT_MKTCMS_GIT_REPO, NUXT_MKTCMS_GIT_TOKEN')
-  }
-
-  const git = simpleGit()
-
-  git.addConfig('user.name', 'Kunde')
-    .addConfig('user.email', 'admin@mktcode.de')
-
   try {
+    const { mktcms: { gitToken, gitUser, gitRepo } } = useRuntimeConfig()
+
+    if (!gitToken || !gitUser || !gitRepo) {
+      throw new Error('Missing Git auth config: NUXT_MKTCMS_GIT_USER, NUXT_MKTCMS_GIT_REPO, NUXT_MKTCMS_GIT_TOKEN')
+    }
+
+    const git = simpleGit()
+    git.addConfig('user.name', 'Kunde').addConfig('user.email', 'admin@mktcode.de')
+
     await git.add('.')
     await git.commit(commitMessage)
 
