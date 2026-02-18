@@ -1,6 +1,6 @@
 # Simple CMS module for Nuxt
 
-![Screenshot of Admin UI](https://private-user-images.githubusercontent.com/6792578/543146782-2b316bad-28b8-4e4f-bb83-d4574be719e8.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Njk4MjE1MjksIm5iZiI6MTc2OTgyMTIyOSwicGF0aCI6Ii82NzkyNTc4LzU0MzE0Njc4Mi0yYjMxNmJhZC0yOGI4LTRlNGYtYmI4My1kNDU3NGJlNzE5ZTgucG5nP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI2MDEzMSUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNjAxMzFUMDEwMDI5WiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9OTdiMmQ3NDgwNzIwOTE0NDFiMDQ2NjU1Yjg3YjJjMTBlOGZhZmVlNDg5ZWEwOWQwZTlhZjYzYjAxN2FjNDFlZiZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QifQ.MrhKMxJ11X20tVIwZBfGGF-N_YZU_sc0VuqNqwnbBNY)
+![Screenshot of Admin UI](https://raw.githubusercontent.com/mktcode/mktcms/main/docs/screenshot.png)
 
 This is my personal, minimalist alternative to @nuxt/content and Studio, which are fantastic projects, but for my needs they still feel a bit unstable, heavier than necessary for my needs, and sometimes lacking the kind of complete documentation I’m looking for.
 
