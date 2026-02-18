@@ -20,12 +20,6 @@ This is my personal, minimalist alternative to @nuxt/content and Studio, which a
 - `sendMail` utility to send emails via SMTP
 - [MDC](https://github.com/nuxt-content/mdc) support
 
-## What this is not
-
-- Git-based
-- horizontally scalable
-- meant to be used once @nuxt/content and studio are stable
-
 ## Setup
 
 ```bash
