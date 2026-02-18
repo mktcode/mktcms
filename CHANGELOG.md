@@ -1,6 +1,40 @@
 # Changelog
 
 
+## v0.2.6
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.2.5...v0.2.6)
+
+### 🚀 Enhancements
+
+- Add commit message input and enforce required validation ([26467e5](https://github.com/mktcode/mktcms/commit/26467e5))
+- Add PDF upload functionality with server handling ([bc5cd9a](https://github.com/mktcode/mktcms/commit/bc5cd9a))
+- Add commit message input for CSV saving and integrate with server handling ([dd3957f](https://github.com/mktcode/mktcms/commit/dd3957f))
+- Add favicon image to header component ([645e946](https://github.com/mktcode/mktcms/commit/645e946))
+- Add favicon image to public directory ([cce00d8](https://github.com/mktcode/mktcms/commit/cce00d8))
+
+### 🩹 Fixes
+
+- Update navigation after content deletion to redirect to admin root ([9ecffd6](https://github.com/mktcode/mktcms/commit/9ecffd6))
+
+### 💅 Refactors
+
+- Restructure git configuration handling in md.post.ts ([9656872](https://github.com/mktcode/mktcms/commit/9656872))
+- Update syncGitContent to accept file paths and improve error handling ([9bb6d09](https://github.com/mktcode/mktcms/commit/9bb6d09))
+- Update breadcrumb component usage in admin index page ([6f59532](https://github.com/mktcode/mktcms/commit/6f59532))
+- Enhance file upload handling and navigation logic in useAdminUpload ([50912e4](https://github.com/mktcode/mktcms/commit/50912e4))
+- Implement clipboard functionality for PDF link copying ([88ac67a](https://github.com/mktcode/mktcms/commit/88ac67a))
+- Remove unused import of useRoute in header component ([38b9269](https://github.com/mktcode/mktcms/commit/38b9269))
+
+### 🎨 Styles
+
+- Format code for improved readability and consistency ([d264596](https://github.com/mktcode/mktcms/commit/d264596))
+
+### ❤️ Contributors
+
+- Kunde <admin@mktcode.de>
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.2.5
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.2.4...v0.2.5)
