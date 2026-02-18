@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useRuntimeConfig, useRoute } from '#imports'
+import { useRuntimeConfig } from '#imports'
 import Breadcrumb from './content/breadcrumb.vue'
 
 const { public: { mktcms: { siteUrl } } } = useRuntimeConfig()
