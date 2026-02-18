@@ -29,7 +29,10 @@ parts.unshift('home')
       </svg>
     </div>
     <div v-else>
-      <NuxtLink to="/admin" class="button secondary small">
+      <NuxtLink
+        to="/admin"
+        class="button secondary small"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

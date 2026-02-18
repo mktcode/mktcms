@@ -2,7 +2,6 @@
 import Admin from '../../../../components/admin.vue'
 import Header from '../../../../components/header.vue'
 import Markdown from '../../../../components/content/editor/markdown.vue'
-import Breadcrumb from '../../../../components/content/breadcrumb.vue'
 import usePathParam from '../../../../composables/usePathParam'
 
 const { isMarkdown } = usePathParam()
