@@ -1,6 +1,6 @@
 # Simple CMS module for Nuxt
 
-![Screenshot of Admin UI](https://raw.githubusercontent.com/mktcode/mktcms/main/docs/screenshot.png)
+![Screenshot of Admin UI](https://raw.githubusercontent.com/mktcode/mktcms/refs/heads/main/docs/screenshot.png)
 
 This is my personal, minimalist alternative to @nuxt/content and Studio, which are fantastic projects, but for my needs they still feel a bit unstable, heavier than necessary for my needs, and sometimes lacking the kind of complete documentation I’m looking for.
 
