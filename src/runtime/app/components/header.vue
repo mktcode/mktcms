@@ -14,6 +14,7 @@ const { public: { mktcms: { siteUrl } } } = useRuntimeConfig()
       external
       target="_blank"
     >
+      <img src="/favicon.png" alt="" class="size-4 mr-1 rounded-sm" />
       zur Website
       <svg
         xmlns="http://www.w3.org/2000/svg"
