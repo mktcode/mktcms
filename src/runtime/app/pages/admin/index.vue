@@ -6,10 +6,8 @@ import Usage from '../../components/content/usage.vue'
 </script>
 
 <template>
-  <Admin class="bg-transparent! shadow-none! p-0! mb-12">
-    <Header />
-  </Admin>
   <Admin>
+    <Header class="mb-4" />
     <Content />
   </Admin>
   <div class="mt-6 max-w-3xl mx-auto">

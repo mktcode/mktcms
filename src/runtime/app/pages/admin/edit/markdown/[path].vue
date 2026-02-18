@@ -11,7 +11,6 @@ const { isMarkdown } = usePathParam()
 <template>
   <Admin class="fullscreen">
     <Header />
-    <Breadcrumb />
     <Markdown v-if="isMarkdown" />
     <div v-else>
       Unbekannter Dateityp.

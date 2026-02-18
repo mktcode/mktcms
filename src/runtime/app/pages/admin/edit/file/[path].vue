@@ -5,7 +5,6 @@ import Image from '../../../../components/content/editor/image.vue'
 import Pdf from '../../../../components/content/editor/pdf.vue'
 import Csv from '../../../../components/content/editor/csv.vue'
 import Txt from '../../../../components/content/editor/txt.vue'
-import Breadcrumb from '../../../../components/content/breadcrumb.vue'
 import usePathParam from '../../../../composables/usePathParam'
 
 const { isImage, isPdf, isCsv, isText } = usePathParam()
@@ -14,7 +13,6 @@ const { isImage, isPdf, isCsv, isText } = usePathParam()
 <template>
   <Admin>
     <Header />
-    <Breadcrumb />
     <Image v-if="isImage" />
     <Pdf v-else-if="isPdf" />
     <Csv v-else-if="isCsv" />

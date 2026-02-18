@@ -8,7 +8,6 @@ import Delete from '../../../components/content/delete.vue'
 <template>
   <Admin>
     <Header />
-    <Breadcrumb />
     <Delete />
   </Admin>
 </template>

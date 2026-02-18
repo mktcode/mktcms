@@ -18,7 +18,7 @@ onMounted(() => {
 
 <template>
   <div class="flex flex-col gap-2 my-4">
-    <h1 class="my-6">
+    <h1 class="mb-6">
       Datei hochladen
     </h1>
 

@@ -1,37 +1,16 @@
 <script setup lang="ts">
-import { useRoute, useRuntimeConfig } from '#imports'
-
-const route = useRoute()
+import { useRuntimeConfig, useRoute } from '#imports'
+import Breadcrumb from './content/breadcrumb.vue'
 
 const { public: { mktcms: { siteUrl } } } = useRuntimeConfig()
 </script>
 
 <template>
   <div class="flex items-start justify-between gap-2">
-    <NuxtLink
-      to="/admin"
-      class="text-xl text-gray-950! bg-transparent! mr-auto flex items-center gap-3"
-    >
-      <svg
-        v-if="route.path.replace(/^\//, '') !== 'admin'"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="currentColor"
-        class="size-5"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M15.75 19.5 8.25 12l7.5-7.5"
-        />
-      </svg>
-      {{ siteUrl.replace(/https?:\/\//, '') }}
-    </NuxtLink>
+    <Breadcrumb />
     <NuxtLink
       :to="siteUrl"
-      class="button small secondary justify-between"
+      class="button small secondary justify-between ml-auto"
       external
       target="_blank"
     >
