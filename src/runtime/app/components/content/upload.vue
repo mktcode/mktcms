@@ -22,14 +22,14 @@ onMounted(() => {
       Datei hochladen
     </h1>
 
-    <div class="bg-yellow-50 text-yellow-800 p-4 rounded flex gap-4 items-center">
+    <div class="bg-lime-50 text-lime-800 p-4 rounded flex gap-4 items-center">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        class="size-10 opacity-50"
+        class="size-8 opacity-30 shrink-0"
       >
         <path
           stroke-linecap="round"
@@ -38,7 +38,7 @@ onMounted(() => {
         />
       </svg>
       Wenn eine Datei mit gleichem Namen im ausgewählten Ordner bereits existiert, wird diese
-      überschrieben!
+      überschrieben. Alle Dateien werden allerdings in einer permanenten Historie gespeichert, sodass vorherige Versionen wiederhergestellt werden können.
     </div>
 
     <div class="flex gap-4 items-center">

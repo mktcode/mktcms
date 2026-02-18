@@ -1,6 +1,7 @@
 import z from 'zod'
 import { createError, defineEventHandler, getValidatedQuery, readMultipartFormData } from 'h3'
 import { useStorage } from 'nitropack/runtime'
+import syncGitContent from '../../utils/syncGitContent'
 
 function sanitizeFilename(filename: string): string {
   return filename.replace(/[/:\\]/g, '_')
@@ -52,6 +53,13 @@ export default defineEventHandler(async (event) => {
 
   const filePath = [sanePath, sanitizeFilename(file.filename)].filter(Boolean).join(':')
   await useStorage('content').setItemRaw(filePath, Buffer.from(file.data))
+
+  try {
+    await syncGitContent('Datei hinzugefügt', [filePath])
+  }
+  catch (error) {
+    console.error('Git-Fehler:', error)
+  }
 
   return { success: true, path: filePath }
 })
