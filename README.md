@@ -2,7 +2,7 @@
 
 ![Screenshot of Admin UI](https://raw.githubusercontent.com/mktcode/mktcms/refs/heads/main/docs/screenshot.png)
 
-This is my personal, minimalist alternative to @nuxt/content and Studio, which are fantastic projects, but for my needs they still feel a bit unstable, heavier than necessary for my needs, and sometimes lacking the kind of complete documentation I’m looking for.
+This is my personal, minimalist alternative to @nuxt/content and Studio, which are fantastic projects, but sometimes lacking the kind of complete documentation I’m looking for. Over time I will probably migrate more and and more (MDC already supported), and keep this repo as a custom nuxt template for my projects. If you find it useful, feel free to use it as well and contribute to it.
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
