@@ -1,13 +1,30 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import SelectFile from '../selectFile/index.vue'
 
-defineProps<{
+const props = defineProps<{
   label: string
 }>()
 
-const value = defineModel<string>('value', {
+const value = defineModel<string | number>('value', {
   required: true,
+})
+
+const isNumberInput = computed(() => typeof value.value === 'number')
+
+const inputValue = computed({
+  get() {
+    return `${value.value ?? ''}`
+  },
+  set(newValue: string) {
+    if (isNumberInput.value) {
+      const parsed = Number(newValue)
+      value.value = Number.isNaN(parsed) ? 0 : parsed
+      return
+    }
+
+    value.value = newValue
+  },
 })
 
 const showFileSelect = ref(false)
@@ -16,15 +33,16 @@ const showFileSelect = ref(false)
 <template>
   <div class="flex flex-col w-full">
     <label class="font-bold">
-      {{ label }}
+      {{ props.label }}
     </label>
     <div class="relative">
       <input
-        v-model="value"
-        type="text"
+        v-model="inputValue"
+        :type="isNumberInput ? 'number' : 'text'"
         class="w-full"
       >
       <button
+        v-if="!isNumberInput"
         type="button"
         class="absolute top-1/2 right-2 -translate-y-1/2 button secondary small"
         @click="showFileSelect = true"
@@ -46,6 +64,7 @@ const showFileSelect = ref(false)
       </button>
     </div>
     <SelectFile
+      v-if="!isNumberInput"
       :is-open="showFileSelect"
       @close="showFileSelect = false"
       @select="(filePath: string) => { value = filePath }"

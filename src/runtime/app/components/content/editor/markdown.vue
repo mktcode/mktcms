@@ -4,7 +4,7 @@ import { refDebounced } from '@vueuse/core'
 import Saved from '../saved.vue'
 import usePathParam from '../../../composables/usePathParam'
 import { useFetch } from '#imports'
-import FrontmatterForm from './frontmatter/form.vue'
+import FrontmatterModal from './frontmatter/modal.vue'
 import MonacoEditor from './monacoEditor.vue'
 
 const { path } = usePathParam()
@@ -18,6 +18,7 @@ const debouncedMarkdown = refDebounced(markdown, 250)
 
 const isSaving = ref(false)
 const savingSuccessful = ref(false)
+const showFrontmatterModal = ref(false)
 
 async function saveMarkdown() {
   if (!content.value) return
@@ -46,10 +47,20 @@ const mode = ref<'edit' | 'preview'>('preview')
     v-if="content"
     class="flex-1 min-h-0 flex flex-col"
   >
-    <FrontmatterForm
+    <button
+      type="button"
+      class="button secondary small mb-3 self-start"
+      @click="showFrontmatterModal = true"
+    >
+      Metadaten bearbeiten
+    </button>
+
+    <FrontmatterModal
       v-model:frontmatter="frontmatter"
-      class="mb-2"
+      :is-open="showFrontmatterModal"
+      @close="showFrontmatterModal = false"
     />
+
     <div class="flex gap-2 my-2 lg:hidden">
       <button
         type="button"
