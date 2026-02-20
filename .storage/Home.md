@@ -2,6 +2,14 @@
 Bild: /api/content/header.jpg
 Sidebar: true
 Footer: true
+Bilder:
+  - Name: header1
+    Url: /api/content/header.jpeg
+  - Name: flyer2
+    Url: /api/content/Flyer2.jpg
+Tags:
+  - default
+  - ""
 ---
 # Default!
 
