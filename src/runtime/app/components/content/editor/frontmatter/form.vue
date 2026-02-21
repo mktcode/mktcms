@@ -41,14 +41,6 @@ function objectKeys(value: Record<string, any>) {
   return Object.keys(value)
 }
 
-function cloneValue<T>(value: T): T {
-  if (typeof structuredClone === 'function') {
-    return structuredClone(value)
-  }
-
-  return JSON.parse(JSON.stringify(value)) as T
-}
-
 function createEmptyLike(value: any): any {
   if (Array.isArray(value)) {
     return []
@@ -81,7 +73,7 @@ function addArrayItem(arrayRef: any[]) {
     return
   }
 
-  const lastItem = cloneValue(arrayRef[arrayRef.length - 1])
+  const lastItem = arrayRef[arrayRef.length - 1]
   arrayRef.push(createEmptyLike(lastItem))
 }
 
