@@ -31,7 +31,7 @@ function isObject(value: unknown) {
 }
 
 function arrayItemLabel(index: number) {
-  return `[${index}]`
+  return `${index + 1}:`
 }
 
 function objectKeys(value: Record<string, any>) {
@@ -93,8 +93,15 @@ function removeArrayItem(arrayRef: any[], index: number) {
 
 <template>
   <div
-    class="flex flex-col gap-2"
-    :class="props.depth > 0 ? 'border border-gray-200 rounded-sm p-2' : ''"
+    class="flex flex-col gap-6"
+    :class="{
+      'border border-gray-200 rounded-sm p-2': props.depth > 0,
+      'bg-gray-100/30': props.depth === 1,
+      'bg-gray-100/50': props.depth === 2,
+      'bg-gray-100/70': props.depth === 3,
+      'bg-gray-100/80': props.depth === 4,
+      'bg-gray-100/90': props.depth >= 5,
+    }"
   >
     <p
       v-if="props.label"
