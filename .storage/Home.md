@@ -5,8 +5,10 @@ Footer: true
 Bilder:
   - Name: header1
     Url: /api/content/header.jpeg
+    Active: true
   - Name: flyer2
     Url: /api/content/Flyer2.jpg
+    Active: false
 Tags:
   - default
   - ""

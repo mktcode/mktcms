@@ -146,12 +146,13 @@ function toggleOpen(key: string) {
       v-if="Array.isArray(frontmatter)"
       v-for="(item, index) in frontmatter"
       :key="index"
-      class="flex flex-col gap-0 border border-gray-200 rounded-sm p-3 bg-white/50"
+      class="flex flex-col gap-0 border border-gray-200 rounded-sm bg-white/50 overflow-hidden"
     >
-      <div class="flex items-center justify-between gap-2">
+      <div class="flex items-center justify-between gap-2 px-3 py-2">
         <button
+          v-if="!isBoolean(item)"
           type="button"
-          class="flex items-center gap-2 min-w-0 text-left"
+          class="flex-1 flex items-center gap-2 min-w-0 text-left rounded-sm px-2 py-1 transition-colors duration-200 hover:bg-gray-200/70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-300"
           :aria-expanded="isOpen(arrayItemStateKey(index))"
           @click="toggleOpen(arrayItemStateKey(index))"
         >
@@ -172,6 +173,13 @@ function toggleOpen(key: string) {
           </svg>
           <span class="font-bold text-sm">{{ arrayItemLabel(index) }}</span>
         </button>
+
+        <div
+          v-else
+          class="flex-1 min-w-0 px-2 py-1"
+        >
+          <span class="font-bold text-sm">{{ arrayItemLabel(index) }}</span>
+        </div>
 
         <div class="flex items-center gap-1">
           <button
@@ -204,33 +212,41 @@ function toggleOpen(key: string) {
       </div>
 
       <div
+        v-if="isBoolean(item)"
+        class="px-3 pb-3"
+      >
+        <label class="inline-flex items-center">
+          <input
+            v-model="frontmatter[index]"
+            type="checkbox"
+            class="mr-2"
+          >
+        </label>
+      </div>
+
+      <div
+        v-else
         class="grid transition-[grid-template-rows] duration-300 ease-in-out"
         :class="isOpen(arrayItemStateKey(index)) ? 'grid-rows-[1fr] mt-2' : 'grid-rows-[0fr]'"
       >
-        <div class="overflow-hidden pt-1">
-          <FrontmatterToggle
-            v-if="isBoolean(item)"
-            v-model:value="frontmatter[index]"
-            label="Wert"
-          />
-
+        <div class="overflow-hidden px-3 pb-3">
           <FrontmatterInput
-            v-else-if="typeof item === 'string' || isNumber(item)"
+            v-if="typeof item === 'string' || isNumber(item)"
             v-model:value="frontmatter[index]"
-            label="Wert"
+            label=""
           />
 
           <FrontmatterForm
             v-else-if="isObject(item) || Array.isArray(item)"
             v-model:frontmatter="frontmatter[index]"
-            label="Wert"
+            label=""
             :depth="props.depth + 1"
           />
 
           <FrontmatterInput
             v-else
             v-model:value="frontmatter[index]"
-            label="Wert"
+            label=""
           />
         </div>
       </div>
@@ -249,11 +265,24 @@ function toggleOpen(key: string) {
       v-else
       v-for="key in objectKeys(frontmatter)"
       :key="key"
-      class="flex flex-col gap-0 border border-gray-200 rounded-sm p-3 bg-white/45"
+      class="flex flex-col gap-0 border border-gray-200 rounded-sm bg-white/45 overflow-hidden"
     >
+      <label
+        v-if="isBoolean(frontmatter[key])"
+        class="w-full inline-flex items-center px-3 py-2 font-bold text-sm"
+      >
+        <input
+          v-model="frontmatter[key]"
+          type="checkbox"
+          class="mr-2"
+        >
+        <span>{{ key }}</span>
+      </label>
+
       <button
+        v-else
         type="button"
-        class="flex items-center gap-2 min-w-0 text-left"
+        class="w-full flex items-center gap-2 min-w-0 text-left px-3 py-2 transition-colors duration-200 hover:bg-gray-200/70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-300"
         :aria-expanded="isOpen(objectItemStateKey(key))"
         @click="toggleOpen(objectItemStateKey(key))"
       >
@@ -276,33 +305,26 @@ function toggleOpen(key: string) {
       </button>
 
       <div
+        v-if="!isBoolean(frontmatter[key])"
         class="grid transition-[grid-template-rows] duration-300 ease-in-out"
         :class="isOpen(objectItemStateKey(key)) ? 'grid-rows-[1fr] mt-2' : 'grid-rows-[0fr]'"
       >
-        <div class="overflow-hidden pt-1">
-          <FrontmatterToggle
-            v-if="isBoolean(frontmatter[key])"
-            v-model:value="frontmatter[key]"
-            :label="key"
-          />
-
+        <div class="overflow-hidden px-3 pb-3">
           <FrontmatterInput
-            v-else-if="typeof frontmatter[key] === 'string' || isNumber(frontmatter[key])"
+            v-if="typeof frontmatter[key] === 'string' || isNumber(frontmatter[key])"
             v-model:value="frontmatter[key]"
-            :label="key"
           />
 
           <FrontmatterForm
             v-else-if="isObject(frontmatter[key]) || Array.isArray(frontmatter[key])"
             v-model:frontmatter="frontmatter[key]"
-            :label="key"
+            label=""
             :depth="props.depth + 1"
           />
 
           <FrontmatterInput
             v-else
             v-model:value="frontmatter[key]"
-            :label="key"
           />
         </div>
       </div>

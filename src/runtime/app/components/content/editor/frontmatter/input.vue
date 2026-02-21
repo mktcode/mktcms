@@ -2,9 +2,11 @@
 import { computed, ref } from 'vue'
 import SelectFile from '../selectFile/index.vue'
 
-const props = defineProps<{
-  label: string
-}>()
+const props = withDefaults(defineProps<{
+  label?: string
+}>(), {
+  label: '',
+})
 
 const value = defineModel<string | number>('value', {
   required: true,
@@ -32,7 +34,10 @@ const showFileSelect = ref(false)
 
 <template>
   <div class="flex flex-col w-full">
-    <label class="font-bold">
+    <label
+      v-if="props.label"
+      class="font-bold"
+    >
       {{ props.label }}
     </label>
     <div class="relative">
