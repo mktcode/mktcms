@@ -6,6 +6,9 @@ Bilder:
   - Name: header1
     Url: /api/content/header.jpeg
     Active: true
+    Meta:
+      Description: This is the header image.
+      ID: 12345
   - Name: flyer2
     Url: /api/content/Flyer2.jpg
     Active: false
