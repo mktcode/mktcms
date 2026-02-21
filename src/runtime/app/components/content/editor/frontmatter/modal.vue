@@ -36,7 +36,7 @@ function syncFrontmatterFromYaml(value: string) {
     yamlError.value = ''
   }
   catch {
-    yamlError.value = 'Ungültiges YAML. Änderungen werden erst bei gültigem YAML übernommen.'
+    yamlError.value = 'Ungültiges Format. Änderungen werden erst bei gültigem Format (YAML) übernommen.'
   }
 }
 
@@ -85,7 +85,7 @@ watch(yamlContent, (value) => {
             class="button secondary small"
             @click="mode = mode === 'form' ? 'yaml' : 'form'"
           >
-            {{ mode === 'form' ? 'YAML' : 'Formular' }}
+            {{ mode === 'form' ? 'Textversion' : 'Formular' }}
           </button>
           <button
             type="button"
@@ -108,20 +108,21 @@ watch(yamlContent, (value) => {
         v-else
         class="h-[70vh] min-h-80 flex flex-col gap-2"
       >
-        <ClientOnly>
-          <MonacoEditor
-            v-model="yamlContent"
-            language="yaml"
-            class="w-full h-full border border-gray-200 rounded-sm"
-          />
-        </ClientOnly>
-
         <p
           v-if="yamlError"
-          class="text-sm"
+          class="text-sm p-4 bg-red-100 text-red-700 rounded"
         >
           {{ yamlError }}
         </p>
+        <div class="flex-1 min-h-0">
+          <ClientOnly>
+            <MonacoEditor
+              v-model="yamlContent"
+              language="yaml"
+              class="w-full h-full border border-gray-200 rounded-sm"
+            />
+          </ClientOnly>
+        </div>
       </div>
     </div>
   </div>
