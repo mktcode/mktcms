@@ -16,7 +16,7 @@ Tags:
   - default
   - ""
 ---
-# Default!
+# Home
 
 This is default content.
 
