@@ -22,7 +22,8 @@ type GitFixture = {
   workDir: string
 }
 
-async function setupFixture(): Promise<GitFixture> {
+async function setupFixture(options: { withStaging?: boolean } = {}): Promise<GitFixture> {
+  const { withStaging = true } = options
   const rootDir = await mkdtemp(join(tmpdir(), 'mktcms-git-versioning-'))
   const remoteDir = join(rootDir, 'remote.git')
   const seedDir = join(rootDir, 'seed')
@@ -43,11 +44,13 @@ async function setupFixture(): Promise<GitFixture> {
   await seedRepo.raw(['commit', '-m', 'chore: initial'])
   await seedRepo.raw(['push', '-u', 'origin', 'main'])
 
-  await seedRepo.raw(['checkout', '-b', 'staging'])
-  await writeFile(join(seedDir, 'content.txt'), 'base\nfrom-staging\n', 'utf8')
-  await seedRepo.raw(['add', '.'])
-  await seedRepo.raw(['commit', '-m', 'feat: staging change'])
-  await seedRepo.raw(['push', '-u', 'origin', 'staging'])
+  if (withStaging) {
+    await seedRepo.raw(['checkout', '-b', 'staging'])
+    await writeFile(join(seedDir, 'content.txt'), 'base\nfrom-staging\n', 'utf8')
+    await seedRepo.raw(['add', '.'])
+    await seedRepo.raw(['commit', '-m', 'feat: staging change'])
+    await seedRepo.raw(['push', '-u', 'origin', 'staging'])
+  }
 
   await simpleGit().raw(['clone', '--branch', 'main', remoteDir, workDir])
   const workRepo = simpleGit({ baseDir: workDir })
@@ -133,5 +136,16 @@ describe('gitVersioning', () => {
     await simpleGit().raw(['clone', '--branch', 'staging', fixture.remoteDir, verifyDir])
     const file = await simpleGit({ baseDir: verifyDir }).raw(['show', 'HEAD:main-only.txt'])
     expect(file).toContain('from-main')
+  })
+
+  it('fails with clear error when counterpart branch is missing', async () => {
+    const noStagingFixture = await setupFixture({ withStaging: false })
+
+    await expect(mergeCounterpartBranchIntoCurrent({
+      baseDir: noStagingFixture.workDir,
+      authUrlOverride: noStagingFixture.remoteDir,
+    })).rejects.toThrowError(/Counterpart branch not found on remote: staging/)
+
+    await rm(noStagingFixture.rootDir, { recursive: true, force: true })
   })
 })
