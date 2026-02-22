@@ -89,7 +89,7 @@ async function runUpdate() {
   <div class="text-sm text-gray-700">
     <div class="flex items-center justify-end gap-3">
       <span class="text-xs text-gray-500 mr-auto">
-        Branch: <strong>{{ currentBranch }}</strong>
+        Version: <strong class="capitalize">{{ currentBranch }}</strong>
       </span>
       <button
         type="button"
