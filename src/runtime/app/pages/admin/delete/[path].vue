@@ -6,7 +6,9 @@ import Delete from '../../../components/content/delete.vue'
 
 <template>
   <Admin>
-    <Header />
-    <Delete />
+    <div class="boxed">
+      <Header />
+      <Delete />
+    </div>
   </Admin>
 </template>

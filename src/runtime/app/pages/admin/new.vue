@@ -6,7 +6,9 @@ import ContentUpload from '../../components/content/upload.vue'
 
 <template>
   <Admin>
-    <Header />
-    <ContentUpload />
+    <div class="boxed">
+      <Header />
+      <ContentUpload />
+    </div>
   </Admin>
 </template>

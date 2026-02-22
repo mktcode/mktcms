@@ -5,15 +5,13 @@ body:has(#mktcms-admin) {
   @apply bg-gray-100;
 }
 
-body:has(#mktcms-admin:not(.fullscreen)) {
-  @apply p-4 md:p-12;
-}
-
 #mktcms-admin {
-  @apply p-4 max-w-3xl mx-auto bg-white md:rounded-lg shadow-lg flex flex-col;
+  .boxed {
+    @apply p-4 max-w-3xl mx-auto md:my-6 bg-white md:rounded-lg shadow-lg flex flex-col;
+  }
 
-  &.fullscreen {
-    @apply max-w-none rounded-none max-h-screen h-screen overflow-hidden;
+  .fullscreen {
+    @apply max-w-none rounded-none max-h-screen h-screen overflow-hidden bg-white p-3 md:p-6 flex flex-col;
   }
 
   h1 {

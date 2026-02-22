@@ -31,6 +31,7 @@ export default defineNuxtModule({
 
     _nuxt.options.runtimeConfig.public.mktcms = defu((_nuxt.options.runtimeConfig.public.mktcms, {
       siteUrl: '',
+      showVersioning: false,
     }))
 
     // Add frontend components

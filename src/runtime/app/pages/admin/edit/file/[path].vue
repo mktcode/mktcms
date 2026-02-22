@@ -12,13 +12,15 @@ const { isImage, isPdf, isCsv, isText } = usePathParam()
 
 <template>
   <Admin>
-    <Header />
-    <Image v-if="isImage" />
-    <Pdf v-else-if="isPdf" />
-    <Csv v-else-if="isCsv" />
-    <Txt v-else-if="isText" />
-    <div v-else>
-      Unbekannter Dateityp.
+    <div class="boxed">
+      <Header />
+      <Image v-if="isImage" />
+      <Pdf v-else-if="isPdf" />
+      <Csv v-else-if="isCsv" />
+      <Txt v-else-if="isText" />
+      <div v-else>
+        Unbekannter Dateityp.
+      </div>
     </div>
   </Admin>
 </template>

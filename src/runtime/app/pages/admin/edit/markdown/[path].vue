@@ -8,11 +8,13 @@ const { isMarkdown } = usePathParam()
 </script>
 
 <template>
-  <Admin class="fullscreen">
-    <Header />
-    <Markdown v-if="isMarkdown" />
-    <div v-else>
-      Unbekannter Dateityp.
+  <Admin>
+    <div class="fullscreen">
+      <Header />
+      <Markdown v-if="isMarkdown" />
+      <div v-else>
+        Unbekannter Dateityp.
+      </div>
     </div>
   </Admin>
 </template>
