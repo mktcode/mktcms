@@ -1,4 +1,4 @@
-import { createAuthenticatedGitClient, toGitErrorMessage } from './gitVersioning'
+import { createAuthenticatedGitClient, gitBotIdentityArgs, toGitErrorMessage } from './gitVersioning'
 
 function toStorageFilePath(file: string) {
   const normalized = file
@@ -43,7 +43,7 @@ export default async function syncGitContent(commitMessage: string, files: strin
   }
 
   try {
-    await git.commit(commitMessage)
+    await git.raw([...gitBotIdentityArgs(), 'commit', '-m', commitMessage])
   }
   catch (error) {
     throw new Error(toGitErrorMessage(error, 'Git commit failed'))

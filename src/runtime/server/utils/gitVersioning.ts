@@ -1,6 +1,18 @@
 import { useRuntimeConfig } from 'nitropack/runtime'
 import { simpleGit } from 'simple-git'
 
+export const MKTCMS_GIT_BOT_NAME = 'Kunde'
+export const MKTCMS_GIT_BOT_EMAIL = 'admin@mktcode.de'
+
+export function gitBotIdentityArgs() {
+  return [
+    '-c',
+    `user.name=${MKTCMS_GIT_BOT_NAME}`,
+    '-c',
+    `user.email=${MKTCMS_GIT_BOT_EMAIL}`,
+  ]
+}
+
 export const SUPPORTED_WEBSITE_BRANCHES = ['main', 'staging'] as const
 
 export type WebsiteBranch = typeof SUPPORTED_WEBSITE_BRANCHES[number]
@@ -77,7 +89,6 @@ export function createAuthenticatedGitClient(options: GitClientOptions = {}) {
   }
 
   const git = options.baseDir ? simpleGit({ baseDir: options.baseDir }) : simpleGit()
-  git.addConfig('user.name', 'Kunde').addConfig('user.email', 'admin@mktcode.de')
 
   const authUrl = options.authUrlOverride
     || `https://${encodeURIComponent(gitUser)}:${encodeURIComponent(gitToken)}@github.com/${gitRepo}`
@@ -272,7 +283,7 @@ export async function mergeCounterpartBranchIntoCurrent(options: MergeOptions = 
   }
 
   try {
-    await git.raw(['merge', '--no-ff', '--no-edit', 'FETCH_HEAD'])
+    await git.raw([...gitBotIdentityArgs(), 'merge', '--no-ff', '--no-edit', 'FETCH_HEAD'])
   }
   catch (error) {
     throw new Error(toGitErrorMessage(error, `Git merge failed (${sourceBranch} -> ${targetBranch})`))
