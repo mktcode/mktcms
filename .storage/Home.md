@@ -16,7 +16,7 @@ Tags:
   - default
   - ""
 ---
-# Default Staging!
+# Default!
 
 This is default content.
 
