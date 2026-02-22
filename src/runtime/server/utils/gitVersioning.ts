@@ -34,6 +34,11 @@ type GitClientOptions = {
 
 type MergeOptions = GitClientOptions
 
+export function isVersioningEnabled() {
+  const { public: { mktcms: { showVersioning } } } = useRuntimeConfig()
+  return Boolean(showVersioning)
+}
+
 export function createAuthenticatedGitClient(options: GitClientOptions = {}) {
   const { mktcms: { gitToken, gitUser, gitRepo } } = useRuntimeConfig()
 
@@ -56,6 +61,12 @@ export async function getCurrentBranchName(options: GitClientOptions = {}) {
   return branchSummary.current
 }
 
+export async function hasRemoteBranch(branch: string, options: GitClientOptions = {}) {
+  const { git, authUrl } = createAuthenticatedGitClient(options)
+  const output = await git.raw(['ls-remote', '--heads', authUrl, branch])
+  return output.trim().length > 0
+}
+
 export function getCounterpartBranch(currentBranch: WebsiteBranch): WebsiteBranch {
   return currentBranch === 'main' ? 'staging' : 'main'
 }
@@ -72,6 +83,11 @@ export async function mergeCounterpartBranchIntoCurrent(options: MergeOptions = 
 
   const sourceBranch = getCounterpartBranch(currentBranch)
   const targetBranch = currentBranch
+
+  const hasCounterpart = await hasRemoteBranch(sourceBranch, options)
+  if (!hasCounterpart) {
+    throw new Error(`Counterpart branch not found on remote: ${sourceBranch}. Nothing to update.`)
+  }
 
   const status = await git.status()
   if (!status.isClean()) {

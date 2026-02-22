@@ -7,6 +7,9 @@ type GitBranchResponse = {
   isSupported: boolean
   sourceBranch: string | null
   targetBranch: string | null
+  hasCounterpartBranch?: boolean
+  canUpdate?: boolean
+  updateBlockedReason?: string | null
 }
 
 const isHistoryModalOpen = ref(false)
@@ -24,6 +27,8 @@ const { data: branchData, pending: branchPending, error: branchError, refresh: r
 const currentBranch = computed(() => branchData.value?.currentBranch ?? 'unbekannt')
 const isSupportedBranch = computed(() => branchData.value?.isSupported ?? false)
 const sourceBranch = computed(() => branchData.value?.sourceBranch ?? '')
+const canUpdate = computed(() => branchData.value?.canUpdate ?? false)
+const updateBlockedReason = computed(() => branchData.value?.updateBlockedReason ?? '')
 const updateTitle = computed(() => currentBranch.value === 'main'
   ? 'Änderungen aus Vorschau übernehmen'
   : currentBranch.value === 'staging'
@@ -51,6 +56,11 @@ function closeUpdateModal() {
 
 async function runUpdate() {
   if (!isSupportedBranch.value || isUpdating.value) {
+    return
+  }
+
+  if (!canUpdate.value) {
+    updateError.value = updateBlockedReason.value || 'Aktualisierung aktuell nicht möglich.'
     return
   }
 
@@ -92,7 +102,7 @@ async function runUpdate() {
       <button
         type="button"
         class="button small tertiary"
-        :disabled="branchPending"
+        :disabled="branchPending || !!branchError"
         @click="openUpdateModal"
       >
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400"><path d="M12 2a10 10 0 0 1 7.38 16.75"/><path d="m16 12-4-4-4 4"/><path d="M12 16V8"/><path d="M2.5 8.875a10 10 0 0 0-.5 3"/><path d="M2.83 16a10 10 0 0 0 2.43 3.4"/><path d="M4.636 5.235a10 10 0 0 1 .891-.857"/><path d="M8.644 21.42a10 10 0 0 0 7.631-.38"/></svg>
@@ -176,10 +186,10 @@ async function runUpdate() {
         </p>
 
         <p
-          v-else-if="!isSupportedBranch"
+          v-else-if="!isSupportedBranch || !canUpdate"
           class="text-sm p-3 bg-red-100 text-red-700 rounded"
         >
-          Unterstützt sind nur main oder staging. Aktuell: {{ currentBranch }}
+          {{ updateBlockedReason || `Unterstützt sind nur main oder staging. Aktuell: ${currentBranch}` }}
         </p>
 
         <label class="text-sm font-medium text-gray-700">
@@ -219,7 +229,7 @@ async function runUpdate() {
           <button
             type="button"
             class="button small"
-            :disabled="!isSupportedBranch || isUpdating"
+            :disabled="!isSupportedBranch || !canUpdate || isUpdating"
             @click="runUpdate"
           >
             {{ isUpdating ? 'Aktualisiert…' : 'Aktualisieren' }}
