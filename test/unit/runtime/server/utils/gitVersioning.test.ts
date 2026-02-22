@@ -3,7 +3,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { simpleGit } from 'simple-git'
-import { getBranchUpdateStatus, getCurrentBranchName, mergeCounterpartBranchIntoCurrent } from '../../../../../src/runtime/server/utils/gitVersioning'
+import { getBranchUpdateStatus, getCurrentBranchName, getGitHistoryPage, mergeCounterpartBranchIntoCurrent } from '../../../../../src/runtime/server/utils/gitVersioning'
 
 vi.mock('nitropack/runtime', () => ({
   useRuntimeConfig: () => ({
@@ -188,5 +188,39 @@ describe('gitVersioning', () => {
     expect(status.updateBlockedReason).toContain('Counterpart branch not found')
 
     await rm(noStagingFixture.rootDir, { recursive: true, force: true })
+  })
+
+  it('returns paginated git history entries', async () => {
+    const seedRepo = simpleGit({ baseDir: fixture.seedDir })
+    await seedRepo.raw(['checkout', 'main'])
+
+    await writeFile(join(fixture.seedDir, 'history-a.txt'), 'a\n', 'utf8')
+    await seedRepo.raw(['add', '.'])
+    await seedRepo.raw(['commit', '-m', 'feat: history a'])
+
+    await writeFile(join(fixture.seedDir, 'history-b.txt'), 'b\n', 'utf8')
+    await seedRepo.raw(['add', '.'])
+    await seedRepo.raw(['commit', '-m', 'feat: history b'])
+
+    await seedRepo.raw(['push', 'origin', 'main'])
+
+    const page1 = await getGitHistoryPage(1, 2, {
+      baseDir: fixture.workDir,
+      authUrlOverride: fixture.remoteDir,
+    })
+
+    expect(page1.page).toBe(1)
+    expect(page1.perPage).toBe(2)
+    expect(page1.entries.length).toBe(2)
+    expect(page1.entries[0]?.subject).toContain('history b')
+    expect(page1.hasNextPage).toBe(true)
+
+    const page2 = await getGitHistoryPage(2, 2, {
+      baseDir: fixture.workDir,
+      authUrlOverride: fixture.remoteDir,
+    })
+
+    expect(page2.page).toBe(2)
+    expect(page2.entries.length).toBeGreaterThan(0)
   })
 })

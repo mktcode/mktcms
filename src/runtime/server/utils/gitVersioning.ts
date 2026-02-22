@@ -47,6 +47,23 @@ export type BranchUpdateStatus = {
   updateBlockedReason: string | null
 }
 
+export type GitHistoryEntry = {
+  hash: string
+  shortHash: string
+  authorName: string
+  authorEmail: string
+  date: string
+  subject: string
+}
+
+export type GitHistoryPage = {
+  branch: string
+  page: number
+  perPage: number
+  entries: GitHistoryEntry[]
+  hasNextPage: boolean
+}
+
 export function isVersioningEnabled() {
   const { public: { mktcms: { showVersioning } } } = useRuntimeConfig()
   return Boolean(showVersioning)
@@ -156,6 +173,64 @@ export async function getBranchUpdateStatus(options: GitClientOptions = {}): Pro
     isIdentical,
     canUpdate,
     updateBlockedReason: canUpdate ? null : 'Keine eingehenden Änderungen verfügbar.',
+  }
+}
+
+export async function getGitHistoryPage(page: number, perPage: number, options: GitClientOptions = {}): Promise<GitHistoryPage> {
+  const safePage = Number.isFinite(page) && page > 0 ? Math.floor(page) : 1
+  const safePerPage = Number.isFinite(perPage) && perPage > 0 ? Math.min(100, Math.floor(perPage)) : 25
+
+  const { git, authUrl } = createAuthenticatedGitClient(options)
+  const branchSummary = await git.branchLocal()
+  const branch = branchSummary.current
+
+  try {
+    await git.raw(['pull', '--ff-only', authUrl, branch])
+  }
+  catch (error) {
+    throw new Error(toGitErrorMessage(error, `Git pull failed for ${branch}`))
+  }
+
+  const skip = (safePage - 1) * safePerPage
+  const maxCount = safePerPage + 1
+  const raw = await git.raw([
+    'log',
+    '--date=iso-strict',
+    `--skip=${skip}`,
+    `--max-count=${maxCount}`,
+    '--pretty=format:%H%x1f%h%x1f%an%x1f%ae%x1f%ad%x1f%s%x1e',
+  ])
+
+  const parsed = raw
+    .split('\u001e')
+    .map(line => line.trim())
+    .filter(Boolean)
+    .map((line): GitHistoryEntry | null => {
+      const [hash, shortHash, authorName, authorEmail, date, subject] = line.split('\u001f')
+      if (!hash || !shortHash || !authorName || !authorEmail || !date || !subject) {
+        return null
+      }
+
+      return {
+        hash,
+        shortHash,
+        authorName,
+        authorEmail,
+        date,
+        subject,
+      }
+    })
+    .filter((entry): entry is GitHistoryEntry => entry !== null)
+
+  const hasNextPage = parsed.length > safePerPage
+  const entries = parsed.slice(0, safePerPage)
+
+  return {
+    branch,
+    page: safePage,
+    perPage: safePerPage,
+    entries,
+    hasNextPage,
   }
 }
 
