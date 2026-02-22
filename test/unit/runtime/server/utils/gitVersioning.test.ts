@@ -3,7 +3,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { simpleGit } from 'simple-git'
-import { getCurrentBranchName, mergeCounterpartBranchIntoCurrent } from '../../../../../src/runtime/server/utils/gitVersioning'
+import { getBranchUpdateStatus, getCurrentBranchName, mergeCounterpartBranchIntoCurrent } from '../../../../../src/runtime/server/utils/gitVersioning'
 
 vi.mock('nitropack/runtime', () => ({
   useRuntimeConfig: () => ({
@@ -22,8 +22,8 @@ type GitFixture = {
   workDir: string
 }
 
-async function setupFixture(options: { withStaging?: boolean } = {}): Promise<GitFixture> {
-  const { withStaging = true } = options
+async function setupFixture(options: { withStaging?: boolean, withStagingChange?: boolean } = {}): Promise<GitFixture> {
+  const { withStaging = true, withStagingChange = true } = options
   const rootDir = await mkdtemp(join(tmpdir(), 'mktcms-git-versioning-'))
   const remoteDir = join(rootDir, 'remote.git')
   const seedDir = join(rootDir, 'seed')
@@ -46,9 +46,11 @@ async function setupFixture(options: { withStaging?: boolean } = {}): Promise<Gi
 
   if (withStaging) {
     await seedRepo.raw(['checkout', '-b', 'staging'])
-    await writeFile(join(seedDir, 'content.txt'), 'base\nfrom-staging\n', 'utf8')
-    await seedRepo.raw(['add', '.'])
-    await seedRepo.raw(['commit', '-m', 'feat: staging change'])
+    if (withStagingChange) {
+      await writeFile(join(seedDir, 'content.txt'), 'base\nfrom-staging\n', 'utf8')
+      await seedRepo.raw(['add', '.'])
+      await seedRepo.raw(['commit', '-m', 'feat: staging change'])
+    }
     await seedRepo.raw(['push', '-u', 'origin', 'staging'])
   }
 
@@ -138,6 +140,36 @@ describe('gitVersioning', () => {
     expect(file).toContain('from-main')
   })
 
+  it('reports source ahead count and non-identical state', async () => {
+    const status = await getBranchUpdateStatus({
+      baseDir: fixture.workDir,
+      authUrlOverride: fixture.remoteDir,
+    })
+
+    expect(status.currentBranch).toBe('main')
+    expect(status.sourceBranch).toBe('staging')
+    expect(status.sourceAheadCount).toBe(1)
+    expect(status.targetAheadCount).toBe(0)
+    expect(status.isIdentical).toBe(false)
+    expect(status.canUpdate).toBe(true)
+  })
+
+  it('reports identical branches when both branches have same history', async () => {
+    const identicalFixture = await setupFixture({ withStaging: true, withStagingChange: false })
+
+    const status = await getBranchUpdateStatus({
+      baseDir: identicalFixture.workDir,
+      authUrlOverride: identicalFixture.remoteDir,
+    })
+
+    expect(status.sourceAheadCount).toBe(0)
+    expect(status.targetAheadCount).toBe(0)
+    expect(status.isIdentical).toBe(true)
+    expect(status.canUpdate).toBe(false)
+
+    await rm(identicalFixture.rootDir, { recursive: true, force: true })
+  })
+
   it('fails with clear error when counterpart branch is missing', async () => {
     const noStagingFixture = await setupFixture({ withStaging: false })
 
@@ -145,6 +177,15 @@ describe('gitVersioning', () => {
       baseDir: noStagingFixture.workDir,
       authUrlOverride: noStagingFixture.remoteDir,
     })).rejects.toThrowError(/Counterpart branch not found on remote: staging/)
+
+    const status = await getBranchUpdateStatus({
+      baseDir: noStagingFixture.workDir,
+      authUrlOverride: noStagingFixture.remoteDir,
+    })
+
+    expect(status.hasCounterpartBranch).toBe(false)
+    expect(status.canUpdate).toBe(false)
+    expect(status.updateBlockedReason).toContain('Counterpart branch not found')
 
     await rm(noStagingFixture.rootDir, { recursive: true, force: true })
   })

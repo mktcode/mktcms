@@ -34,6 +34,19 @@ type GitClientOptions = {
 
 type MergeOptions = GitClientOptions
 
+export type BranchUpdateStatus = {
+  currentBranch: string
+  isSupported: boolean
+  sourceBranch: string | null
+  targetBranch: string | null
+  hasCounterpartBranch: boolean
+  sourceAheadCount: number
+  targetAheadCount: number
+  isIdentical: boolean
+  canUpdate: boolean
+  updateBlockedReason: string | null
+}
+
 export function isVersioningEnabled() {
   const { public: { mktcms: { showVersioning } } } = useRuntimeConfig()
   return Boolean(showVersioning)
@@ -69,6 +82,81 @@ export async function hasRemoteBranch(branch: string, options: GitClientOptions 
 
 export function getCounterpartBranch(currentBranch: WebsiteBranch): WebsiteBranch {
   return currentBranch === 'main' ? 'staging' : 'main'
+}
+
+export async function getBranchUpdateStatus(options: GitClientOptions = {}): Promise<BranchUpdateStatus> {
+  const { git, authUrl } = createAuthenticatedGitClient(options)
+  const branchSummary = await git.branchLocal()
+  const currentBranch = branchSummary.current
+
+  if (!isSupportedWebsiteBranch(currentBranch)) {
+    return {
+      currentBranch,
+      isSupported: false,
+      sourceBranch: null,
+      targetBranch: null,
+      hasCounterpartBranch: false,
+      sourceAheadCount: 0,
+      targetAheadCount: 0,
+      isIdentical: false,
+      canUpdate: false,
+      updateBlockedReason: 'Unsupported checked-out branch. Expected main or staging.',
+    }
+  }
+
+  const sourceBranch = getCounterpartBranch(currentBranch)
+  const targetBranch = currentBranch
+  const hasCounterpartBranch = await hasRemoteBranch(sourceBranch, options)
+
+  if (!hasCounterpartBranch) {
+    return {
+      currentBranch,
+      isSupported: true,
+      sourceBranch,
+      targetBranch,
+      hasCounterpartBranch: false,
+      sourceAheadCount: 0,
+      targetAheadCount: 0,
+      isIdentical: false,
+      canUpdate: false,
+      updateBlockedReason: `Counterpart branch not found: ${sourceBranch}`,
+    }
+  }
+
+  try {
+    await git.raw(['pull', '--ff-only', authUrl, targetBranch])
+  }
+  catch (error) {
+    throw new Error(toGitErrorMessage(error, `Git pull failed for ${targetBranch}`))
+  }
+
+  try {
+    await git.raw(['fetch', '--prune', authUrl, sourceBranch])
+  }
+  catch (error) {
+    throw new Error(toGitErrorMessage(error, `Git fetch failed for ${sourceBranch}`))
+  }
+
+  const sourceAheadRaw = await git.raw(['rev-list', '--count', `${targetBranch}..FETCH_HEAD`])
+  const targetAheadRaw = await git.raw(['rev-list', '--count', `FETCH_HEAD..${targetBranch}`])
+
+  const sourceAheadCount = Number.parseInt(sourceAheadRaw.trim() || '0', 10) || 0
+  const targetAheadCount = Number.parseInt(targetAheadRaw.trim() || '0', 10) || 0
+  const isIdentical = sourceAheadCount === 0 && targetAheadCount === 0
+  const canUpdate = sourceAheadCount > 0
+
+  return {
+    currentBranch,
+    isSupported: true,
+    sourceBranch,
+    targetBranch,
+    hasCounterpartBranch: true,
+    sourceAheadCount,
+    targetAheadCount,
+    isIdentical,
+    canUpdate,
+    updateBlockedReason: canUpdate ? null : 'Keine eingehenden Änderungen verfügbar.',
+  }
 }
 
 export async function mergeCounterpartBranchIntoCurrent(options: MergeOptions = {}) {

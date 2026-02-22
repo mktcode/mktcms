@@ -12,6 +12,19 @@ type GitBranchResponse = {
   updateBlockedReason?: string | null
 }
 
+type GitUpdateStatusResponse = {
+  currentBranch: string
+  isSupported: boolean
+  sourceBranch: string | null
+  targetBranch: string | null
+  hasCounterpartBranch: boolean
+  sourceAheadCount: number
+  targetAheadCount: number
+  isIdentical: boolean
+  canUpdate: boolean
+  updateBlockedReason: string | null
+}
+
 const isHistoryModalOpen = ref(false)
 const isUpdateModalOpen = ref(false)
 
@@ -24,11 +37,21 @@ const { data: branchData, pending: branchPending, error: branchError, refresh: r
   key: 'mktcms-git-branch',
 })
 
+const { data: updateStatusData, pending: updateStatusPending, error: updateStatusError, refresh: refreshUpdateStatus } = await useFetch<GitUpdateStatusResponse>('/api/admin/git-update-status', {
+  key: 'mktcms-git-update-status',
+})
+
 const currentBranch = computed(() => branchData.value?.currentBranch ?? 'unbekannt')
 const isSupportedBranch = computed(() => branchData.value?.isSupported ?? false)
 const sourceBranch = computed(() => branchData.value?.sourceBranch ?? '')
-const canUpdate = computed(() => branchData.value?.canUpdate ?? false)
-const updateBlockedReason = computed(() => branchData.value?.updateBlockedReason ?? '')
+const sourceAheadCount = computed(() => updateStatusData.value?.sourceAheadCount ?? 0)
+const isIdentical = computed(() => updateStatusData.value?.isIdentical ?? false)
+const canUpdate = computed(() => updateStatusData.value?.canUpdate ?? false)
+const updateBlockedReason = computed(() => updateStatusData.value?.updateBlockedReason || branchData.value?.updateBlockedReason || '')
+const updateButtonText = computed(() => {
+  const count = sourceAheadCount.value
+  return `Aktualisieren (${count})`
+})
 const updateTitle = computed(() => currentBranch.value === 'main'
   ? 'Änderungen aus Vorschau übernehmen'
   : currentBranch.value === 'staging'
@@ -40,7 +63,7 @@ function openHistoryModal() {
 }
 
 function openUpdateModal() {
-  selectedUpdateBranch.value = sourceBranch.value
+  selectedUpdateBranch.value = updateStatusData.value?.sourceBranch || sourceBranch.value
   updateError.value = ''
   updateSuccess.value = ''
   isUpdateModalOpen.value = true
@@ -75,6 +98,7 @@ async function runUpdate() {
 
     updateSuccess.value = `Merge erfolgreich: ${sourceBranch.value} → ${currentBranch.value}`
     await refreshBranch()
+    await refreshUpdateStatus()
   }
   catch (error: any) {
     updateError.value = error?.data?.statusMessage || error?.message || 'Aktualisierung fehlgeschlagen.'
@@ -102,11 +126,11 @@ async function runUpdate() {
       <button
         type="button"
         class="button small tertiary"
-        :disabled="branchPending || !!branchError"
+        :disabled="branchPending || updateStatusPending || !!branchError || !!updateStatusError"
         @click="openUpdateModal"
       >
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400"><path d="M12 2a10 10 0 0 1 7.38 16.75"/><path d="m16 12-4-4-4 4"/><path d="M12 16V8"/><path d="M2.5 8.875a10 10 0 0 0-.5 3"/><path d="M2.83 16a10 10 0 0 0 2.43 3.4"/><path d="M4.636 5.235a10 10 0 0 1 .891-.857"/><path d="M8.644 21.42a10 10 0 0 0 7.631-.38"/></svg>
-        Aktualisieren
+        {{ updateButtonText }}
       </button>
     </div>
 
@@ -186,6 +210,20 @@ async function runUpdate() {
         </p>
 
         <p
+          v-else-if="updateStatusError"
+          class="text-sm p-3 bg-red-100 text-red-700 rounded"
+        >
+          Konnte Branch-Status nicht laden.
+        </p>
+
+        <p
+          v-else-if="isIdentical"
+          class="text-sm p-3 bg-gray-50 border border-gray-200 rounded"
+        >
+          Die Branches sind identisch. Es sind keine neuen Änderungen verfügbar.
+        </p>
+
+        <p
           v-else-if="!isSupportedBranch || !canUpdate"
           class="text-sm p-3 bg-red-100 text-red-700 rounded"
         >
@@ -229,7 +267,7 @@ async function runUpdate() {
           <button
             type="button"
             class="button small"
-            :disabled="!isSupportedBranch || !canUpdate || isUpdating"
+            :disabled="!isSupportedBranch || !canUpdate || isUpdating || isIdentical"
             @click="runUpdate"
           >
             {{ isUpdating ? 'Aktualisiert…' : 'Aktualisieren' }}
