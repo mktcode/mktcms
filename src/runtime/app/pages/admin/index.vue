@@ -14,9 +14,9 @@ const { public: { mktcms: { showVersioning } } } = useRuntimeConfig()
     <div class="boxed">
       <Header class="mb-4" />
       <Content />
+      <Versioning v-if="showVersioning" class="mt-6" />
     </div>
     <div class="mt-6 max-w-3xl mx-auto p-4 border border-gray-200 rounded-2xl">
-      <Versioning v-if="showVersioning" class="mb-4" />
       <Usage />
     </div>
   </Admin>

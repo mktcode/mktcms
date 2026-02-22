@@ -33,6 +33,10 @@ body:has(#mktcms-admin) {
       @apply bg-gray-50 text-gray-700 border border-gray-300 hover:bg-gray-100;
     }
 
+    &.tertiary {
+      @apply bg-transparent text-gray-500 border border-gray-100 hover:bg-gray-100 hover:text-gray-700;
+    }
+
     &.directory {
       @apply bg-gray-700 text-white border border-gray-600 hover:bg-gray-600;
     }
