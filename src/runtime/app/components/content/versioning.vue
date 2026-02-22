@@ -1,20 +1,43 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { useFetch } from '#app'
 
-const currentBranch = ref('main')
-const availableBranches = ['main', 'staging', 'develop']
+type GitBranchResponse = {
+  currentBranch: string
+  isSupported: boolean
+  sourceBranch: string | null
+  targetBranch: string | null
+}
 
 const isHistoryModalOpen = ref(false)
 const isUpdateModalOpen = ref(false)
 
-const selectedUpdateBranch = ref(currentBranch.value)
+const selectedUpdateBranch = ref('')
+const isUpdating = ref(false)
+const updateError = ref('')
+const updateSuccess = ref('')
+
+const { data: branchData, pending: branchPending, error: branchError, refresh: refreshBranch } = await useFetch<GitBranchResponse>('/api/admin/git-branch', {
+  key: 'mktcms-git-branch',
+})
+
+const currentBranch = computed(() => branchData.value?.currentBranch ?? 'unbekannt')
+const isSupportedBranch = computed(() => branchData.value?.isSupported ?? false)
+const sourceBranch = computed(() => branchData.value?.sourceBranch ?? '')
+const updateTitle = computed(() => currentBranch.value === 'main'
+  ? 'Änderungen aus Vorschau übernehmen'
+  : currentBranch.value === 'staging'
+    ? 'Änderungen von Live in Vorschau übernehmen'
+    : 'Branch aktualisieren')
 
 function openHistoryModal() {
   isHistoryModalOpen.value = true
 }
 
 function openUpdateModal() {
-  selectedUpdateBranch.value = currentBranch.value
+  selectedUpdateBranch.value = sourceBranch.value
+  updateError.value = ''
+  updateSuccess.value = ''
   isUpdateModalOpen.value = true
 }
 
@@ -25,11 +48,39 @@ function closeHistoryModal() {
 function closeUpdateModal() {
   isUpdateModalOpen.value = false
 }
+
+async function runUpdate() {
+  if (!isSupportedBranch.value || isUpdating.value) {
+    return
+  }
+
+  isUpdating.value = true
+  updateError.value = ''
+  updateSuccess.value = ''
+
+  try {
+    await $fetch('/api/admin/git-update', {
+      method: 'POST',
+    })
+
+    updateSuccess.value = `Merge erfolgreich: ${sourceBranch.value} → ${currentBranch.value}`
+    await refreshBranch()
+  }
+  catch (error: any) {
+    updateError.value = error?.data?.statusMessage || error?.message || 'Aktualisierung fehlgeschlagen.'
+  }
+  finally {
+    isUpdating.value = false
+  }
+}
 </script>
 
 <template>
   <div class="text-sm text-gray-700">
     <div class="flex items-center justify-end gap-3">
+      <span class="text-xs text-gray-500 mr-auto">
+        Branch: <strong>{{ currentBranch }}</strong>
+      </span>
       <button
         type="button"
         class="button small tertiary"
@@ -41,6 +92,7 @@ function closeUpdateModal() {
       <button
         type="button"
         class="button small tertiary"
+        :disabled="branchPending"
         @click="openUpdateModal"
       >
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400"><path d="M12 2a10 10 0 0 1 7.38 16.75"/><path d="m16 12-4-4-4 4"/><path d="M12 16V8"/><path d="M2.5 8.875a10 10 0 0 0-.5 3"/><path d="M2.83 16a10 10 0 0 0 2.43 3.4"/><path d="M4.636 5.235a10 10 0 0 1 .891-.857"/><path d="M8.644 21.42a10 10 0 0 0 7.631-.38"/></svg>
@@ -101,7 +153,7 @@ function closeUpdateModal() {
       >
         <div class="flex items-center justify-between gap-2">
           <h2 class="font-bold text-xl">
-            Änderungen aus Vorschau übernehmen
+            {{ updateTitle }}
           </h2>
           <button
             type="button"
@@ -116,21 +168,45 @@ function closeUpdateModal() {
           Achtung: Eine Aktualisierung ist sofort auf der Website sichtbar.
         </p>
 
+        <p
+          v-if="branchError"
+          class="text-sm p-3 bg-red-100 text-red-700 rounded"
+        >
+          Konnte aktuellen Branch nicht laden.
+        </p>
+
+        <p
+          v-else-if="!isSupportedBranch"
+          class="text-sm p-3 bg-red-100 text-red-700 rounded"
+        >
+          Unterstützt sind nur main oder staging. Aktuell: {{ currentBranch }}
+        </p>
+
         <label class="text-sm font-medium text-gray-700">
-          Branch auswählen
+          Merge von Branch
         </label>
         <select
           v-model="selectedUpdateBranch"
           class="w-full border border-gray-200 rounded-sm px-3 py-2"
+          :disabled="true"
         >
-          <option
-            v-for="branch in availableBranches"
-            :key="`update-${branch}`"
-            :value="branch"
-          >
-            {{ branch }}
+          <option :value="selectedUpdateBranch || ''">
+            {{ selectedUpdateBranch || 'unbekannt' }}
           </option>
         </select>
+
+        <p
+          v-if="updateError"
+          class="text-sm p-3 bg-red-100 text-red-700 rounded"
+        >
+          {{ updateError }}
+        </p>
+        <p
+          v-if="updateSuccess"
+          class="text-sm p-3 bg-emerald-100 text-emerald-800 rounded"
+        >
+          {{ updateSuccess }}
+        </p>
 
         <div class="flex items-center justify-end gap-2">
           <button
@@ -143,8 +219,10 @@ function closeUpdateModal() {
           <button
             type="button"
             class="button small"
+            :disabled="!isSupportedBranch || isUpdating"
+            @click="runUpdate"
           >
-            Aktualisieren
+            {{ isUpdating ? 'Aktualisiert…' : 'Aktualisieren' }}
           </button>
         </div>
       </div>

@@ -200,6 +200,17 @@ export default defineNuxtModule({
       handler: resolver.resolve('./runtime/server/api/admin/stats-visits'),
     })
 
+    // Git versioning
+    addServerHandler({
+      route: '/api/admin/git-branch',
+      handler: resolver.resolve('./runtime/server/api/admin/git-branch'),
+    })
+    addServerHandler({
+      route: '/api/admin/git-update',
+      method: 'post',
+      handler: resolver.resolve('./runtime/server/api/admin/git-update.post'),
+    })
+
     // Public API Routes
     addServerHandler({
       route: '/api/content/list',

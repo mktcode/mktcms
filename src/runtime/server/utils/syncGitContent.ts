@@ -1,19 +1,4 @@
-import { useRuntimeConfig } from 'nitropack/runtime'
-import { simpleGit } from 'simple-git'
-
-function toGitErrorMessage(error: unknown, fallback: string) {
-  const message = error instanceof Error ? error.message : String(error)
-
-  if (/conflict|merge conflict|could not apply|needs merge/i.test(message)) {
-    return 'Git sync failed due to merge conflicts during pull --rebase. Resolve conflicts and retry.'
-  }
-
-  if (/authentication failed|could not read username|access denied|permission denied/i.test(message)) {
-    return 'Git sync failed due to authentication error. Check NUXT_MKTCMS_GIT_USER, NUXT_MKTCMS_GIT_REPO and NUXT_MKTCMS_GIT_TOKEN.'
-  }
-
-  return `${fallback}: ${message}`
-}
+import { createAuthenticatedGitClient, toGitErrorMessage } from './gitVersioning'
 
 function toStorageFilePath(file: string) {
   const normalized = file
@@ -39,16 +24,7 @@ function toStorageFilePath(file: string) {
 }
 
 export default async function syncGitContent(commitMessage: string, files: string[]) {
-  const { mktcms: { gitToken, gitUser, gitRepo } } = useRuntimeConfig()
-
-  if (!gitToken || !gitUser || !gitRepo) {
-    throw new Error('Missing Git auth config: NUXT_MKTCMS_GIT_USER, NUXT_MKTCMS_GIT_REPO, NUXT_MKTCMS_GIT_TOKEN')
-  }
-
-  const git = simpleGit()
-  git.addConfig('user.name', 'Kunde').addConfig('user.email', 'admin@mktcode.de')
-
-  const authUrl = `https://${encodeURIComponent(gitUser)}:${encodeURIComponent(gitToken)}@github.com/${gitRepo}`
+  const { git, authUrl } = createAuthenticatedGitClient()
 
   try {
     await git.raw(['pull', '--rebase', '--autostash', authUrl])
