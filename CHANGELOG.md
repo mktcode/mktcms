@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.2.13
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.2.12...v0.2.13)
+
+### 🚀 Enhancements
+
+- Add commit message input for text content and sync with Git ([b7208bb](https://github.com/mktcode/mktcms/commit/b7208bb))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.2.12
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.2.11...v0.2.12)
