@@ -1,6 +1,37 @@
 # Changelog
 
 
+## v0.2.8
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.2.7...v0.2.8)
+
+### 🚀 Enhancements
+
+- Implemented recursive yaml editor modal with array and object support ([721223d](https://github.com/mktcode/mktcms/commit/721223d))
+- Add Git branch management and update functionality ([6f81be6](https://github.com/mktcode/mktcms/commit/6f81be6))
+- Enhance setupFixture to conditionally create staging branch and add error handling for missing counterpart branch ([806376c](https://github.com/mktcode/mktcms/commit/806376c))
+- Enhance versioning feature with counterpart branch checks and update handling ([9764527](https://github.com/mktcode/mktcms/commit/9764527))
+- Add Git update status API and enhance versioning logic ([8946bdf](https://github.com/mktcode/mktcms/commit/8946bdf))
+- Add Git history API endpoint with pagination support ([d3ecea8](https://github.com/mktcode/mktcms/commit/d3ecea8))
+- Implement git bot identity for automated commits and merges ([2abaf8d](https://github.com/mktcode/mktcms/commit/2abaf8d))
+
+### 🩹 Fixes
+
+- Update screenshot link in README.md to use correct reference ([d9a25d2](https://github.com/mktcode/mktcms/commit/d9a25d2))
+- Refine project description in README.md for clarity ([dd84c0a](https://github.com/mktcode/mktcms/commit/dd84c0a))
+- Update header to reflect staging environment ([31797d4](https://github.com/mktcode/mktcms/commit/31797d4))
+- Update header title from 'Default!' to 'Home' for clarity ([4dac703](https://github.com/mktcode/mktcms/commit/4dac703))
+
+### 🏡 Chore
+
+- Linter ([dc667b7](https://github.com/mktcode/mktcms/commit/dc667b7))
+- Fix linter issue ([72fbe03](https://github.com/mktcode/mktcms/commit/72fbe03))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+- Kunde <admin@mktcode.de>
+
 ## v0.2.7
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.2.6...v0.2.7)
