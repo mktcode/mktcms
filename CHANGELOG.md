@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.2.10
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.2.9...v0.2.10)
+
+### 💅 Refactors
+
+- Update login.vue layout and button functionality ([2a80ec1](https://github.com/mktcode/mktcms/commit/2a80ec1))
+
+### 🏡 Chore
+
+- Remove release:minor and release:major scripts from package.json ([70913bb](https://github.com/mktcode/mktcms/commit/70913bb))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.2.9
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.2.8...v0.2.9)
