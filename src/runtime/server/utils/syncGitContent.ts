@@ -65,6 +65,7 @@ export default async function syncGitContent(commitMessage: string, files: strin
       await git.fetch(['--prune', 'origin', currentBranch])
     }
   }
-  catch {
+  catch (error) {
+    throw new Error(toGitErrorMessage(error, 'Git status refresh failed'))
   }
 }
