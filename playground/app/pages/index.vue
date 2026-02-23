@@ -2,12 +2,13 @@
 const siteUrl = useSiteUrl()
 
 const md = await useMdContent('Home.md')
+const txt = await useTxtContent('Title.txt')
 
 const imagePaths = await useImagePaths()
 </script>
 
 <template>
-  <h1>Welcome to MKT CMS</h1>
+  <h1>{{ txt }}</h1>
 
   <img
     v-for="path in imagePaths"
