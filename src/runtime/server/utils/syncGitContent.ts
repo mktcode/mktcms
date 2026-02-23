@@ -25,9 +25,10 @@ function toStorageFilePath(file: string) {
 
 export default async function syncGitContent(commitMessage: string, files: string[]) {
   const { git, authUrl } = createAuthenticatedGitClient()
+  const currentBranch = (await git.branchLocal()).current
 
   try {
-    await git.raw(['pull', '--rebase', '--autostash', authUrl])
+    await git.raw(['pull', '--rebase', '--autostash', authUrl, currentBranch])
   }
   catch (error) {
     throw new Error(toGitErrorMessage(error, 'Git pull failed'))
@@ -50,19 +51,18 @@ export default async function syncGitContent(commitMessage: string, files: strin
   }
 
   try {
-    await git.push([authUrl])
+    await git.push([authUrl, `HEAD:${currentBranch}`])
   }
   catch (error) {
     throw new Error(toGitErrorMessage(error, 'Git push failed'))
   }
 
   try {
-    const currentBranch = (await git.branchLocal()).current
     const remotes = await git.getRemotes(true)
     const hasOriginRemote = remotes.some(remote => remote.name === 'origin')
 
     if (hasOriginRemote) {
-      await git.fetch(['--prune', 'origin', currentBranch])
+      await git.raw(['update-ref', `refs/remotes/origin/${currentBranch}`, 'HEAD'])
     }
   }
   catch (error) {
