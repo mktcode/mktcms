@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.2.12
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.2.11...v0.2.12)
+
+### 🩹 Fixes
+
+- Include current branch in Git pull and push commands ([d6a9188](https://github.com/mktcode/mktcms/commit/d6a9188))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.2.11
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.2.10...v0.2.11)
