@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v0.2.11
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.2.10...v0.2.11)
+
+### 🩹 Fixes
+
+- Ensure current branch is fetched from origin after push ([80ed7f1](https://github.com/mktcode/mktcms/commit/80ed7f1))
+- Handle error in Git status refresh with detailed message ([a11ff16](https://github.com/mktcode/mktcms/commit/a11ff16))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.2.10
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.2.9...v0.2.10)
