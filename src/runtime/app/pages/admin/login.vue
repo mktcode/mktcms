@@ -51,50 +51,52 @@ async function login() {
 
 <template>
   <Admin>
-    <h1 class="text-3xl font-bold">
-      Anmelden
-    </h1>
-    <h2 class="text-gray-500">
-      Administration: {{ siteUrl.replace(/https?:\/\//, '') }}
-    </h2>
-    <div class="mt-6">
-      <label
-        for="adminAuthKey"
-        class="text-gray-700"
-      >
-        Schlüssel:
-      </label>
-      <div class="flex gap-2 mt-2">
-        <input
-          id="adminAuthKey"
-          v-model="adminAuthKey"
-          type="password"
-          class="border border-gray-300 rounded-md p-2 flex-1"
-          autocomplete="one-time-code"
-          @keyup.enter="login"
+    <div class="boxed">
+      <h1 class="text-3xl font-bold">
+        Anmelden
+      </h1>
+      <h2 class="text-gray-500">
+        Administration: {{ siteUrl.replace(/https?:\/\//, '') }}
+      </h2>
+      <div class="mt-6">
+        <label
+          for="adminAuthKey"
+          class="text-gray-700"
         >
-        <input
-          ref="adminAuthKeyFileInput"
-          type="file"
-          accept=".txt,text/plain"
-          class="hidden"
-          @change="onAdminAuthKeyFileSelected"
-        >
+          Schlüssel:
+        </label>
+        <div class="flex gap-2 mt-2">
+          <input
+            id="adminAuthKey"
+            v-model="adminAuthKey"
+            type="password"
+            class="border border-gray-300 rounded-md p-2 flex-1"
+            autocomplete="one-time-code"
+            @keyup.enter="login"
+          >
+          <input
+            ref="adminAuthKeyFileInput"
+            type="file"
+            accept=".txt,text/plain"
+            class="hidden"
+            @change="onAdminAuthKeyFileSelected"
+          >
+          <button
+            type="button"
+            class="button secondary"
+            @click="openAdminAuthKeyFilePicker"
+          >
+            Datei wählen
+          </button>
+        </div>
         <button
           type="button"
-          class="button secondary"
-          @click="openAdminAuthKeyFilePicker"
+          class="button w-full justify-center mt-2.5"
+          @click="login"
         >
-          Datei wählen
+          Anmelden
         </button>
       </div>
-      <button
-        type="button"
-        class="button w-full justify-center mt-2.5"
-        @click="login"
-      >
-        Anmelden
-      </button>
     </div>
   </Admin>
 </template>
