@@ -213,11 +213,11 @@ export async function getGitHistoryPage(page: number, perPage: number, options: 
   ])
 
   const parsed = raw
-    .split('\u001e')
+    .split('\u001E')
     .map(line => line.trim())
     .filter(Boolean)
     .map((line): GitHistoryEntry | null => {
-      const [hash, shortHash, authorName, authorEmail, date, subject] = line.split('\u001f')
+      const [hash, shortHash, authorName, authorEmail, date, subject] = line.split('\u001F')
       if (!hash || !shortHash || !authorName || !authorEmail || !date || !subject) {
         return null
       }

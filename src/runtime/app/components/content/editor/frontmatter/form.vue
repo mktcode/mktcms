@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import FrontmatterInput from './input.vue'
-import FrontmatterToggle from './toggle.vue'
 
 defineOptions({
   name: 'FrontmatterForm',
