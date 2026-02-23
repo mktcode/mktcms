@@ -2,6 +2,10 @@ import z from 'zod'
 import { useStorage } from 'nitropack/runtime'
 import { defineEventHandler, getValidatedQuery } from 'h3'
 
+function alphaSort(a: string, b: string) {
+  return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' })
+}
+
 const querySchema = z.object({
   path: z.string().optional(),
   type: z.enum(['image']).optional(),
@@ -24,7 +28,7 @@ export default defineEventHandler(async (event) => {
   const uniqueDirs = Array.from(new Set(dirs))
 
   return {
-    files: filteredFiles,
-    dirs: uniqueDirs,
+    files: [...filteredFiles].sort(alphaSort),
+    dirs: [...uniqueDirs].sort(alphaSort),
   }
 })
