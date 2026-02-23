@@ -55,4 +55,16 @@ export default async function syncGitContent(commitMessage: string, files: strin
   catch (error) {
     throw new Error(toGitErrorMessage(error, 'Git push failed'))
   }
+
+  try {
+    const currentBranch = (await git.branchLocal()).current
+    const remotes = await git.getRemotes(true)
+    const hasOriginRemote = remotes.some(remote => remote.name === 'origin')
+
+    if (hasOriginRemote) {
+      await git.fetch(['--prune', 'origin', currentBranch])
+    }
+  }
+  catch {
+  }
 }
