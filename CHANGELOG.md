@@ -1,6 +1,25 @@
 # Changelog
 
 
+## v0.2.9
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.2.8...v0.2.9)
+
+### 🩹 Fixes
+
+- Downgrade eslint to version 9.39.3 for compatibility ([77e2dcd](https://github.com/mktcode/mktcms/commit/77e2dcd))
+
+### 🏡 Chore
+
+- Update dependencies and devDependencies to latest versions ([0fd9d5e](https://github.com/mktcode/mktcms/commit/0fd9d5e))
+- Update eslint to version 10.0.1 in package.json ([02fd4f1](https://github.com/mktcode/mktcms/commit/02fd4f1))
+- Remove .npmrc configuration file ([b874fab](https://github.com/mktcode/mktcms/commit/b874fab))
+- Add release:minor and release:major scripts to package.json ([d6159cd](https://github.com/mktcode/mktcms/commit/d6159cd))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.2.8
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.2.7...v0.2.8)
