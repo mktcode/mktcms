@@ -17,7 +17,7 @@ This is my personal, minimalist alternative to @nuxt/content and Studio, which a
 
 ## Features
 
-- Simple Admin UI to manage content files
+- Simple Admin UI with Git integration to manage content
 - Composables to use the content in your Nuxt app
 - `sendMail` utility to send emails via SMTP
 - [MDC](https://github.com/nuxt-content/mdc) support
