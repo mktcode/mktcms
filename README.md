@@ -1,8 +1,10 @@
-# Simple CMS module for Nuxt
+# MktCMS
+
+A CMS for Solo-Custom-Website-Builders with their own servers.
 
 ![Screenshot of Admin UI](https://raw.githubusercontent.com/mktcode/mktcms/refs/heads/main/docs/screenshot.png)
 
-This is my personal, minimalist alternative to @nuxt/content and Studio, which are fantastic projects, but sometimes lacking the kind of complete documentation I’m looking for. Over time I will probably migrate more and and more (MDC already supported), and keep this repo as a custom nuxt template for my projects. If you find it useful, feel free to use it as well and contribute to it.
+This is my personal, minimalist alternative to @nuxt/content and Studio, which are fantastic projects, but sometimes lacking the kind of complete documentation I’m looking for. Over time I will maybe migrate more and more (MDC already supported), and just keep [the website template](https://github.com/mktcode/mktcms-website-template) and the [server utility](https://github.com/mktcode/mktcms-server). If you find this useful, feel free to use it as well and contribute to it.
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
