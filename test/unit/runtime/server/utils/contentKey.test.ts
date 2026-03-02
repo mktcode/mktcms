@@ -14,6 +14,12 @@ describe('contentKey', () => {
       expect(normalizeContentKey('dir%5Csub%5Cfile.txt')).toBe('dir:sub:file.txt')
     })
 
+    it('allows whitespace in directory and file names', () => {
+      expect(normalizeContentKey('About us.md')).toBe('About us.md')
+      expect(normalizeContentKey('Company Pages/About us.md')).toBe('Company Pages:About us.md')
+      expect(normalizeContentKey('Company%20Pages/About%20us.md')).toBe('Company Pages:About us.md')
+    })
+
     it('rejects invalid keys', () => {
       const invalidInputs = [
         '',
