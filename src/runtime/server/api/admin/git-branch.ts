@@ -1,5 +1,5 @@
 import { createError, defineEventHandler } from 'h3'
-import { getCounterpartBranch, getCurrentBranchName, hasRemoteBranch, isSupportedWebsiteBranch, isVersioningEnabled } from '../../utils/gitVersioning'
+import { getCounterpartBranch, getCurrentBranchName, hasRemoteBranch, isSupportedWebsiteBranch, isVersioningEnabled, toGitErrorMessage } from '../../utils/gitVersioning'
 
 export default defineEventHandler(async () => {
   try {
@@ -43,9 +43,11 @@ export default defineEventHandler(async () => {
       throw error
     }
 
+    const safeMessage = toGitErrorMessage(error, 'Failed to get current Git branch')
+
     throw createError({
       statusCode: 500,
-      statusMessage: error?.message || 'Failed to get current Git branch',
+      statusMessage: safeMessage,
     })
   }
 })

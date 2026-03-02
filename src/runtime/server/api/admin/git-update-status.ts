@@ -1,5 +1,5 @@
 import { createError, defineEventHandler } from 'h3'
-import { getBranchUpdateStatus, isVersioningEnabled } from '../../utils/gitVersioning'
+import { getBranchUpdateStatus, isVersioningEnabled, toGitErrorMessage } from '../../utils/gitVersioning'
 
 export default defineEventHandler(async () => {
   try {
@@ -17,9 +17,11 @@ export default defineEventHandler(async () => {
       throw error
     }
 
+    const safeMessage = toGitErrorMessage(error, 'Failed to get Git update status')
+
     throw createError({
       statusCode: 500,
-      statusMessage: error?.message || 'Failed to get Git update status',
+      statusMessage: safeMessage,
     })
   }
 })

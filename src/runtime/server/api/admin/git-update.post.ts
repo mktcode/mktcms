@@ -1,5 +1,5 @@
 import { createError, defineEventHandler } from 'h3'
-import { isVersioningEnabled, mergeCounterpartBranchIntoCurrent } from '../../utils/gitVersioning'
+import { isVersioningEnabled, mergeCounterpartBranchIntoCurrent, toGitErrorMessage } from '../../utils/gitVersioning'
 
 function toStatusCode(message: string) {
   if (/Versioning feature is disabled/i.test(message)) {
@@ -47,7 +47,7 @@ export default defineEventHandler(async () => {
       throw error
     }
 
-    const message = error?.message || 'Failed to update branch'
+    const message = toGitErrorMessage(error, 'Failed to update branch')
 
     throw createError({
       statusCode: toStatusCode(message),

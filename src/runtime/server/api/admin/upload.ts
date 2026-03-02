@@ -5,6 +5,7 @@ import syncGitContent from '../../utils/syncGitContent'
 import { normalizeContentKey, normalizeContentPrefix } from '../../utils/contentKey'
 import { CONTENT_UPLOAD_EXTENSIONS, hasAllowedExtension } from '../../../shared/contentFiles'
 import { assertUploadSize, getMaxUploadBytes } from '../../utils/uploadGuard'
+import { toGitErrorMessage } from '../../utils/gitVersioning'
 
 function sanitizeFilename(filename: string): string {
   return filename.replace(/[/:\\]/g, '_')
@@ -60,7 +61,7 @@ export default defineEventHandler(async (event) => {
     await syncGitContent('Datei hinzugefügt', [filePath])
   }
   catch (error) {
-    console.error('Git-Fehler:', error)
+    console.error('Git-Fehler:', toGitErrorMessage(error, 'Git sync failed'))
   }
 
   return { success: true, path: filePath }

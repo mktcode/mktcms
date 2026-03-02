@@ -6,6 +6,7 @@ import syncGitContent from '../../utils/syncGitContent'
 import { normalizeContentKey } from '../../utils/contentKey'
 import { IMAGE_EXTENSIONS, hasAllowedExtension, toFileExtension } from '../../../shared/contentFiles'
 import { assertUploadSize, getMaxUploadBytes } from '../../utils/uploadGuard'
+import { toGitErrorMessage } from '../../utils/gitVersioning'
 
 const querySchema = z.object({
   path: z.string().min(1),
@@ -109,7 +110,7 @@ export default defineEventHandler(async (event) => {
     await syncGitContent('Bild ersetzt', [contentKey])
   }
   catch (error) {
-    console.error('Git-Fehler:', error)
+    console.error('Git-Fehler:', toGitErrorMessage(error, 'Git sync failed'))
   }
 
   return { success: true, path: contentKey }

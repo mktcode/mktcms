@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { createError, defineEventHandler, getValidatedQuery } from 'h3'
-import { getGitHistoryPage, isVersioningEnabled } from '../../utils/gitVersioning'
+import { getGitHistoryPage, isVersioningEnabled, toGitErrorMessage } from '../../utils/gitVersioning'
 
 const querySchema = z.object({
   page: z.coerce.number().int().min(1).default(1),
@@ -25,9 +25,11 @@ export default defineEventHandler(async (event) => {
       throw error
     }
 
+    const safeMessage = toGitErrorMessage(error, 'Failed to load Git history')
+
     throw createError({
       statusCode: 500,
-      statusMessage: error?.message || 'Failed to load Git history',
+      statusMessage: safeMessage,
     })
   }
 })
