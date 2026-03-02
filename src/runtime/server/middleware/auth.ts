@@ -1,5 +1,6 @@
 import { useRuntimeConfig } from 'nitropack/runtime'
 import { createError, defineEventHandler, getCookie, getRequestURL, sendRedirect } from 'h3'
+import { ADMIN_AUTH_COOKIE_NAME } from '../utils/authCookie'
 
 export default defineEventHandler(async (event) => {
   const pathname = getRequestURL(event).pathname
@@ -11,7 +12,7 @@ export default defineEventHandler(async (event) => {
 
   const { mktcms: { adminAuthKey } } = useRuntimeConfig()
 
-  const authKeyCookie = getCookie(event, 'mktcms_admin_auth_key')
+  const authKeyCookie = getCookie(event, ADMIN_AUTH_COOKIE_NAME)
 
   if (!authKeyCookie || authKeyCookie !== adminAuthKey.toString() || adminAuthKey === '') {
     if (isAdminApiRoute) {

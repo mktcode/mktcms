@@ -1,6 +1,8 @@
 import { useRuntimeConfig } from 'nitropack/runtime'
 import { createError, defineEventHandler, readValidatedBody, setCookie } from 'h3'
 import z from 'zod'
+import { ADMIN_AUTH_COOKIE_NAME, getAuthCookieOptions } from '../../utils/authCookie'
+import { assertLoginNotRateLimited, clearFailedLoginAttempts, recordFailedLoginAttempt } from '../../utils/loginRateLimit'
 
 const bodySchema = z.object({
   adminAuthKey: z.string(),
@@ -8,17 +10,18 @@ const bodySchema = z.object({
 
 export default defineEventHandler(async (event) => {
   const { mktcms: { adminAuthKey } } = useRuntimeConfig()
+  assertLoginNotRateLimited(event)
 
   const body = await readValidatedBody(event, body => bodySchema.parse(body))
 
   if (body.adminAuthKey !== adminAuthKey.toString()) {
+    recordFailedLoginAttempt(event)
     throw createError({ statusCode: 401, statusMessage: 'Unauthorized' })
   }
 
-  setCookie(event, 'mktcms_admin_auth_key', adminAuthKey.toString(), {
-    httpOnly: true,
-    maxAge: 7 * 24 * 60 * 60,
-  })
+  clearFailedLoginAttempts(event)
+
+  setCookie(event, ADMIN_AUTH_COOKIE_NAME, adminAuthKey.toString(), getAuthCookieOptions(event))
 
   return { message: 'Login successful' }
 })

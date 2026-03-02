@@ -17,6 +17,13 @@ export default defineNuxtModule({
     // Runtime Config
     _nuxt.options.runtimeConfig.mktcms = defu((_nuxt.options.runtimeConfig.mktcms, {
       adminAuthKey: '',
+      authCookieMaxAgeSeconds: 7 * 24 * 60 * 60,
+      authCookiePath: '/',
+      authCookieSameSite: 'lax',
+      authCookieSecure: process.env.NODE_ENV === 'production',
+      loginRateLimitMaxAttempts: 5,
+      loginRateLimitWindowSeconds: 300,
+      loginRateLimitBlockSeconds: 600,
       uploadMaxBytes: 50 * 1024 * 1024,
       smtpHost: '',
       smtpPort: 465,
