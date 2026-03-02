@@ -1,6 +1,45 @@
 # Changelog
 
 
+## v0.2.14
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.2.13...v0.2.14)
+
+### 🚀 Enhancements
+
+- Sort files and directories in the response ([4ff0f42](https://github.com/mktcode/mktcms/commit/4ff0f42))
+- Implement content key normalization for file paths across API endpoints ([e980804](https://github.com/mktcode/mktcms/commit/e980804))
+- Enhance file upload handling with size limits and type validation ([e99cfbf](https://github.com/mktcode/mktcms/commit/e99cfbf))
+- Implement authentication cookie management and login rate limiting ([a0e1c33](https://github.com/mktcode/mktcms/commit/a0e1c33))
+- Add login error handling and rate limiting response for admin login ([d2e4767](https://github.com/mktcode/mktcms/commit/d2e4767))
+- Enhance error handling in Git operations with sanitized messages ([2ae1a11](https://github.com/mktcode/mktcms/commit/2ae1a11))
+- Add comprehensive security audit report for MktCMS ([d76f85f](https://github.com/mktcode/mktcms/commit/d76f85f))
+- Simplify data fetching in index.vue and enhance content key validation ([094ecaa](https://github.com/mktcode/mktcms/commit/094ecaa))
+- Implement git error message sanitization and update related tests ([f8e3cd8](https://github.com/mktcode/mktcms/commit/f8e3cd8))
+
+### 🩹 Fixes
+
+- Update README title and description for clarity ([b223715](https://github.com/mktcode/mktcms/commit/b223715))
+- Update README description for clarity ([d881573](https://github.com/mktcode/mktcms/commit/d881573))
+- Update feature description for Admin UI in README ([d642e0b](https://github.com/mktcode/mktcms/commit/d642e0b))
+
+### 💅 Refactors
+
+- Remove import endpoint ([05e714f](https://github.com/mktcode/mktcms/commit/05e714f))
+
+### 🏡 Chore
+
+- Linter ([ae8348b](https://github.com/mktcode/mktcms/commit/ae8348b))
+- Linter ([f5c452d](https://github.com/mktcode/mktcms/commit/f5c452d))
+
+### ✅ Tests
+
+- Add case to allow whitespace in directory and file names for content key normalization ([3d52b8b](https://github.com/mktcode/mktcms/commit/3d52b8b))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.2.13
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.2.12...v0.2.13)
