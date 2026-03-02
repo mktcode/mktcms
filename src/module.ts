@@ -17,6 +17,7 @@ export default defineNuxtModule({
     // Runtime Config
     _nuxt.options.runtimeConfig.mktcms = defu((_nuxt.options.runtimeConfig.mktcms, {
       adminAuthKey: '',
+      uploadMaxBytes: 50 * 1024 * 1024,
       smtpHost: '',
       smtpPort: 465,
       smtpSecure: true,
@@ -171,12 +172,6 @@ export default defineNuxtModule({
       handler: resolver.resolve('./runtime/server/api/admin/blob'),
     })
 
-    // Import
-    addServerHandler({
-      route: '/api/admin/import',
-      method: 'post',
-      handler: resolver.resolve('./runtime/server/api/admin/import'),
-    })
     // Upload
     addServerHandler({
       route: '/api/admin/upload',

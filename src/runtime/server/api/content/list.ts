@@ -4,6 +4,7 @@ import { defineEventHandler, getValidatedQuery } from 'h3'
 import { marked } from 'marked'
 import { parseFrontmatter } from '../../utils/parseFrontmatter'
 import { normalizeContentPrefix } from '../../utils/contentKey'
+import { isCsvPath, isImagePath, isJsonPath, isMarkdownPath, isTextPath } from '../../../shared/contentFiles'
 
 const querySchema = z.object({
   path: z.string().optional(),
@@ -19,19 +20,19 @@ export default defineEventHandler(async (event) => {
 
   const filteredKeys = keys.filter((key) => {
     if (type === 'md') {
-      return key.endsWith('.md')
+      return isMarkdownPath(key)
     }
     if (type === 'json') {
-      return key.endsWith('.json')
+      return isJsonPath(key)
     }
     if (type === 'csv') {
-      return key.endsWith('.csv')
+      return isCsvPath(key)
     }
     if (type === 'txt') {
-      return key.endsWith('.txt')
+      return isTextPath(key)
     }
     if (type === 'image') {
-      return key.match(/\.(png|jpg|jpeg|gif|webp)$/i)
+      return isImagePath(key)
     }
     return false
   })

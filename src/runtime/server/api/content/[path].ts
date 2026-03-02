@@ -4,13 +4,14 @@ import { useStorage } from 'nitropack/runtime'
 import { toNodeBuffer } from '../../utils/toNodeBuffer'
 import { parsedFile } from '../../utils/parsedFile'
 import { normalizeContentKey } from '../../utils/contentKey'
+import { isCsvPath, isImagePath, isJsonPath, isMarkdownPath, isPdfPath, toFileExtension } from '../../../shared/contentFiles'
 
 function getFileType(path: string) {
-  const isImage = path.match(/\.(png|jpg|jpeg|gif|webp)$/i)
-  const isPdf = path.endsWith('.pdf')
-  const isJson = path.endsWith('.json')
-  const isCSV = path.endsWith('.csv')
-  const isMarkdown = path.endsWith('.md')
+  const isImage = isImagePath(path)
+  const isPdf = isPdfPath(path)
+  const isJson = isJsonPath(path)
+  const isCSV = isCsvPath(path)
+  const isMarkdown = isMarkdownPath(path)
   return { isImage, isPdf, isJson, isCSV, isMarkdown }
 }
 
@@ -18,7 +19,7 @@ function getContentType(path: string) {
   const { isImage, isPdf, isJson, isCSV, isMarkdown } = getFileType(path)
 
   if (isImage) {
-    const ext = path.split('.').pop()?.toLowerCase()
+    const ext = toFileExtension(path).slice(1)
 
     if (ext === 'jpg') {
       return 'image/jpeg'

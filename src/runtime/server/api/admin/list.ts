@@ -2,6 +2,7 @@ import z from 'zod'
 import { useStorage } from 'nitropack/runtime'
 import { defineEventHandler, getValidatedQuery } from 'h3'
 import { normalizeContentPrefix } from '../../utils/contentKey'
+import { isImagePath } from '../../../shared/contentFiles'
 
 function alphaSort(a: string, b: string) {
   return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' })
@@ -22,7 +23,7 @@ export default defineEventHandler(async (event) => {
 
   const files = keysWithoutPath.filter((key: string) => !key.includes(':'))
   const filteredFiles = type === 'image'
-    ? files.filter((file: string) => file.match(/\.(png|jpg|jpeg|gif|webp)$/i))
+    ? files.filter((file: string) => isImagePath(file))
     : files
 
   const dirs = keysWithoutPath.filter((key: string) => key.includes(':')).map((key: string) => key.split(':')[0]!)

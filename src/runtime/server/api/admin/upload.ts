@@ -3,6 +3,8 @@ import { createError, defineEventHandler, getValidatedQuery, readMultipartFormDa
 import { useStorage } from 'nitropack/runtime'
 import syncGitContent from '../../utils/syncGitContent'
 import { normalizeContentKey, normalizeContentPrefix } from '../../utils/contentKey'
+import { CONTENT_UPLOAD_EXTENSIONS, hasAllowedExtension } from '../../../shared/contentFiles'
+import { assertUploadSize, getMaxUploadBytes } from '../../utils/uploadGuard'
 
 function sanitizeFilename(filename: string): string {
   return filename.replace(/[/:\\]/g, '_')
@@ -14,6 +16,7 @@ const querySchema = z.object({
 
 export default defineEventHandler(async (event) => {
   const form = await readMultipartFormData(event)
+  const maxUploadBytes = getMaxUploadBytes()
 
   const { path } = await getValidatedQuery(event, query => querySchema.parse(query))
   const contentPrefix = normalizeContentPrefix(path)
@@ -41,16 +44,14 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  // TODO: allow all image types and convert to webp on the fly
-  const allowedExtensions = ['.pdf', '.jpg', '.jpeg', '.png', '.gif', '.webp', '.md', '.docx', '.txt', '.csv', '.json']
-  const fileExtension = file.filename.toLowerCase().slice(file.filename.lastIndexOf('.'))
-
-  if (!allowedExtensions.includes(fileExtension)) {
+  if (!hasAllowedExtension(file.filename, CONTENT_UPLOAD_EXTENSIONS)) {
     throw createError({
       statusCode: 400,
       statusMessage: 'Invalid file type. Only PDF, JPG, JPEG, PNG, GIF, WEBP, MD, DOCX, TXT, CSV, and JSON files are allowed.',
     })
   }
+
+  assertUploadSize(file.data, maxUploadBytes)
 
   const filePath = normalizeContentKey([contentPrefix, sanitizeFilename(file.filename)].filter(Boolean).join(':'))
   await useStorage('content').setItemRaw(filePath, Buffer.from(file.data))

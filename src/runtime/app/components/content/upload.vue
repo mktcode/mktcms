@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref, useFetch, useRoute } from '#imports'
 import useAdminUpload from '../../composables/useAdminUpload'
+import { CONTENT_UPLOAD_EXTENSIONS, IMAGE_EXTENSIONS, PDF_EXTENSIONS, toAcceptAttribute } from '../../../shared/contentFiles'
 
 const { data: list } = await useFetch('/api/admin/list')
 
@@ -8,6 +9,10 @@ const route = useRoute()
 const dir = ref(route.query.dir as string || '')
 
 const newSubdir = ref('')
+
+const uploadAccept = toAcceptAttribute(CONTENT_UPLOAD_EXTENSIONS)
+const imageAccept = toAcceptAttribute(IMAGE_EXTENSIONS)
+const pdfAccept = toAcceptAttribute(PDF_EXTENSIONS)
 
 const { isUploading, fileInput, fileInputImg, fileInputPdf, path, uploadFiles } = useAdminUpload()
 
@@ -103,21 +108,21 @@ onMounted(() => {
       ref="fileInput"
       class="hidden"
       type="file"
-      accept=".pdf,.jpg,.jpeg,.png,.gif,.webp,.md,.docx,.txt,.csv,.json"
+      :accept="uploadAccept"
       @change="async (e) => { await uploadFiles(e); }"
     >
     <input
       ref="fileInputImg"
       class="hidden"
       type="file"
-      accept=".jpg,.jpeg,.png,.gif,.webp"
+      :accept="imageAccept"
       @change="async (e) => { await uploadFiles(e); }"
     >
     <input
       ref="fileInputPdf"
       class="hidden"
       type="file"
-      accept=".pdf"
+      :accept="pdfAccept"
       @change="async (e) => { await uploadFiles(e); }"
     >
   </div>

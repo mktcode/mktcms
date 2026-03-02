@@ -4,6 +4,8 @@ import { useStorage } from 'nitropack/runtime'
 import sharp from 'sharp'
 import syncGitContent from '../../utils/syncGitContent'
 import { normalizeContentKey } from '../../utils/contentKey'
+import { IMAGE_EXTENSIONS, hasAllowedExtension, toFileExtension } from '../../../shared/contentFiles'
+import { assertUploadSize, getMaxUploadBytes } from '../../utils/uploadGuard'
 
 const querySchema = z.object({
   path: z.string().min(1),
@@ -11,6 +13,7 @@ const querySchema = z.object({
 
 export default defineEventHandler(async (event) => {
   const form = await readMultipartFormData(event)
+  const maxUploadBytes = getMaxUploadBytes()
 
   const { path } = await getValidatedQuery(event, query => querySchema.parse(query))
   const contentKey = normalizeContentKey(path)
@@ -38,24 +41,23 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp']
-  const fileExtension = file.filename.toLowerCase().slice(file.filename.lastIndexOf('.'))
+  const targetExtension = toFileExtension(contentKey)
 
-  const targetExtension = contentKey.toLowerCase().slice(contentKey.lastIndexOf('.'))
-
-  if (!allowedExtensions.includes(targetExtension)) {
+  if (!hasAllowedExtension(contentKey, IMAGE_EXTENSIONS)) {
     throw createError({
       statusCode: 400,
       statusMessage: 'Invalid target file type. Only JPG, JPEG, PNG, GIF, WEBP files are allowed.',
     })
   }
 
-  if (!allowedExtensions.includes(fileExtension)) {
+  if (!hasAllowedExtension(file.filename, IMAGE_EXTENSIONS)) {
     throw createError({
       statusCode: 400,
       statusMessage: 'Invalid file type. Only JPG, JPEG, PNG, GIF, WEBP files are allowed.',
     })
   }
+
+  assertUploadSize(file.data, maxUploadBytes)
 
   const image = sharp(file.data)
   const metadata = await image.metadata()

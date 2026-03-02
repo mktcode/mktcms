@@ -1,11 +1,11 @@
-export default function useFileType(path: string) {
-  const normalizedPath = path.toLowerCase()
+import { isCsvPath, isImagePath, isMarkdownPath, isPdfPath, isTextPath } from '../../shared/contentFiles'
 
-  const isImage = normalizedPath.match(/\.(png|jpg|jpeg|gif|webp)$/) !== null
-  const isPdf = normalizedPath.endsWith('.pdf')
-  const isMarkdown = normalizedPath.endsWith('.md')
-  const isCsv = normalizedPath.endsWith('.csv')
-  const isText = normalizedPath.match(/\.(txt|json)$/) !== null
+export default function useFileType(path: string) {
+  const isImage = isImagePath(path)
+  const isPdf = isPdfPath(path)
+  const isMarkdown = isMarkdownPath(path)
+  const isCsv = isCsvPath(path)
+  const isText = isTextPath(path)
 
   return {
     isImage,

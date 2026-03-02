@@ -3,13 +3,10 @@ import { useFetch } from '#app'
 import TreeNode from './treeNode.vue'
 import FileIcon from './fileIcon.vue'
 import FileButtons from './fileButtons.vue'
-import useImport from '../../composables/useImport'
 
 const { data: list, refresh } = await useFetch('/api/admin/list', {
   query: { path: '' },
 })
-
-const { fileInput, uploadFile } = useImport()
 
 function filenameWithoutExtension(filename: string): string {
   return filename.replace(/\.[^/.]+$/, '')
@@ -90,19 +87,9 @@ function fileExtension(filename: string): string {
       class="flex flex-col gap-4"
     >
       <p>Keine Dateien oder Verzeichnisse gefunden.</p>
-      <button
-        class="button"
-        @click="fileInput?.click()"
-      >
-        Dateien importieren
-      </button>
-      <input
-        ref="fileInput"
-        type="file"
-        class="hidden"
-        accept=".zip"
-        @change="async (e) => { await uploadFile(e); await refresh(); }"
-      >
+      <NuxtLink to="/admin/new" class="button">
+        Datei hochladen
+      </NuxtLink>
     </div>
   </div>
 </template>
