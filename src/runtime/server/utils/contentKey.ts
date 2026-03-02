@@ -11,6 +11,17 @@ function invalidContentKeyError() {
   })
 }
 
+function hasControlCharacters(value: string) {
+  for (const char of value) {
+    const code = char.charCodeAt(0)
+    if ((code >= 0 && code <= 31) || code === 127) {
+      return true
+    }
+  }
+
+  return false
+}
+
 function normalizeContentKeyInternal(input: string, options: NormalizeOptions = {}) {
   const raw = input.trim()
 
@@ -51,7 +62,7 @@ function normalizeContentKeyInternal(input: string, options: NormalizeOptions = 
     throw invalidContentKeyError()
   }
 
-  if (/([\u0000-\u001F\u007F])/.test(unifiedSeparators)) {
+  if (hasControlCharacters(unifiedSeparators)) {
     throw invalidContentKeyError()
   }
 

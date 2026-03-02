@@ -4,7 +4,7 @@ import TreeNode from './treeNode.vue'
 import FileIcon from './fileIcon.vue'
 import FileButtons from './fileButtons.vue'
 
-const { data: list, refresh } = await useFetch('/api/admin/list', {
+const { data: list } = await useFetch('/api/admin/list', {
   query: { path: '' },
 })
 

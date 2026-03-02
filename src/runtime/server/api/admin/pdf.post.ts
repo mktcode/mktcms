@@ -3,7 +3,7 @@ import { createError, defineEventHandler, getValidatedQuery, readMultipartFormDa
 import { useStorage } from 'nitropack/runtime'
 import syncGitContent from '../../utils/syncGitContent'
 import { normalizeContentKey } from '../../utils/contentKey'
-import { isPdfPath, toFileExtension } from '../../../shared/contentFiles'
+import { isPdfPath } from '../../../shared/contentFiles'
 import { assertUploadSize, getMaxUploadBytes } from '../../utils/uploadGuard'
 import { toGitErrorMessage } from '../../utils/gitVersioning'
 
