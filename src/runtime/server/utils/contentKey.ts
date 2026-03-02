@@ -36,7 +36,7 @@ function normalizeContentKeyInternal(input: string, options: NormalizeOptions = 
     throw invalidContentKeyError()
   }
 
-  if (decoded.startsWith('/') || decoded.startsWith('\\') || /^[a-zA-Z]:[\\/]/.test(decoded)) {
+  if (decoded.startsWith('/') || decoded.startsWith('\\') || /^[a-z]:[\\/]/i.test(decoded)) {
     throw invalidContentKeyError()
   }
 

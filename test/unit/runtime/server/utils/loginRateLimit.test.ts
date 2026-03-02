@@ -1,5 +1,11 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
+import {
+  assertLoginNotRateLimited,
+  clearFailedLoginAttempts,
+  recordFailedLoginAttempt,
+} from '../../../../../src/runtime/server/utils/loginRateLimit'
+
 vi.mock('nitropack/runtime', () => ({
   useRuntimeConfig: () => ({
     mktcms: {
@@ -17,12 +23,6 @@ vi.mock('h3', async () => {
     getRequestIP: () => '127.0.0.1',
   }
 })
-
-import {
-  assertLoginNotRateLimited,
-  clearFailedLoginAttempts,
-  recordFailedLoginAttempt,
-} from '../../../../../src/runtime/server/utils/loginRateLimit'
 
 describe('loginRateLimit', () => {
   beforeEach(() => {

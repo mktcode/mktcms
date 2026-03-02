@@ -1,5 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 
+import { ADMIN_AUTH_COOKIE_NAME, getAuthCookieOptions } from '../../../../../src/runtime/server/utils/authCookie'
+
 vi.mock('nitropack/runtime', () => ({
   useRuntimeConfig: () => ({
     mktcms: {
@@ -10,8 +12,6 @@ vi.mock('nitropack/runtime', () => ({
     },
   }),
 }))
-
-import { ADMIN_AUTH_COOKIE_NAME, getAuthCookieOptions } from '../../../../../src/runtime/server/utils/authCookie'
 
 describe('authCookie', () => {
   it('returns hardened auth cookie options from runtime config', () => {

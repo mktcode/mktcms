@@ -87,7 +87,10 @@ function fileExtension(filename: string): string {
       class="flex flex-col gap-4"
     >
       <p>Keine Dateien oder Verzeichnisse gefunden.</p>
-      <NuxtLink to="/admin/new" class="button">
+      <NuxtLink
+        to="/admin/new"
+        class="button"
+      >
         Datei hochladen
       </NuxtLink>
     </div>

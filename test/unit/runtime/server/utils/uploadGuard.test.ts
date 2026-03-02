@@ -1,5 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 
+import { assertUploadSize, getMaxUploadBytes } from '../../../../../src/runtime/server/utils/uploadGuard'
+
 vi.mock('nitropack/runtime', () => ({
   useRuntimeConfig: () => ({
     mktcms: {
@@ -7,8 +9,6 @@ vi.mock('nitropack/runtime', () => ({
     },
   }),
 }))
-
-import { assertUploadSize, getMaxUploadBytes } from '../../../../../src/runtime/server/utils/uploadGuard'
 
 describe('uploadGuard', () => {
   it('reads max upload size from runtime config', () => {

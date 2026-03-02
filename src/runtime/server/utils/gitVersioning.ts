@@ -26,7 +26,7 @@ export function toGitErrorMessage(error: unknown, fallback: string) {
   const message = rawMessage
     .replace(/https?:\/\/[^\s@]+@/gi, 'https://***@')
     .replace(/(ghp_[A-Za-z0-9]+)/g, '***')
-    .replace(/(github_pat_[A-Za-z0-9_]+)/g, '***')
+    .replace(/(github_pat_\w+)/g, '***')
     .replace(/(token=)[^&\s]+/gi, '$1***')
     .replace(/(x-access-token:)[^@\s]+/gi, '$1***')
 
