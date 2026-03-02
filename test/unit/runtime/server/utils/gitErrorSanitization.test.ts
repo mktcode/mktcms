@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { toGitErrorMessage } from '../../../../../src/runtime/server/utils/gitVersioning'
+import { toGitErrorMessage } from '../../../../../src/runtime/server/utils/gitErrorSanitization'
 
 describe('git error sanitization', () => {
   it('returns fallback for unknown errors instead of raw message', () => {
