@@ -61,9 +61,14 @@ export function assertLoginNotRateLimited(event: H3Event) {
   clearStaleAttempts(state, now, windowMs)
 
   if (state.blockedUntil > now) {
+    const retryAfterSeconds = Math.ceil((state.blockedUntil - now) / 1000)
+
     throw createError({
       statusCode: 429,
       statusMessage: 'Too many login attempts. Please try again later.',
+      data: {
+        retryAfterSeconds,
+      },
     })
   }
 }

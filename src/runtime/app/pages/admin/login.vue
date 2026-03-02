@@ -9,6 +9,7 @@ const { public: { mktcms: { siteUrl } } } = useRuntimeConfig()
 const adminAuthKey = ref('')
 const adminAuthKeyFileInput = ref<HTMLInputElement | null>(null)
 const wasHere = useLocalStorage('mktcms_admin_was_here', false)
+const loginError = ref<string | null>(null)
 
 function openAdminAuthKeyFilePicker() {
   adminAuthKeyFileInput.value?.click()
@@ -37,15 +38,39 @@ async function onAdminAuthKeyFileSelected(event: Event) {
 }
 
 async function login() {
-  await $fetch('/api/admin/login', {
-    method: 'POST',
-    body: {
-      adminAuthKey: adminAuthKey.value,
-    },
-  })
+  loginError.value = null
 
-  wasHere.value = true
-  await navigateTo('/admin')
+  try {
+    await $fetch('/api/admin/login', {
+      method: 'POST',
+      body: {
+        adminAuthKey: adminAuthKey.value,
+      },
+    })
+
+    wasHere.value = true
+    await navigateTo('/admin')
+  }
+  catch (error: any) {
+    const statusCode = Number(error?.statusCode || error?.response?.status || error?.data?.statusCode)
+
+    if (statusCode === 429) {
+      const retryAfterSeconds = Number(
+        error?.data?.data?.retryAfterSeconds
+        || error?.response?._data?.data?.retryAfterSeconds,
+      )
+
+      if (Number.isFinite(retryAfterSeconds) && retryAfterSeconds > 0) {
+        loginError.value = `Zu viele Anmeldeversuche. Bitte warte ${retryAfterSeconds} Sekunden und versuche es dann erneut.`
+        return
+      }
+
+      loginError.value = 'Zu viele Anmeldeversuche. Bitte warte einen Moment und versuche es dann erneut.'
+      return
+    }
+
+    loginError.value = 'Anmeldung fehlgeschlagen. Der eingegebene Schlüssel ist ungültig.'
+  }
 }
 </script>
 
@@ -96,6 +121,15 @@ async function login() {
         >
           Anmelden
         </button>
+
+        <div
+          v-if="loginError"
+          class="mt-3 rounded-md border border-red-300 bg-red-50 px-3 py-2 text-sm text-red-700"
+          role="alert"
+          aria-live="polite"
+        >
+          {{ loginError }}
+        </div>
       </div>
     </div>
   </Admin>
