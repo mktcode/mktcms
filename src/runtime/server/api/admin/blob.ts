@@ -2,6 +2,7 @@ import { z } from 'zod'
 import { createError, defineEventHandler, getValidatedQuery, send } from 'h3'
 import { useStorage } from 'nitropack/runtime'
 import { toNodeBuffer } from '../../utils/toNodeBuffer'
+import { normalizeContentKey } from '../../utils/contentKey'
 
 const querySchema = z.object({
   path: z.string().min(1),
@@ -9,10 +10,10 @@ const querySchema = z.object({
 
 export default defineEventHandler(async (event) => {
   const { path } = await getValidatedQuery(event, query => querySchema.parse(query))
-  const decodedPath = decodeURIComponent(path)
+  const contentKey = normalizeContentKey(path)
 
   const storage = useStorage('content')
-  const file = await storage.getItemRaw(decodedPath)
+  const file = await storage.getItemRaw(contentKey)
 
   if (!file) {
     throw createError({
@@ -21,7 +22,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const extension = decodedPath.split('.').pop()?.toLowerCase() || 'bin'
+  const extension = contentKey.split('.').pop()?.toLowerCase() || 'bin'
   const mimeTypes: Record<string, string> = {
     png: 'image/png',
     jpg: 'image/jpeg',

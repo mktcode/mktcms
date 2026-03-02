@@ -2,6 +2,7 @@ import z from 'zod'
 import { createError, defineEventHandler, getValidatedQuery, readMultipartFormData } from 'h3'
 import { useStorage } from 'nitropack/runtime'
 import syncGitContent from '../../utils/syncGitContent'
+import { normalizeContentKey } from '../../utils/contentKey'
 
 const querySchema = z.object({
   path: z.string().min(1),
@@ -11,7 +12,7 @@ export default defineEventHandler(async (event) => {
   const form = await readMultipartFormData(event)
 
   const { path } = await getValidatedQuery(event, query => querySchema.parse(query))
-  const decodedPath = decodeURIComponent(path)
+  const contentKey = normalizeContentKey(path)
 
   if (!form) {
     throw createError({
@@ -37,7 +38,7 @@ export default defineEventHandler(async (event) => {
   }
 
   const fileExtension = file.filename.toLowerCase().slice(file.filename.lastIndexOf('.'))
-  const targetExtension = decodedPath.toLowerCase().slice(decodedPath.lastIndexOf('.'))
+  const targetExtension = contentKey.toLowerCase().slice(contentKey.lastIndexOf('.'))
 
   if (targetExtension !== '.pdf') {
     throw createError({
@@ -53,14 +54,14 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  await useStorage('content').setItemRaw(decodedPath, Buffer.from(file.data))
+  await useStorage('content').setItemRaw(contentKey, Buffer.from(file.data))
 
   try {
-    await syncGitContent('PDF ersetzt', [decodedPath])
+    await syncGitContent('PDF ersetzt', [contentKey])
   }
   catch (error) {
     console.error('Git-Fehler:', error)
   }
 
-  return { success: true, path: decodedPath }
+  return { success: true, path: contentKey }
 })

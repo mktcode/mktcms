@@ -3,6 +3,7 @@ import { createError, defineEventHandler, getValidatedRouterParams, send } from 
 import { useStorage } from 'nitropack/runtime'
 import { toNodeBuffer } from '../../utils/toNodeBuffer'
 import { parsedFile } from '../../utils/parsedFile'
+import { normalizeContentKey } from '../../utils/contentKey'
 
 function getFileType(path: string) {
   const isImage = path.match(/\.(png|jpg|jpeg|gif|webp)$/i)
@@ -43,16 +44,16 @@ const paramsSchema = z.object({
 
 export default defineEventHandler(async (event) => {
   const { path } = await getValidatedRouterParams(event, params => paramsSchema.parse(params))
-  const decodedPath = decodeURIComponent(path)
+  const contentKey = normalizeContentKey(path)
 
-  const { isImage, isPdf } = getFileType(decodedPath)
+  const { isImage, isPdf } = getFileType(contentKey)
 
-  event.node.res.setHeader('Content-Type', getContentType(decodedPath))
+  event.node.res.setHeader('Content-Type', getContentType(contentKey))
 
   const storage = useStorage('content')
 
   if (isImage || isPdf) {
-    const raw = await storage.getItemRaw(decodedPath)
+    const raw = await storage.getItemRaw(contentKey)
 
     if (!raw) {
       throw createError({
@@ -66,7 +67,7 @@ export default defineEventHandler(async (event) => {
     return send(event, body)
   }
 
-  const file = await storage.getItem(decodedPath)
+  const file = await storage.getItem(contentKey)
 
   if (!file) {
     throw createError({
@@ -75,5 +76,5 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  return parsedFile(decodedPath, file)
+  return parsedFile(contentKey, file)
 })

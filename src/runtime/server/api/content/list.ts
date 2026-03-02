@@ -3,6 +3,7 @@ import { useStorage } from 'nitropack/runtime'
 import { defineEventHandler, getValidatedQuery } from 'h3'
 import { marked } from 'marked'
 import { parseFrontmatter } from '../../utils/parseFrontmatter'
+import { normalizeContentPrefix } from '../../utils/contentKey'
 
 const querySchema = z.object({
   path: z.string().optional(),
@@ -11,10 +12,10 @@ const querySchema = z.object({
 
 export default defineEventHandler(async (event) => {
   const { path, type } = await getValidatedQuery(event, query => querySchema.parse(query))
-  const decodedPath = path ? decodeURIComponent(path) : undefined
+  const contentPrefix = normalizeContentPrefix(path)
 
   const storage = useStorage('content')
-  const keys = await storage.getKeys(decodedPath)
+  const keys = await storage.getKeys(contentPrefix)
 
   const filteredKeys = keys.filter((key) => {
     if (type === 'md') {

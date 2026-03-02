@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { createError, defineEventHandler, getValidatedQuery } from 'h3'
 import { useStorage } from 'nitropack/runtime'
+import { normalizeContentKey } from '../../utils/contentKey'
 
 const querySchema = z.object({
   path: z.string().min(1),
@@ -8,10 +9,10 @@ const querySchema = z.object({
 
 export default defineEventHandler(async (event) => {
   const { path } = await getValidatedQuery(event, query => querySchema.parse(query))
-  const decodedPath = decodeURIComponent(path)
+  const contentKey = normalizeContentKey(path)
 
   const storage = useStorage('content')
-  const file = await storage.getItem<string>(decodedPath)
+  const file = await storage.getItem<string>(contentKey)
 
   if (!file) {
     throw createError({

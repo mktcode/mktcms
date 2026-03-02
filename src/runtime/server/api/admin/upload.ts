@@ -2,6 +2,7 @@ import z from 'zod'
 import { createError, defineEventHandler, getValidatedQuery, readMultipartFormData } from 'h3'
 import { useStorage } from 'nitropack/runtime'
 import syncGitContent from '../../utils/syncGitContent'
+import { normalizeContentKey, normalizeContentPrefix } from '../../utils/contentKey'
 
 function sanitizeFilename(filename: string): string {
   return filename.replace(/[/:\\]/g, '_')
@@ -15,7 +16,7 @@ export default defineEventHandler(async (event) => {
   const form = await readMultipartFormData(event)
 
   const { path } = await getValidatedQuery(event, query => querySchema.parse(query))
-  const sanePath = path ? path.replace(/^\//, '').replace(/\/$/, '') : undefined
+  const contentPrefix = normalizeContentPrefix(path)
 
   if (!form) {
     throw createError({
@@ -51,7 +52,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const filePath = [sanePath, sanitizeFilename(file.filename)].filter(Boolean).join(':')
+  const filePath = normalizeContentKey([contentPrefix, sanitizeFilename(file.filename)].filter(Boolean).join(':'))
   await useStorage('content').setItemRaw(filePath, Buffer.from(file.data))
 
   try {

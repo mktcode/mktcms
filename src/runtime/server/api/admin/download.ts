@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { defineEventHandler, getValidatedQuery } from 'h3'
 import { useStorage } from 'nitropack/runtime'
+import { normalizeContentKey } from '../../utils/contentKey'
 
 const querySchema = z.object({
   path: z.string().min(1),
@@ -8,18 +9,18 @@ const querySchema = z.object({
 
 export default defineEventHandler(async (event) => {
   const { path } = await getValidatedQuery(event, query => querySchema.parse(query))
-  const decodedPath = decodeURIComponent(path)
+  const contentKey = normalizeContentKey(path)
 
   const storage = useStorage('content')
-  const file = await storage.getItemRaw(decodedPath)
+  const file = await storage.getItemRaw(contentKey)
 
-  const isImage = decodedPath.match(/\.(png|jpg|jpeg|gif|webp)$/i)
-  const isPdf = decodedPath.endsWith('.pdf')
-  const isJson = decodedPath.endsWith('.json')
-  const isCSV = decodedPath.endsWith('.csv')
+  const isImage = contentKey.match(/\.(png|jpg|jpeg|gif|webp)$/i)
+  const isPdf = contentKey.endsWith('.pdf')
+  const isJson = contentKey.endsWith('.json')
+  const isCSV = contentKey.endsWith('.csv')
 
   if (isImage) {
-    event.node.res.setHeader('Content-Type', 'image/' + decodedPath.split('.').pop()?.toLowerCase())
+    event.node.res.setHeader('Content-Type', 'image/' + contentKey.split('.').pop()?.toLowerCase())
   }
   else if (isPdf) {
     event.node.res.setHeader('Content-Type', 'application/pdf')
@@ -31,7 +32,7 @@ export default defineEventHandler(async (event) => {
     event.node.res.setHeader('Content-Type', 'text/plain; charset=utf-8')
   }
 
-  event.node.res.setHeader('Content-Disposition', `attachment; filename="${decodedPath.split(':').pop()}"`)
+  event.node.res.setHeader('Content-Disposition', `attachment; filename="${contentKey.split(':').pop()}"`)
 
   return file
 })

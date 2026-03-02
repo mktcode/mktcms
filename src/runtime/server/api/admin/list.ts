@@ -1,6 +1,7 @@
 import z from 'zod'
 import { useStorage } from 'nitropack/runtime'
 import { defineEventHandler, getValidatedQuery } from 'h3'
+import { normalizeContentPrefix } from '../../utils/contentKey'
 
 function alphaSort(a: string, b: string) {
   return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' })
@@ -13,11 +14,11 @@ const querySchema = z.object({
 
 export default defineEventHandler(async (event) => {
   const { path, type } = await getValidatedQuery(event, query => querySchema.parse(query))
-  const decodedPath = path ? decodeURIComponent(path) : ''
+  const contentPrefix = normalizeContentPrefix(path)
 
   const storage = useStorage('content')
-  const keys = await storage.getKeys(decodedPath)
-  const keysWithoutPath = decodedPath ? keys.map(key => key.replace(decodedPath + ':', '')) : keys
+  const keys = await storage.getKeys(contentPrefix)
+  const keysWithoutPath = contentPrefix ? keys.map(key => key.replace(contentPrefix + ':', '')) : keys
 
   const files = keysWithoutPath.filter((key: string) => !key.includes(':'))
   const filteredFiles = type === 'image'

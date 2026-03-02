@@ -2,6 +2,7 @@ import { createError, defineEventHandler, readMultipartFormData } from 'h3'
 import { useStorage } from 'nitropack/runtime'
 import path from 'node:path'
 import unzipper from 'unzipper'
+import { normalizeContentKey } from '../../utils/contentKey'
 
 function sanitizePathSegment(segment: string): string {
   return segment.replace(/[/:\\]/g, '_').replace(/\0/g, '')
@@ -106,9 +107,11 @@ export default defineEventHandler(async (event) => {
       })
     }
 
+    const contentKey = normalizeContentKey(fileColonKey)
+
     const data = await entry.buffer()
-    await storage.setItemRaw(fileColonKey, data)
-    written.add(fileColonKey)
+    await storage.setItemRaw(contentKey, data)
+    written.add(contentKey)
   }
 
   return { success: true, count: written.size }
