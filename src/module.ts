@@ -17,6 +17,9 @@ export default defineNuxtModule({
     // Runtime Config
     _nuxt.options.runtimeConfig.mktcms = defu((_nuxt.options.runtimeConfig.mktcms, {
       adminAuthKey: '',
+      openaiApiKey: '',
+      openaiBaseUrl: 'https://api.openai.com/v1',
+      openaiModel: 'gpt-5.3-codex',
       authCookieMaxAgeSeconds: 7 * 24 * 60 * 60,
       authCookiePath: '/',
       authCookieSameSite: 'lax',
@@ -200,6 +203,13 @@ export default defineNuxtModule({
     addServerHandler({
       route: '/api/admin/stats-visits',
       handler: resolver.resolve('./runtime/server/api/admin/stats-visits'),
+    })
+
+    // Agent
+    addServerHandler({
+      route: '/api/admin/agent',
+      method: 'post',
+      handler: resolver.resolve('./runtime/server/api/admin/agent.post'),
     })
 
     // Git versioning
