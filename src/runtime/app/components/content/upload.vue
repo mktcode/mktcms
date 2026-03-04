@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { onMounted, ref, useFetch, useRoute } from '#imports'
+import { onMounted, ref, useRoute } from '#imports'
 import useAdminUpload from '../../composables/useAdminUpload'
 import { CONTENT_UPLOAD_EXTENSIONS, IMAGE_EXTENSIONS, PDF_EXTENSIONS, toAcceptAttribute } from '../../../shared/contentFiles'
 
-const { data: list } = await useFetch('/api/admin/list')
-
 const route = useRoute()
 const dir = ref(route.query.dir as string || '')
+const dirs = ref<string[]>([])
 
 const newSubdir = ref('')
 
@@ -15,6 +14,35 @@ const imageAccept = toAcceptAttribute(IMAGE_EXTENSIONS)
 const pdfAccept = toAcceptAttribute(PDF_EXTENSIONS)
 
 const { isUploading, fileInput, fileInputImg, fileInputPdf, path, uploadFiles } = useAdminUpload()
+
+const loadAllDirs = async () => {
+  const found = new Set<string>()
+  const queue: string[] = ['']
+
+  while (queue.length > 0) {
+    const currentPath = queue.shift()
+    if (currentPath === undefined) {
+      continue
+    }
+
+    const list = await $fetch<{ dirs: string[] }>('/api/admin/list', {
+      query: currentPath ? { path: currentPath } : {},
+    })
+
+    for (const childDir of list.dirs) {
+      const fullPath = currentPath ? `${currentPath}:${childDir}` : childDir
+      if (found.has(fullPath)) {
+        continue
+      }
+      found.add(fullPath)
+      queue.push(fullPath)
+    }
+  }
+
+  dirs.value = [...found].sort((a, b) => a.localeCompare(b, 'de'))
+}
+
+await loadAllDirs()
 
 onMounted(() => {
   path.value = dir.value
@@ -59,11 +87,11 @@ onMounted(() => {
             Hauptordner
           </option>
           <option
-            v-for="d in list?.dirs"
+            v-for="d in dirs"
             :key="d"
             :value="d"
           >
-            {{ d }}
+            {{ d.replace(/:/g, ' / ') }}
           </option>
         </select>
       </div>
