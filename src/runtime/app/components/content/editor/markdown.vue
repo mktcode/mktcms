@@ -3,11 +3,13 @@ import { ref } from 'vue'
 import { refDebounced } from '@vueuse/core'
 import Saved from '../saved.vue'
 import usePathParam from '../../../composables/usePathParam'
-import { useFetch } from '#imports'
+import useCopyMode from '../../../composables/useCopyMode'
+import { navigateTo, useFetch } from '#imports'
 import FrontmatterModal from './frontmatter/modal.vue'
 import MonacoEditor from './monacoEditor.vue'
 
 const { path } = usePathParam()
+const { isCopyMode, newFilename, sourceExtension, targetPath, targetEditPath, filenameError, confirmOverwriteIfNeeded } = useCopyMode(path)
 const { data: content } = await useFetch<{ frontmatter: Record<string, any>, markdown: string }>(`/api/admin/md?path=${path}`)
 
 const frontmatter = ref<Record<string, any>>(content.value?.frontmatter ?? {})
@@ -22,11 +24,12 @@ const showFrontmatterModal = ref(false)
 
 async function saveMarkdown() {
   if (!content.value) return
+  if (isCopyMode.value && !await confirmOverwriteIfNeeded()) return
 
   isSaving.value = true
   savingSuccessful.value = false
 
-  await useFetch(`/api/admin/md?path=${path}`, {
+  await useFetch(`/api/admin/md?path=${isCopyMode.value ? targetPath.value : path}`, {
     method: 'POST',
     body: {
       frontmatter: frontmatter.value,
@@ -34,6 +37,11 @@ async function saveMarkdown() {
       commitMessage: commitMessage.value,
     },
   })
+
+  if (isCopyMode.value) {
+    await navigateTo(targetEditPath.value, { replace: true })
+    return
+  }
 
   isSaving.value = false
   savingSuccessful.value = true
@@ -111,6 +119,34 @@ const mode = ref<'edit' | 'preview'>('preview')
     </div>
 
     <div class="flex-none">
+      <div
+        v-if="isCopyMode"
+        class="mt-3"
+      >
+        <label
+          for="copy-filename"
+          class="block mb-1"
+        >
+          Neuer Dateiname
+        </label>
+        <div class="flex items-center gap-2">
+          <input
+            id="copy-filename"
+            v-model="newFilename"
+            type="text"
+            required
+            class="w-full border border-gray-200 rounded-sm px-3 py-2"
+          >
+          <span class="text-sm text-gray-400">{{ sourceExtension }}</span>
+        </div>
+        <p
+          v-if="filenameError"
+          class="text-sm mt-1"
+        >
+          {{ filenameError }}
+        </p>
+      </div>
+
       <div class="mt-3">
         <label
           for="commit-message"
@@ -130,11 +166,11 @@ const mode = ref<'edit' | 'preview'>('preview')
       <button
         type="button"
         class="button w-full justify-center mt-3"
-        :disabled="!commitMessage.trim() || isSaving"
+        :disabled="!commitMessage.trim() || isSaving || !!filenameError"
         @click="saveMarkdown"
       >
         <span v-if="isSaving">Speichern...</span>
-        <span v-else>Speichern</span>
+        <span v-else>{{ isCopyMode ? 'Kopie speichern' : 'Speichern' }}</span>
       </button>
       <Saved v-if="savingSuccessful" />
     </div>

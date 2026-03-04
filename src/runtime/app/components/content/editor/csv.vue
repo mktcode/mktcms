@@ -2,9 +2,11 @@
 import { ref } from 'vue'
 import Saved from '../saved.vue'
 import usePathParam from '../../../composables/usePathParam'
-import { useFetch } from '#imports'
+import useCopyMode from '../../../composables/useCopyMode'
+import { navigateTo, useFetch } from '#imports'
 
 const { path } = usePathParam()
+const { isCopyMode, newFilename, sourceExtension, targetPath, targetEditPath, filenameError, confirmOverwriteIfNeeded } = useCopyMode(path)
 const { data: table } = await useFetch<{ headers: string[], rows: string[][] }>(`/api/admin/csv?path=${path}`)
 
 const isSaving = ref(false)
@@ -13,18 +15,24 @@ const commitMessage = ref<string>('Inhaltliche Änderungen')
 
 async function saveCsv() {
   if (!table.value) return
+  if (isCopyMode.value && !await confirmOverwriteIfNeeded()) return
 
   isSaving.value = true
   savingSuccessful.value = false
 
   try {
-    await useFetch(`/api/admin/csv?path=${path}`, {
+    await useFetch(`/api/admin/csv?path=${isCopyMode.value ? targetPath.value : path}`, {
       method: 'POST',
       body: {
         table: table.value,
         commitMessage: commitMessage.value,
       },
     })
+
+    if (isCopyMode.value) {
+      await navigateTo(targetEditPath.value, { replace: true })
+      return
+    }
 
     savingSuccessful.value = true
   }
@@ -123,6 +131,34 @@ function cancelEdit() {
 
 <template>
   <div class="w-full">
+    <div
+      v-if="isCopyMode"
+      class="mb-3"
+    >
+      <label
+        for="copy-filename"
+        class="block mb-1"
+      >
+        Neuer Dateiname
+      </label>
+      <div class="flex items-center gap-2">
+        <input
+          id="copy-filename"
+          v-model="newFilename"
+          type="text"
+          required
+          class="w-full border border-gray-200 rounded-sm px-3 py-2"
+        >
+        <span class="text-sm text-gray-400">{{ sourceExtension }}</span>
+      </div>
+      <p
+        v-if="filenameError"
+        class="text-sm mt-1"
+      >
+        {{ filenameError }}
+      </p>
+    </div>
+
     <div
       v-if="table"
       class="bg-white"
@@ -299,11 +335,11 @@ function cancelEdit() {
     <button
       type="button"
       class="button w-full mt-3 justify-center"
-      :disabled="!commitMessage.trim() || isSaving"
+      :disabled="!commitMessage.trim() || isSaving || !!filenameError"
       @click="saveCsv"
     >
       <span v-if="isSaving">Speichern...</span>
-      <span v-else>Speichern</span>
+      <span v-else>{{ isCopyMode ? 'Kopie speichern' : 'Speichern' }}</span>
     </button>
     <Saved v-if="savingSuccessful" />
 

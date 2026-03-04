@@ -1,12 +1,25 @@
 <script setup lang="ts">
 import { useRuntimeConfig } from '#app'
 import { useClipboard } from '@vueuse/core'
+import { EDITABLE_EXTENSIONS, isMarkdownPath, toFileExtension } from '../../../shared/contentFiles'
 
 const { filePath } = defineProps<{ filePath: string }>()
 
 const { public: { mktcms: { siteUrl } } } = useRuntimeConfig()
 
 const { copy, copied } = useClipboard()
+
+function isCopyableTextFile(path: string) {
+  return EDITABLE_EXTENSIONS.includes(toFileExtension(path) as (typeof EDITABLE_EXTENSIONS)[number])
+}
+
+function copyEditRoute(path: string) {
+  const editorType = isMarkdownPath(path) ? 'markdown' : 'file'
+  return {
+    path: `/admin/edit/${editorType}/${path}`,
+    query: { copy: '1' },
+  }
+}
 </script>
 
 <template>
@@ -44,6 +57,27 @@ const { copy, copied } = useClipboard()
           stroke-linecap="round"
           stroke-linejoin="round"
           d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"
+        />
+      </svg>
+    </NuxtLink>
+    <NuxtLink
+      v-if="isCopyableTextFile(filePath)"
+      :to="copyEditRoute(filePath)"
+      class="button secondary"
+      title="Datei kopieren"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="size-4"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M8.25 7.5V6A2.25 2.25 0 0 1 10.5 3.75h7.5A2.25 2.25 0 0 1 20.25 6v7.5a2.25 2.25 0 0 1-2.25 2.25H16.5m-8.25-8.25h7.5A2.25 2.25 0 0 1 18 9.75v7.5a2.25 2.25 0 0 1-2.25 2.25h-7.5A2.25 2.25 0 0 1 6 17.25v-7.5A2.25 2.25 0 0 1 8.25 7.5Z"
         />
       </svg>
     </NuxtLink>
