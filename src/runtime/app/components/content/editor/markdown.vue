@@ -170,7 +170,7 @@ const mode = ref<'edit' | 'preview'>('preview')
         @click="saveMarkdown"
       >
         <span v-if="isSaving">Speichern...</span>
-        <span v-else>{{ isCopyMode ? 'Kopie speichern' : 'Speichern' }}</span>
+        <span v-else>{{ isCopyMode ? 'Kopie speichern und veröffentlichen' : 'Speichern' }}</span>
       </button>
       <Saved v-if="savingSuccessful" />
     </div>
