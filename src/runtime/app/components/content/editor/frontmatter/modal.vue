@@ -73,11 +73,11 @@ watch(yamlContent, (value) => {
       class="w-full max-w-220 bg-white rounded-[10px] border border-black/10 shadow-[0_10px_40px_rgba(0,0,0,0.28)] p-6 flex flex-col gap-3"
       role="dialog"
       aria-modal="true"
-      aria-label="Metadaten"
+      aria-label="Einstellungen"
     >
       <div class="flex items-center justify-between gap-2">
         <h2 class="font-bold text-2xl">
-          Metadaten
+          Einstellungen
         </h2>
         <div class="flex items-center gap-2">
           <button
