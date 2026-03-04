@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { parse, stringify } from 'yaml'
 import FrontmatterForm from './form.vue'
 import MonacoEditor from '../monacoEditor.vue'
@@ -19,6 +19,19 @@ const frontmatter = defineModel<any>('frontmatter', {
 const mode = ref<'form' | 'yaml'>('form')
 const yamlContent = ref('')
 const yamlError = ref('')
+const hasFrontmatterSettings = computed(() => {
+  const value = frontmatter.value
+
+  if (Array.isArray(value)) {
+    return value.length > 0
+  }
+
+  if (value && typeof value === 'object') {
+    return Object.keys(value).length > 0
+  }
+
+  return false
+})
 
 let syncingYamlFromModel = false
 
@@ -81,6 +94,7 @@ watch(yamlContent, (value) => {
         </h2>
         <div class="flex items-center gap-2">
           <button
+            v-if="hasFrontmatterSettings"
             type="button"
             class="button secondary small"
             @click="mode = mode === 'form' ? 'yaml' : 'form'"
@@ -98,7 +112,14 @@ watch(yamlContent, (value) => {
       </div>
 
       <div
-        v-if="mode === 'form'"
+        v-if="!hasFrontmatterSettings"
+        class="text-sm p-4 bg-gray-100 text-gray-700 rounded"
+      >
+        Keine Einstellungen für diesen Inhalt vorhanden.
+      </div>
+
+      <div
+        v-else-if="mode === 'form'"
         class="max-h-[70vh] overflow-auto pr-1"
       >
         <FrontmatterForm v-model:frontmatter="frontmatter" />
