@@ -96,7 +96,7 @@ async function saveContent() {
       @click="saveContent"
     >
       <span v-if="isSaving">Speichern...</span>
-      <span v-else>{{ isCopyMode ? 'Kopie speichern und veröffentlichen' : 'Speichern' }}</span>
+      <span v-else>{{ isCopyMode ? 'Neue Datei veröffentlichen' : 'Speichern' }}</span>
     </button>
     <Saved v-if="savingSuccessful" />
   </div>
