@@ -337,11 +337,12 @@ onBeforeUnmount(() => {
       class="w-full max-w-140 bg-white rounded-[10px] border border-black/10 shadow-[0_10px_40px_rgba(0,0,0,0.28)] p-6 flex flex-col gap-4 max-h-[calc(100vh-2rem)] my-auto"
       role="dialog"
       aria-modal="true"
-      aria-label="KI-Agent"
+      aria-label="Agent"
     >
       <div class="flex items-center justify-between gap-2">
-        <h2 class="font-bold text-xl">
-          KI-Agent
+        <h2 class="font-bold text-xl flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot-icon lucide-bot"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
+          Agent
         </h2>
         <button
           type="button"

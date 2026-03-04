@@ -11,9 +11,17 @@ const isAgentModalOpen = ref(false)
 <template>
   <div class="flex items-start justify-between gap-2">
     <Breadcrumb />
+    <button
+      type="button"
+      class="button small secondary ml-auto"
+      @click="isAgentModalOpen = true"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot-icon lucide-bot"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
+      Agent
+    </button>
     <NuxtLink
       :to="siteUrl"
-      class="button small secondary justify-between ml-auto"
+      class="button small secondary justify-between"
       external
       target="_blank"
     >
@@ -38,26 +46,6 @@ const isAgentModalOpen = ref(false)
         />
       </svg>
     </NuxtLink>
-    <button
-      type="button"
-      class="button small secondary"
-      @click="isAgentModalOpen = true"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path d="M12 3v3" /><path d="M18.36 5.64 16.24 7.76" /><path d="M21 12h-3" /><path d="m18.36 18.36-2.12-2.12" /><path d="M12 21v-3" /><path d="m7.76 16.24-2.12 2.12" /><path d="M6 12H3" /><path d="m7.76 7.76-2.12-2.12" /><circle cx="12" cy="12" r="3" />
-      </svg>
-      KI-Agent
-    </button>
     <NuxtLink
       external
       to="/api/admin/logout"
