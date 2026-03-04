@@ -3,7 +3,18 @@ import { useRoute } from '#app'
 import { isMarkdownPath, toFileExtension } from '../../shared/contentFiles'
 
 function hasInvalidFilenameCharacters(filename: string) {
-  return /[:\\/]/.test(filename) || /[\u0000-\u001F\u007F]/.test(filename)
+  return /[:\\/]/.test(filename) || hasControlCharacters(filename)
+}
+
+function hasControlCharacters(value: string) {
+  for (const char of value) {
+    const code = char.charCodeAt(0)
+    if ((code >= 0 && code <= 31) || code === 127) {
+      return true
+    }
+  }
+
+  return false
 }
 
 export default function useCopyMode(sourcePath: string) {
