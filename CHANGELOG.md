@@ -1,6 +1,10 @@
 # Changelog
 
 
+## v0.2.16
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.2.15...v0.2.16)
+
 ## v0.2.15
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.2.14...v0.2.15)
