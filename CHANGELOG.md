@@ -1,6 +1,35 @@
 # Changelog
 
 
+## v0.2.15
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.2.14...v0.2.15)
+
+### 🚀 Enhancements
+
+- Add Copilot instructions and enhance README with new environment variables ([e1334b9](https://github.com/mktcode/mktcms/commit/e1334b9))
+- Implement copy mode functionality across editors with filename validation ([acfae1a](https://github.com/mktcode/mktcms/commit/acfae1a))
+
+### 🩹 Fixes
+
+- Update copy button functionality and improve UI consistency ([f0b7f03](https://github.com/mktcode/mktcms/commit/f0b7f03))
+- Update save button text to clarify copy mode action ([60a86f4](https://github.com/mktcode/mktcms/commit/60a86f4))
+- Update button text to clarify copy mode action across editors ([9e80538](https://github.com/mktcode/mktcms/commit/9e80538))
+- Improve filename validation by separating control character checks ([1f2ea22](https://github.com/mktcode/mktcms/commit/1f2ea22))
+
+### 💅 Refactors
+
+- Streamline directory loading and update select options ([160df10](https://github.com/mktcode/mktcms/commit/160df10))
+
+### 🏡 Chore
+
+- Remove outdated Developer Manual documentation ([38c7c5a](https://github.com/mktcode/mktcms/commit/38c7c5a))
+- Linter ([44e9ac1](https://github.com/mktcode/mktcms/commit/44e9ac1))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.2.14
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.2.13...v0.2.14)
