@@ -1,6 +1,29 @@
 # Changelog
 
 
+## v0.3.1
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.2.16...v0.3.1)
+
+### 🚀 Enhancements
+
+- Add frontmatter schema matching to admin API ([68c0c63](https://github.com/mktcode/mktcms/commit/68c0c63))
+- Implement file picker component and enhance file listing API ([30a2ee5](https://github.com/mktcode/mktcms/commit/30a2ee5))
+- Update markdown editor styles and add page ID for improved layout ([0296e2a](https://github.com/mktcode/mktcms/commit/0296e2a))
+
+### 📖 Documentation
+
+- Clarify language conventions in copilot instructions ([a9a09ea](https://github.com/mktcode/mktcms/commit/a9a09ea))
+
+### 🏡 Chore
+
+- Update version to 0.3.0 in package.json ([7fa7169](https://github.com/mktcode/mktcms/commit/7fa7169))
+- Linter ([69ff482](https://github.com/mktcode/mktcms/commit/69ff482))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.2.16
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.2.15...v0.2.16)
