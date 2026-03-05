@@ -48,5 +48,6 @@ These notes are for this repository only. Keep them in mind when editing `src/`.
 ## UI/data conventions worth preserving
 
 - Admin UI and several status/commit texts are German; keep language consistent when touching nearby UX copy.
+- English is still the primary language for code, comments, logs, and conversation with developers.
 - Frontend path params for nested content use `:` separators (see `usePathParam.ts` and admin pages).
 - `useFileType` + extension helpers are the source of truth for editor/file treatment.
