@@ -18,11 +18,11 @@ const frontmatter = defineModel<any>('frontmatter', {
 })
 
 type SchemaNode = {
-  type?: 'string' | 'number' | 'boolean' | 'array' | 'object' | 'date' | 'datetime'
-  label?: string
+  'type'?: 'string' | 'number' | 'boolean' | 'array' | 'object' | 'date' | 'datetime'
+  'label'?: string
   'x-ui'?: 'image' | 'pdf' | 'file'
-  items?: SchemaNode
-  properties?: Record<string, SchemaNode>
+  'items'?: SchemaNode
+  'properties'?: Record<string, SchemaNode>
 }
 
 function isRecord(value: unknown): value is Record<string, any> {

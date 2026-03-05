@@ -57,7 +57,10 @@ const hasFrontmatterSettings = computed(() => {
         v-else
         class="max-h-[70vh] overflow-auto pl-1 pr-3"
       >
-        <FrontmatterForm v-model:frontmatter="frontmatter" :schema="schema" />
+        <FrontmatterForm
+          v-model:frontmatter="frontmatter"
+          :schema="schema"
+        />
       </div>
     </div>
   </div>
