@@ -10,8 +10,10 @@ const querySchema = z.object({
 })
 
 function findFrontmatterSchema(filePath: string, schemas: Record<string, any>) {
+  const filePathWithSlashesInsteadOfColons = filePath.replace(/:/g, '/')
+
   for (const pattern in schemas) {
-    if (minimatch(filePath, pattern)) {
+    if (minimatch(filePathWithSlashesInsteadOfColons, pattern)) {
       return schemas[pattern]
     }
   }
