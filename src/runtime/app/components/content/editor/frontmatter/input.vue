@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
+import FilePickerModal from './filePicker/modal.vue'
 
 const props = withDefaults(defineProps<{
   label?: string
@@ -14,6 +15,8 @@ const props = withDefaults(defineProps<{
 const value = defineModel<string | number>('value', {
   required: true,
 })
+
+const isPickerOpen = ref(false)
 
 const resolvedInputType = computed(() => {
   if (props.inputType !== 'text') {
@@ -55,6 +58,10 @@ const pickerButtonLabel = computed(() => {
 
   return ''
 })
+
+function onPickerSelect(path: string) {
+  value.value = path
+}
 </script>
 
 <template>
@@ -76,9 +83,18 @@ const pickerButtonLabel = computed(() => {
         v-if="props.uiHint"
         type="button"
         class="button secondary small whitespace-nowrap"
+        @click="isPickerOpen = true"
       >
         {{ pickerButtonLabel }}
       </button>
     </div>
+
+    <FilePickerModal
+      v-if="props.uiHint"
+      :is-open="isPickerOpen"
+      :ui-hint="props.uiHint"
+      @close="isPickerOpen = false"
+      @select="onPickerSelect"
+    />
   </div>
 </template>

@@ -7,8 +7,10 @@ tags:
   - asd
   - dfg
 gallery:
-  - src: Bilder:test.jpg
+  - src: header.jpg
     caption: Ein Bild von mir.
+pdfDownload: Flyer-2026.pdf
+someFile: Prices.csv
 ---
 # Home!!!
 

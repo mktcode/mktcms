@@ -2,7 +2,7 @@ import z from 'zod'
 import { useStorage } from 'nitropack/runtime'
 import { defineEventHandler, getValidatedQuery } from 'h3'
 import { normalizeContentPrefix } from '../../utils/contentKey'
-import { isImagePath } from '../../../shared/contentFiles'
+import { isImagePath, isPdfPath } from '../../../shared/contentFiles'
 
 function alphaSort(a: string, b: string) {
   return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' })
@@ -10,7 +10,7 @@ function alphaSort(a: string, b: string) {
 
 const querySchema = z.object({
   path: z.string().optional(),
-  type: z.enum(['image']).optional(),
+  type: z.enum(['image', 'pdf', 'file']).optional(),
 })
 
 export default defineEventHandler(async (event) => {
@@ -21,12 +21,24 @@ export default defineEventHandler(async (event) => {
   const keys = await storage.getKeys(contentPrefix)
   const keysWithoutPath = contentPrefix ? keys.map(key => key.replace(contentPrefix + ':', '')) : keys
 
-  const files = keysWithoutPath.filter((key: string) => !key.includes(':'))
-  const filteredFiles = type === 'image'
-    ? files.filter((file: string) => isImagePath(file))
-    : files
+  const matchingKeys = keysWithoutPath.filter((key: string) => {
+    if (type === 'image') {
+      return isImagePath(key)
+    }
 
-  const dirs = keysWithoutPath.filter((key: string) => key.includes(':')).map((key: string) => key.split(':')[0]!)
+    if (type === 'pdf') {
+      return isPdfPath(key)
+    }
+
+    return true
+  })
+
+  const filteredFiles = matchingKeys.filter((key: string) => !key.includes(':'))
+
+  const dirs = matchingKeys
+    .filter((key: string) => key.includes(':'))
+    .map((key: string) => key.split(':')[0]!)
+
   const uniqueDirs = Array.from(new Set(dirs))
 
   return {
