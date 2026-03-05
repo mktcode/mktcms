@@ -10,7 +10,7 @@ import MonacoEditor from './monacoEditor.vue'
 
 const { path } = usePathParam()
 const { isCopyMode, newFilename, sourceExtension, targetPath, targetEditPath, filenameError, confirmOverwriteIfNeeded } = useCopyMode(path)
-const { data: content } = await useFetch<{ frontmatter: Record<string, any>, markdown: string }>(`/api/admin/md?path=${path}`)
+const { data: content } = await useFetch<{ frontmatter: Record<string, any>, markdown: string, schema: Record<string, any> }>(`/api/admin/md?path=${path}`)
 
 const frontmatter = ref<Record<string, any>>(content.value?.frontmatter ?? {})
 const markdown = ref<string>(content.value?.markdown ?? '')
@@ -79,6 +79,7 @@ const mode = ref<'edit' | 'preview'>('preview')
 
     <FrontmatterModal
       v-model:frontmatter="frontmatter"
+      :schema="content.schema"
       :is-open="showFrontmatterModal"
       @close="showFrontmatterModal = false"
     />

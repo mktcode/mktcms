@@ -3,15 +3,25 @@ import { computed } from 'vue'
 
 const props = withDefaults(defineProps<{
   label?: string
+  inputType?: 'text' | 'number' | 'date' | 'datetime-local'
 }>(), {
   label: '',
+  inputType: 'text',
 })
 
 const value = defineModel<string | number>('value', {
   required: true,
 })
 
-const isNumberInput = computed(() => typeof value.value === 'number')
+const resolvedInputType = computed(() => {
+  if (props.inputType !== 'text') {
+    return props.inputType
+  }
+
+  return typeof value.value === 'number' ? 'number' : 'text'
+})
+
+const isNumberInput = computed(() => resolvedInputType.value === 'number')
 
 const inputValue = computed({
   get() {
@@ -39,7 +49,7 @@ const inputValue = computed({
     </label>
     <input
       v-model="inputValue"
-      :type="isNumberInput ? 'number' : 'text'"
+      :type="resolvedInputType"
       class="w-full"
     >
   </div>

@@ -47,6 +47,7 @@
     "defu": "^6.1.4",
     "ejs": "^4.0.1",
     "marked": "^17.0.3",
+    "minimatch": "^10.2.4",
     "monaco-editor": "^0.55.1",
     "nodemailer": "^7.0.13",
     "sharp": "^0.34.5",

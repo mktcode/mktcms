@@ -2,8 +2,9 @@
 import { computed } from 'vue'
 import FrontmatterForm from './form.vue'
 
-const { isOpen } = defineProps<{
+const { isOpen, schema } = defineProps<{
   isOpen: boolean
+  schema: Record<string, any> | null
 }>()
 
 const emit = defineEmits<{
@@ -15,17 +16,7 @@ const frontmatter = defineModel<any>('frontmatter', {
 })
 
 const hasFrontmatterSettings = computed(() => {
-  const value = frontmatter.value
-
-  if (Array.isArray(value)) {
-    return value.length > 0
-  }
-
-  if (value && typeof value === 'object') {
-    return Object.keys(value).length > 0
-  }
-
-  return false
+  return !!schema && Object.keys(schema).length > 0
 })
 </script>
 
@@ -66,7 +57,7 @@ const hasFrontmatterSettings = computed(() => {
         v-else
         class="max-h-[70vh] overflow-auto pl-1 pr-3"
       >
-        <FrontmatterForm v-model:frontmatter="frontmatter" />
+        <FrontmatterForm v-model:frontmatter="frontmatter" :schema="schema" />
       </div>
     </div>
   </div>

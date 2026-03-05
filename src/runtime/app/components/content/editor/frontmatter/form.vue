@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed, watch } from 'vue'
 import FrontmatterInput from './input.vue'
 
 defineOptions({
@@ -7,6 +8,7 @@ defineOptions({
 
 const props = withDefaults(defineProps<{
   depth?: number
+  schema: Record<string, any> | null
 }>(), {
   depth: 0,
 })
@@ -15,56 +17,175 @@ const frontmatter = defineModel<any>('frontmatter', {
   required: true,
 })
 
-function isBoolean(value: unknown) {
-  return typeof value === 'boolean'
+type SchemaNode = {
+  type?: 'string' | 'number' | 'boolean' | 'array' | 'object' | 'date' | 'datetime'
+  label?: string
+  items?: SchemaNode
+  properties?: Record<string, SchemaNode>
 }
 
-function isNumber(value: unknown) {
-  return typeof value === 'number'
-}
-
-function isObject(value: unknown) {
+function isRecord(value: unknown): value is Record<string, any> {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
 }
 
-function objectKeys(value: Record<string, any>) {
-  return Object.keys(value)
+function isBooleanSchema(schema: unknown): schema is SchemaNode {
+  return isRecord(schema) && schema.type === 'boolean'
 }
 
-function createEmptyLike(value: any): any {
-  if (Array.isArray(value)) {
+function isObject(value: unknown) {
+  return isRecord(value)
+}
+
+function isArraySchema(schema: unknown): schema is SchemaNode {
+  return isRecord(schema) && schema.type === 'array'
+}
+
+function isObjectSchema(schema: unknown): schema is SchemaNode {
+  return isRecord(schema) && schema.type === 'object'
+}
+
+function isPrimitiveSchema(schema: unknown): schema is SchemaNode {
+  return isRecord(schema) && ['string', 'number', 'date', 'datetime'].includes(schema.type ?? '')
+}
+
+function isSchemaMap(schema: unknown): schema is Record<string, SchemaNode> {
+  return isRecord(schema) && !('type' in schema)
+}
+
+function schemaEntries(schema: Record<string, SchemaNode>) {
+  return Object.entries(schema)
+}
+
+function createDefaultFromSchema(schema: SchemaNode | null | undefined): any {
+  if (!schema || !schema.type) {
+    return ''
+  }
+
+  if (schema.type === 'array') {
     return []
   }
 
-  if (isObject(value)) {
+  if (schema.type === 'object') {
     const next: Record<string, any> = {}
+    const properties = schema.properties ?? {}
 
-    for (const key of Object.keys(value)) {
-      next[key] = createEmptyLike(value[key])
+    for (const key of Object.keys(properties)) {
+      next[key] = createDefaultFromSchema(properties[key])
     }
 
     return next
   }
 
-  if (isBoolean(value)) {
+  if (schema.type === 'boolean') {
     return false
   }
 
-  if (isNumber(value)) {
+  if (schema.type === 'number') {
     return 0
   }
 
   return ''
 }
 
-function addArrayItem(arrayRef: any[]) {
-  if (arrayRef.length === 0) {
-    arrayRef.push('')
+function ensureInitializedFromSchema() {
+  const schema = props.schema
+
+  if (!schema) {
     return
   }
 
-  const lastItem = arrayRef[arrayRef.length - 1]
-  arrayRef.push(createEmptyLike(lastItem))
+  if (isSchemaMap(schema)) {
+    if (!isObject(frontmatter.value)) {
+      frontmatter.value = {}
+    }
+
+    for (const [key, fieldSchema] of schemaEntries(schema)) {
+      if (frontmatter.value[key] === undefined) {
+        frontmatter.value[key] = createDefaultFromSchema(fieldSchema)
+      }
+    }
+
+    return
+  }
+
+  if (isObjectSchema(schema)) {
+    if (!isObject(frontmatter.value)) {
+      frontmatter.value = {}
+    }
+
+    const properties = schema.properties ?? {}
+    for (const [key, fieldSchema] of schemaEntries(properties)) {
+      if (frontmatter.value[key] === undefined) {
+        frontmatter.value[key] = createDefaultFromSchema(fieldSchema)
+      }
+    }
+
+    return
+  }
+
+  if (isArraySchema(schema) && !Array.isArray(frontmatter.value)) {
+    frontmatter.value = []
+  }
+}
+
+watch(
+  () => props.schema,
+  () => {
+    ensureInitializedFromSchema()
+  },
+  { immediate: true, deep: true },
+)
+
+const objectSchemaEntries = computed(() => {
+  if (!props.schema) {
+    return [] as Array<[string, SchemaNode]>
+  }
+
+  if (isSchemaMap(props.schema)) {
+    return schemaEntries(props.schema)
+  }
+
+  if (isObjectSchema(props.schema)) {
+    return schemaEntries(props.schema.properties ?? {})
+  }
+
+  return [] as Array<[string, SchemaNode]>
+})
+
+const arrayItemSchema = computed<SchemaNode | null>(() => {
+  if (!props.schema || !isArraySchema(props.schema)) {
+    return null
+  }
+
+  return props.schema.items ?? null
+})
+
+function addArrayItem(arrayRef: any[], itemSchema: SchemaNode | null) {
+  arrayRef.push(createDefaultFromSchema(itemSchema))
+}
+
+function getFieldLabel(key: string, fieldSchema: SchemaNode) {
+  return fieldSchema.label || key
+}
+
+function getInputTypeFromSchema(schema: SchemaNode | null | undefined) {
+  if (!schema || !schema.type) {
+    return 'text'
+  }
+
+  if (schema.type === 'number') {
+    return 'number'
+  }
+
+  if (schema.type === 'date') {
+    return 'date'
+  }
+
+  if (schema.type === 'datetime') {
+    return 'datetime-local'
+  }
+
+  return 'text'
 }
 
 function removeArrayItem(arrayRef: any[], index: number) {
@@ -88,7 +209,7 @@ function removeArrayItem(arrayRef: any[], index: number) {
       'bg-gray-100/90': props.depth >= 5,
     }"
   >
-    <template v-if="Array.isArray(frontmatter)">
+    <template v-if="props.schema && isArraySchema(props.schema) && Array.isArray(frontmatter)">
       <div
         v-for="(item, index) in frontmatter"
         :key="index"
@@ -105,7 +226,7 @@ function removeArrayItem(arrayRef: any[], index: number) {
           </button>
         </div>
 
-        <div v-if="isBoolean(item)">
+        <div v-if="isBooleanSchema(arrayItemSchema)">
           <label class="inline-flex items-center">
             <input
               v-model="frontmatter[index]"
@@ -116,15 +237,16 @@ function removeArrayItem(arrayRef: any[], index: number) {
         </div>
 
         <FrontmatterInput
-          v-else-if="typeof item === 'string' || isNumber(item)"
+          v-else-if="isPrimitiveSchema(arrayItemSchema)"
           v-model:value="frontmatter[index]"
           label=""
+          :input-type="getInputTypeFromSchema(arrayItemSchema)"
         />
 
         <FrontmatterForm
-          v-else-if="isObject(item) || Array.isArray(item)"
+          v-else-if="isObjectSchema(arrayItemSchema) || isArraySchema(arrayItemSchema)"
           v-model:frontmatter="frontmatter[index]"
-          label=""
+          :schema="arrayItemSchema"
           :depth="props.depth + 1"
         />
 
@@ -138,58 +260,59 @@ function removeArrayItem(arrayRef: any[], index: number) {
       <button
         type="button"
         class="button secondary small self-start"
-        @click="addArrayItem(frontmatter)"
+        @click="addArrayItem(frontmatter, arrayItemSchema)"
       >
         Element hinzufügen
       </button>
     </template>
 
-    <template v-else>
+    <template v-else-if="objectSchemaEntries.length > 0 && isObject(frontmatter)">
       <div
-        v-for="key in objectKeys(frontmatter)"
-        :key="key"
+        v-for="entry in objectSchemaEntries"
+        :key="entry[0]"
         class="flex flex-col gap-1"
       >
         <label
-          v-if="isBoolean(frontmatter[key])"
+          v-if="isBooleanSchema(entry[1])"
           class="w-full inline-flex items-center font-bold text-sm"
         >
           <input
-            v-model="frontmatter[key]"
+            v-model="frontmatter[entry[0]]"
             type="checkbox"
             class="mr-2"
           >
-          <span>{{ key }}</span>
+          <span>{{ getFieldLabel(entry[0], entry[1]) }}</span>
         </label>
 
-        <p
-          v-else
-          class="font-bold"
-          :class="{
-            'text-[18px]': props.depth === 0,
-            'text-[15px]': props.depth === 1,
-            'text-[12px]': props.depth >= 2,
-          }"
-        >
-          {{ key }}
-        </p>
+        <template v-else>
+          <p class="font-bold text-sm">
+            {{ getFieldLabel(entry[0], entry[1]) }}
+          </p>
 
-        <FrontmatterInput
-          v-if="!isBoolean(frontmatter[key]) && (typeof frontmatter[key] === 'string' || isNumber(frontmatter[key]))"
-          v-model:value="frontmatter[key]"
-        />
+          <FrontmatterInput
+            v-if="isPrimitiveSchema(entry[1])"
+            v-model:value="frontmatter[entry[0]]"
+            :input-type="getInputTypeFromSchema(entry[1])"
+          />
 
-        <FrontmatterForm
-          v-else-if="!isBoolean(frontmatter[key]) && (isObject(frontmatter[key]) || Array.isArray(frontmatter[key]))"
-          v-model:frontmatter="frontmatter[key]"
-          label=""
-          :depth="props.depth + 1"
-        />
+          <FrontmatterForm
+            v-else-if="isObjectSchema(entry[1]) || isArraySchema(entry[1])"
+            v-model:frontmatter="frontmatter[entry[0]]"
+            :schema="entry[1]"
+            :depth="props.depth + 1"
+          />
 
-        <FrontmatterInput
-          v-else-if="!isBoolean(frontmatter[key])"
-          v-model:value="frontmatter[key]"
-        />
+          <FrontmatterInput
+            v-else
+            v-model:value="frontmatter[entry[0]]"
+          />
+        </template>
+      </div>
+    </template>
+
+    <template v-else>
+      <div class="text-sm text-gray-600">
+        Keine Felder in der Frontmatter-Konfiguration vorhanden.
       </div>
     </template>
   </div>

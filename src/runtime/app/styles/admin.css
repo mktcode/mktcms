@@ -23,6 +23,8 @@ body:has(#mktcms-admin) {
   input[type="text"],
   input[type="password"],
   input[type="email"],
+  input[type="date"],
+  input[type="datetime-local"],
   textarea {
     @apply w-full bg-white px-2.5 py-1 text-base border border-gray-300 rounded;
   }

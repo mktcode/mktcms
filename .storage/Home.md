@@ -1,24 +1,14 @@
 ---
-Datum:
-  Tag: 05
-  Monat: 03
-  Jahr: 2024
-Bild: /api/content/header.jpg
-Sidebar: true
-Footer: true
-Bilder:
-  - Name: header1
-    Url: /api/content/header.jpeg
-    Active: true
-    Meta:
-      Description: This is the header image.
-      ID: 12345
-  - Name: flyer2
-    Url: /api/content/Flyer2.jpg
-    Active: false
-Tags:
-  - default
-  - ""
+seoTitle: Mein Titel
+dateUntil: 2026-03-06
+createdAt: 2026-03-01T20:56
+isActive: true
+tags:
+  - asd
+  - dfg
+gallery:
+  - src: Bilder:test.jpg
+    caption: Ein Bild von mir.
 ---
 # Home!!!
 

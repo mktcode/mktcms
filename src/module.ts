@@ -35,6 +35,7 @@ export default defineNuxtModule({
       gitUser: '',
       gitRepo: '',
       gitToken: '',
+      frontmatter: _options.frontmatter || {},
     }))
 
     _nuxt.options.runtimeConfig.public.mktcms = defu((_nuxt.options.runtimeConfig.public.mktcms, {
