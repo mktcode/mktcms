@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.3.2
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.3.1...v0.3.2)
+
+### 🩹 Fixes
+
+- Correct file path handling in frontmatter schema matching ([04401e2](https://github.com/mktcode/mktcms/commit/04401e2))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.3.1
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.2.16...v0.3.1)
