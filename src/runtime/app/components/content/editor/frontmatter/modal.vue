@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
-import { parse, stringify } from 'yaml'
+import { computed } from 'vue'
 import FrontmatterForm from './form.vue'
-import MonacoEditor from '../monacoEditor.vue'
 
 const { isOpen } = defineProps<{
   isOpen: boolean
@@ -16,9 +14,6 @@ const frontmatter = defineModel<any>('frontmatter', {
   required: true,
 })
 
-const mode = ref<'form' | 'yaml'>('form')
-const yamlContent = ref('')
-const yamlError = ref('')
 const hasFrontmatterSettings = computed(() => {
   const value = frontmatter.value
 
@@ -31,47 +26,6 @@ const hasFrontmatterSettings = computed(() => {
   }
 
   return false
-})
-
-let syncingYamlFromModel = false
-
-function syncYamlFromFrontmatter() {
-  syncingYamlFromModel = true
-  yamlContent.value = stringify(frontmatter.value ?? {})
-  yamlError.value = ''
-  syncingYamlFromModel = false
-}
-
-function syncFrontmatterFromYaml(value: string) {
-  try {
-    const parsed = parse(value)
-    frontmatter.value = parsed && typeof parsed === 'object' ? parsed : {}
-    yamlError.value = ''
-  }
-  catch {
-    yamlError.value = 'Ungültiges Format. Änderungen werden erst bei gültigem Format (YAML) übernommen.'
-  }
-}
-
-watch(() => isOpen, (open) => {
-  if (!open)
-    return
-
-  syncYamlFromFrontmatter()
-})
-
-watch(frontmatter, () => {
-  if (mode.value !== 'form')
-    return
-
-  syncYamlFromFrontmatter()
-}, { deep: true })
-
-watch(yamlContent, (value) => {
-  if (mode.value !== 'yaml' || syncingYamlFromModel)
-    return
-
-  syncFrontmatterFromYaml(value)
 })
 </script>
 
@@ -92,23 +46,13 @@ watch(yamlContent, (value) => {
         <h2 class="font-bold text-2xl">
           Einstellungen
         </h2>
-        <div class="flex items-center gap-2">
-          <button
-            v-if="hasFrontmatterSettings"
-            type="button"
-            class="button secondary small"
-            @click="mode = mode === 'form' ? 'yaml' : 'form'"
-          >
-            {{ mode === 'form' ? 'Textversion' : 'Formular' }}
-          </button>
-          <button
-            type="button"
-            class="button secondary small"
-            @click="emit('close')"
-          >
-            Schließen
-          </button>
-        </div>
+        <button
+          type="button"
+          class="button secondary small"
+          @click="emit('close')"
+        >
+          Schließen
+        </button>
       </div>
 
       <div
@@ -119,31 +63,10 @@ watch(yamlContent, (value) => {
       </div>
 
       <div
-        v-else-if="mode === 'form'"
-        class="max-h-[70vh] overflow-auto pr-1"
+        v-else
+        class="max-h-[70vh] overflow-auto pl-1 pr-3"
       >
         <FrontmatterForm v-model:frontmatter="frontmatter" />
-      </div>
-
-      <div
-        v-else
-        class="h-[70vh] min-h-80 flex flex-col gap-2"
-      >
-        <p
-          v-if="yamlError"
-          class="text-sm p-4 bg-red-100 text-red-700 rounded"
-        >
-          {{ yamlError }}
-        </p>
-        <div class="flex-1 min-h-0">
-          <ClientOnly>
-            <MonacoEditor
-              v-model="yamlContent"
-              language="yaml"
-              class="w-full h-full border border-gray-200 rounded-sm"
-            />
-          </ClientOnly>
-        </div>
       </div>
     </div>
   </div>

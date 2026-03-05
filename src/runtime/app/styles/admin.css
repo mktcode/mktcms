@@ -19,11 +19,12 @@ body:has(#mktcms-admin) {
   }
 
   select,
+  input[type="number"],
   input[type="text"],
   input[type="password"],
   input[type="email"],
   textarea {
-    @apply w-full bg-white p-2.5 text-base border border-gray-300 rounded;
+    @apply w-full bg-white px-2.5 py-1 text-base border border-gray-300 rounded;
   }
 
   .button {

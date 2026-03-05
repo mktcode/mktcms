@@ -1,4 +1,8 @@
 ---
+Datum:
+  Tag: 05
+  Monat: 03
+  Jahr: 2024
 Bild: /api/content/header.jpg
 Sidebar: true
 Footer: true
