@@ -4,9 +4,11 @@ import { computed } from 'vue'
 const props = withDefaults(defineProps<{
   label?: string
   inputType?: 'text' | 'number' | 'date' | 'datetime-local'
+  uiHint?: 'image' | 'pdf' | 'file'
 }>(), {
   label: '',
   inputType: 'text',
+  uiHint: undefined,
 })
 
 const value = defineModel<string | number>('value', {
@@ -37,6 +39,22 @@ const inputValue = computed({
     value.value = newValue
   },
 })
+
+const pickerButtonLabel = computed(() => {
+  if (props.uiHint === 'image') {
+    return 'Bild auswählen'
+  }
+
+  if (props.uiHint === 'pdf') {
+    return 'PDF auswählen'
+  }
+
+  if (props.uiHint === 'file') {
+    return 'Datei auswählen'
+  }
+
+  return ''
+})
 </script>
 
 <template>
@@ -47,10 +65,20 @@ const inputValue = computed({
     >
       {{ props.label }}
     </label>
-    <input
-      v-model="inputValue"
-      :type="resolvedInputType"
-      class="w-full"
-    >
+    <div class="flex items-center gap-2">
+      <input
+        v-model="inputValue"
+        :type="resolvedInputType"
+        class="w-full"
+      >
+
+      <button
+        v-if="props.uiHint"
+        type="button"
+        class="button secondary small whitespace-nowrap"
+      >
+        {{ pickerButtonLabel }}
+      </button>
+    </div>
   </div>
 </template>

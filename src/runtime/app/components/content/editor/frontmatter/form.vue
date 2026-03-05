@@ -20,6 +20,7 @@ const frontmatter = defineModel<any>('frontmatter', {
 type SchemaNode = {
   type?: 'string' | 'number' | 'boolean' | 'array' | 'object' | 'date' | 'datetime'
   label?: string
+  'x-ui'?: 'image' | 'pdf' | 'file'
   items?: SchemaNode
   properties?: Record<string, SchemaNode>
 }
@@ -188,6 +189,18 @@ function getInputTypeFromSchema(schema: SchemaNode | null | undefined) {
   return 'text'
 }
 
+function getUiHintFromSchema(schema: SchemaNode | null | undefined): 'image' | 'pdf' | 'file' | undefined {
+  if (!schema || schema.type !== 'string') {
+    return undefined
+  }
+
+  if (schema['x-ui'] === 'image' || schema['x-ui'] === 'pdf' || schema['x-ui'] === 'file') {
+    return schema['x-ui']
+  }
+
+  return undefined
+}
+
 function removeArrayItem(arrayRef: any[], index: number) {
   if (arrayRef.length <= 1) {
     return
@@ -241,6 +254,7 @@ function removeArrayItem(arrayRef: any[], index: number) {
           v-model:value="frontmatter[index]"
           label=""
           :input-type="getInputTypeFromSchema(arrayItemSchema)"
+          :ui-hint="getUiHintFromSchema(arrayItemSchema)"
         />
 
         <FrontmatterForm
@@ -293,6 +307,7 @@ function removeArrayItem(arrayRef: any[], index: number) {
             v-if="isPrimitiveSchema(entry[1])"
             v-model:value="frontmatter[entry[0]]"
             :input-type="getInputTypeFromSchema(entry[1])"
+            :ui-hint="getUiHintFromSchema(entry[1])"
           />
 
           <FrontmatterForm
