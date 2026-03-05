@@ -119,12 +119,13 @@ const mode = ref<'edit' | 'preview'>('preview')
         </div>
 
         <div
+          id="mktcms-page"
           class="flex-1 min-h-0 overflow-auto border border-gray-200 rounded-sm p-4 lg:block lg:h-full"
           :class="mode === 'preview' ? 'block' : 'hidden'"
         >
           <MDC
             :value="debouncedMarkdown"
-            class="prose prose-sm max-w-none"
+            class="markdown-content"
           />
         </div>
       </div>
