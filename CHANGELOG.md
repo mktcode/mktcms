@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.3.4
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.3.3...v0.3.4)
+
+### 🩹 Fixes
+
+- Update data fetching logic in toggleExpand function ([6916bca](https://github.com/mktcode/mktcms/commit/6916bca))
+
+### 🏡 Chore
+
+- Linter ([4a11fc0](https://github.com/mktcode/mktcms/commit/4a11fc0))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.3.3
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.3.2...v0.3.3)
