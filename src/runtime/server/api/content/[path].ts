@@ -108,7 +108,7 @@ function ifNoneMatchMatches(headerValue: string | undefined, etag: string) {
   return headerValue
     .split(',')
     .map(token => token.trim().replace(/^W\//, '').trim())
-    .some(token => token === normalizedEtag)
+    .includes(normalizedEtag)
 }
 
 function ifModifiedSinceMatches(headerValue: string | undefined, lastModifiedMs: number | undefined) {
