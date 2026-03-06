@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v0.3.5
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.3.4...v0.3.5)
+
+### 🚀 Enhancements
+
+- Implement caching and ETag support for content delivery ([8976ed6](https://github.com/mktcode/mktcms/commit/8976ed6))
+- Apply caching to all files ([fc052fd](https://github.com/mktcode/mktcms/commit/fc052fd))
+- Enhance ETag generation with content fingerprinting and improve caching header handling ([a88002c](https://github.com/mktcode/mktcms/commit/a88002c))
+
+### 🏡 Chore
+
+- Linter ([25bab5a](https://github.com/mktcode/mktcms/commit/25bab5a))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.3.4
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.3.3...v0.3.4)
