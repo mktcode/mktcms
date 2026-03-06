@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useFetch } from '#app'
 import FileIcon from './fileIcon.vue'
 import FileButtons from './fileButtons.vue'
 
