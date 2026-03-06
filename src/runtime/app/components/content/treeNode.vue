@@ -33,12 +33,12 @@ async function toggleExpand() {
   // Load contents when expanding for the first time
   if (isExpanded.value && files.value.length === 0 && dirs.value.length === 0 && !isLoading.value) {
     isLoading.value = true
-    const { data } = await useFetch('/api/admin/list', {
+    const data = await $fetch('/api/admin/list', {
       query: { path: props.path },
     })
-    if (data.value) {
-      files.value = data.value.files
-      dirs.value = data.value.dirs
+    if (data) {
+      files.value = data.files
+      dirs.value = data.dirs
     }
     isLoading.value = false
   }
