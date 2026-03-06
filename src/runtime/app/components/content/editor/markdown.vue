@@ -29,7 +29,7 @@ async function saveMarkdown() {
   isSaving.value = true
   savingSuccessful.value = false
 
-  await useFetch(`/api/admin/md?path=${isCopyMode.value ? targetPath.value : path}`, {
+  await $fetch(`/api/admin/md?path=${isCopyMode.value ? targetPath.value : path}`, {
     method: 'POST',
     body: {
       frontmatter: frontmatter.value,
