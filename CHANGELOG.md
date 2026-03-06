@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.3.3
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.3.2...v0.3.3)
+
+### 🩹 Fixes
+
+- Bug that resubmits to save endpoint when frontmatter changes after first save ([086e9f5](https://github.com/mktcode/mktcms/commit/086e9f5))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.3.2
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.3.1...v0.3.2)
