@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { createHash } from 'node:crypto'
 import type { H3Event } from 'h3'
 import { createError, defineEventHandler, getValidatedRouterParams, send } from 'h3'
 import { useStorage } from 'nitropack/runtime'
@@ -60,9 +61,38 @@ function getSizeBytes(meta: unknown, fallbackContent?: string | number | boolean
   return 0
 }
 
-function buildWeakEtag(lastModifiedMs: number | undefined, sizeBytes: number) {
+function getContentFingerprint(content: unknown) {
+  if (content === undefined || content === null) {
+    return undefined
+  }
+
+  if (Buffer.isBuffer(content)) {
+    return createHash('sha1').update(content).digest('base64url').slice(0, 12)
+  }
+
+  if (typeof content === 'string') {
+    return createHash('sha1').update(content).digest('base64url').slice(0, 12)
+  }
+
+  return createHash('sha1').update(JSON.stringify(content)).digest('base64url').slice(0, 12)
+}
+
+function buildWeakEtag(lastModifiedMs: number | undefined, sizeBytes: number, fingerprint?: string) {
   const etagVersion = Number.isFinite(lastModifiedMs) ? Math.floor(lastModifiedMs as number) : 0
-  return `W/"${etagVersion.toString(36)}-${Math.floor(sizeBytes).toString(36)}"`
+  const base = `${etagVersion.toString(36)}-${Math.floor(sizeBytes).toString(36)}`
+  return `W/"${fingerprint ? `${base}-${fingerprint}` : base}"`
+}
+
+function toHeaderString(value: string | string[] | undefined) {
+  if (typeof value === 'string') {
+    return value
+  }
+
+  if (Array.isArray(value)) {
+    return value.join(',')
+  }
+
+  return undefined
 }
 
 function ifNoneMatchMatches(headerValue: string | undefined, etag: string) {
@@ -107,12 +137,12 @@ function setCachingHeaders(event: H3Event, etag: string, lastModifiedMs: number 
 }
 
 function isNotModified(event: H3Event, etag: string, lastModifiedMs: number | undefined) {
-  const ifNoneMatch = event.node.req.headers['if-none-match']
+  const ifNoneMatch = toHeaderString(event.node.req.headers['if-none-match'])
   if (ifNoneMatch) {
     return ifNoneMatchMatches(ifNoneMatch, etag)
   }
 
-  const ifModifiedSince = event.node.req.headers['if-modified-since']
+  const ifModifiedSince = toHeaderString(event.node.req.headers['if-modified-since'])
   return ifModifiedSinceMatches(ifModifiedSince, lastModifiedMs)
 }
 
@@ -133,6 +163,9 @@ function getContentType(path: string) {
 
     if (ext === 'jpg') {
       return 'image/jpeg'
+    }
+    else if (ext === 'svg') {
+      return 'image/svg+xml'
     }
     else {
       return 'image/' + ext
@@ -168,7 +201,7 @@ export default defineEventHandler(async (event) => {
   if (isImage || isPdf) {
     const raw = await storage.getItemRaw(contentKey)
 
-    if (!raw) {
+    if (raw == null) {
       throw createError({
         statusCode: 404,
         statusMessage: 'File not found',
@@ -176,13 +209,17 @@ export default defineEventHandler(async (event) => {
     }
 
     const body = toNodeBuffer(raw)
-    const etag = buildWeakEtag(lastModifiedMs, getSizeBytes(meta, undefined, body.byteLength))
+    const etag = buildWeakEtag(
+      lastModifiedMs,
+      getSizeBytes(meta, undefined, body.byteLength),
+      Number.isFinite(lastModifiedMs) ? undefined : getContentFingerprint(body),
+    )
 
     setCachingHeaders(event, etag, lastModifiedMs)
 
     if (isNotModified(event, etag, lastModifiedMs)) {
       event.node.res.statusCode = 304
-      return ''
+      return
     }
 
     event.node.res.setHeader('Content-Length', String(body.byteLength))
@@ -191,19 +228,23 @@ export default defineEventHandler(async (event) => {
 
   const file = await storage.getItem(contentKey)
 
-  if (!file) {
+  if (file == null) {
     throw createError({
       statusCode: 404,
       statusMessage: 'File not found',
     })
   }
 
-  const etag = buildWeakEtag(lastModifiedMs, getSizeBytes(meta, file))
+  const etag = buildWeakEtag(
+    lastModifiedMs,
+    getSizeBytes(meta, file),
+    Number.isFinite(lastModifiedMs) ? undefined : getContentFingerprint(file),
+  )
   setCachingHeaders(event, etag, lastModifiedMs)
 
   if (isNotModified(event, etag, lastModifiedMs)) {
     event.node.res.statusCode = 304
-    return ''
+    return
   }
 
   return parsedFile(contentKey, file)
