@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.3.6
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.3.5...v0.3.6)
+
+### 🩹 Fixes
+
+- Style of markdown edit page preview ([cd4aaea](https://github.com/mktcode/mktcms/commit/cd4aaea))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.3.5
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.3.4...v0.3.5)
