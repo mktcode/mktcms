@@ -6,17 +6,23 @@ const props = withDefaults(defineProps<{
   label?: string
   inputType?: 'text' | 'number' | 'date' | 'datetime-local'
   uiHint?: 'image' | 'pdf' | 'file'
+  selectMode?: 'single' | 'multiple'
+  selectOptions?: Array<{ label: string, value: string | number }>
 }>(), {
   label: '',
   inputType: 'text',
   uiHint: undefined,
+  selectMode: undefined,
+  selectOptions: () => [],
 })
 
-const value = defineModel<string | number>('value', {
+const value = defineModel<string | number | Array<string | number>>('value', {
   required: true,
 })
 
 const isPickerOpen = ref(false)
+
+const hasSelectInput = computed(() => props.selectMode === 'single' || props.selectMode === 'multiple')
 
 const resolvedInputType = computed(() => {
   if (props.inputType !== 'text') {
@@ -27,6 +33,16 @@ const resolvedInputType = computed(() => {
 })
 
 const isNumberInput = computed(() => resolvedInputType.value === 'number')
+
+function normalizeOptionValue(optionValue: string): string | number {
+  for (const option of props.selectOptions) {
+    if (String(option.value) === optionValue) {
+      return option.value
+    }
+  }
+
+  return optionValue
+}
 
 const inputValue = computed({
   get() {
@@ -42,6 +58,45 @@ const inputValue = computed({
     value.value = newValue
   },
 })
+
+const singleSelectValue = computed({
+  get() {
+    if (Array.isArray(value.value)) {
+      return value.value.length > 0 ? String(value.value[0]) : ''
+    }
+
+    return `${value.value ?? ''}`
+  },
+  set(newValue: string) {
+    value.value = normalizeOptionValue(newValue)
+  },
+})
+
+function isMultipleOptionSelected(optionValue: string | number): boolean {
+  if (!Array.isArray(value.value)) {
+    return false
+  }
+
+  return value.value.some(selected => String(selected) === String(optionValue))
+}
+
+function toggleMultipleOption(optionValue: string | number, isChecked: boolean) {
+  const normalizedValue = normalizeOptionValue(String(optionValue))
+  const currentValues = Array.isArray(value.value) ? [...value.value] : []
+
+  if (isChecked) {
+    if (!currentValues.some(selected => String(selected) === String(normalizedValue))) {
+      currentValues.push(normalizedValue)
+    }
+  }
+  else {
+    const nextValues = currentValues.filter(selected => String(selected) !== String(normalizedValue))
+    value.value = nextValues
+    return
+  }
+
+  value.value = currentValues
+}
 
 const pickerButtonLabel = computed(() => {
   if (props.uiHint === 'image') {
@@ -72,7 +127,43 @@ function onPickerSelect(path: string) {
     >
       {{ props.label }}
     </label>
-    <div class="flex items-center gap-2">
+
+    <select
+      v-if="hasSelectInput && props.selectMode === 'single'"
+      v-model="singleSelectValue"
+      class="w-full"
+    >
+      <option
+        v-for="option in props.selectOptions"
+        :key="`${option.value}`"
+        :value="`${option.value}`"
+      >
+        {{ option.label }}
+      </option>
+    </select>
+
+    <div
+      v-else-if="hasSelectInput && props.selectMode === 'multiple'"
+      class="flex flex-col gap-2 w-full"
+    >
+      <label
+        v-for="option in props.selectOptions"
+        :key="`${option.value}`"
+        class="inline-flex items-center gap-2"
+      >
+        <input
+          type="checkbox"
+          :checked="isMultipleOptionSelected(option.value)"
+          @change="toggleMultipleOption(option.value, ($event.target as HTMLInputElement).checked)"
+        >
+        {{ option.label }}
+      </label>
+    </div>
+
+    <div
+      v-else
+      class="flex items-center gap-2"
+    >
       <input
         v-model="inputValue"
         :type="resolvedInputType"

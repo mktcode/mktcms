@@ -20,9 +20,16 @@ const frontmatter = defineModel<any>('frontmatter', {
 type SchemaNode = {
   'type'?: 'string' | 'number' | 'boolean' | 'array' | 'object' | 'date' | 'datetime'
   'label'?: string
-  'x-ui'?: 'image' | 'pdf' | 'file'
+  'x-ui'?: 'image' | 'pdf' | 'file' | 'select-single' | 'select-multiple'
+  'enum'?: Array<string | number>
+  'oneOf'?: Array<{ label?: string, value: string | number }>
   'items'?: SchemaNode
   'properties'?: Record<string, SchemaNode>
+}
+
+type SelectOption = {
+  label: string
+  value: string
 }
 
 function isRecord(value: unknown): value is Record<string, any> {
@@ -49,6 +56,38 @@ function isPrimitiveSchema(schema: unknown): schema is SchemaNode {
   return isRecord(schema) && ['string', 'number', 'date', 'datetime'].includes(schema.type ?? '')
 }
 
+function isSelectSingleSchema(schema: unknown): boolean {
+  if (!isRecord(schema)) {
+    return false
+  }
+
+  return schema['x-ui'] === 'select-single' || (schema.type === 'string' && Array.isArray(schema.enum))
+}
+
+function isSelectMultipleSchema(schema: unknown): boolean {
+  if (!isRecord(schema)) {
+    return false
+  }
+
+  if (schema['x-ui'] === 'select-multiple') {
+    return true
+  }
+
+  if (schema.type !== 'array') {
+    return false
+  }
+
+  if (Array.isArray(schema.enum)) {
+    return true
+  }
+
+  if (!isRecord(schema.items)) {
+    return false
+  }
+
+  return schema.items.type === 'string' && Array.isArray(schema.items.enum)
+}
+
 function isSchemaMap(schema: unknown): schema is Record<string, SchemaNode> {
   return isRecord(schema) && !('type' in schema)
 }
@@ -62,7 +101,21 @@ function createDefaultFromSchema(schema: SchemaNode | null | undefined): any {
     return ''
   }
 
+  if (isSelectSingleSchema(schema)) {
+    const options = getSelectSingleOptionsFromSchema(schema)
+    const firstOption = options[0]
+    if (firstOption) {
+      return firstOption.value
+    }
+
+    return ''
+  }
+
   if (schema.type === 'array') {
+    if (isSelectMultipleSchema(schema)) {
+      return []
+    }
+
     return []
   }
 
@@ -86,6 +139,61 @@ function createDefaultFromSchema(schema: SchemaNode | null | undefined): any {
   }
 
   return ''
+}
+
+function getSelectOptionsFromSchema(schema: SchemaNode | null | undefined): SelectOption[] {
+  if (!schema) {
+    return []
+  }
+
+  const rawOptions = Array.isArray(schema.oneOf)
+    ? schema.oneOf
+    : Array.isArray(schema.enum)
+      ? schema.enum.map(value => ({ value }))
+      : []
+
+  return rawOptions
+    .filter(option => option !== null && option !== undefined)
+    .map((option) => {
+      if (typeof option === 'string' || typeof option === 'number') {
+        return {
+          label: String(option),
+          value: String(option),
+        }
+      }
+
+      if (isRecord(option) && option.value !== undefined && option.value !== null) {
+        const optionLabel = 'label' in option ? option.label : undefined
+
+        return {
+          label: String(optionLabel ?? option.value),
+          value: String(option.value),
+        }
+      }
+
+      return null
+    })
+    .filter((option): option is SelectOption => option !== null)
+}
+
+function getSelectSingleOptionsFromSchema(schema: SchemaNode | null | undefined): SelectOption[] {
+  return getSelectOptionsFromSchema(schema)
+}
+
+function getSelectMultipleOptionsFromSchema(schema: SchemaNode | null | undefined): SelectOption[] {
+  if (!schema || !isArraySchema(schema)) {
+    return []
+  }
+
+  if (Array.isArray(schema.enum) || Array.isArray(schema.oneOf)) {
+    return getSelectOptionsFromSchema(schema)
+  }
+
+  if (schema.items && isRecord(schema.items)) {
+    return getSelectOptionsFromSchema(schema.items)
+  }
+
+  return []
 }
 
 function ensureInitializedFromSchema() {
@@ -250,6 +358,14 @@ function removeArrayItem(arrayRef: any[], index: number) {
         </div>
 
         <FrontmatterInput
+          v-else-if="isSelectSingleSchema(arrayItemSchema)"
+          v-model:value="frontmatter[index]"
+          label=""
+          :select-options="getSelectSingleOptionsFromSchema(arrayItemSchema)"
+          select-mode="single"
+        />
+
+        <FrontmatterInput
           v-else-if="isPrimitiveSchema(arrayItemSchema)"
           v-model:value="frontmatter[index]"
           label=""
@@ -304,7 +420,21 @@ function removeArrayItem(arrayRef: any[], index: number) {
           </p>
 
           <FrontmatterInput
-            v-if="isPrimitiveSchema(entry[1])"
+            v-if="isSelectSingleSchema(entry[1])"
+            v-model:value="frontmatter[entry[0]]"
+            :select-options="getSelectSingleOptionsFromSchema(entry[1])"
+            select-mode="single"
+          />
+
+          <FrontmatterInput
+            v-else-if="isSelectMultipleSchema(entry[1])"
+            v-model:value="frontmatter[entry[0]]"
+            :select-options="getSelectMultipleOptionsFromSchema(entry[1])"
+            select-mode="multiple"
+          />
+
+          <FrontmatterInput
+            v-else-if="isPrimitiveSchema(entry[1])"
             v-model:value="frontmatter[entry[0]]"
             :input-type="getInputTypeFromSchema(entry[1])"
             :ui-hint="getUiHintFromSchema(entry[1])"

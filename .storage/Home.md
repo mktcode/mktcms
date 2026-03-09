@@ -11,6 +11,10 @@ gallery:
     caption: Ein Bild von mir.
 pdfDownload: Flyer-2026.pdf
 someFile: Prices.csv
+category: Event
+targetGroups:
+  - Presse
+  - Kunden
 ---
 # Home!!!
 

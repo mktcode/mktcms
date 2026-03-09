@@ -10,6 +10,21 @@ export default defineNuxtConfig({
         createdAt: { type: 'datetime', label: 'Erstellt am' },
         isActive: { type: 'boolean', label: 'Aktiv' },
         tags: { type: 'array', label: 'Tags', items: { type: 'string' } },
+        category: {
+          type: 'string',
+          label: 'Kategorie',
+          'x-ui': 'select-single',
+          enum: ['News', 'Event', 'Blog'],
+        },
+        targetGroups: {
+          type: 'array',
+          label: 'Zielgruppen',
+          'x-ui': 'select-multiple',
+          items: {
+            type: 'string',
+            enum: ['Partner', 'Kunden', 'Presse'],
+          },
+        },
         pdfDownload: { 'type': 'string', 'label': 'PDF Download', 'x-ui': 'pdf' },
         someFile: { 'type': 'string', 'label': 'Irgendeine Datei', 'x-ui': 'file' },
         gallery: {
