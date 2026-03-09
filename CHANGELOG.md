@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.3.7
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.3.6...v0.3.7)
+
+### 🚀 Enhancements
+
+- Add category and target groups to frontmatter schema and input components ([b0cbf4c](https://github.com/mktcode/mktcms/commit/b0cbf4c))
+
+### 🏡 Chore
+
+- Linter ([ba23b23](https://github.com/mktcode/mktcms/commit/ba23b23))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.3.6
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.3.5...v0.3.6)
