@@ -11,16 +11,16 @@ export default defineNuxtConfig({
         isActive: { type: 'boolean', label: 'Aktiv' },
         tags: { type: 'array', label: 'Tags', items: { type: 'string' } },
         category: {
-          type: 'string',
-          label: 'Kategorie',
+          'type': 'string',
+          'label': 'Kategorie',
           'x-ui': 'select-single',
-          enum: ['News', 'Event', 'Blog'],
+          'enum': ['News', 'Event', 'Blog'],
         },
         targetGroups: {
-          type: 'array',
-          label: 'Zielgruppen',
+          'type': 'array',
+          'label': 'Zielgruppen',
           'x-ui': 'select-multiple',
-          items: {
+          'items': {
             type: 'string',
             enum: ['Partner', 'Kunden', 'Presse'],
           },
