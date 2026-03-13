@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.3.8
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.3.7...v0.3.8)
+
+### 🚀 Enhancements
+
+- Add health check endpoint and refactor storage usage calculation ([9001a52](https://github.com/mktcode/mktcms/commit/9001a52))
+
+### 💅 Refactors
+
+- Optimize storage usage calculation by removing unused code and increasing cache TTL ([3b0ece6](https://github.com/mktcode/mktcms/commit/3b0ece6))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.3.7
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.3.6...v0.3.7)
