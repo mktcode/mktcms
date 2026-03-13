@@ -231,6 +231,10 @@ export default defineNuxtModule({
       route: '/api/content/:path',
       handler: resolver.resolve('./runtime/server/api/content/[path]'),
     })
+    addServerHandler({
+      route: '/api/health',
+      handler: resolver.resolve('./runtime/server/api/health'),
+    })
 
     // Admin Pages
     extendPages((pages) => {
