@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.3.9
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.3.8...v0.3.9)
+
+### 🚀 Enhancements
+
+- Enhance login rate limiting by adding client eviction and state management ([433c63b](https://github.com/mktcode/mktcms/commit/433c63b))
+
+### 🏡 Chore
+
+- Update package-lock.json to version 0.3.8 and add peer dependencies ([75d7cff](https://github.com/mktcode/mktcms/commit/75d7cff))
+
+### ❤️ Contributors
+
+- Markus Kottländer <kontakt@markus-kottlaender.de>
+
 ## v0.3.8
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.3.7...v0.3.8)
