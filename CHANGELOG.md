@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.3.10
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.3.9...v0.3.10)
+
+### 🚀 Enhancements
+
+- Implement traffic tracking with metrics and API endpoints ([db28cb1](https://github.com/mktcode/mktcms/commit/db28cb1))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.3.9
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.3.8...v0.3.9)
