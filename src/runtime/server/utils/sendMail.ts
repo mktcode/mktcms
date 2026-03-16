@@ -5,6 +5,7 @@ import { useRuntimeConfig } from 'nitropack/runtime'
 export async function sendMail({
   to,
   from,
+  envelopeFrom,
   subject,
   fields,
   replyTo,
@@ -13,6 +14,7 @@ export async function sendMail({
 }: {
   to?: string
   from?: string
+  envelopeFrom?: string
   subject: string
   fields: Record<string, any>
   replyTo?: string
@@ -36,6 +38,9 @@ export async function sendMail({
 
   const mailOptions = {
     from: from || mailerFrom,
+    envelope: {
+      from: envelopeFrom || from || mailerFrom,
+    },
     to: to || mailerTo,
     replyTo: replyTo || undefined,
     subject: subject,
