@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.3.12
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.3.11...v0.3.12)
+
+### 💅 Refactors
+
+- **sendMail:** Improve mailOptions structure and conditionally set envelope ([c978cf3](https://github.com/mktcode/mktcms/commit/c978cf3))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.3.11
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.3.10...v0.3.11)
