@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.3.11
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.3.10...v0.3.11)
+
+### 🚀 Enhancements
+
+- Enhance sendMail function to support custom envelopeFrom parameter ([d4b38de](https://github.com/mktcode/mktcms/commit/d4b38de))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.3.10
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.3.9...v0.3.10)
