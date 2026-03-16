@@ -83,6 +83,10 @@ export default defineNuxtModule({
         name: 'useForm',
         as: 'useForm',
         from: resolver.resolve('runtime/app/composables/useForm'),
+      }, {
+        name: 'useTrackTraffic',
+        as: 'useTrackTraffic',
+        from: resolver.resolve('runtime/app/composables/useTrackTraffic'),
       },
     ])
 
@@ -234,6 +238,11 @@ export default defineNuxtModule({
     addServerHandler({
       route: '/api/health',
       handler: resolver.resolve('./runtime/server/api/health'),
+    })
+    addServerHandler({
+      route: '/api/traffic/track',
+      method: 'post',
+      handler: resolver.resolve('./runtime/server/api/traffic/track.post'),
     })
 
     // Admin Pages

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+useTrackTraffic()
+
 const siteUrl = useSiteUrl()
 
 const md = await useMdContent('Home.md')
