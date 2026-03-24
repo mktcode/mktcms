@@ -18,6 +18,7 @@ This is my personal, minimalist alternative to @nuxt/content and Studio, which a
 ## Features
 
 - Simple Admin UI with Git integration to manage content
+- Admin chat endpoint and UI with routing between conversation and coding agents
 - Composables to use the content in your Nuxt app
 - `sendMail` utility to send emails via SMTP
 - [MDC](https://github.com/nuxt-content/mdc) support
@@ -41,6 +42,8 @@ NUXT_MKTCMS_LOGIN_RATE_LIMIT_MAX_ATTEMPTS=5
 NUXT_MKTCMS_LOGIN_RATE_LIMIT_WINDOW_SECONDS=300
 NUXT_MKTCMS_LOGIN_RATE_LIMIT_BLOCK_SECONDS=600
 NUXT_MKTCMS_UPLOAD_MAX_BYTES=52428800
+NUXT_MKTCMS_OPENAI_API_KEY="your-openai-api-key"
+NUXT_MKTCMS_OPENAI_MODEL="gpt-5.4-mini"
 
 NUXT_MKTCMS_SMTP_HOST="your-smtp-host"
 NUXT_MKTCMS_SMTP_PORT=465
@@ -106,6 +109,15 @@ await sendMail({
   replyTo: 'jane.smith@example.com',
 })
 ```
+
+### Admin Chat
+
+When `NUXT_MKTCMS_OPENAI_API_KEY` is configured, the admin UI exposes [admin chat](./src/runtime/app/pages/admin/chat.vue) at `/admin/chat`.
+
+- A routing step classifies each admin message as either `conversation` or `coding`
+- Conversation requests cover copy, planning, content, and general admin help
+- Coding requests cover technical implementation, configuration, debugging, and API questions
+- The default model is `gpt-5.4-mini`
 
 ## Contribution
 

@@ -25,6 +25,8 @@ export default defineNuxtModule({
       loginRateLimitWindowSeconds: 300,
       loginRateLimitBlockSeconds: 600,
       uploadMaxBytes: 50 * 1024 * 1024,
+      openaiApiKey: '',
+      openaiModel: 'gpt-5.4-mini',
       smtpHost: '',
       smtpPort: 465,
       smtpSecure: true,
@@ -117,6 +119,11 @@ export default defineNuxtModule({
     addServerHandler({
       route: '/api/admin/logout',
       handler: resolver.resolve('./runtime/server/api/admin/logout'),
+    })
+    addServerHandler({
+      route: '/api/admin/chat',
+      method: 'post',
+      handler: resolver.resolve('./runtime/server/api/admin/chat.post'),
     })
 
     // List
@@ -275,6 +282,12 @@ export default defineNuxtModule({
         name: 'Admin New Content',
         path: '/admin/new',
         file: resolver.resolve('./runtime/app/pages/admin/new.vue'),
+      })
+
+      pages.push({
+        name: 'Admin Chat',
+        path: '/admin/chat',
+        file: resolver.resolve('./runtime/app/pages/admin/chat.vue'),
       })
 
       pages.push({
