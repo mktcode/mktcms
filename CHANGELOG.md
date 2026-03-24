@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.3.13
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.3.12...v0.3.13)
+
+### 🚀 Enhancements
+
+- Enhance IP normalization and traffic metrics tracking functionality ([ac4ead9](https://github.com/mktcode/mktcms/commit/ac4ead9))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.3.12
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.3.11...v0.3.12)
