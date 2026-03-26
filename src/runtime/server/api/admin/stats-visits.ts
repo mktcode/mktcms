@@ -27,13 +27,14 @@ export function buildPlausibleUrl(apiUrl: string, siteId: string): string {
 
 export default defineEventHandler(async () => {
   const config = useRuntimeConfig()
-  const { plausibleApiUrl, plausibleApiKey } = config.mktcms
+  const plausibleApiHost = config.public.plausibleApiHost
+  const plausibleApiKey = config.plausibleApiKey
   const siteUrl = config.public.mktcms.siteUrl
 
-  if (!plausibleApiUrl || !plausibleApiKey || !siteUrl) {
+  if (!plausibleApiHost || !plausibleApiKey || !siteUrl) {
     const missing = [
-      !plausibleApiUrl && 'NUXT_MKTCMS_PLAUSIBLE_API_URL',
-      !plausibleApiKey && 'NUXT_MKTCMS_PLAUSIBLE_API_KEY',
+      !plausibleApiHost && 'NUXT_PUBLIC_PLAUSIBLE_API_HOST',
+      !plausibleApiKey && 'NUXT_PLAUSIBLE_API_KEY',
       !siteUrl && 'NUXT_PUBLIC_MKTCMS_SITE_URL',
     ].filter(Boolean).join(', ')
     throw createError({
@@ -53,7 +54,7 @@ export default defineEventHandler(async () => {
     })
   }
 
-  const url = buildPlausibleUrl(plausibleApiUrl, siteId)
+  const url = buildPlausibleUrl(plausibleApiHost, siteId)
 
   const response = await fetch(url, {
     headers: {
