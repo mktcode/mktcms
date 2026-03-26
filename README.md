@@ -53,6 +53,9 @@ NUXT_MKTCMS_MAILER_TO="your-mailer-to-address"
 NUXT_MKTCMS_GIT_USER="your-github-username"
 NUXT_MKTCMS_GIT_REPO="owner/repository.git"
 NUXT_MKTCMS_GIT_TOKEN="your-github-personal-access-token"
+
+NUXT_PUBLIC_PLAUSIBLE_API_HOST="https://plausible.yourdomain.com"
+NUXT_PLAUSIBLE_API_KEY="your-plausible-api-key"
 ```
 
 > **Note:** To generate a GitHub Personal Access Token, go to GitHub Settings → Developer settings → Personal access tokens → Tokens (classic) → Generate new token. Grant it `repo` scope for full repository access.

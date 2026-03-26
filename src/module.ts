@@ -15,6 +15,13 @@ export default defineNuxtModule({
     const resolver = createResolver(import.meta.url)
 
     // Runtime Config
+    _nuxt.options.runtimeConfig = defu(_nuxt.options.runtimeConfig, {
+      plausibleApiKey: '',
+    })
+    _nuxt.options.runtimeConfig.public = defu(_nuxt.options.runtimeConfig.public, {
+      plausibleApiHost: '',
+    })
+
     _nuxt.options.runtimeConfig.mktcms = defu((_nuxt.options.runtimeConfig.mktcms, {
       adminAuthKey: '',
       authCookieMaxAgeSeconds: 7 * 24 * 60 * 60,
