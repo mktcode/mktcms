@@ -6,9 +6,11 @@ vi.mock('nitropack/runtime', () => ({
 
 const {
   buildPlausibleUrl,
-  buildPlausibleQuery,
+  buildDailyVisitorsQuery,
+  buildTopPagesQuery,
   toDateString,
   buildFullDays,
+  buildTopPages,
 } = await import('../../../../../../src/runtime/server/api/admin/stats-visits')
 
 describe('buildPlausibleUrl', () => {
@@ -31,15 +33,32 @@ describe('buildPlausibleUrl', () => {
   })
 })
 
-describe('buildPlausibleQuery', () => {
+describe('buildDailyVisitorsQuery', () => {
   it('returns a v2 query object with time:day dimension', () => {
-    const q = buildPlausibleQuery('example.com', ['2026-02-25', '2026-03-26'])
+    const q = buildDailyVisitorsQuery('example.com', ['2026-02-25', '2026-03-26'])
     expect(q).toEqual({
       site_id: 'example.com',
       metrics: ['visitors'],
       date_range: ['2026-02-25', '2026-03-26'],
       dimensions: ['time:day'],
       include: { time_labels: true },
+    })
+  })
+})
+
+describe('buildTopPagesQuery', () => {
+  it('returns a v2 query object for top pages', () => {
+    const q = buildTopPagesQuery('example.com', ['2026-02-25', '2026-03-26'])
+    expect(q).toEqual({
+      site_id: 'example.com',
+      metrics: ['visitors'],
+      date_range: ['2026-02-25', '2026-03-26'],
+      dimensions: ['event:page'],
+      order_by: [['visitors', 'desc']],
+      pagination: {
+        limit: 10,
+        offset: 0,
+      },
     })
   })
 })
@@ -80,5 +99,31 @@ describe('buildFullDays', () => {
   it('always includes today as the last entry', () => {
     const days = buildFullDays([], today)
     expect(days[days.length - 1]!.date).toBe('2026-03-26')
+  })
+})
+
+describe('buildTopPages', () => {
+  it('maps plausible rows to top page entries', () => {
+    const topPages = buildTopPages([
+      { dimensions: ['/'], metrics: [22] },
+      { dimensions: ['/about'], metrics: [11] },
+    ])
+
+    expect(topPages).toEqual([
+      { path: '/', visits: 22 },
+      { path: '/about', visits: 11 },
+    ])
+  })
+
+  it('drops invalid rows', () => {
+    const topPages = buildTopPages([
+      { dimensions: [''], metrics: [2] },
+      { dimensions: ['/valid'], metrics: [3] },
+      { dimensions: ['/bad'], metrics: [Number.NaN] },
+    ])
+
+    expect(topPages).toEqual([
+      { path: '/valid', visits: 3 },
+    ])
   })
 })
