@@ -1,39 +1,84 @@
-import { defineEventHandler } from 'h3'
+import { defineEventHandler, createError } from 'h3'
+import { useRuntimeConfig } from 'nitropack/runtime'
 
 type VisitDay = {
   date: string
   visits: number
 }
 
-const VISITS_LAST_30_DAYS: number[] = [
-  12, 14, 11, 18, 22, 19, 17,
-  25, 28, 21, 20, 24, 29, 31,
-  27, 26, 23, 22, 21, 24, 28,
-  30, 33, 29, 27, 26, 24, 22,
-  25, 28,
-]
-
-function formatIsoDateLocal(date: Date): string {
-  // Local date (not UTC) as YYYY-MM-DD
-  const year = date.getFullYear()
-  const month = String(date.getMonth() + 1).padStart(2, '0')
-  const day = String(date.getDate()).padStart(2, '0')
-  return `${year}-${month}-${day}`
+type PlausibleTimeseriesResult = {
+  date: string
+  visitors: number
 }
 
-export default defineEventHandler(() => {
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
+type PlausibleTimeseriesResponse = {
+  results: PlausibleTimeseriesResult[]
+}
 
-  const days: VisitDay[] = Array.from({ length: 30 }, (_, index) => {
-    const date = new Date(today)
-    date.setDate(today.getDate() - (29 - index))
-
-    return {
-      date: formatIsoDateLocal(date),
-      visits: VISITS_LAST_30_DAYS[index] ?? 0,
-    }
+export function buildPlausibleUrl(apiUrl: string, siteId: string): string {
+  const base = apiUrl.replace(/\/+$/, '')
+  const params = new URLSearchParams({
+    site_id: siteId,
+    period: '30d',
+    metrics: 'visitors',
   })
+  return `${base}/api/v1/stats/timeseries?${params.toString()}`
+}
+
+export default defineEventHandler(async () => {
+  const config = useRuntimeConfig()
+  const { plausibleApiUrl, plausibleApiKey } = config.mktcms
+  const siteUrl = config.public.mktcms.siteUrl
+
+  if (!plausibleApiUrl || !plausibleApiKey || !siteUrl) {
+    const missing = [
+      !plausibleApiUrl && 'NUXT_MKTCMS_PLAUSIBLE_API_URL',
+      !plausibleApiKey && 'NUXT_MKTCMS_PLAUSIBLE_API_KEY',
+      !siteUrl && 'NUXT_PUBLIC_MKTCMS_SITE_URL',
+    ].filter(Boolean).join(', ')
+    throw createError({
+      statusCode: 503,
+      statusMessage: `Plausible analytics is not configured. Missing: ${missing}`,
+    })
+  }
+
+  let siteId: string
+  try {
+    siteId = new URL(siteUrl).hostname
+  }
+  catch {
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'Invalid siteUrl configured.',
+    })
+  }
+
+  const url = buildPlausibleUrl(plausibleApiUrl, siteId)
+
+  const response = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${plausibleApiKey}`,
+    },
+  }).catch((err: Error) => {
+    throw createError({
+      statusCode: 502,
+      statusMessage: `Failed to reach Plausible API: ${err.message}`,
+    })
+  })
+
+  if (!response.ok) {
+    throw createError({
+      statusCode: response.status,
+      statusMessage: `Plausible API returned ${response.status}.`,
+    })
+  }
+
+  const body = await response.json() as PlausibleTimeseriesResponse
+
+  const days: VisitDay[] = (body.results ?? []).map(r => ({
+    date: r.date,
+    visits: r.visitors,
+  }))
 
   return {
     rangeDays: 30,

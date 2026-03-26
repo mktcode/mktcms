@@ -35,6 +35,8 @@ export default defineNuxtModule({
       gitUser: '',
       gitRepo: '',
       gitToken: '',
+      plausibleApiUrl: '',
+      plausibleApiKey: '',
       frontmatter: _options.frontmatter || {},
     }))
 
