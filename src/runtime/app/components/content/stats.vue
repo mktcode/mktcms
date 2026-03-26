@@ -36,7 +36,7 @@ function shortDate(isoDate: string): string {
       v-if="error"
       class="text-sm text-red-600 mt-1"
     >
-      Could not load visit stats: {{ error }}
+      Could not load visit stats.
     </div>
 
     <div
