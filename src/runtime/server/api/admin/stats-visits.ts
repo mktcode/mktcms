@@ -117,7 +117,7 @@ async function fetchPlausibleQuery(url: string, apiKey: string, query: Plausible
   const response = await fetch(url, {
     method: 'POST',
     headers: {
-      Authorization: `Bearer ${apiKey}`,
+      'Authorization': `Bearer ${apiKey}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(query),

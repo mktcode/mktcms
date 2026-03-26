@@ -96,7 +96,9 @@ function shortDate(isoDate: string): string {
           v-else-if="topPagesExpanded"
           class="space-y-1 mt-3"
         >
-          <div class="text-xs text-gray-500 mb-3">Seitenaufrufe:</div>
+          <div class="text-xs text-gray-500 mb-3">
+            Seitenaufrufe:
+          </div>
           <NuxtLink
             v-for="page in topPages"
             :key="page.path"
@@ -108,7 +110,10 @@ function shortDate(isoDate: string): string {
               class="absolute inset-y-0 left-0 rounded bg-gray-200"
               :style="{ width: `${Math.round((page.visits / maxTopPageVisits) * 100)}%` }"
             />
-            <span class="relative truncate text-gray-700" :title="page.path">{{ page.path }}</span>
+            <span
+              class="relative truncate text-gray-700"
+              :title="page.path"
+            >{{ page.path }}</span>
             <span class="relative tabular-nums text-gray-400">{{ page.visits }}</span>
           </NuxtLink>
         </div>
