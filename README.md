@@ -28,6 +28,35 @@ This is my personal, minimalist alternative to @nuxt/content and Studio, which a
 npx nuxi module add mktcms
 ```
 
+The module also applies a small set of app defaults that you can still override in your own `nuxt.config.ts`:
+
+- `router.options.scrollBehaviorType = 'smooth'`
+- default German `app.head` language, title, description, and favicon
+- `mdc.headings.anchorLinks = false`
+- includes and configures `@nuxtjs/robots` with admin route disallow rules
+- includes and configures `@nuxt/fonts` with default font weights
+- includes and configures `@nuxtjs/plausible` with `proxy = true` and `autoPageviews = false`
+- default frontmatter schema for `Seiten/Startseite.md` and `Seiten/**/*.md`
+
+Example override:
+
+```ts
+export default defineNuxtConfig({
+  app: {
+    head: {
+      title: 'Meine Website',
+    },
+  },
+  mktcms: {
+    frontmatter: {
+      'Seiten/**/*.md': {
+        seoTitle: { type: 'string', label: 'Eigener SEO-Titel' },
+      },
+    },
+  },
+})
+```
+
 ```bash
 NUXT_PUBLIC_MKTCMS_SITE_URL="http://localhost:3000"
 NUXT_PUBLIC_MKTCMS_SHOW_VERSIONING=false
