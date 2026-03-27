@@ -10,10 +10,7 @@ const MonacoEditor = defineAsyncComponent({
   loader: () => import('./monacoEditor.vue'),
   loadingComponent: {
     template: `<div class="w-full h-full min-h-0 border border-gray-200 rounded-sm flex items-center justify-center text-gray-400">
-      <svg xmlns="http://www.w3.org/2000/svg" class="size-6 animate-spin" fill="none" viewBox="0 0 24 24">
-        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
-        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
-      </svg>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="animate-spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
     </div>`,
   },
 })
