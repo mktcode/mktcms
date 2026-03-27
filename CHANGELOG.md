@@ -7,7 +7,7 @@
 
 ### 🚀 Enhancements
 
-- Use Plausible API at stats.mktco.de to show last 30 days of visits in /admin index view ([0e636e9](https://github.com/mktcode/mktcms/commit/0e636e9))
+- Use Plausible API to show last 30 days of visits in /admin index view ([0e636e9](https://github.com/mktcode/mktcms/commit/0e636e9))
 - Implement v2 API integration for visitor metrics and enhance test coverage ([ebc5d04](https://github.com/mktcode/mktcms/commit/ebc5d04))
 - Enhance stats-visits API to include top pages query and response handling ([2cf9811](https://github.com/mktcode/mktcms/commit/2cf9811))
 

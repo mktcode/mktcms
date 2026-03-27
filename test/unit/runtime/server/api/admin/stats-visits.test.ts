@@ -15,20 +15,20 @@ const {
 
 describe('buildPlausibleUrl', () => {
   it('constructs a v2 query URL', () => {
-    expect(buildPlausibleUrl('https://stats.mktco.de')).toBe(
-      'https://stats.mktco.de/api/v2/query',
+    expect(buildPlausibleUrl('https://stats.example.com')).toBe(
+      'https://stats.example.com/api/v2/query',
     )
   })
 
   it('strips trailing slashes', () => {
-    expect(buildPlausibleUrl('https://stats.mktco.de/')).toBe(
-      'https://stats.mktco.de/api/v2/query',
+    expect(buildPlausibleUrl('https://stats.example.com/')).toBe(
+      'https://stats.example.com/api/v2/query',
     )
   })
 
   it('strips multiple trailing slashes', () => {
-    expect(buildPlausibleUrl('https://stats.mktco.de///')).toBe(
-      'https://stats.mktco.de/api/v2/query',
+    expect(buildPlausibleUrl('https://stats.example.com///')).toBe(
+      'https://stats.example.com/api/v2/query',
     )
   })
 })
