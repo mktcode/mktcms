@@ -3,7 +3,7 @@ import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import type * as Monaco from 'monaco-editor'
 
 import 'monaco-editor/min/vs/editor/editor.main.css'
-import 'monaco-editor/esm/vs/basic-languages/markdown/markdown.contribution'
+import 'monaco-editor/esm/vs/basic-languages/markdown/markdown.contribution.js'
 
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api.js'
 
