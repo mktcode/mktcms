@@ -6,6 +6,7 @@ import usePathParam from '../../../composables/usePathParam'
 import useCopyMode from '../../../composables/useCopyMode'
 import { navigateTo, useFetch } from '#imports'
 import FrontmatterModal from './frontmatter/modal.vue'
+
 const MonacoEditor = defineAsyncComponent({
   loader: () => import('./monacoEditor.vue'),
   loadingComponent: {
@@ -124,7 +125,18 @@ const mode = ref<'edit' | 'preview'>('preview')
             />
             <template #fallback>
               <div class="w-full h-full min-h-0 border border-gray-200 rounded-sm flex items-center justify-center text-gray-400">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="animate-spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="animate-spin"
+                ><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>
               </div>
             </template>
           </ClientOnly>
