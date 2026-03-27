@@ -20,10 +20,10 @@ const { public: { mktcms: { showVersioning } } } = useRuntimeConfig()
         class="mt-6"
       />
     </div>
-    <div class="mt-6 max-w-3xl mx-auto p-4 border border-gray-200 rounded-2xl">
+    <div class="mt-6 w-full max-w-3xl mx-auto p-4 border border-gray-200 rounded-2xl">
       <Stats />
     </div>
-    <div class="mt-6 max-w-3xl mx-auto p-4 border border-gray-200 rounded-2xl">
+    <div class="mt-6 w-full max-w-3xl mx-auto p-4 border border-gray-200 rounded-2xl">
       <Usage />
     </div>
   </Admin>

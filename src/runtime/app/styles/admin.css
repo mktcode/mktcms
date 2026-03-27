@@ -1,13 +1,11 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-body:has(#mktcms-admin) {
-  @apply bg-gray-100;
-}
-
 #mktcms-admin {
+  @apply bg-gray-100 flex flex-col min-h-screen;
+
   .boxed {
-    @apply p-4 max-w-3xl mx-auto md:my-6 bg-white md:rounded-lg shadow-lg flex flex-col;
+    @apply p-4 w-full max-w-3xl mx-auto md:my-6 bg-white md:rounded-lg shadow-lg flex flex-col;
   }
 
   .fullscreen {
