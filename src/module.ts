@@ -242,11 +242,6 @@ export default defineNuxtModule({
       route: '/api/health',
       handler: resolver.resolve('./runtime/server/api/health'),
     })
-    addServerHandler({
-      route: '/api/traffic/track',
-      method: 'post',
-      handler: resolver.resolve('./runtime/server/api/traffic/track.post'),
-    })
 
     // Admin Pages
     extendPages((pages) => {
