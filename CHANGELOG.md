@@ -1,6 +1,60 @@
 # Changelog
 
 
+## v0.3.17
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.3.16...v0.3.17)
+
+### 🩹 Fixes
+
+- **monacoEditor:** Correct import path for markdown contribution ([fbc6f36](https://github.com/mktcode/mktcms/commit/fbc6f36))
+
+### 💅 Refactors
+
+- **monacoEditor:** Simplify worker setup and restrict language support to markdown ([87ce0ef](https://github.com/mktcode/mktcms/commit/87ce0ef))
+
+### 🏡 Chore
+
+- **package:** Update version to 0.3.16 in package-lock.json ([2bc56a4](https://github.com/mktcode/mktcms/commit/2bc56a4))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
+## v0.3.16
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.3.15...v0.3.16)
+
+## v0.3.15
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.3.14...v0.3.15)
+
+### 🏡 Chore
+
+- Linter ([097caae](https://github.com/mktcode/mktcms/commit/097caae))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
+## v0.3.14
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.3.13...v0.3.14)
+
+### 🚀 Enhancements
+
+- Use Plausible API to show last 30 days of visits in /admin index view ([0e636e9](https://github.com/mktcode/mktcms/commit/0e636e9))
+- Implement v2 API integration for visitor metrics and enhance test coverage ([ebc5d04](https://github.com/mktcode/mktcms/commit/ebc5d04))
+- Enhance stats-visits API to include top pages query and response handling ([2cf9811](https://github.com/mktcode/mktcms/commit/2cf9811))
+
+### 🏡 Chore
+
+- Linter ([c3f20ce](https://github.com/mktcode/mktcms/commit/c3f20ce))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.3.13
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.3.12...v0.3.13)

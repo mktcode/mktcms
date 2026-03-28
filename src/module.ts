@@ -1,5 +1,5 @@
 import { defineNuxtModule, addServerPlugin, createResolver, addServerHandler, extendPages, addServerImports, addImports, addComponent } from '@nuxt/kit'
-import defu from 'defu'
+import { applyMktcmsNuxtDefaults } from './moduleDefaults'
 
 export default defineNuxtModule({
   meta: {
@@ -9,41 +9,38 @@ export default defineNuxtModule({
   moduleDependencies: {
     '@nuxtjs/mdc': {
       version: '^0.20.0',
+      defaults: {
+        headings: {
+          anchorLinks: false,
+        },
+      },
+    },
+    '@nuxt/fonts': {
+      version: '^0.14.0',
+      defaults: {
+        defaults: {
+          weights: [300, 400, 700, 800],
+        },
+      },
+    },
+    '@nuxtjs/robots': {
+      version: '^6.0.6',
+      defaults: {
+        disallow: ['/api/admin/*', '/admin/*'],
+      },
+    },
+    '@nuxtjs/plausible': {
+      version: '^3.0.2',
+      defaults: {
+        proxy: true,
+        autoPageviews: false,
+      },
     },
   },
   setup(_options, _nuxt) {
     const resolver = createResolver(import.meta.url)
 
-    // Runtime Config
-    _nuxt.options.runtimeConfig.mktcms = defu((_nuxt.options.runtimeConfig.mktcms, {
-      adminAuthKey: '',
-      authCookieMaxAgeSeconds: 7 * 24 * 60 * 60,
-      authCookiePath: '/',
-      authCookieSameSite: 'lax',
-      authCookieSecure: process.env.NODE_ENV === 'production',
-      loginRateLimitMaxAttempts: 5,
-      loginRateLimitWindowSeconds: 300,
-      loginRateLimitBlockSeconds: 600,
-      uploadMaxBytes: 50 * 1024 * 1024,
-      openaiApiKey: '',
-      openaiModel: 'gpt-5.4-mini',
-      smtpHost: '',
-      smtpPort: 465,
-      smtpSecure: true,
-      smtpUser: '',
-      smtpPass: '',
-      mailerFrom: '',
-      mailerTo: '',
-      gitUser: '',
-      gitRepo: '',
-      gitToken: '',
-      frontmatter: _options.frontmatter || {},
-    }))
-
-    _nuxt.options.runtimeConfig.public.mktcms = defu((_nuxt.options.runtimeConfig.public.mktcms, {
-      siteUrl: '',
-      showVersioning: false,
-    }))
+    applyMktcmsNuxtDefaults(_nuxt.options as Record<string, any>, _options)
 
     // Add frontend components
     addComponent({
@@ -85,10 +82,6 @@ export default defineNuxtModule({
         name: 'useForm',
         as: 'useForm',
         from: resolver.resolve('runtime/app/composables/useForm'),
-      }, {
-        name: 'useTrackTraffic',
-        as: 'useTrackTraffic',
-        from: resolver.resolve('runtime/app/composables/useTrackTraffic'),
       },
     ])
 
@@ -245,11 +238,6 @@ export default defineNuxtModule({
     addServerHandler({
       route: '/api/health',
       handler: resolver.resolve('./runtime/server/api/health'),
-    })
-    addServerHandler({
-      route: '/api/traffic/track',
-      method: 'post',
-      handler: resolver.resolve('./runtime/server/api/traffic/track.post'),
     })
 
     // Admin Pages
