@@ -90,7 +90,7 @@ async function saveMarkdown() {
       :is-open="showFrontmatterModal"
       @close="showFrontmatterModal = false"
     />
-    <div class="flex-1 min-h-0 overflow-hidden md-editor-shell">
+    <div class="flex-1 min-h-0 md-editor-shell">
       <div class="md-editor-grid">
         <div class="md-editor-pane">
           <ClientOnly>

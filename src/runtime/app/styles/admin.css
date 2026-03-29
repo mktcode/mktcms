@@ -195,7 +195,7 @@
 
   .admin-main:has(.workspace-panel--fluid) {
     height: 100dvh;
-    overflow: hidden;
+    overflow: clip;
   }
 
   .chat-empty-state {
@@ -303,8 +303,7 @@
   }
 
   .md-editor-shell {
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow: visible;
   }
 
   .md-editor-grid {
@@ -319,13 +318,16 @@
   .md-editor-pane {
     min-height: 0;
     height: 100%;
+    border-radius: 0.75rem;
+    box-shadow: var(--shadow-ambient);
+    overflow: hidden;
   }
 
   .md-editor-preview {
     overflow: auto;
     border-radius: 0.75rem;
     background-color: var(--color-ds-surface-container-low);
-    padding: 1rem;
+    shadow: inset 0 0 0 1px rgba(169, 180, 185, 0.15);
   }
 
   @media (min-width: 768px) {
