@@ -534,6 +534,11 @@
     box-shadow: inset 0 0.5rem 1rem rgba(42, 52, 57, 0.1);
   }
 
+  .file-item.active .file-item-ext,
+  .file-item.active .tree-chevron {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
   .file-item-icon {
     @apply size-5 shrink-0;
     opacity: 0.35;
