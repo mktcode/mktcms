@@ -40,7 +40,7 @@ function shortDate(isoDate: string): string {
 </script>
 
 <template>
-  <div>
+  <div class="bg-white rounded-md p-4">
     <div
       v-if="error"
       class="text-sm mt-1"

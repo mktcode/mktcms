@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bg-white rounded-md p-4">
     <div class="min-w-0">
       <div
         v-if="error"
