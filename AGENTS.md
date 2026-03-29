@@ -10,6 +10,7 @@ These notes are for this repository only. The main working directory is `src/`.
   - Admin UI: `/admin`, `/admin/login`, `/admin/new`, `/admin/edit/file/:path`, `/admin/edit/markdown/:path`, `/admin/delete/:path`
   - Admin API: `/api/admin/*`
   - Public content API: `/api/content/list`, `/api/content/:path`
+- Admin content views now render inside a shared workspace shell with the file explorer/sidebar intact; avoid reintroducing standalone boxed/fullscreen page wrappers for `/admin/new` or `/admin/edit/*`.
 
 ## Path and file safety rules
 

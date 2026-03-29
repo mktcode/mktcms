@@ -1,14 +1,7 @@
 <script setup lang="ts">
 import { computed, nextTick, ref, useTemplateRef, watch } from 'vue'
 import Admin from '../../components/admin.vue'
-import Header from '../../components/header.vue'
-import Content from '../../components/content/index.vue'
-import Versioning from '../../components/content/versioning.vue'
-import Stats from '../../components/content/stats.vue'
-import Usage from '../../components/content/usage.vue'
-import { useRuntimeConfig } from '#imports'
-
-const { public: { mktcms: { showVersioning } } } = useRuntimeConfig()
+import AdminWorkspace from '../../components/adminWorkspace.vue'
 
 // ── Chat logic ──────────────────────────────
 type ChatRole = 'user' | 'assistant'
@@ -89,37 +82,7 @@ watch(messages, async () => {
 
 <template>
   <Admin>
-    <div class="admin-layout">
-      <!-- Sidebar -->
-      <aside class="admin-sidebar">
-        <div class="admin-sidebar-brand">
-          MKTCMS
-        </div>
-
-        <div class="admin-sidebar-files">
-          <div class="admin-sidebar-section-label">
-            Dateien
-          </div>
-          <Content />
-        </div>
-
-        <div class="admin-sidebar-footer">
-          <Stats />
-          <Usage />
-          <Versioning
-            v-if="showVersioning"
-          />
-        </div>
-      </aside>
-
-      <!-- Main area -->
-      <div class="admin-main">
-        <div class="admin-topbar">
-          <span class="admin-topbar-title">Website Assistant</span>
-          <Header />
-        </div>
-
-        <!-- Chat messages -->
+    <AdminWorkspace>
         <div
           ref="transcript"
           class="admin-main-content chat-transcript"
@@ -312,7 +275,6 @@ watch(messages, async () => {
             </svg>
           </button>
         </div>
-      </div>
-    </div>
+    </AdminWorkspace>
   </Admin>
 </template>

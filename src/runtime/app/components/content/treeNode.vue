@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref, watch } from 'vue'
+import { useRoute } from '#app'
 import FileIcon from './fileIcon.vue'
 
 const props = defineProps<{
@@ -13,6 +14,15 @@ const isExpanded = ref(false)
 const isLoading = ref(false)
 const files = ref<string[]>([])
 const dirs = ref<string[]>([])
+const route = useRoute()
+
+const currentPath = computed(() => {
+  return typeof route.params.path === 'string' ? route.params.path : ''
+})
+
+const isActiveBranch = computed(() => {
+  return currentPath.value === props.path || currentPath.value.startsWith(`${props.path}:`)
+})
 
 function filenameWithoutExtension(filename: string): string {
   return filename.replace(/\.[^/.]+$/, '')
@@ -23,28 +33,46 @@ function fileExtension(filename: string): string {
   return match && match[1] ? match[1] : ''
 }
 
+async function loadContents() {
+  if (files.value.length > 0 || dirs.value.length > 0 || isLoading.value) {
+    return
+  }
+
+  isLoading.value = true
+  const data = await $fetch('/api/admin/list', {
+    query: { path: props.path },
+  })
+  if (data) {
+    files.value = data.files
+    dirs.value = data.dirs
+  }
+  isLoading.value = false
+}
+
 async function toggleExpand() {
   if (!props.isDirectory) return
 
   isExpanded.value = !isExpanded.value
 
-  // Load contents when expanding for the first time
-  if (isExpanded.value && files.value.length === 0 && dirs.value.length === 0 && !isLoading.value) {
-    isLoading.value = true
-    const data = await $fetch('/api/admin/list', {
-      query: { path: props.path },
-    })
-    if (data) {
-      files.value = data.files
-      dirs.value = data.dirs
-    }
-    isLoading.value = false
+  if (isExpanded.value) {
+    await loadContents()
   }
 }
 
 const indentStyle = {
   paddingLeft: `${props.level * 1}rem`,
 }
+
+function isActiveFile(path: string) {
+  return currentPath.value === path
+}
+
+watch(isActiveBranch, async (active) => {
+  if (active) {
+    isExpanded.value = true
+    await loadContents()
+  }
+}, { immediate: true })
 </script>
 
 <template>
@@ -53,6 +81,7 @@ const indentStyle = {
     <div v-if="isDirectory">
       <button
         class="file-item w-full text-left"
+        :class="{ active: isActiveBranch }"
         :style="indentStyle"
         style="font-weight: 600;"
         @click="toggleExpand"
@@ -120,6 +149,7 @@ const indentStyle = {
               :key="file"
               :to="`/admin/edit/${fileExtension(file) === 'md' ? 'markdown/' : 'file/'}${path}${path ? ':' : ''}${file}`"
               class="file-item"
+              :class="{ active: isActiveFile(`${path}${path ? ':' : ''}${file}`) }"
               :style="{ paddingLeft: `${(level + 1) * 1 + 0.75}rem` }"
             >
               <FileIcon :file-path="`${path}${path ? ':' : ''}${file}`" />

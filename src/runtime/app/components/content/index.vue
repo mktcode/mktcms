@@ -1,11 +1,24 @@
 <script setup lang="ts">
-import { useFetch } from '#app'
+import { computed } from 'vue'
+import { useFetch, useRoute } from '#app'
 import TreeNode from './treeNode.vue'
 import FileIcon from './fileIcon.vue'
 
 const { data: list } = await useFetch('/api/admin/list', {
   query: { path: '' },
 })
+
+const route = useRoute()
+
+const currentPath = computed(() => {
+  return typeof route.params.path === 'string' ? route.params.path : ''
+})
+
+const isNewRoute = computed(() => route.path === '/admin/new')
+
+function isActiveFile(path: string) {
+  return currentPath.value === path
+}
 
 function filenameWithoutExtension(filename: string): string {
   return filename.replace(/\.[^/.]+$/, '')
@@ -22,7 +35,8 @@ function fileExtension(filename: string): string {
     <NuxtLink
       to="/admin/new"
       class="file-item"
-      style="color: var(--color-ds-on-surface-variant);"
+      :class="{ active: isNewRoute }"
+      :style="!isNewRoute ? 'color: var(--color-ds-on-surface-variant);' : undefined"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -55,6 +69,7 @@ function fileExtension(filename: string): string {
         <NuxtLink
           :to="`/admin/edit/${fileExtension(file) === 'md' ? 'markdown/' : 'file/'}${file}`"
           class="file-item flex-1"
+          :class="{ active: isActiveFile(file) }"
         >
           <FileIcon :file-path="file" />
           <span class="file-item-label">{{ filenameWithoutExtension(file) }}</span>

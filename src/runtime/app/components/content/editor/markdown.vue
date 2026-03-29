@@ -55,7 +55,6 @@ async function saveMarkdown() {
   savingSuccessful.value = true
 }
 
-const mode = ref<'edit' | 'preview'>('preview')
 </script>
 
 <template>
@@ -91,32 +90,9 @@ const mode = ref<'edit' | 'preview'>('preview')
       :is-open="showFrontmatterModal"
       @close="showFrontmatterModal = false"
     />
-
-    <div class="flex gap-2 my-2 lg:hidden">
-      <button
-        type="button"
-        class="button secondary flex-1"
-        :disabled="mode === 'preview'"
-        @click="mode = 'preview'"
-      >
-        Vorschau
-      </button>
-      <button
-        type="button"
-        class="button secondary flex-1"
-        :disabled="mode === 'edit'"
-        @click="mode = 'edit'"
-      >
-        Bearbeiten
-      </button>
-    </div>
-
-    <div class="flex-1 min-h-0 overflow-hidden">
-      <div class="h-full min-h-0 overflow-hidden flex flex-col lg:grid lg:grid-cols-2 lg:gap-3">
-        <div
-          class="flex-1 min-h-0 h-full lg:block"
-          :class="mode === 'edit' ? 'block' : 'hidden'"
-        >
+    <div class="flex-1 min-h-0 overflow-hidden md-editor-shell">
+      <div class="md-editor-grid">
+        <div class="md-editor-pane">
           <ClientOnly>
             <MonacoEditor
               v-model="markdown"
@@ -143,8 +119,7 @@ const mode = ref<'edit' | 'preview'>('preview')
         </div>
 
         <div
-          class="flex-1 min-h-0 overflow-auto rounded-xl bg-ds-surface-container-low p-4 lg:block lg:h-full"
-          :class="mode === 'preview' ? 'block' : 'hidden'"
+          class="md-editor-pane md-editor-preview"
         >
           <div id="mktcms-page">
             <MDC

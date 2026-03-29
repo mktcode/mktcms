@@ -74,8 +74,8 @@ onMounted(() => {
       überschrieben. Alle Dateien werden allerdings in einer permanenten Historie gespeichert, sodass vorherige Versionen wiederhergestellt werden können.
     </div>
 
-    <div class="flex gap-4 items-center">
-      <div class="flex-1">
+    <div class="flex flex-col gap-4 md:flex-row md:items-start">
+      <div class="flex-1 min-w-0">
         <h3 class="mb-1">
           Ordner
         </h3>
@@ -95,7 +95,7 @@ onMounted(() => {
           </option>
         </select>
       </div>
-      <div class="flex-1">
+      <div class="flex-1 min-w-0">
         <h3 class="mb-1">
           Unterordner erstellen
         </h3>

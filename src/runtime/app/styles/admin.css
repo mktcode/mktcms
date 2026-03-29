@@ -141,6 +141,10 @@
     order: 1;
   }
 
+  .admin-view-slot {
+    @apply flex flex-1 flex-col min-h-0;
+  }
+
   .admin-topbar {
     @apply flex flex-wrap items-center gap-3 px-4 py-4 md:px-6;
     background-color: transparent;
@@ -163,6 +167,23 @@
 
   .chat-transcript {
     min-height: 0;
+  }
+
+  .workspace-panel {
+    @apply flex flex-1 flex-col min-h-0;
+    padding: 0 1rem 1rem;
+  }
+
+  .workspace-panel--scroll {
+    overflow-y: auto;
+  }
+
+  .workspace-panel--compact {
+    max-width: 64rem;
+  }
+
+  .workspace-panel--fluid {
+    padding-bottom: 0.75rem;
   }
 
   .chat-empty-state {
@@ -269,7 +290,37 @@
     cursor: not-allowed;
   }
 
+  .md-editor-shell {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .md-editor-grid {
+    display: grid;
+    gap: 0.75rem;
+    height: 100%;
+    min-height: 0;
+    min-width: 40rem;
+    grid-template-columns: minmax(18rem, 1fr) minmax(18rem, 1fr);
+  }
+
+  .md-editor-pane {
+    min-height: 0;
+    height: 100%;
+  }
+
+  .md-editor-preview {
+    overflow: auto;
+    border-radius: 0.75rem;
+    background-color: var(--color-ds-surface-container-low);
+    padding: 1rem;
+  }
+
   @media (min-width: 768px) {
+    .workspace-panel {
+      padding: 0 1.5rem 1rem;
+    }
+
     .chat-avatar {
       width: 2.5rem;
       height: 2.5rem;
@@ -278,6 +329,10 @@
     .chat-input-bar {
       margin: 0 1rem 1rem;
       bottom: 1rem;
+    }
+
+    .md-editor-grid {
+      gap: 1rem;
     }
   }
 

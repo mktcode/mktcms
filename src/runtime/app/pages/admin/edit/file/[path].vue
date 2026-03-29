@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Admin from '../../../../components/admin.vue'
-import Header from '../../../../components/header.vue'
+import AdminWorkspace from '../../../../components/adminWorkspace.vue'
 import Image from '../../../../components/content/editor/image.vue'
 import Pdf from '../../../../components/content/editor/pdf.vue'
 import Csv from '../../../../components/content/editor/csv.vue'
@@ -12,15 +12,16 @@ const { isImage, isPdf, isCsv, isText } = usePathParam()
 
 <template>
   <Admin>
-    <div class="boxed">
-      <Header />
-      <Image v-if="isImage" />
-      <Pdf v-else-if="isPdf" />
-      <Csv v-else-if="isCsv" />
-      <Txt v-else-if="isText" />
-      <div v-else>
-        Unbekannter Dateityp.
+    <AdminWorkspace>
+      <div class="workspace-panel workspace-panel--scroll workspace-panel--compact">
+        <Image v-if="isImage" />
+        <Pdf v-else-if="isPdf" />
+        <Csv v-else-if="isCsv" />
+        <Txt v-else-if="isText" />
+        <div v-else>
+          Unbekannter Dateityp.
+        </div>
       </div>
-    </div>
+    </AdminWorkspace>
   </Admin>
 </template>

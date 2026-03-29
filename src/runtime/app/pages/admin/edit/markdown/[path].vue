@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Admin from '../../../../components/admin.vue'
-import Header from '../../../../components/header.vue'
+import AdminWorkspace from '../../../../components/adminWorkspace.vue'
 import Markdown from '../../../../components/content/editor/markdown.vue'
 import usePathParam from '../../../../composables/usePathParam'
 
@@ -9,12 +9,13 @@ const { isMarkdown } = usePathParam()
 
 <template>
   <Admin>
-    <div class="fullscreen">
-      <Header />
-      <Markdown v-if="isMarkdown" />
-      <div v-else>
-        Unbekannter Dateityp.
+    <AdminWorkspace>
+      <div class="workspace-panel workspace-panel--fluid">
+        <Markdown v-if="isMarkdown" />
+        <div v-else>
+          Unbekannter Dateityp.
+        </div>
       </div>
-    </div>
+    </AdminWorkspace>
   </Admin>
 </template>
