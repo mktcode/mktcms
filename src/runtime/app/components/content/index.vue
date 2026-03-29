@@ -61,24 +61,20 @@ function fileExtension(filename: string): string {
       class="flex flex-col gap-0.5 mt-1"
     >
       <!-- Root level files -->
-      <div
+      <NuxtLink
         v-for="file in list.files"
         :key="file"
-        class="flex items-center gap-1"
+        :to="`/admin/edit/${fileExtension(file) === 'md' ? 'markdown/' : 'file/'}${file}`"
+        class="file-item"
+        :class="{ active: isActiveFile(file) }"
       >
-        <NuxtLink
-          :to="`/admin/edit/${fileExtension(file) === 'md' ? 'markdown/' : 'file/'}${file}`"
-          class="file-item flex-1"
-          :class="{ active: isActiveFile(file) }"
-        >
-          <FileIcon :file-path="file" />
-          <span class="file-item-label">{{ filenameWithoutExtension(file) }}</span>
-          <span
-            v-if="fileExtension(file)"
-            class="file-item-ext"
-          >.{{ fileExtension(file) }}</span>
-        </NuxtLink>
-      </div>
+        <FileIcon :file-path="file" />
+        <span class="file-item-label">{{ filenameWithoutExtension(file) }}</span>
+        <span
+          v-if="fileExtension(file)"
+          class="file-item-ext"
+        >.{{ fileExtension(file) }}</span>
+      </NuxtLink>
 
       <!-- Root level directories - collapsible -->
       <TreeNode
@@ -86,8 +82,6 @@ function fileExtension(filename: string): string {
         :key="dir"
         :path="dir"
         :name="dir"
-        :is-directory="true"
-        :level="0"
       />
     </div>
 
