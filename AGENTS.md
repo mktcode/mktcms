@@ -7,7 +7,7 @@ These notes are for this repository only. The main working directory is `src/`.
 - This module mounts Nitro storage namespace `content` to `./.storage` (filesystem driver). Content APIs and admin flows depend on this mount.
 - Internal content paths are **storage keys**, not filesystem paths. Nested segments are colon-delimited (for example `Articles:Post.md`).
 - Public/admin route contracts are fixed and coupled to UI + middleware:
-  - Admin UI: `/admin`, `/admin/login`, `/admin/chat`, `/admin/new`, `/admin/edit/file/:path`, `/admin/edit/markdown/:path`, `/admin/delete/:path`
+  - Admin UI: `/admin`, `/admin/login`, `/admin/new`, `/admin/edit/file/:path`, `/admin/edit/markdown/:path`, `/admin/delete/:path`
   - Admin API: `/api/admin/*`
   - Public content API: `/api/content/list`, `/api/content/:path`
 

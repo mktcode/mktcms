@@ -14,7 +14,7 @@ const { path } = usePathParam()
       v-for="dir in dirs"
       :key="dir"
       :to="`/admin/${path ? path + ':' : ''}${dir}`"
-      class="button secondary"
+      class="file-item"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

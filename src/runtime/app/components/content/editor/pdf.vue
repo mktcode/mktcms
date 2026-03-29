@@ -77,7 +77,7 @@ async function uploadAndReloadPage(event: Event) {
     <embed
       :src="`/api/admin/blob?path=${path}&t=${refreshTimestamp}`"
       type="application/pdf"
-      class="w-full h-auto aspect-[5.5/7] border border-gray-200 rounded-sm"
+      class="w-full h-auto aspect-[5.5/7] rounded-xl bg-ds-surface-container-low"
     >
   </div>
 </template>

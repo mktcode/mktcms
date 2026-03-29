@@ -273,12 +273,6 @@ export default defineNuxtModule({
       })
 
       pages.push({
-        name: 'Admin Chat',
-        path: '/admin/chat',
-        file: resolver.resolve('./runtime/app/pages/admin/chat.vue'),
-      })
-
-      pages.push({
         name: 'Admin Login',
         path: '/admin/login',
         file: resolver.resolve('./runtime/app/pages/admin/login.vue'),

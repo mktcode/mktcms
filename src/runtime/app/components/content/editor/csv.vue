@@ -147,9 +147,9 @@ function cancelEdit() {
           v-model="newFilename"
           type="text"
           required
-          class="w-full border border-gray-200 rounded-sm px-3 py-2"
+          class="w-full"
         >
-        <span class="text-sm text-gray-400">{{ sourceExtension }}</span>
+        <span class="text-sm text-ds-on-surface-variant">{{ sourceExtension }}</span>
       </div>
       <p
         v-if="filenameError"
@@ -161,12 +161,12 @@ function cancelEdit() {
 
     <div
       v-if="table"
-      class="bg-white"
+      class="bg-ds-surface-container-lowest"
     >
-      <div class="flex items-center h-0 justify-center border border-gray-100 rounded-sm mb-6">
+      <div class="flex items-center h-0 justify-center mb-6">
         <button
           type="button"
-          class="button small bg-white! text-gray-400! hover:bg-gray-50! hover:text-gray-600!"
+          class="button small bg-ds-surface-container-lowest! text-ds-on-surface-variant!"
           @click="insertRow(0)"
         >
           <svg
@@ -192,14 +192,14 @@ function cancelEdit() {
           :key="rowIndex"
         >
           <div
-            class="flex items-stretch rounded-sm border border-gray-200"
+            class="flex items-stretch rounded-xl bg-ds-surface-container-lowest"
           >
             <div class="flex-1 min-w-0 overflow-x-auto overflow-y-hidden">
               <div class="grid grid-flow-col auto-cols-[minmax(160px,1fr)] max-[640px]:auto-cols-[minmax(220px,1fr)]">
                 <div
                   v-for="(cell, colIndex) in r"
                   :key="colIndex"
-                  class="p-1.5 border-r border-gray-200 box-border last:border-r-0"
+                  class="p-1.5 box-border"
                 >
                   <div class="text-xs mb-1.5 leading-tight wrap-break-word flex items-center justify-between gap-1">
                     <div class="font-bold">
@@ -207,7 +207,7 @@ function cancelEdit() {
                     </div>
                   </div>
                   <div
-                    class="text-xs whitespace-pre-line wrap-break-word border border-gray-300/70 rounded bg-gray-50 p-1.5 min-h-9.5 leading-[1.35] box-border overflow-hidden line-clamp-4 h-[calc(4*1.35*1em+12px)] max-[640px]:line-clamp-3 max-[640px]:h-[calc(3*1.35*1em+12px)] cursor-pointer"
+                    class="text-xs whitespace-pre-line wrap-break-word rounded-lg bg-ds-surface-container-low p-1.5 min-h-9.5 leading-[1.35] box-border overflow-hidden line-clamp-4 h-[calc(4*1.35*1em+12px)] max-[640px]:line-clamp-3 max-[640px]:h-[calc(3*1.35*1em+12px)] cursor-pointer"
                     :title="cell"
                     @click="startEdit(rowIndex, colIndex)"
                   >
@@ -217,7 +217,7 @@ function cancelEdit() {
               </div>
             </div>
 
-            <div class="flex-none flex flex-col items-start gap-1 p-1.5 border-l border-gray-200 bg-white max-[640px]:px-1 max-[640px]:gap-0.5">
+            <div class="flex-none flex flex-col items-start gap-1 p-1.5 bg-ds-surface-container-lowest max-[640px]:px-1 max-[640px]:gap-0.5">
               <button
                 type="button"
                 class="button small"
@@ -289,10 +289,10 @@ function cancelEdit() {
             </div>
           </div>
 
-          <div class="h-0 flex items-center justify-center border border-gray-100 rounded-sm my-6">
+          <div class="h-0 flex items-center justify-center my-6">
             <button
               type="button"
-              class="button small bg-white! text-gray-400! hover:bg-gray-50! hover:text-gray-600!"
+              class="button small bg-ds-surface-container-lowest! text-ds-on-surface-variant!"
               :disabled="table.headers.length === 0"
               @click="insertRow(rowIndex + 1)"
             >
@@ -328,7 +328,7 @@ function cancelEdit() {
         v-model="commitMessage"
         type="text"
         required
-        class="w-full border border-gray-200 rounded-sm px-3 py-2"
+        class="w-full"
         placeholder="Inhaltliche Änderungen"
       >
     </div>
@@ -345,12 +345,12 @@ function cancelEdit() {
 
     <div
       v-if="editingCell"
-      class="fixed inset-0 bg-black/45 flex items-center justify-center p-4 z-9999"
+      class="fixed inset-0 glass-overlay flex items-center justify-center p-4 z-9999"
       role="presentation"
       @click.self="cancelEdit()"
     >
       <div
-        class="w-full max-w-180 bg-white rounded-[10px] border border-black/10 shadow-[0_10px_40px_rgba(0,0,0,0.28)] p-3.5 flex flex-col gap-2.5"
+        class="w-full max-w-180 bg-ds-surface-container-lowest rounded-2xl ghost-border shadow-(--shadow-float) p-3.5 flex flex-col gap-2.5"
         role="dialog"
         aria-modal="true"
         aria-label="Zelle bearbeiten"
@@ -364,7 +364,7 @@ function cancelEdit() {
         <textarea
           id="csv-edit-textarea"
           v-model="editBuffer"
-          class="w-full box-border p-2.5 border border-gray-300 rounded-lg resize-y min-h-40 font-[inherit] focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+          class="w-full box-border p-2.5 rounded-lg resize-y min-h-40 font-[inherit]"
           rows="8"
         />
 

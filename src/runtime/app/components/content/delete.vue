@@ -17,7 +17,7 @@ async function deleteContent() {
 
 <template>
   <div>
-    <h1 class="text-2xl font-bold mb-4">
+    <h1 class="mb-4">
       Datei löschen
     </h1>
     <p class="mb-4">

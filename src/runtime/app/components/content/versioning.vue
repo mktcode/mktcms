@@ -176,9 +176,9 @@ async function runUpdate() {
 </script>
 
 <template>
-  <div class="text-sm text-gray-700">
+  <div class="text-sm">
     <div class="flex items-center justify-end gap-3">
-      <span class="text-xs text-gray-500 mr-auto">
+      <span class="text-xs mr-auto" style="color: var(--color-ds-on-surface-variant);">
         Version: <strong class="capitalize">{{ currentBranch }}</strong>
       </span>
       <button
@@ -196,7 +196,7 @@ async function runUpdate() {
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="text-gray-400"
+          class="text-ds-on-surface-variant!"
         ><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /><path d="M12 7v5l4 2" /></svg>
         Änderungshistorie
       </button>
@@ -216,7 +216,7 @@ async function runUpdate() {
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="text-gray-400"
+          class="text-ds-on-surface-variant!"
         ><path d="M12 2a10 10 0 0 1 7.38 16.75" /><path d="m16 12-4-4-4 4" /><path d="M12 16V8" /><path d="M2.5 8.875a10 10 0 0 0-.5 3" /><path d="M2.83 16a10 10 0 0 0 2.43 3.4" /><path d="M4.636 5.235a10 10 0 0 1 .891-.857" /><path d="M8.644 21.42a10 10 0 0 0 7.631-.38" /></svg>
         {{ updateButtonText }}
       </button>
@@ -224,18 +224,20 @@ async function runUpdate() {
 
     <div
       v-if="isHistoryModalOpen"
-      class="fixed inset-0 bg-black/45 flex items-start justify-center p-4 z-9999 overflow-y-auto"
+      class="fixed inset-0 flex items-start justify-center p-4 z-9999 overflow-y-auto"
+      style="background: rgba(42, 52, 57, 0.35);"
       role="presentation"
       @click.self="closeHistoryModal"
     >
       <div
-        class="w-full max-w-140 bg-white rounded-[10px] border border-black/10 shadow-[0_10px_40px_rgba(0,0,0,0.28)] p-6 flex flex-col gap-4 max-h-[calc(100vh-2rem)] my-auto"
+        class="w-full max-w-140 rounded-2xl p-6 flex flex-col gap-4 max-h-[calc(100vh-2rem)] my-auto glass-overlay ghost-border"
+        style="box-shadow: var(--shadow-float);"
         role="dialog"
         aria-modal="true"
         aria-label="Änderungshistorie"
       >
         <div class="flex items-center justify-between gap-2">
-          <h2 class="font-bold text-xl">
+          <h2 class="text-xl">
             Änderungshistorie
           </h2>
           <button
@@ -250,21 +252,24 @@ async function runUpdate() {
         <div class="min-h-0 overflow-y-auto pr-1">
           <div
             v-if="historyError"
-            class="text-sm p-3 bg-red-100 text-red-700 rounded"
+            class="text-sm p-3 rounded-xl"
+            style="background: var(--color-ds-error-container); color: var(--color-ds-error);"
           >
             Konnte Änderungshistorie nicht laden.
           </div>
 
           <div
             v-else-if="historyPending"
-            class="text-sm text-gray-500"
+            class="text-sm"
+            style="color: var(--color-ds-on-surface-variant);"
           >
             lädt…
           </div>
 
           <div
             v-else-if="historyEntries.length === 0"
-            class="text-sm text-gray-500"
+            class="text-sm"
+            style="color: var(--color-ds-on-surface-variant);"
           >
             Keine Einträge vorhanden.
           </div>
@@ -276,18 +281,19 @@ async function runUpdate() {
             <div
               v-for="entry in historyEntries"
               :key="entry.hash"
-              class="flex flex-col justify-between gap-3 p-3 bg-gray-50 border border-gray-200 rounded"
+              class="flex flex-col justify-between gap-3 p-4 rounded-xl"
+              style="background: var(--color-ds-surface-container-low);"
             >
               <div class="flex items-start justify-between gap-3 flex-1 w-full">
                 <div>
                   <p class="font-bold">
                     {{ entry.authorName }}
                   </p>
-                  <p class="text-xs text-gray-500 break-all">
+                  <p class="text-xs break-all" style="color: var(--color-ds-on-surface-variant);">
                     {{ entry.authorEmail }}
                   </p>
                 </div>
-                <p class="text-sm text-gray-500">
+                <p class="text-sm" style="color: var(--color-ds-on-surface-variant);">
                   {{ formatRelativeDate(entry.date) }}
                 </p>
               </div>
@@ -305,7 +311,7 @@ async function runUpdate() {
               >
                 Zurück
               </button>
-              <span class="text-xs text-gray-500">
+              <span class="text-xs" style="color: var(--color-ds-on-surface-variant);">
                 Seite {{ historyPage }}
               </span>
               <button
@@ -324,18 +330,20 @@ async function runUpdate() {
 
     <div
       v-if="isUpdateModalOpen"
-      class="fixed inset-0 bg-black/45 flex items-start justify-center p-4 z-9999 overflow-y-auto"
+      class="fixed inset-0 flex items-start justify-center p-4 z-9999 overflow-y-auto"
+      style="background: rgba(42, 52, 57, 0.35);"
       role="presentation"
       @click.self="closeUpdateModal"
     >
       <div
-        class="w-full max-w-140 bg-white rounded-[10px] border border-black/10 shadow-[0_10px_40px_rgba(0,0,0,0.28)] p-6 flex flex-col gap-4 max-h-[calc(100vh-2rem)] my-auto overflow-y-auto"
+        class="w-full max-w-140 rounded-2xl p-6 flex flex-col gap-4 max-h-[calc(100vh-2rem)] my-auto overflow-y-auto glass-overlay ghost-border"
+        style="box-shadow: var(--shadow-float);"
         role="dialog"
         aria-modal="true"
         aria-label="Version aktualisieren"
       >
         <div class="flex items-center justify-between gap-2">
-          <h2 class="font-bold text-xl">
+          <h2 class="text-xl">
             {{ updateTitle }}
           </h2>
           <button
@@ -347,44 +355,44 @@ async function runUpdate() {
           </button>
         </div>
 
-        <p class="text-sm p-3 bg-gray-50 border border-gray-200 rounded">
+        <p class="text-sm p-3 rounded-xl" style="background: var(--color-ds-surface-container-low);">
           Achtung: Eine Aktualisierung ist sofort auf der Website sichtbar.
         </p>
 
         <p
           v-if="branchError"
-          class="text-sm p-3 bg-red-100 text-red-700 rounded"
+          class="text-sm p-3 rounded-xl" style="background: var(--color-ds-error-container); color: var(--color-ds-error);"
         >
           Konnte aktuellen Branch nicht laden.
         </p>
 
         <p
           v-else-if="updateStatusError"
-          class="text-sm p-3 bg-red-100 text-red-700 rounded"
+          class="text-sm p-3 rounded-xl" style="background: var(--color-ds-error-container); color: var(--color-ds-error);"
         >
           Konnte Branch-Status nicht laden.
         </p>
 
         <p
           v-else-if="isIdentical"
-          class="text-sm p-3 bg-gray-50 border border-gray-200 rounded"
+          class="text-sm p-3 rounded-xl"
+          style="background: var(--color-ds-surface-container-low);"
         >
           Die Branches sind identisch. Es sind keine neuen Änderungen verfügbar.
         </p>
 
         <p
           v-else-if="!isSupportedBranch || !canUpdate"
-          class="text-sm p-3 bg-red-100 text-red-700 rounded"
+          class="text-sm p-3 rounded-xl" style="background: var(--color-ds-error-container); color: var(--color-ds-error);"
         >
           {{ updateBlockedReason || `Unterstützt sind nur main oder staging. Aktuell: ${currentBranch}` }}
         </p>
 
-        <label class="text-sm font-medium text-gray-700">
+        <label class="text-sm font-medium" style="color: var(--color-ds-on-surface);">
           Merge von Branch
         </label>
         <select
           v-model="selectedUpdateBranch"
-          class="w-full border border-gray-200 rounded-sm px-3 py-2"
           :disabled="true"
         >
           <option :value="selectedUpdateBranch || ''">
@@ -394,13 +402,14 @@ async function runUpdate() {
 
         <p
           v-if="updateError"
-          class="text-sm p-3 bg-red-100 text-red-700 rounded"
+          class="text-sm p-3 rounded-xl" style="background: var(--color-ds-error-container); color: var(--color-ds-error);"
         >
           {{ updateError }}
         </p>
         <p
           v-if="updateSuccess"
-          class="text-sm p-3 bg-emerald-100 text-emerald-800 rounded"
+          class="text-sm p-3 rounded-xl"
+          style="background: var(--color-ds-surface-container-low); color: var(--color-ds-primary);"
         >
           {{ updateSuccess }}
         </p>

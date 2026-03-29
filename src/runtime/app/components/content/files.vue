@@ -28,14 +28,14 @@ function fileExtension(filename: string): string {
     >
       <NuxtLink
         :to="`/admin/edit/${fileExtension(file) === 'md' ? 'markdown/' : 'file/'}${path ? path + ':' : ''}${file}`"
-        class="flex-1 button secondary"
+        class="flex-1 file-item"
       >
         <FileIcon :file-path="`${path ? path + ':' : ''}${file}`" />
         <div class="w-full flex">
           {{ filenameWithoutExtension(file) }}
           <span
             v-if="fileExtension(file)"
-            class="text-sm text-gray-400 ml-auto"
+            class="text-sm text-ds-on-surface-variant ml-auto"
           >
             .{{ fileExtension(file) }}
           </span>

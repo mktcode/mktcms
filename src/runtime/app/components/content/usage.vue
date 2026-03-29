@@ -1,20 +1,23 @@
 <template>
-  <div class="">
+  <div>
     <div class="min-w-0">
       <div
         v-if="error"
-        class="text-sm text-red-600 mt-1"
+        class="text-sm mt-1"
+        style="color: var(--color-ds-error);"
       >
         Konnte Speicherbelegung nicht laden.
       </div>
 
       <div
         v-else
-        class="text-sm text-gray-700 mt-1"
+        class="text-sm mt-1"
       >
         <div class="flex items-center justify-between gap-3">
-          <span class="text-gray-500">Speicher:</span>
-          <span class="font-semibold text-gray-900 tabular-nums">
+          <span class="stat-label">Speicher</span>
+          <span
+            class="tabular-nums stat-value text-xs"
+          >
             <template v-if="pending">
               lädt…
             </template>
@@ -24,15 +27,9 @@
           </span>
         </div>
 
-        <div
-          class="mt-2 h-2 w-full rounded-full bg-gray-200 overflow-hidden"
-          role="progressbar"
-          :aria-valuenow="Math.round(usedPercent)"
-          aria-valuemin="0"
-          aria-valuemax="100"
-        >
+        <div class="progress-track mt-2">
           <div
-            class="h-full rounded-full bg-emerald-600 transition-[width] duration-300"
+            class="progress-fill"
             :style="{ width: `${usedPercent}%` }"
           />
         </div>

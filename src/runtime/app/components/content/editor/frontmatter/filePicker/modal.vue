@@ -59,12 +59,12 @@ const title = computed(() => {
 <template>
   <div
     v-if="props.isOpen"
-    class="fixed inset-0 bg-black/45 flex items-center justify-center p-4 z-9999"
+    class="fixed inset-0 glass-overlay flex items-center justify-center p-4 z-9999"
     role="presentation"
     @click.self="emit('close')"
   >
     <div
-      class="w-full max-w-220 bg-white rounded-[10px] border border-black/10 shadow-[0_10px_40px_rgba(0,0,0,0.28)] p-6 flex flex-col gap-3"
+      class="w-full max-w-220 bg-ds-surface-container-lowest rounded-2xl ghost-border shadow-(--shadow-float) p-6 flex flex-col gap-3"
       role="dialog"
       aria-modal="true"
       :aria-label="title"
@@ -85,7 +85,7 @@ const title = computed(() => {
       <div class="max-h-[70vh] overflow-auto pl-1 pr-3">
         <div
           v-if="pending"
-          class="text-sm text-gray-500"
+          class="text-sm text-ds-on-surface-variant"
         >
           Laden...
         </div>
@@ -106,7 +106,7 @@ const title = computed(() => {
               {{ filenameWithoutExtension(file) }}
               <span
                 v-if="fileExtension(file)"
-                class="text-sm text-gray-400 ml-auto"
+                class="text-sm text-ds-on-surface-variant ml-auto"
               >
                 .{{ fileExtension(file) }}
               </span>
@@ -125,7 +125,7 @@ const title = computed(() => {
 
           <div
             v-if="(list?.files?.length ?? 0) === 0 && (list?.dirs?.length ?? 0) === 0"
-            class="text-sm text-gray-600"
+            class="text-sm text-ds-on-surface-variant"
           >
             Keine passenden Dateien gefunden.
           </div>

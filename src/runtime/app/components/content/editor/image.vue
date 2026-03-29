@@ -77,7 +77,7 @@ async function uploadAndReloadPage(event: Event) {
     <img
       :src="`/api/admin/blob?path=${path}&t=${refreshTimestamp}`"
       alt="Image Preview"
-      class="w-full h-auto border border-gray-200 rounded-sm p-1"
+      class="w-full h-auto rounded-xl bg-ds-surface-container-low p-1"
     >
   </div>
 </template>

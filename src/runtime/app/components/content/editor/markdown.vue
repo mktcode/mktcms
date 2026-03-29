@@ -10,7 +10,7 @@ import FrontmatterModal from './frontmatter/modal.vue'
 const MonacoEditor = defineAsyncComponent({
   loader: () => import('./monacoEditor.vue'),
   loadingComponent: {
-    template: `<div class="w-full h-full min-h-0 border border-gray-200 rounded-sm flex items-center justify-center text-gray-400">
+    template: `<div class="w-full h-full min-h-0 rounded-xl bg-ds-surface-container-low flex items-center justify-center text-ds-on-surface-variant">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="animate-spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
     </div>`,
   },
@@ -121,10 +121,10 @@ const mode = ref<'edit' | 'preview'>('preview')
             <MonacoEditor
               v-model="markdown"
               language="markdown"
-              class="w-full h-full min-h-0 border border-gray-200 rounded-sm"
+              class="w-full h-full min-h-0 rounded-xl"
             />
             <template #fallback>
-              <div class="w-full h-full min-h-0 border border-gray-200 rounded-sm flex items-center justify-center text-gray-400">
+              <div class="w-full h-full min-h-0 rounded-xl bg-ds-surface-container-low flex items-center justify-center text-ds-on-surface-variant">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -143,7 +143,7 @@ const mode = ref<'edit' | 'preview'>('preview')
         </div>
 
         <div
-          class="flex-1 min-h-0 overflow-auto border border-gray-200 rounded-sm p-4 lg:block lg:h-full"
+          class="flex-1 min-h-0 overflow-auto rounded-xl bg-ds-surface-container-low p-4 lg:block lg:h-full"
           :class="mode === 'preview' ? 'block' : 'hidden'"
         >
           <div id="mktcms-page">
@@ -173,9 +173,9 @@ const mode = ref<'edit' | 'preview'>('preview')
             v-model="newFilename"
             type="text"
             required
-            class="w-full border border-gray-200 rounded-sm px-3 py-2"
+            class="w-full"
           >
-          <span class="text-sm text-gray-400">{{ sourceExtension }}</span>
+          <span class="text-sm text-ds-on-surface-variant">{{ sourceExtension }}</span>
         </div>
         <p
           v-if="filenameError"
@@ -197,7 +197,7 @@ const mode = ref<'edit' | 'preview'>('preview')
           v-model="commitMessage"
           type="text"
           required
-          class="w-full border border-gray-200 rounded-sm px-3 py-2"
+          class="w-full"
           placeholder="Inhaltliche Änderungen"
         >
       </div>

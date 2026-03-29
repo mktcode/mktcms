@@ -114,7 +114,7 @@ function selectFile(fileName: string) {
           class="py-2"
           :style="{ paddingLeft: `${(props.level + 1) * 1.5}rem` }"
         >
-          <span class="text-sm text-gray-500">Laden...</span>
+          <span class="text-sm text-ds-on-surface-variant">Laden...</span>
         </div>
 
         <div
@@ -137,7 +137,7 @@ function selectFile(fileName: string) {
                 {{ filenameWithoutExtension(file) }}
                 <span
                   v-if="fileExtension(file)"
-                  class="text-sm text-gray-400 ml-auto"
+                  class="text-sm text-ds-on-surface-variant ml-auto"
                 >
                   .{{ fileExtension(file) }}
                 </span>

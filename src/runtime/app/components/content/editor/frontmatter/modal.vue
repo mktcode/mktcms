@@ -23,12 +23,12 @@ const hasFrontmatterSettings = computed(() => {
 <template>
   <div
     v-if="isOpen"
-    class="fixed inset-0 bg-black/45 flex items-center justify-center p-4 z-9999"
+    class="fixed inset-0 glass-overlay flex items-center justify-center p-4 z-9999"
     role="presentation"
     @click.self="emit('close')"
   >
     <div
-      class="w-full max-w-220 bg-white rounded-[10px] border border-black/10 shadow-[0_10px_40px_rgba(0,0,0,0.28)] p-6 flex flex-col gap-3"
+      class="w-full max-w-220 bg-ds-surface-container-lowest rounded-2xl ghost-border shadow-(--shadow-float) p-6 flex flex-col gap-3"
       role="dialog"
       aria-modal="true"
       aria-label="Einstellungen"
@@ -48,7 +48,7 @@ const hasFrontmatterSettings = computed(() => {
 
       <div
         v-if="!hasFrontmatterSettings"
-        class="text-sm p-4 bg-gray-100 text-gray-700 rounded"
+        class="text-sm p-4 bg-ds-surface-container-low text-ds-on-surface-variant rounded-xl"
       >
         Keine Einstellungen für diesen Inhalt vorhanden.
       </div>

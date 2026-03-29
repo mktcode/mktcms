@@ -1,5 +1,5 @@
 <template>
-  <div class="text-emerald-700 text-center my-3 flex items-center justify-center gap-2">
+  <div class="text-center my-3 flex items-center justify-center gap-2" style="color: var(--color-ds-primary);">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"

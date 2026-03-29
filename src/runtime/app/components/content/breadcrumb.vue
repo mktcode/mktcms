@@ -9,7 +9,8 @@ parts.unshift('home')
 
 <template>
   <div
-    class="text-gray-500 text-base flex items-center gap-1"
+    class="text-base flex items-center gap-1"
+    style="color: var(--color-ds-on-surface-variant);"
     :class="{ 'mb-4': parts.length > 1 }"
   >
     <div v-if="fullPath === '/admin'">

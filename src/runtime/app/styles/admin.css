@@ -1,21 +1,334 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-#mktcms-admin {
-  @apply bg-gray-100 flex flex-col min-h-screen;
+/*
+ * Design System: "The Website Assistant"
+ * See DESIGN.md for full specification.
+ *
+ * Surface hierarchy (light → dark):
+ *   surface-container-lowest: #ffffff  (primary cards, elevated)
+ *   surface:                  #f7f9fb  (base background)
+ *   surface-container-low:    #f0f4f7  (subtle card bg, recessed inputs)
+ *   surface-container:        #e8eef2
+ *   surface-container-high:   #e1e9ee  (search bars, secondary zones)
+ *   surface-container-highest:#d9e4ea  (secondary button bg)
+ *   surface-dim:              #cfdce3
+ *
+ * Primary:          #506169
+ * Secondary:        #526073
+ * On-surface:       #2a3439
+ * On-surface-variant:#6b7d85
+ * Outline-variant:  #a9b4b9
+ * Primary-fixed-dim:#c6d7e1
+ */
 
+@theme {
+  /* Design-system surface tokens */
+  --color-ds-surface: #f7f9fb;
+  --color-ds-surface-dim: #cfdce3;
+  --color-ds-surface-container-lowest: #ffffff;
+  --color-ds-surface-container-low: #f0f4f7;
+  --color-ds-surface-container: #e8eef2;
+  --color-ds-surface-container-high: #e1e9ee;
+  --color-ds-surface-container-highest: #d9e4ea;
+  --color-ds-primary: #506169;
+  --color-ds-secondary: #526073;
+  --color-ds-on-surface: #2a3439;
+  --color-ds-on-surface-variant: #6b7d85;
+  --color-ds-on-primary: #ffffff;
+  --color-ds-outline-variant: #a9b4b9;
+  --color-ds-primary-fixed-dim: #c6d7e1;
+  --color-ds-error: #b3261e;
+  --color-ds-error-container: #f9dedc;
+
+  /* Typography */
+  --font-display: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  /* Ambient shadow */
+  --shadow-ambient: 0 12px 40px rgba(42, 52, 57, 0.06);
+  --shadow-float: 0 10px 40px rgba(42, 52, 57, 0.12);
+}
+
+/* ───────────────────────────────────────────────
+   Root wrapper
+   ─────────────────────────────────────────────── */
+#mktcms-admin {
+  @apply flex flex-col min-h-screen;
+  background-color: var(--color-ds-surface);
+  color: var(--color-ds-on-surface);
+  font-family: var(--font-body);
+
+  /* ── Layout containers ────────────────────── */
   .boxed {
-    @apply p-4 w-full max-w-3xl mx-auto md:my-6 bg-white md:rounded-lg shadow-lg flex flex-col;
+    @apply p-6 md:p-8 w-full max-w-3xl mx-auto md:my-8 flex flex-col;
+    background-color: var(--color-ds-surface-container-lowest);
+    border-radius: 1rem;
+    box-shadow: var(--shadow-ambient);
   }
 
   .fullscreen {
-    @apply max-w-none rounded-none max-h-screen h-screen overflow-hidden bg-white p-3 md:p-6 flex flex-col;
+    @apply max-w-none max-h-screen h-screen overflow-hidden p-3 md:p-6 flex flex-col;
+    background-color: var(--color-ds-surface-container-lowest);
+    border-radius: 0;
   }
 
+  /* ── Sidebar-based dashboard layout ─────── */
+  .admin-layout {
+    @apply flex min-h-screen flex-col;
+  }
+
+  .admin-sidebar {
+    @apply flex flex-col w-full shrink-0 px-4 pb-6 pt-2;
+    background-color: var(--color-ds-surface);
+    gap: 1.25rem;
+    order: 2;
+  }
+
+  .admin-sidebar-brand {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.125rem;
+    letter-spacing: -0.01em;
+    color: var(--color-ds-on-surface);
+  }
+
+  .admin-sidebar-brand small {
+    @apply block;
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 0.75rem;
+    color: var(--color-ds-on-surface-variant);
+    letter-spacing: 0;
+  }
+
+  .admin-sidebar-search {
+    @apply w-full py-2 px-3 text-sm;
+    background-color: var(--color-ds-surface-container-high);
+    border-radius: 0.5rem;
+    border: none;
+    color: var(--color-ds-on-surface);
+    outline: none;
+    transition: background-color 0.15s, box-shadow 0.15s;
+  }
+
+  .admin-sidebar-search::placeholder {
+    color: var(--color-ds-on-surface-variant);
+  }
+
+  .admin-sidebar-search:focus {
+    background-color: var(--color-ds-surface-container-lowest);
+    box-shadow: 0 0 0 2px rgba(80, 97, 105, 0.4);
+  }
+
+  .admin-sidebar-section-label {
+    @apply text-xs font-semibold uppercase tracking-widest;
+    color: var(--color-ds-on-surface-variant);
+    margin-bottom: 0.5rem;
+  }
+
+  .admin-sidebar-files {
+    @apply min-h-0;
+  }
+
+  .admin-sidebar-footer {
+    @apply flex flex-col gap-4;
+  }
+
+  .admin-main {
+    @apply flex flex-1 flex-col min-w-0;
+    min-height: 100dvh;
+    order: 1;
+  }
+
+  .admin-topbar {
+    @apply flex flex-wrap items-center gap-3 px-4 py-4 md:px-6;
+    background-color: transparent;
+  }
+
+  .admin-topbar-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.125rem;
+    color: var(--color-ds-on-surface);
+  }
+
+  .admin-topbar-actions {
+    @apply flex items-center gap-2 ml-auto;
+  }
+
+  .admin-main-content {
+    @apply flex-1 flex flex-col overflow-y-auto px-4 pb-4 md:px-6;
+  }
+
+  .chat-transcript {
+    min-height: 0;
+  }
+
+  .chat-empty-state {
+    @apply flex-1 flex flex-col items-center justify-center gap-4 text-center;
+    min-height: 16rem;
+    padding: 3rem 0 2rem;
+  }
+
+  /* ── Chat avatars ─────────────────────────── */
+  .chat-avatar {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .chat-avatar-assistant {
+    background: linear-gradient(135deg, var(--color-ds-primary), var(--color-ds-secondary));
+    color: var(--color-ds-on-primary);
+  }
+
+  .chat-avatar-user {
+    background-color: var(--color-ds-surface-container-high);
+    color: var(--color-ds-on-surface-variant);
+  }
+
+  /* ── Chat input bar (pinned bottom) ───────── */
+  .chat-input-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 0.75rem;
+    margin: 0 0.75rem 0.75rem;
+    background-color: var(--color-ds-surface-container-low);
+    border-radius: 1rem;
+    position: sticky;
+    bottom: 0.75rem;
+    box-shadow: var(--shadow-ambient);
+  }
+
+  .chat-input-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--color-ds-on-surface-variant);
+    flex-shrink: 0;
+    transition: background-color 0.15s;
+  }
+
+  .chat-input-icon:hover {
+    background-color: var(--color-ds-surface-container-high);
+  }
+
+  .chat-input-textarea {
+    flex: 1;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    resize: none;
+    padding: 0.375rem 0 !important;
+    min-height: 1.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--color-ds-on-surface);
+    outline: none !important;
+    max-height: 10rem;
+  }
+
+  .chat-input-textarea:focus {
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .chat-send-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-ds-primary), var(--color-ds-secondary));
+    color: var(--color-ds-on-primary);
+    border: none;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: opacity 0.15s;
+  }
+
+  .chat-send-button:hover {
+    opacity: 0.85;
+  }
+
+  .chat-send-button:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  @media (min-width: 768px) {
+    .chat-avatar {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+
+    .chat-input-bar {
+      margin: 0 1rem 1rem;
+      bottom: 1rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .admin-layout {
+      @apply flex-row;
+    }
+
+    .admin-sidebar {
+      @apply w-60 p-5;
+      gap: 1.5rem;
+      order: 0;
+    }
+
+    .admin-sidebar-files {
+      @apply flex-1 overflow-y-auto;
+    }
+
+    .admin-sidebar-footer {
+      @apply mt-auto;
+    }
+
+    .admin-main {
+      min-height: 100vh;
+      order: 0;
+    }
+
+    .chat-empty-state {
+      min-height: 20rem;
+      padding: 3rem 0;
+    }
+  }
+
+  /* ── Typography ───────────────────────────── */
   h1 {
-    @apply text-gray-800 text-3xl font-semibold;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.875rem;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    color: var(--color-ds-on-surface);
   }
 
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: var(--color-ds-on-surface);
+  }
+
+  /* ── Inputs ───────────────────────────────── */
   select,
   input[type="number"],
   input[type="text"],
@@ -24,34 +337,235 @@
   input[type="date"],
   input[type="datetime-local"],
   textarea {
-    @apply w-full bg-white px-2.5 py-1 text-base border border-gray-300 rounded;
+    @apply w-full px-3 py-2 text-sm;
+    background-color: var(--color-ds-surface-container-low);
+    border: none;
+    border-radius: 0.5rem;
+    color: var(--color-ds-on-surface);
+    outline: none;
+    transition: background-color 0.15s, box-shadow 0.15s;
   }
 
+  select:focus,
+  input[type="number"]:focus,
+  input[type="text"]:focus,
+  input[type="password"]:focus,
+  input[type="email"]:focus,
+  input[type="date"]:focus,
+  input[type="datetime-local"]:focus,
+  textarea:focus {
+    background-color: var(--color-ds-surface-container-lowest);
+    box-shadow: 0 0 0 2px rgba(80, 97, 105, 0.4);
+  }
+
+  /* ── Buttons ──────────────────────────────── */
   .button {
-    @apply inline-flex items-center gap-2 px-4 py-2.5 bg-emerald-600 text-white rounded hover:bg-emerald-700 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply inline-flex items-center gap-2 px-5 cursor-pointer;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.875rem;
+    height: 2.75rem;
+    background: linear-gradient(135deg, var(--color-ds-primary), var(--color-ds-secondary));
+    color: var(--color-ds-on-primary);
+    border-radius: 0.75rem;
+    border: none;
+    transition: opacity 0.15s, box-shadow 0.15s;
+  }
 
-    &.secondary {
-      @apply bg-gray-50 text-gray-700 border border-gray-300 hover:bg-gray-100;
-    }
+  .button:hover {
+    opacity: 0.9;
+    box-shadow: var(--shadow-ambient);
+  }
 
-    &.tertiary {
-      @apply bg-transparent text-gray-500 border border-gray-100 hover:bg-gray-100 hover:text-gray-700;
-    }
+  .button:disabled {
+    @apply cursor-not-allowed opacity-40;
+  }
 
-    &.directory {
-      @apply bg-gray-700 text-white border border-gray-600 hover:bg-gray-600;
-    }
+  .button.secondary {
+    background: var(--color-ds-surface-container-highest);
+    color: var(--color-ds-on-surface);
+    border: none;
+  }
 
-    &.danger {
-      @apply bg-red-600 hover:bg-red-700;
-    }
+  .button.secondary:hover {
+    background: var(--color-ds-surface-dim);
+    opacity: 1;
+  }
 
-    &.small {
-      @apply px-2.5 py-1.5 text-sm;
-    }
+  .button.tertiary {
+    background: transparent;
+    color: var(--color-ds-primary);
+    font-weight: 600;
+    border: none;
+  }
 
-    :disabled {
-      @apply cursor-not-allowed opacity-50;
-    }
+  .button.tertiary:hover {
+    background: var(--color-ds-surface-container-low);
+    opacity: 1;
+  }
+
+  .button.directory {
+    background: var(--color-ds-primary);
+    color: var(--color-ds-on-primary);
+    border: none;
+  }
+
+  .button.directory:hover {
+    opacity: 0.9;
+  }
+
+  .button.danger {
+    background: var(--color-ds-error);
+    color: #fff;
+  }
+
+  .button.danger:hover {
+    opacity: 0.9;
+  }
+
+  .button.small {
+    @apply px-3 text-sm;
+    height: 2.25rem;
+    border-radius: 0.5rem;
+  }
+
+  /* ── File list items (No-Divider rule) ──── */
+  .file-item {
+    @apply flex items-center gap-2 px-3 rounded-lg cursor-pointer;
+    padding-top: 0.625rem;
+    padding-bottom: 0.625rem;
+    color: var(--color-ds-on-surface);
+    transition: background-color 0.15s;
+  }
+
+  .file-item:hover {
+    background-color: var(--color-ds-surface-container-low);
+  }
+
+  .file-item.active {
+    background: var(--color-ds-primary);
+    color: var(--color-ds-on-primary);
+    box-shadow: inset 0 0.5rem 1rem rgba(42, 52, 57, 0.1);
+  }
+
+  .file-item-icon {
+    @apply size-5 shrink-0;
+    opacity: 0.35;
+  }
+
+  .file-item-label {
+    @apply flex-1 text-sm truncate;
+  }
+
+  .file-item-ext {
+    @apply text-xs ml-auto shrink-0;
+    color: var(--color-ds-on-surface-variant);
+  }
+
+  /* ── Cards ────────────────────────────────── */
+  .card {
+    background-color: var(--color-ds-surface-container-lowest);
+    border-radius: 1rem;
+    box-shadow: var(--shadow-ambient);
+    padding: 1.25rem;
+  }
+
+  .card-flat {
+    background-color: var(--color-ds-surface-container-low);
+    border-radius: 1rem;
+    padding: 1.25rem;
+  }
+
+  /* ── Progress / Storage bar ───────────────── */
+  .progress-track {
+    @apply w-full overflow-hidden;
+    height: 0.375rem;
+    border-radius: 999px;
+    background-color: var(--color-ds-surface-container-high);
+  }
+
+  .progress-fill {
+    @apply h-full;
+    border-radius: 999px;
+    background-color: var(--color-ds-primary-fixed-dim);
+    transition: width 0.3s;
+  }
+
+  /* ── Glassmorphism for modals / overlays ─── */
+  .glass-overlay {
+    background-color: rgba(247, 249, 251, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  /* ── Chat bubbles ─────────────────────────── */
+  .chat-bubble-assistant {
+    @apply max-w-3xl px-5 py-4;
+    background-color: var(--color-ds-surface-container-lowest);
+    border-radius: 1.25rem;
+    box-shadow: var(--shadow-ambient);
+    color: var(--color-ds-on-surface);
+  }
+
+  .chat-bubble-user {
+    @apply max-w-3xl px-5 py-4;
+    background: linear-gradient(135deg, var(--color-ds-primary), var(--color-ds-secondary));
+    border-radius: 1.25rem;
+    color: var(--color-ds-on-primary);
+  }
+
+  .chat-meta {
+    @apply text-xs font-medium uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-ds-on-surface-variant);
+    margin-top: 0.5rem;
+  }
+
+  /* ── Ghost border utility ──────────────────  */
+  .ghost-border {
+    outline: 1px solid rgba(169, 180, 185, 0.15);
+  }
+
+  /* ── Alert / info boxes ───────────────────── */
+  .alert-info {
+    @apply flex gap-4 items-center p-4 rounded-2xl text-sm;
+    background-color: var(--color-ds-surface-container-low);
+    color: var(--color-ds-on-surface);
+  }
+
+  .alert-error {
+    @apply flex gap-3 items-center px-4 py-3 rounded-2xl text-sm;
+    background-color: var(--color-ds-error-container);
+    color: var(--color-ds-error);
+  }
+
+  /* ── Stat / metric labels ─────────────────── */
+  .stat-label {
+    @apply text-xs font-semibold uppercase tracking-widest;
+    font-family: var(--font-display);
+    color: var(--color-ds-on-surface-variant);
+  }
+
+  .stat-value {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--color-ds-on-surface);
+  }
+
+  /* ── Icon button (topbar icons) ───────────── */
+  .icon-button {
+    @apply flex items-center justify-center cursor-pointer;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    color: var(--color-ds-on-surface-variant);
+    background: transparent;
+    border: none;
+    transition: background-color 0.15s, color 0.15s;
+  }
+
+  .icon-button:hover {
+    background-color: var(--color-ds-surface-container-high);
+    color: var(--color-ds-on-surface);
   }
 }

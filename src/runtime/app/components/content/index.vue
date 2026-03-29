@@ -2,7 +2,6 @@
 import { useFetch } from '#app'
 import TreeNode from './treeNode.vue'
 import FileIcon from './fileIcon.vue'
-import FileButtons from './fileButtons.vue'
 
 const { data: list } = await useFetch('/api/admin/list', {
   query: { path: '' },
@@ -22,7 +21,8 @@ function fileExtension(filename: string): string {
   <div>
     <NuxtLink
       to="/admin/new"
-      class="button secondary w-full flex items-center border border-dashed!"
+      class="file-item"
+      style="color: var(--color-ds-on-surface-variant);"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -30,7 +30,8 @@ function fileExtension(filename: string): string {
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        class="size-5"
+        class="file-item-icon"
+        style="opacity: 0.5;"
       >
         <path
           stroke-linecap="round"
@@ -38,37 +39,30 @@ function fileExtension(filename: string): string {
           d="M12 4.5v15m7.5-7.5h-15"
         />
       </svg>
-      Datei hochladen
+      <span class="file-item-label">Datei hochladen</span>
     </NuxtLink>
-
-    <hr class="my-4 border-gray-200">
 
     <div
       v-if="list && (list.files.length > 0 || list.dirs.length > 0)"
-      class="space-y-2"
+      class="flex flex-col gap-0.5 mt-1"
     >
       <!-- Root level files -->
       <div
         v-for="file in list.files"
         :key="file"
-        class="flex gap-2"
+        class="flex items-center gap-1"
       >
         <NuxtLink
           :to="`/admin/edit/${fileExtension(file) === 'md' ? 'markdown/' : 'file/'}${file}`"
-          class="flex-1 button secondary"
+          class="file-item flex-1"
         >
           <FileIcon :file-path="file" />
-          <div class="w-full flex">
-            {{ filenameWithoutExtension(file) }}
-            <span
-              v-if="fileExtension(file)"
-              class="text-sm text-gray-400 ml-auto"
-            >
-              .{{ fileExtension(file) }}
-            </span>
-          </div>
+          <span class="file-item-label">{{ filenameWithoutExtension(file) }}</span>
+          <span
+            v-if="fileExtension(file)"
+            class="file-item-ext"
+          >.{{ fileExtension(file) }}</span>
         </NuxtLink>
-        <FileButtons :file-path="file" />
       </div>
 
       <!-- Root level directories - collapsible -->
@@ -84,12 +78,17 @@ function fileExtension(filename: string): string {
 
     <div
       v-if="list?.files.length === 0 && list.dirs.length === 0"
-      class="flex flex-col gap-4"
+      class="flex flex-col gap-4 py-4"
     >
-      <p>Keine Dateien oder Verzeichnisse gefunden.</p>
+      <p
+        class="text-sm"
+        style="color: var(--color-ds-on-surface-variant);"
+      >
+        Keine Dateien oder Verzeichnisse gefunden.
+      </p>
       <NuxtLink
         to="/admin/new"
-        class="button"
+        class="button small"
       >
         Datei hochladen
       </NuxtLink>

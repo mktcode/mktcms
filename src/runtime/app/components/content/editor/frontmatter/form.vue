@@ -322,12 +322,12 @@ function removeArrayItem(arrayRef: any[], index: number) {
   <div
     class="flex flex-col gap-3"
     :class="{
-      'border border-gray-200 rounded-sm p-3': props.depth > 0,
-      'bg-gray-100/30': props.depth === 1,
-      'bg-gray-100/50': props.depth === 2,
-      'bg-gray-100/70': props.depth === 3,
-      'bg-gray-100/80': props.depth === 4,
-      'bg-gray-100/90': props.depth >= 5,
+      'rounded-xl p-3 bg-ds-surface-container-low': props.depth > 0,
+      'bg-ds-surface-container-low/40': props.depth === 1,
+      'bg-ds-surface-container-low/60': props.depth === 2,
+      'bg-ds-surface-container/50': props.depth === 3,
+      'bg-ds-surface-container/70': props.depth === 4,
+      'bg-ds-surface-container/90': props.depth >= 5,
     }"
   >
     <template v-if="props.schema && isArraySchema(props.schema) && Array.isArray(frontmatter)">
@@ -456,7 +456,7 @@ function removeArrayItem(arrayRef: any[], index: number) {
     </template>
 
     <template v-else>
-      <div class="text-sm text-gray-600">
+      <div class="text-sm text-ds-on-surface-variant">
         Keine Felder in der Frontmatter-Konfiguration vorhanden.
       </div>
     </template>

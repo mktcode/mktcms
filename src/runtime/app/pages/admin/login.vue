@@ -77,16 +77,17 @@ async function login() {
 <template>
   <Admin>
     <div class="boxed">
-      <h1 class="text-3xl font-bold">
+      <h1>
         Anmelden
       </h1>
-      <h2 class="text-gray-500">
+      <h2 style="color: var(--color-ds-on-surface-variant);">
         Administration: {{ siteUrl.replace(/https?:\/\//, '') }}
       </h2>
       <div class="mt-6">
         <label
           for="adminAuthKey"
-          class="text-gray-700"
+          class="text-sm font-medium"
+          style="color: var(--color-ds-on-surface);"
         >
           Schlüssel:
         </label>
@@ -95,7 +96,7 @@ async function login() {
             id="adminAuthKey"
             v-model="adminAuthKey"
             type="password"
-            class="border border-gray-300 rounded-md p-2 flex-1"
+            class="flex-1"
             autocomplete="one-time-code"
             @keyup.enter="login"
           >
@@ -124,7 +125,7 @@ async function login() {
 
         <div
           v-if="loginError"
-          class="mt-3 rounded-md border border-red-300 bg-red-50 px-3 py-2 text-sm text-red-700"
+          class="mt-3 alert-error"
           role="alert"
           aria-live="polite"
         >

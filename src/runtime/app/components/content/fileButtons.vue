@@ -27,7 +27,7 @@ function copyEditRoute(path: string) {
     <NuxtLink
       v-if="isCopyableTextFile(filePath)"
       :to="copyEditRoute(filePath)"
-      class="button secondary"
+      class="icon-button"
       title="Neue Datei aus Vorlage"
     >
       <svg
@@ -46,7 +46,7 @@ function copyEditRoute(path: string) {
       </svg>
     </NuxtLink>
     <NuxtLink
-      class="button secondary"
+      class="icon-button"
       title="Link kopieren"
       @click.prevent="copy(siteUrl + '/api/content/' + filePath)"
     >
@@ -83,7 +83,7 @@ function copyEditRoute(path: string) {
     </NuxtLink>
     <NuxtLink
       :to="`/api/admin/download?path=${filePath}`"
-      class="button secondary"
+      class="icon-button"
       title="herunterladen"
       external
       download
@@ -105,7 +105,7 @@ function copyEditRoute(path: string) {
     </NuxtLink>
     <NuxtLink
       :to="`/admin/delete/${filePath}`"
-      class="button secondary"
+      class="icon-button"
       title="löschen"
     >
       <svg

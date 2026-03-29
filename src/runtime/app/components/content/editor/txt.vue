@@ -55,9 +55,9 @@ async function saveContent() {
           v-model="newFilename"
           type="text"
           required
-          class="w-full border border-gray-200 rounded-sm px-3 py-2"
+          class="w-full"
         >
-        <span class="text-sm text-gray-400">{{ sourceExtension }}</span>
+        <span class="text-sm text-ds-on-surface-variant">{{ sourceExtension }}</span>
       </div>
       <p
         v-if="filenameError"
@@ -69,7 +69,7 @@ async function saveContent() {
 
     <textarea
       v-model="content"
-      class="w-full h-24 resize-y border border-gray-300 p-2 box-border font-mono"
+      class="w-full h-24 resize-y p-2 box-border font-mono"
     />
 
     <div class="mt-3">
@@ -84,7 +84,7 @@ async function saveContent() {
         v-model="commitMessage"
         type="text"
         required
-        class="w-full border border-gray-200 rounded-sm px-3 py-2"
+        class="w-full"
         placeholder="Inhaltliche Änderungen"
       >
     </div>

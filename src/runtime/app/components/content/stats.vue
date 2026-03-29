@@ -43,35 +43,49 @@ function shortDate(isoDate: string): string {
   <div>
     <div
       v-if="error"
-      class="text-sm text-red-600 mt-1"
+      class="text-sm mt-1"
+      style="color: var(--color-ds-error);"
     >
       Could not load visit stats.
     </div>
 
     <div
       v-else-if="pending"
-      class="text-sm text-gray-500 mt-1"
+      class="text-sm mt-1"
+      style="color: var(--color-ds-on-surface-variant);"
     >
       loading…
     </div>
 
     <div v-else>
+      <div class="flex items-center justify-between mb-2">
+        <span class="stat-label">Traffic</span>
+        <span
+          v-if="totalVisits > 0"
+          class="text-xs font-semibold"
+          style="font-family: var(--font-display); color: var(--color-ds-primary);"
+        >{{ totalVisits }}</span>
+      </div>
+
       <div
-        class="h-10 grid items-end gap-1 rounded"
+        class="h-10 grid items-end gap-0.5 rounded"
         style="grid-template-columns: repeat(30, minmax(0, 1fr));"
       >
         <div
           v-for="d in days"
           :key="d.date"
-          class="w-full rounded-sm bg-gray-300"
+          class="w-full rounded-sm"
+          style="background-color: var(--color-ds-surface-dim);"
           :style="{ height: `${Math.max(2, Math.round((d.visits / maxVisits) * 100))}%` }"
           :title="`${shortDate(d.date)}: ${d.visits}`"
         />
       </div>
 
-      <div class="mt-1 flex items-center justify-between text-xs text-gray-500 tabular-nums">
+      <div
+        class="mt-1 flex items-center justify-between text-xs tabular-nums"
+        style="color: var(--color-ds-on-surface-variant);"
+      >
         <span>{{ firstDate ? shortDate(firstDate) : '' }}</span>
-        <span>Besucher letzte 30 Tage: {{ totalVisits }}</span>
         <span>{{ lastDate ? shortDate(lastDate) : '' }}</span>
       </div>
 
@@ -79,7 +93,8 @@ function shortDate(isoDate: string): string {
         <div class="flex items-center justify-center">
           <button
             v-if="topPages.length > 0"
-            class="text-xs text-gray-400 hover:text-gray-600 cursor-pointer hover:bg-gray-200 px-3 py-1.5 rounded-md border border-gray-200"
+            class="text-xs cursor-pointer px-3 py-1.5 rounded-lg"
+            style="color: var(--color-ds-on-surface-variant); background: var(--color-ds-surface-container-high);"
             type="button"
             @click="topPagesExpanded = !topPagesExpanded"
           >
@@ -88,7 +103,8 @@ function shortDate(isoDate: string): string {
         </div>
         <div
           v-if="topPages.length === 0"
-          class="text-xs text-gray-400 mt-3"
+          class="text-xs mt-3"
+          style="color: var(--color-ds-on-surface-variant);"
         >
           Keine Seitenaufrufe im Zeitraum.
         </div>
@@ -96,7 +112,10 @@ function shortDate(isoDate: string): string {
           v-else-if="topPagesExpanded"
           class="space-y-1 mt-3"
         >
-          <div class="text-xs text-gray-500 mb-3">
+          <div
+            class="text-xs mb-3"
+            style="color: var(--color-ds-on-surface-variant);"
+          >
             Seitenaufrufe:
           </div>
           <NuxtLink
@@ -104,17 +123,22 @@ function shortDate(isoDate: string): string {
             :key="page.path"
             :to="page.path"
             target="_blank"
-            class="relative flex items-center justify-between gap-2 text-xs px-1.5 py-0.5 rounded overflow-hidden hover:bg-gray-200/50"
+            class="relative flex items-center justify-between gap-2 text-xs px-1.5 py-0.5 rounded-lg overflow-hidden"
           >
             <div
-              class="absolute inset-y-0 left-0 rounded bg-gray-200"
+              class="absolute inset-y-0 left-0 rounded-lg"
+              style="background-color: var(--color-ds-surface-container-high);"
               :style="{ width: `${Math.round((page.visits / maxTopPageVisits) * 100)}%` }"
             />
             <span
-              class="relative truncate text-gray-700"
+              class="relative truncate"
+              style="color: var(--color-ds-on-surface);"
               :title="page.path"
             >{{ page.path }}</span>
-            <span class="relative tabular-nums text-gray-400">{{ page.visits }}</span>
+            <span
+              class="relative tabular-nums"
+              style="color: var(--color-ds-on-surface-variant);"
+            >{{ page.visits }}</span>
           </NuxtLink>
         </div>
       </div>
