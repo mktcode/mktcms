@@ -220,7 +220,7 @@
     gap: 0.5rem;
     padding: 0.625rem 0.75rem;
     margin: 0 0.75rem 0.75rem;
-    background-color: var(--color-ds-surface-container-low);
+    background-color: white;
     border-radius: 1rem;
     position: sticky;
     bottom: 0.75rem;
