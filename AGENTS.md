@@ -57,5 +57,4 @@ The design system and Creative North Star are defined in `DESIGN.md`. Before wor
 
 ## Updates to this document
 
-After every significant change to the codebase, especially those affecting architecture, security, or API contracts, **update this `AGENTS.md`** document to reflect the new state of the system. This ensures that all contributors have a clear understanding of the project's structure and best practices.
-
+After every significant change to the codebase, especially those affecting architecture, security, or API contracts, **update this `AGENTS.md`** document to reflect the new state of the system. All updates to this document must describe the **current state of the system only**. Write in a **declarative, present-tense style** (what *is*, not what *was*). The document must always read as if it were written from scratch to describe the system as it exists today.
