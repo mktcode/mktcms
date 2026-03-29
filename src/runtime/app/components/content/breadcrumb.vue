@@ -11,7 +11,6 @@ parts.unshift('home')
   <div
     class="text-base flex items-center gap-1"
     style="color: var(--color-ds-on-surface-variant);"
-    :class="{ 'mb-4': parts.length > 1 }"
   >
     <div v-if="fullPath === '/admin'">
       <svg

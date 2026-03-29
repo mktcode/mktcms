@@ -128,7 +128,7 @@ watch(messages, async () => {
 
           <div
             v-else
-            class="flex min-h-full flex-col gap-5 py-2 md:gap-6 md:py-4"
+            class="flex min-h-full flex-col gap-5 py-4 md:gap-6 md:py-8"
           >
             <div
               v-for="(message, index) in messages"
@@ -165,7 +165,7 @@ watch(messages, async () => {
                 :class="message.role === 'user' ? 'items-end ml-auto' : ''"
               >
                 <div :class="message.role === 'user' ? 'chat-bubble-user' : 'chat-bubble-assistant'">
-                  <pre class="whitespace-pre-wrap text-sm leading-6">{{ message.content }}</pre>
+                  <pre class="whitespace-pre-wrap font-body leading-normal">{{ message.content }}</pre>
                 </div>
                 <div class="chat-meta mt-2">
                   {{ message.role === 'user' ? 'USER' : 'ASSISTANT' }}
