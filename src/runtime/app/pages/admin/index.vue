@@ -107,10 +107,10 @@ watch(messages, async () => {
               />
             </svg>
             <p
-              class="text-sm max-w-md"
+              class="text-sm max-w-xl"
               style="color: var(--color-ds-on-surface-variant);"
             >
-              Fragen zu Inhalten, Texten und Workflows gehen an den Gesprächs-Agenten. Technische Fragen zu Code, APIs und Konfiguration gehen an den Coding-Agenten.
+              Geben Sie Änderungen in natürlicher Sprache in Auftrag. Einfache inhaltliche oder strukturelle Änderungen werden automatisiert durchgeführt. Komplexere Anfragen, wie z.B. die Implementierung neuer Funktionen, können hier vorbereitet und an Ihren Websitebetreiber weitergeleitet werden.
             </p>
           </div>
 
