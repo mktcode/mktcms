@@ -14,6 +14,18 @@ type ChatMessage = {
 }
 
 const messages = ref<ChatMessage[]>([])
+messages.value.push({
+  role: 'assistant',
+  content: 'Hallo! Wie kann ich Ihnen heute helfen? Sie können mich bitten, Änderungen an Ihrer Website vorzunehmen, Funktionen zu implementieren oder Analysen durchzuführen. Geben Sie einfach Ihre Anfrage in natürlicher Sprache ein.',
+  agent: 'conversation',
+}, {
+  role: 'user',
+  content: 'Erstelle eine neue Seite mit dem Titel "Über uns" und füge einen Abschnitt mit Informationen über unser Team hinzu.',
+}, {
+  role: 'assistant',
+  content: 'Die Seite "Über uns" wurde erstellt. Ich habe einen Abschnitt hinzugefügt, in dem Sie Informationen über Ihr Team eingeben können. Möchten Sie, dass ich einen Beispieltext hinzufüge, den Sie später anpassen können?',
+  agent: 'conversation',
+})
 const draft = ref('')
 const isSending = ref(false)
 const errorMessage = ref('')
@@ -129,21 +141,7 @@ watch(messages, async () => {
                 class="chat-avatar shrink-0"
                 :class="message.role === 'user' ? 'chat-avatar-user' : 'chat-avatar-assistant'"
               >
-                <svg
-                  v-if="message.role === 'assistant'"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="size-5"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z"
-                  />
-                </svg>
+                <svg v-if="message.role === 'assistant'" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
                 <svg
                   v-else
                   xmlns="http://www.w3.org/2000/svg"
