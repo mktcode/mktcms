@@ -186,6 +186,18 @@
     padding-bottom: 0.75rem;
   }
 
+  /* When the fluid (editor) panel is present, remove the max-width
+     cap on the view slot and constrain admin-main to the viewport
+     so the editor + preview fill available space without overflow. */
+  .admin-view-slot:has(.workspace-panel--fluid) {
+    max-width: none;
+  }
+
+  .admin-main:has(.workspace-panel--fluid) {
+    height: 100dvh;
+    overflow: hidden;
+  }
+
   .chat-empty-state {
     @apply flex-1 flex flex-col items-center justify-center gap-4 text-center;
     min-height: 16rem;

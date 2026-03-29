@@ -41,8 +41,60 @@ function ensureMonacoWorkers() {
   }
 }
 
+const THEME_NAME = 'mktcms-light'
+
+function defineEditorTheme() {
+  monaco.editor.defineTheme(THEME_NAME, {
+    base: 'vs',
+    inherit: true,
+    rules: [
+      // Markdown headings (the # markers are tokenised as "keyword")
+      { token: 'keyword', foreground: '506169', fontStyle: 'bold' },
+      // Bold / italic marker characters
+      { token: 'variable', foreground: '6b7d85' },
+      // Emphasised text
+      { token: 'emphasis', foreground: '526073', fontStyle: 'italic' },
+      { token: 'strong', foreground: '2a3439', fontStyle: 'bold' },
+      // Links & URLs
+      { token: 'string.link', foreground: '506169' },
+      { token: 'string', foreground: '526073' },
+      // Inline code / fenced-block language tag
+      { token: 'variable.source', foreground: '526073' },
+      { token: 'type', foreground: '526073' },
+      // HTML inside markdown
+      { token: 'tag', foreground: '506169' },
+      { token: 'attribute.name', foreground: '6b7d85' },
+      { token: 'attribute.value', foreground: '526073' },
+      // Comments
+      { token: 'comment', foreground: 'a9b4b9', fontStyle: 'italic' },
+      // Numbers
+      { token: 'number', foreground: '506169' },
+    ],
+    colors: {
+      'editor.background': '#ffffff',
+      'editor.foreground': '#2a3439',
+      'editor.lineHighlightBackground': '#f7f9fb',
+      'editor.lineHighlightBorder': '#00000000',
+      'editor.selectionBackground': '#c6d7e180',
+      'editor.inactiveSelectionBackground': '#e1e9ee60',
+      'editorCursor.foreground': '#506169',
+      'editorLineNumber.foreground': '#a9b4b9',
+      'editorLineNumber.activeForeground': '#6b7d85',
+      'editorIndentGuide.background': '#e8eef2',
+      'editorWhitespace.foreground': '#e1e9ee',
+      'editorWidget.background': '#f7f9fb',
+      'editorWidget.border': '#e8eef2',
+      'scrollbar.shadow': '#00000000',
+      'scrollbarSlider.background': '#c6d7e140',
+      'scrollbarSlider.hoverBackground': '#a9b4b960',
+      'scrollbarSlider.activeBackground': '#a9b4b980',
+    },
+  })
+}
+
 onMounted(() => {
   ensureMonacoWorkers()
+  defineEditorTheme()
 
   if (!rootEl.value)
     return
@@ -51,10 +103,15 @@ onMounted(() => {
     value: props.modelValue ?? '',
     language: props.language,
     readOnly: props.readOnly,
+    theme: THEME_NAME,
     minimap: { enabled: false },
     scrollBeyondLastLine: false,
     wordWrap: 'on',
     automaticLayout: true,
+    padding: { top: 12 },
+    fontFamily: '\'Inter\', ui-sans-serif, system-ui, sans-serif',
+    fontSize: 14,
+    lineHeight: 22,
   })
 
   editor.onDidChangeModelContent(() => {
