@@ -73,14 +73,9 @@ const { data: historyData, pending: historyPending, error: historyError, refresh
 const currentBranch = computed(() => branchData.value?.currentBranch ?? 'unbekannt')
 const isSupportedBranch = computed(() => branchData.value?.isSupported ?? false)
 const sourceBranch = computed(() => branchData.value?.sourceBranch ?? '')
-const sourceAheadCount = computed(() => updateStatusData.value?.sourceAheadCount ?? 0)
 const isIdentical = computed(() => updateStatusData.value?.isIdentical ?? false)
 const canUpdate = computed(() => updateStatusData.value?.canUpdate ?? false)
 const updateBlockedReason = computed(() => updateStatusData.value?.updateBlockedReason || branchData.value?.updateBlockedReason || '')
-const updateButtonText = computed(() => {
-  const count = sourceAheadCount.value
-  return `Aktualisieren (${count})`
-})
 const updateTitle = computed(() => currentBranch.value === 'main'
   ? 'Änderungen aus Vorschau übernehmen'
   : currentBranch.value === 'staging'
@@ -176,11 +171,8 @@ async function runUpdate() {
 </script>
 
 <template>
-  <div class="text-sm">
-    <div class="flex items-center justify-end gap-3">
-      <span class="text-xs mr-auto" style="color: var(--color-ds-on-surface-variant);">
-        Version: <strong class="capitalize">{{ currentBranch }}</strong>
-      </span>
+  <div class="text-sm ml-auto">
+    <div class="flex justify-end">
       <button
         type="button"
         class="button small tertiary"
@@ -198,7 +190,6 @@ async function runUpdate() {
           stroke-linejoin="round"
           class="text-ds-on-surface-variant!"
         ><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /><path d="M12 7v5l4 2" /></svg>
-        Änderungshistorie
       </button>
       <button
         type="button"
@@ -218,7 +209,6 @@ async function runUpdate() {
           stroke-linejoin="round"
           class="text-ds-on-surface-variant!"
         ><path d="M12 2a10 10 0 0 1 7.38 16.75" /><path d="m16 12-4-4-4 4" /><path d="M12 16V8" /><path d="M2.5 8.875a10 10 0 0 0-.5 3" /><path d="M2.83 16a10 10 0 0 0 2.43 3.4" /><path d="M4.636 5.235a10 10 0 0 1 .891-.857" /><path d="M8.644 21.42a10 10 0 0 0 7.631-.38" /></svg>
-        {{ updateButtonText }}
       </button>
     </div>
 

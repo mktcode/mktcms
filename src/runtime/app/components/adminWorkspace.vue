@@ -23,22 +23,21 @@ const { public: { mktcms: { showVersioning } } } = useRuntimeConfig()
       </div>
 
       <div class="admin-sidebar-files">
-        <div class="admin-sidebar-section-label">
+        <div class="admin-sidebar-section-label flex items-center">
           {{ props.sectionLabel }}
+          <Versioning v-if="showVersioning" />
         </div>
         <Content />
       </div>
 
       <div class="admin-sidebar-footer">
-        <Stats />
         <Usage />
-        <Versioning v-if="showVersioning" />
+        <Stats />
       </div>
     </aside>
 
     <div class="admin-main">
       <div class="admin-topbar">
-        <span class="admin-topbar-title">Website Assistant</span>
         <Header />
       </div>
 
