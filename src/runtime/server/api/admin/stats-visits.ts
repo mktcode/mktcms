@@ -139,6 +139,32 @@ async function fetchPlausibleQuery(url: string, apiKey: string, query: Plausible
 }
 
 export default defineEventHandler(async () => {
+  // reutrn mock data in development
+  if (process.env.NODE_ENV !== 'production') {
+    const today = new Date()
+    const randomDays: PlausibleV2Result[] = []
+    for (let i = 0; i < RANGE_DAYS; i++) {
+      const d = new Date(today)
+      d.setDate(d.getDate() - i)
+      randomDays.push({
+        dimensions: [toDateString(d)],
+        metrics: [Math.floor(Math.random() * 100)],
+      })
+    }
+    return {
+      rangeDays: RANGE_DAYS,
+      days: buildFullDays(randomDays, today),
+      topPages: [
+        { dimensions: ['/home'], metrics: [50] },
+        { dimensions: ['/about'], metrics: [30] },
+        { dimensions: ['/contact'], metrics: [20] },
+      ].map(row => ({
+        path: row.dimensions[0],
+        visits: row.metrics[0],
+      })),
+    }
+  }
+
   const config = useRuntimeConfig()
   const plausibleApiHost = config.public.plausibleApiHost as string | undefined
   const plausibleApiKey = config.plausibleApiKey as string | undefined
