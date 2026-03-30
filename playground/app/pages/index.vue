@@ -55,7 +55,7 @@ const imagePaths = await useImagePaths()
 
       <section
         v-if="md"
-        class="content-section markdown-content"
+        class="content-section"
       >
         <div class="section-header">
           <h2>Markdown Content</h2>
@@ -70,7 +70,7 @@ const imagePaths = await useImagePaths()
         <MDC
           :value="md.markdown"
           tag="article"
-          class="prose max-w-none"
+          class="markdown-content"
         />
       </section>
     </main>

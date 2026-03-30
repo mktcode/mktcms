@@ -121,12 +121,10 @@ async function saveMarkdown() {
         <div
           class="md-editor-pane md-editor-preview"
         >
-          <div id="mktcms-page">
-            <MDC
-              :value="debouncedMarkdown"
-              class="markdown-content"
-            />
-          </div>
+          <MDC
+            :value="debouncedMarkdown"
+            class="prose max-w-none p-4 md:p-6 lg:p-8"
+          />
         </div>
       </div>
     </div>
