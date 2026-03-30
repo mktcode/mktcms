@@ -64,10 +64,10 @@ watch(() => [props.messages.length, props.isSending], async () => {
         />
       </svg>
       <p
-        class="text-sm max-w-xl"
+        class="max-w-xl"
         style="color: var(--color-ds-on-surface-variant);"
       >
-        Geben Sie Änderungen in natürlicher Sprache in Auftrag. Einfache inhaltliche oder strukturelle Änderungen werden automatisiert durchgeführt. Komplexere Anfragen, wie z.B. die Implementierung neuer Funktionen, können hier vorbereitet und an Ihren Websitebetreiber weitergeleitet werden.
+        Geben Sie Änderungen in natürlicher Sprache in Auftrag. Einfache inhaltliche oder strukturelle Änderungen werden automatisiert durchgeführt. Komplexere Anfragen können hier vorbereitet und an Ihren Websitebetreiber weitergeleitet werden.
       </p>
     </div>
 
