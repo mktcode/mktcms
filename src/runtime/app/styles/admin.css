@@ -215,7 +215,7 @@
   }
 
   .file-item-ext {
-    @apply text-xs ml-auto shrink-0;
+    @apply text-xs shrink-0;
     color: var(--color-ds-on-surface-variant);
   }
 

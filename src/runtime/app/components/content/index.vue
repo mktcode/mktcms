@@ -54,7 +54,7 @@ function fileExtension(filename: string): string {
           d="M12 4.5v15m7.5-7.5h-15"
         />
       </svg>
-      <span class="file-item-label">Datei hochladen</span>
+      Datei hochladen
     </NuxtLink>
 
     <div
@@ -73,14 +73,15 @@ function fileExtension(filename: string): string {
           :class="{ active: isActiveFile(file) }"
         >
           <FileIcon :file-path="file" />
-          <span class="file-item-label">{{ filenameWithoutExtension(file) }}</span>
-          <span
-            v-if="fileExtension(file)"
-            class="file-item-ext"
-          >.{{ fileExtension(file) }}</span>
+          <span class="file-item-label">
+            {{ filenameWithoutExtension(file) }}
+            <span
+              v-if="fileExtension(file)"
+              class="file-item-ext"
+            >.{{ fileExtension(file) }}</span>
+          </span>
         </NuxtLink>
         <FileButtons
-          compact
           :file-path="file"
           class="shrink-0 opacity-0 group-hover/fi:opacity-100 transition-opacity duration-150"
         />

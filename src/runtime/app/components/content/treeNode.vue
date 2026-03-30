@@ -135,7 +135,6 @@ watch(isActiveBranch, async (active) => {
               >.{{ ext(file) }}</span>
             </NuxtLink>
             <FileButtons
-              compact
               :file-path="childPath(file)"
               class="shrink-0 opacity-0 group-hover/fi:opacity-100 transition-opacity duration-150"
             />
