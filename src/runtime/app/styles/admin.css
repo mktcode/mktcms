@@ -430,12 +430,12 @@
   .button {
     @apply inline-flex items-center gap-2 px-5 cursor-pointer;
     font-family: var(--font-body);
-    font-weight: 500;
+    font-weight: 700;
     font-size: 0.875rem;
     height: 2.75rem;
     background: linear-gradient(135deg, var(--color-ds-primary), var(--color-ds-secondary));
     color: var(--color-ds-on-primary);
-    border-radius: 0.75rem;
+    border-radius: 1rem;
     border: none;
     transition: opacity 0.15s, box-shadow 0.15s;
   }
@@ -489,12 +489,6 @@
 
   .button.danger:hover {
     opacity: 0.9;
-  }
-
-  .button.small {
-    @apply px-3 text-sm;
-    height: 2.25rem;
-    border-radius: 0.5rem;
   }
 
   /* ── Tree (file explorer) ─────────────────── */
