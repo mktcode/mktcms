@@ -30,8 +30,9 @@ function onChange(event: Event) {
 <template>
   <div class="chat-session-bar">
     <div class="chat-session-copy">
-      <span class="chat-session-label">Sitzung</span>
-      <span class="chat-session-preview">{{ props.activeSession?.preview || 'Noch keine Nachrichten' }}</span>
+      <span class="chat-session-label">Aktive Sitzung</span>
+      <span class="chat-session-preview">{{ props.activeSession?.label || 'Neue Sitzung' }}</span>
+      <span class="chat-session-meta">{{ props.activeSession?.preview || 'Noch keine Nachrichten' }}</span>
     </div>
 
     <div class="chat-session-actions">

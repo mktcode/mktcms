@@ -11,7 +11,7 @@ These notes are for this repository only. The main working directory is `src/`.
   - Admin UI: `/admin`, `/admin/login`, `/admin/new`, `/admin/edit/file/:path`, `/admin/edit/markdown/:path`, `/admin/delete/:path`
   - Admin API: `/api/admin/*`, including chat endpoints `/api/admin/chat`, `/api/admin/chat/sessions`, and `/api/admin/chat/sessions/:id`
   - Public content API: `/api/content/list`, `/api/content/:path`
-- Admin content views now render inside a shared workspace shell with the file explorer/sidebar intact; avoid reintroducing standalone boxed/fullscreen page wrappers for `/admin/new` or `/admin/edit/*`.
+- Admin content views render inside a shared workspace shell with the file explorer/sidebar intact; avoid reintroducing standalone boxed/fullscreen page wrappers for `/admin/new` or `/admin/edit/*`.
 
 ## Path and file safety rules
 
