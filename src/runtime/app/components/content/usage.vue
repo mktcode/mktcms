@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded-md p-4">
+  <div class="bg-ds-surface-container-lowest rounded-[1.25rem] p-4">
     <div class="min-w-0">
       <div
         v-if="error"

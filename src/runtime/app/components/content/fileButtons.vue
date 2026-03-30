@@ -3,7 +3,7 @@ import { useRuntimeConfig } from '#app'
 import { useClipboard } from '@vueuse/core'
 import { EDITABLE_EXTENSIONS, isMarkdownPath, toFileExtension } from '../../../shared/contentFiles'
 
-const { filePath } = defineProps<{ filePath: string }>()
+const { filePath, compact = false } = defineProps<{ filePath: string, compact?: boolean }>()
 
 const { public: { mktcms: { siteUrl } } } = useRuntimeConfig()
 
@@ -23,11 +23,11 @@ function copyEditRoute(path: string) {
 </script>
 
 <template>
-  <div class="flex gap-2">
+  <div :class="compact ? 'flex gap-0.5' : 'flex gap-2'">
     <NuxtLink
       v-if="isCopyableTextFile(filePath)"
       :to="copyEditRoute(filePath)"
-      class="icon-button"
+      :class="compact ? 'icon-button-sm' : 'icon-button'"
       title="Neue Datei aus Vorlage"
     >
       <svg
@@ -36,7 +36,7 @@ function copyEditRoute(path: string) {
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        class="size-4"
+        :class="compact ? 'size-3.5' : 'size-4'"
       >
         <path
           stroke-linecap="round"
@@ -46,6 +46,7 @@ function copyEditRoute(path: string) {
       </svg>
     </NuxtLink>
     <NuxtLink
+      v-if="!compact"
       class="icon-button"
       title="Link kopieren"
       @click.prevent="copy(siteUrl + '/api/content/' + filePath)"
@@ -82,6 +83,7 @@ function copyEditRoute(path: string) {
       </svg>
     </NuxtLink>
     <NuxtLink
+      v-if="!compact"
       :to="`/api/admin/download?path=${filePath}`"
       class="icon-button"
       title="herunterladen"
@@ -105,7 +107,7 @@ function copyEditRoute(path: string) {
     </NuxtLink>
     <NuxtLink
       :to="`/admin/delete/${filePath}`"
-      class="icon-button"
+      :class="compact ? 'icon-button-sm' : 'icon-button'"
       title="löschen"
     >
       <svg
@@ -114,7 +116,7 @@ function copyEditRoute(path: string) {
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        class="size-4"
+        :class="compact ? 'size-3.5' : 'size-4'"
       >
         <path
           stroke-linecap="round"

@@ -235,4 +235,31 @@
     background-color: var(--color-ds-surface-container-high);
     color: var(--color-ds-on-surface);
   }
+
+  /* ── Compact icon button (file tree actions) */
+  .icon-button-sm {
+    @apply flex items-center justify-center cursor-pointer;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    color: var(--color-ds-on-surface-variant);
+    background: transparent;
+    border: none;
+    transition: background-color 0.15s, color 0.15s;
+  }
+
+  .icon-button-sm:hover {
+    background-color: var(--color-ds-surface-container-high);
+    color: var(--color-ds-on-surface);
+  }
+
+  /* Active file-item rows: ensure icon buttons adapt to primary bg */
+  .file-item.active .icon-button-sm {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .file-item.active .icon-button-sm:hover {
+    color: var(--color-ds-on-primary);
+    background-color: rgba(255, 255, 255, 0.12);
+  }
 }

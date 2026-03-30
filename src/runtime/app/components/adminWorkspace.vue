@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, useSlots } from 'vue'
+import { ref, useSlots, computed } from 'vue'
 import { useRuntimeConfig } from '#imports'
 import Header from './header.vue'
 import Content from './content/index.vue'
@@ -8,18 +8,16 @@ import Stats from './content/stats.vue'
 import Usage from './content/usage.vue'
 
 const props = withDefaults(defineProps<{
-  primarySidebarLabel?: string
   sectionLabel?: string
 }>(), {
-  primarySidebarLabel: 'Chats',
   sectionLabel: 'Dateien',
 })
 
 const { public: { mktcms: { showVersioning } } } = useRuntimeConfig()
 const slots = useSlots()
 
-const hasSidebarPrimary = computed(() => Boolean(slots.sidebarPrimary))
-const isPrimarySidebarExpanded = ref(true)
+const hasSidebarTop = computed(() => Boolean(slots.sidebarTop))
+const isSidebarTopExpanded = ref(true)
 const isFilesSidebarExpanded = ref(true)
 </script>
 
@@ -32,17 +30,19 @@ const isFilesSidebarExpanded = ref(true)
 
       <div class="flex flex-col gap-3 min-h-0 lg:flex-1 lg:overflow-y-auto">
         <section
-          v-if="hasSidebarPrimary"
+          v-if="hasSidebarTop"
           class="bg-ds-surface-container-lowest rounded-[1.25rem]"
         >
           <button
             type="button"
             class="flex items-center justify-between w-full gap-3 py-[0.95rem] px-4 bg-transparent border-none cursor-pointer text-left"
-            :aria-expanded="isPrimarySidebarExpanded"
-            @click="isPrimarySidebarExpanded = !isPrimarySidebarExpanded"
+            :aria-expanded="isSidebarTopExpanded"
+            @click="isSidebarTopExpanded = !isSidebarTopExpanded"
           >
             <span class="text-xs font-semibold uppercase tracking-widest text-ds-on-surface-variant">
-              {{ props.primarySidebarLabel }}
+              <slot name="sidebarTopLabel">
+                Chats
+              </slot>
             </span>
 
             <svg
@@ -51,8 +51,8 @@ const isFilesSidebarExpanded = ref(true)
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="size-4 shrink-0 text-ds-on-surface-variant transition-transform duration-200"
-              :class="{ '-rotate-90': !isPrimarySidebarExpanded }"
+              class="size-4 shrink-0 text-ds-on-surface-variant transition-transform duration-300"
+              :class="{ '-rotate-90': !isSidebarTopExpanded }"
             >
               <path
                 stroke-linecap="round"
@@ -63,10 +63,14 @@ const isFilesSidebarExpanded = ref(true)
           </button>
 
           <div
-            v-show="isPrimarySidebarExpanded"
-            class="min-h-0 px-4 pb-4"
+            class="grid transition-[grid-template-rows] duration-300 ease-in-out"
+            :class="isSidebarTopExpanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
           >
-            <slot name="sidebarPrimary" />
+            <div class="overflow-hidden">
+              <div class="px-4 pb-4">
+                <slot name="sidebarTop" />
+              </div>
+            </div>
           </div>
         </section>
 
@@ -90,7 +94,7 @@ const isFilesSidebarExpanded = ref(true)
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="size-4 shrink-0 text-ds-on-surface-variant transition-transform duration-200"
+                class="size-4 shrink-0 text-ds-on-surface-variant transition-transform duration-300"
                 :class="{ '-rotate-90': !isFilesSidebarExpanded }"
               >
                 <path
@@ -103,10 +107,14 @@ const isFilesSidebarExpanded = ref(true)
           </div>
 
           <div
-            v-show="isFilesSidebarExpanded"
-            class="min-h-0 px-4 pb-4"
+            class="grid transition-[grid-template-rows] duration-300 ease-in-out"
+            :class="isFilesSidebarExpanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
           >
-            <Content />
+            <div class="overflow-hidden">
+              <div class="px-4 pb-4">
+                <Content />
+              </div>
+            </div>
           </div>
         </section>
       </div>
@@ -128,3 +136,4 @@ const isFilesSidebarExpanded = ref(true)
     </div>
   </div>
 </template>
+

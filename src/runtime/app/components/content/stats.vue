@@ -40,21 +40,19 @@ function shortDate(isoDate: string): string {
 </script>
 
 <template>
-  <div class="bg-white rounded-md p-4">
+  <div class="bg-ds-surface-container-lowest rounded-[1.25rem] p-4">
     <div
       v-if="error"
-      class="text-sm mt-1"
-      style="color: var(--color-ds-error);"
+      class="text-sm mt-1 text-ds-error"
     >
       Could not load visit stats.
     </div>
 
     <div
       v-else-if="pending"
-      class="text-sm mt-1"
-      style="color: var(--color-ds-on-surface-variant);"
+      class="text-sm mt-1 text-ds-on-surface-variant"
     >
-      loading…
+      Lädt…
     </div>
 
     <div v-else>
@@ -62,8 +60,7 @@ function shortDate(isoDate: string): string {
         <span class="text-xs font-semibold uppercase tracking-widest font-display text-ds-on-surface-variant">Traffic</span>
         <span
           v-if="totalVisits > 0"
-          class="text-xs font-semibold"
-          style="font-family: var(--font-display); color: var(--color-ds-primary);"
+          class="text-xs font-semibold font-display text-ds-primary"
         >{{ totalVisits }}</span>
       </div>
 
@@ -74,73 +71,80 @@ function shortDate(isoDate: string): string {
         <div
           v-for="d in days"
           :key="d.date"
-          class="w-full rounded-sm"
-          style="background-color: var(--color-ds-surface-dim);"
+          class="w-full rounded-sm bg-ds-surface-dim"
           :style="{ height: `${Math.max(2, Math.round((d.visits / maxVisits) * 100))}%` }"
           :title="`${shortDate(d.date)}: ${d.visits}`"
         />
       </div>
 
-      <div
-        class="mt-1 flex items-center justify-between text-xs tabular-nums"
-        style="color: var(--color-ds-on-surface-variant);"
-      >
+      <div class="mt-1 flex items-center justify-between text-xs tabular-nums text-ds-on-surface-variant">
         <span>{{ firstDate ? shortDate(firstDate) : '' }}</span>
         <span>{{ lastDate ? shortDate(lastDate) : '' }}</span>
       </div>
 
-      <div class="mt-3">
-        <div class="flex items-center justify-center">
-          <button
-            v-if="topPages.length > 0"
-            class="text-xs cursor-pointer px-3 py-1.5 rounded-lg"
-            style="color: var(--color-ds-on-surface-variant); background: var(--color-ds-surface-container-high);"
-            type="button"
-            @click="topPagesExpanded = !topPagesExpanded"
-          >
-            {{ topPagesExpanded ? 'weniger' : 'mehr' }}
-          </button>
-        </div>
-        <div
-          v-if="topPages.length === 0"
-          class="text-xs mt-3"
-          style="color: var(--color-ds-on-surface-variant);"
+      <div
+        v-if="topPages.length > 0"
+        class="mt-3"
+      >
+        <button
+          class="flex items-center gap-1.5 w-full text-xs cursor-pointer px-0 py-1 bg-transparent border-none text-left text-ds-on-surface-variant hover:text-ds-on-surface transition-colors duration-150"
+          type="button"
+          @click="topPagesExpanded = !topPagesExpanded"
         >
-          Keine Seitenaufrufe im Zeitraum.
-        </div>
-        <div
-          v-else-if="topPagesExpanded"
-          class="space-y-1 mt-3"
-        >
-          <div
-            class="text-xs mb-3"
-            style="color: var(--color-ds-on-surface-variant);"
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+            stroke="currentColor"
+            class="size-3 shrink-0 transition-transform duration-300"
+            :class="topPagesExpanded ? 'rotate-90' : ''"
           >
-            Seitenaufrufe:
-          </div>
-          <NuxtLink
-            v-for="page in topPages"
-            :key="page.path"
-            :to="page.path"
-            target="_blank"
-            class="relative flex items-center justify-between gap-2 text-xs px-1.5 py-0.5 rounded-lg overflow-hidden"
-          >
-            <div
-              class="absolute inset-y-0 left-0 rounded-lg"
-              style="background-color: var(--color-ds-surface-container-high);"
-              :style="{ width: `${Math.round((page.visits / maxTopPageVisits) * 100)}%` }"
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="m8.25 4.5 7.5 7.5-7.5 7.5"
             />
-            <span
-              class="relative truncate"
-              style="color: var(--color-ds-on-surface);"
-              :title="page.path"
-            >{{ page.path }}</span>
-            <span
-              class="relative tabular-nums"
-              style="color: var(--color-ds-on-surface-variant);"
-            >{{ page.visits }}</span>
-          </NuxtLink>
+          </svg>
+          <span>{{ topPagesExpanded ? 'weniger' : 'mehr' }}</span>
+        </button>
+
+        <div
+          class="grid transition-[grid-template-rows] duration-300 ease-in-out"
+          :class="topPagesExpanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
+        >
+          <div class="overflow-hidden">
+            <div class="space-y-1 pt-2">
+              <div class="text-xs mb-2 text-ds-on-surface-variant">
+                Seitenaufrufe:
+              </div>
+              <NuxtLink
+                v-for="page in topPages"
+                :key="page.path"
+                :to="page.path"
+                target="_blank"
+                class="relative flex items-center justify-between gap-2 text-xs px-1.5 py-0.5 rounded-lg overflow-hidden"
+              >
+                <div
+                  class="absolute inset-y-0 left-0 rounded-lg bg-ds-surface-container-high"
+                  :style="{ width: `${Math.round((page.visits / maxTopPageVisits) * 100)}%` }"
+                />
+                <span
+                  class="relative truncate text-ds-on-surface"
+                  :title="page.path"
+                >{{ page.path }}</span>
+                <span class="relative tabular-nums text-ds-on-surface-variant">{{ page.visits }}</span>
+              </NuxtLink>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <div
+        v-if="topPages.length === 0"
+        class="text-xs mt-3 text-ds-on-surface-variant"
+      >
+        Keine Seitenaufrufe im Zeitraum.
       </div>
     </div>
   </div>

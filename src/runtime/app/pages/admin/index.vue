@@ -26,10 +26,10 @@ const promptTemplates = [
 ] as const
 
 const {
-  activeSession,
   activeSessionId,
   canSend,
   createSession,
+  deleteSession,
   draft,
   errorMessage,
   initialize,
@@ -56,17 +56,17 @@ function applyPromptTemplate(prompt: string) {
 
 <template>
   <Admin>
-    <AdminWorkspace primary-sidebar-label="Chats">
-      <template #sidebarPrimary>
+    <AdminWorkspace>
+      <template #sidebarTop>
         <ChatSessionBar
           :sessions="sessions"
-          :active-session="activeSession"
           :active-session-id="activeSessionId"
           :disabled="isSending"
           :is-loading="isTranscriptLoading"
           :is-creating="isCreatingSession"
           @select="selectSession"
           @create="createSession"
+          @delete="deleteSession"
         />
       </template>
 

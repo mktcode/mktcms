@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import { useRoute } from '#app'
+import FileButtons from './fileButtons.vue'
 import FileIcon from './fileIcon.vue'
 
 const props = defineProps<{
@@ -116,20 +117,29 @@ watch(isActiveBranch, async (active) => {
           v-else
           class="flex flex-col gap-0.5 ml-5 pl-2.5 py-1 border-l-3 border-black/5"
         >
-          <NuxtLink
+          <div
             v-for="file in files"
             :key="file"
-            :to="editLink(file)"
-            class="file-item"
-            :class="{ active: currentPath === childPath(file) }"
+            class="group/fi flex items-center gap-0.5"
           >
-            <FileIcon :file-path="childPath(file)" />
-            <span class="file-item-label">{{ baseName(file) }}</span>
-            <span
-              v-if="ext(file)"
-              class="file-item-ext"
-            >.{{ ext(file) }}</span>
-          </NuxtLink>
+            <NuxtLink
+              :to="editLink(file)"
+              class="file-item flex-1 min-w-0"
+              :class="{ active: currentPath === childPath(file) }"
+            >
+              <FileIcon :file-path="childPath(file)" />
+              <span class="file-item-label">{{ baseName(file) }}</span>
+              <span
+                v-if="ext(file)"
+                class="file-item-ext"
+              >.{{ ext(file) }}</span>
+            </NuxtLink>
+            <FileButtons
+              compact
+              :file-path="childPath(file)"
+              class="shrink-0 opacity-0 group-hover/fi:opacity-100 transition-opacity duration-150"
+            />
+          </div>
 
           <TreeNode
             v-for="dir in dirs"

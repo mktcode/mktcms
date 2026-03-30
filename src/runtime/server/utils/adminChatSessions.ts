@@ -1,4 +1,4 @@
-import { mkdir, readdir, rename, writeFile } from 'node:fs/promises'
+import { mkdir, readdir, rename, unlink, writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import { createError } from 'h3'
 import { SessionManager, type SessionEntry, type SessionInfo } from '@mariozechner/pi-coding-agent'
@@ -280,6 +280,11 @@ export async function getAdminChatSessionDetail(sessionId: string, context: Admi
     },
     messages,
   }
+}
+
+export async function deleteAdminChatSession(sessionId: string, context: AdminChatSessionContext = {}) {
+  const { sessionInfo } = await findSessionInfo(sessionId, context)
+  await unlink(sessionInfo.path)
 }
 
 export function deriveAdminChatSessionName(prompt: string) {

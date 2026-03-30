@@ -58,6 +58,26 @@ These notes are for this repository only. The main working directory is `src/`.
 
 The design system and Creative North Star are defined in `DESIGN.md`. Before working on any UI components or layouts, read that document for detailed guidance on colors, typography, spacing, and component usage to maintain a consistent, high-end user experience.
 
+### Sidebar architecture
+
+`adminWorkspace.vue` renders a left sidebar with two collapsible sections:
+- An optional `#sidebarTop` slot section (visible when slot content is provided, e.g. the chat sessions list on the chat page). The slot label can be overridden via `#sidebarTopLabel`.
+- A fixed file-explorer section (`Content` component).
+
+All expand/collapse animations in sidebar sections use `grid-template-rows` CSS transitions (same pattern as `treeNode.vue`), not `v-show`.
+
+`stats.vue` and `usage.vue` use design-system tokens (`bg-ds-surface-container-lowest rounded-[1.25rem]`) and follow the same animated expand/collapse pattern via `grid-template-rows`.
+
+### File explorer action icons
+
+File items in `treeNode.vue` and root-level files in `content/index.vue` each render `FileButtons compact` in a `group/fi` container (opacity-0, revealed on hover). The `compact` prop on `FileButtons` shows only the copy-template and delete icons (vs. all 4 in full mode). The CSS class `icon-button-sm` (1.75 rem, defined in `admin.css`) is used for compact action icons.
+
+### Chat session sidebar
+
+The chat session sidebar (`chat/sessionBar.vue`) is a flat file-explorer-style list, not a `<select>` dropdown. Each session row uses `file-item`-style layout with a hover-revealed trash icon (delete button). Sessions are passed as a prop array; the component emits `select`, `create`, and `delete` events.
+
+Delete session is backed by `DELETE /api/admin/chat/sessions/:id` and `deleteAdminChatSession` in `runtime/server/utils/adminChatSessions.ts`.
+
 ## Updates to this document
 
 After every significant change to the codebase, especially those affecting architecture, security, or API contracts, **update this `AGENTS.md`** document to reflect the new state of the system. All updates to this document must describe the **current state of the system only**. Write in a **declarative, present-tense style** (what *is*, not what *was*). The document must always read as if it were written from scratch to describe the system as it exists today.

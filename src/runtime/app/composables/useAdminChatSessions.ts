@@ -224,11 +224,39 @@ export function useAdminChatSessions() {
     }
   }
 
+  async function deleteSession(sessionId: string) {
+    if (isSending.value) {
+      return
+    }
+
+    errorMessage.value = ''
+
+    try {
+      await $fetch<{ ok: boolean }>(`/api/admin/chat/sessions/${sessionId}` as string, { method: 'DELETE' })
+      sessions.value = sessions.value.filter(s => s.id !== sessionId)
+
+      if (activeSessionId.value === sessionId) {
+        if (sessions.value.length > 0) {
+          await selectSession(sessions.value[0]!.id)
+        }
+        else {
+          activeSessionId.value = null
+          messages.value = []
+          await createSession()
+        }
+      }
+    }
+    catch (error: any) {
+      errorMessage.value = getErrorMessage(error)
+    }
+  }
+
   return {
     activeSession,
     activeSessionId,
     canSend,
     createSession,
+    deleteSession,
     draft,
     errorMessage,
     initialize,

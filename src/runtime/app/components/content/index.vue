@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useFetch, useRoute } from '#app'
-import TreeNode from './treeNode.vue'
+import FileButtons from './fileButtons.vue'
 import FileIcon from './fileIcon.vue'
+import TreeNode from './treeNode.vue'
 
 const { data: list } = await useFetch('/api/admin/list', {
   query: { path: '' },
@@ -61,20 +62,29 @@ function fileExtension(filename: string): string {
       class="flex flex-col gap-0.5 mt-1"
     >
       <!-- Root level files -->
-      <NuxtLink
+      <div
         v-for="file in list.files"
         :key="file"
-        :to="`/admin/edit/${fileExtension(file) === 'md' ? 'markdown/' : 'file/'}${file}`"
-        class="file-item"
-        :class="{ active: isActiveFile(file) }"
+        class="group/fi flex items-center gap-0.5"
       >
-        <FileIcon :file-path="file" />
-        <span class="file-item-label">{{ filenameWithoutExtension(file) }}</span>
-        <span
-          v-if="fileExtension(file)"
-          class="file-item-ext"
-        >.{{ fileExtension(file) }}</span>
-      </NuxtLink>
+        <NuxtLink
+          :to="`/admin/edit/${fileExtension(file) === 'md' ? 'markdown/' : 'file/'}${file}`"
+          class="file-item flex-1 min-w-0"
+          :class="{ active: isActiveFile(file) }"
+        >
+          <FileIcon :file-path="file" />
+          <span class="file-item-label">{{ filenameWithoutExtension(file) }}</span>
+          <span
+            v-if="fileExtension(file)"
+            class="file-item-ext"
+          >.{{ fileExtension(file) }}</span>
+        </NuxtLink>
+        <FileButtons
+          compact
+          :file-path="file"
+          class="shrink-0 opacity-0 group-hover/fi:opacity-100 transition-opacity duration-150"
+        />
+      </div>
 
       <!-- Root level directories - collapsible -->
       <TreeNode
