@@ -82,6 +82,8 @@ const isFilesSidebarExpanded = ref(true)
                 {{ props.sectionLabel }}
               </span>
 
+              <Versioning v-if="showVersioning" />
+
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -98,8 +100,6 @@ const isFilesSidebarExpanded = ref(true)
                 />
               </svg>
             </button>
-
-            <Versioning v-if="showVersioning" />
           </div>
 
           <div

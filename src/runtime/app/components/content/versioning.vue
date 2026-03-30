@@ -176,7 +176,7 @@ async function runUpdate() {
       <button
         type="button"
         class="button small tertiary"
-        @click="openHistoryModal"
+        @click.stop="openHistoryModal"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

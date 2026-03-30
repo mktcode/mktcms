@@ -128,7 +128,6 @@
   .admin-sidebar-section {
     background-color: var(--color-ds-surface-container-lowest);
     border-radius: 1.25rem;
-    box-shadow: var(--shadow-ambient);
   }
 
   .admin-sidebar-section-header {
