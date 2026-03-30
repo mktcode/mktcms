@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
 import Admin from '../../components/admin.vue'
 import AdminWorkspace from '../../components/adminWorkspace.vue'
 import ChatInputBar from '../../components/chat/inputBar.vue'
-import ChatSessionBar from '../../components/chat/sessionBar.vue'
 import ChatTranscript from '../../components/chat/transcript.vue'
 import { useAdminChatSessions } from '../../composables/useAdminChatSessions'
 
@@ -28,25 +26,15 @@ const promptTemplates = [
 const {
   activeSessionId,
   canSend,
-  createSession,
-  deleteSession,
   draft,
   errorMessage,
-  initialize,
   isBusy,
-  isCreatingSession,
   isSending,
   isSessionsLoading,
   isTranscriptLoading,
   messages,
-  selectSession,
   sendPrompt,
-  sessions,
 } = useAdminChatSessions()
-
-onMounted(() => {
-  void initialize()
-})
 
 function applyPromptTemplate(prompt: string) {
   const currentDraft = draft.value.trim()
@@ -57,19 +45,6 @@ function applyPromptTemplate(prompt: string) {
 <template>
   <Admin>
     <AdminWorkspace>
-      <template #sidebarTop>
-        <ChatSessionBar
-          :sessions="sessions"
-          :active-session-id="activeSessionId"
-          :disabled="isSending"
-          :is-loading="isTranscriptLoading"
-          :is-creating="isCreatingSession"
-          @select="selectSession"
-          @create="createSession"
-          @delete="deleteSession"
-        />
-      </template>
-
       <ChatTranscript
         :messages="messages"
         :is-loading="isTranscriptLoading || isSessionsLoading"

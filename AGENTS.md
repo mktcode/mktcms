@@ -61,7 +61,6 @@ The design system and Creative North Star are defined in `DESIGN.md`. Before wor
 ### Sidebar architecture
 
 `adminWorkspace.vue` renders a left sidebar with two collapsible sections:
-- An optional `#sidebarTop` slot section (visible when slot content is provided, e.g. the chat sessions list on the chat page). The slot label can be overridden via `#sidebarTopLabel`.
 - A fixed file-explorer section (`Content` component).
 
 All expand/collapse animations in sidebar sections use `grid-template-rows` CSS transitions (same pattern as `treeNode.vue`), not `v-show`.
@@ -74,7 +73,9 @@ File items in `treeNode.vue` and root-level files in `content/index.vue` each re
 
 ### Chat session sidebar
 
-The chat session sidebar (`chat/sessionBar.vue`) is a flat file-explorer-style list, not a `<select>` dropdown. Each session row uses `file-item`-style layout with a hover-revealed trash icon (delete button). Sessions are passed as a prop array; the component emits `select`, `create`, and `delete` events.
+The chat session sidebar (`chat/sessionBar.vue`) is a flat file-explorer-style list, not a `<select>` dropdown. Each session row uses `file-item`-style layout with a hover-revealed trash icon (delete button). The component reads and mutates shared admin chat UI state directly via `useAdminChatSessions()`.
+
+`useAdminChatSessions()` stores client-side admin chat UI state in Nuxt `useState()` keys so the sidebar, transcript, and prompt input share one reactive source of truth across components. The browser still persists only the last selected session id in local storage; the server remains the source of truth for transcript history.
 
 Delete session is backed by `DELETE /api/admin/chat/sessions/:id` and `deleteAdminChatSession` in `runtime/server/utils/adminChatSessions.ts`.
 

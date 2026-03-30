@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref, useSlots, computed } from 'vue'
+import { ref } from 'vue'
 import Header from './header.vue'
+import ChatSessionBar from './chat/sessionBar.vue'
 import Content from './content/index.vue'
 import Stats from './content/stats.vue'
 import Usage from './content/usage.vue'
@@ -11,9 +12,6 @@ const props = withDefaults(defineProps<{
   sectionLabel: 'Dateien',
 })
 
-const slots = useSlots()
-
-const hasSidebarTop = computed(() => Boolean(slots.sidebarTop))
 const isSidebarTopExpanded = ref(true)
 const isFilesSidebarExpanded = ref(true)
 </script>
@@ -26,10 +24,7 @@ const isFilesSidebarExpanded = ref(true)
       </div>
 
       <div class="flex flex-col gap-3 min-h-0 lg:flex-1 lg:overflow-y-auto">
-        <section
-          v-if="hasSidebarTop"
-          class="bg-ds-surface-container-lowest rounded-[1.25rem]"
-        >
+        <section class="bg-ds-surface-container-lowest rounded-[1.25rem]">
           <button
             type="button"
             class="flex items-center justify-between w-full gap-3 py-[0.95rem] px-4 bg-transparent border-none cursor-pointer text-left"
@@ -37,9 +32,7 @@ const isFilesSidebarExpanded = ref(true)
             @click="isSidebarTopExpanded = !isSidebarTopExpanded"
           >
             <span class="text-xs font-semibold uppercase tracking-widest text-ds-on-surface-variant">
-              <slot name="sidebarTopLabel">
-                Chats
-              </slot>
+              Chats
             </span>
 
             <svg
@@ -65,7 +58,7 @@ const isFilesSidebarExpanded = ref(true)
           >
             <div class="overflow-hidden">
               <div class="px-4 pb-4">
-                <slot name="sidebarTop" />
+                <ChatSessionBar />
               </div>
             </div>
           </div>

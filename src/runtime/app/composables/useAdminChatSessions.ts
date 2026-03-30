@@ -1,4 +1,5 @@
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
+import { useState } from '#app'
 import { useLocalStorage } from '@vueuse/core'
 
 export type AdminChatAgent = 'conversation' | 'coding'
@@ -54,15 +55,15 @@ export function useAdminChatSessions() {
     initOnMounted: true,
   })
 
-  const sessions = ref<AdminChatSessionSummary[]>([])
-  const messages = ref<AdminChatMessage[]>([])
-  const draft = ref('')
-  const errorMessage = ref('')
-  const isSessionsLoading = ref(false)
-  const isTranscriptLoading = ref(false)
-  const isCreatingSession = ref(false)
-  const isSending = ref(false)
-  const hasInitialized = ref(false)
+  const sessions = useState<AdminChatSessionSummary[]>('mktcms-admin-chat-sessions', () => [])
+  const messages = useState<AdminChatMessage[]>('mktcms-admin-chat-messages', () => [])
+  const draft = useState('mktcms-admin-chat-draft', () => '')
+  const errorMessage = useState('mktcms-admin-chat-error-message', () => '')
+  const isSessionsLoading = useState('mktcms-admin-chat-is-sessions-loading', () => false)
+  const isTranscriptLoading = useState('mktcms-admin-chat-is-transcript-loading', () => false)
+  const isCreatingSession = useState('mktcms-admin-chat-is-creating-session', () => false)
+  const isSending = useState('mktcms-admin-chat-is-sending', () => false)
+  const hasInitialized = useState('mktcms-admin-chat-has-initialized', () => false)
 
   const activeSession = computed(() => sessions.value.find(session => session.id === activeSessionId.value) || null)
   const canSend = computed(() => Boolean(activeSessionId.value) && draft.value.trim().length > 0 && !isSending.value)

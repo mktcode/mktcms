@@ -1,23 +1,23 @@
 <script setup lang="ts">
-import type { AdminChatSessionSummary } from '../../composables/useAdminChatSessions'
+import { onMounted } from 'vue'
+import { useAdminChatSessions } from '../../composables/useAdminChatSessions'
 
-const props = withDefaults(defineProps<{
-  activeSessionId: string | null
-  disabled?: boolean
-  isCreating?: boolean
-  isLoading?: boolean
-  sessions: AdminChatSessionSummary[]
-}>(), {
-  disabled: false,
-  isCreating: false,
-  isLoading: false,
+const {
+  activeSessionId,
+  createSession,
+  deleteSession,
+  initialize,
+  isCreatingSession,
+  isSending,
+  isSessionsLoading,
+  isTranscriptLoading,
+  selectSession,
+  sessions,
+} = useAdminChatSessions()
+
+onMounted(() => {
+  void initialize()
 })
-
-const emit = defineEmits<{
-  create: []
-  delete: [sessionId: string]
-  select: [sessionId: string]
-}>()
 </script>
 
 <template>
@@ -26,8 +26,8 @@ const emit = defineEmits<{
     <button
       type="button"
       class="flex items-center gap-2 w-full px-3 py-2 mb-1 bg-transparent border-none rounded-lg cursor-pointer text-left transition-colors duration-150 text-ds-on-surface-variant hover:bg-ds-surface-container-low hover:text-ds-on-surface disabled:cursor-not-allowed disabled:opacity-50"
-      :disabled="disabled || isCreating"
-      @click="emit('create')"
+      :disabled="isSending || isCreatingSession"
+      @click="createSession"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -43,12 +43,12 @@ const emit = defineEmits<{
           d="M12 4.5v15m7.5-7.5h-15"
         />
       </svg>
-      <span class="text-sm font-semibold">{{ isCreating ? 'Erstellt…' : 'Neue Sitzung' }}</span>
+      <span class="text-sm font-semibold">{{ isCreatingSession ? 'Erstellt…' : 'Neue Sitzung' }}</span>
     </button>
 
     <!-- Loading state -->
     <div
-      v-if="isLoading && sessions.length === 0"
+      v-if="(isTranscriptLoading || isSessionsLoading) && sessions.length === 0"
       class="px-3 py-2 text-xs text-ds-on-surface-variant"
     >
       Lädt…
@@ -56,7 +56,7 @@ const emit = defineEmits<{
 
     <!-- Empty state -->
     <div
-      v-else-if="!isLoading && sessions.length === 0"
+      v-else-if="!(isTranscriptLoading || isSessionsLoading) && sessions.length === 0"
       class="px-3 py-2 text-xs text-ds-on-surface-variant"
     >
       Keine Sitzungen
@@ -77,8 +77,8 @@ const emit = defineEmits<{
         :class="session.id === activeSessionId
           ? 'text-ds-on-primary'
           : 'text-ds-on-surface hover:bg-ds-surface-container-low'"
-        :disabled="disabled || isLoading"
-        @click="emit('select', session.id)"
+        :disabled="isSending || isTranscriptLoading"
+        @click="selectSession(session.id)"
       >
         <span class="flex-1 text-sm truncate">{{ session.label }}</span>
       </button>
@@ -89,9 +89,9 @@ const emit = defineEmits<{
         :class="session.id === activeSessionId
           ? 'bg-transparent text-white/60 hover:text-white hover:bg-white/10'
           : 'bg-transparent text-ds-on-surface-variant hover:text-ds-on-surface hover:bg-ds-surface-container-high'"
-        :disabled="disabled"
+        :disabled="isSending"
         title="Sitzung löschen"
-        @click="emit('delete', session.id)"
+        @click="deleteSession(session.id)"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
