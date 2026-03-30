@@ -14,9 +14,9 @@
         class="text-sm mt-1"
       >
         <div class="flex items-center justify-between gap-3">
-          <span class="stat-label">Speicher</span>
+          <span class="text-xs font-semibold uppercase tracking-widest font-display text-ds-on-surface-variant">Speicher</span>
           <span
-            class="tabular-nums stat-value text-xs"
+            class="tabular-nums font-display font-bold text-ds-on-surface text-xs"
           >
             <template v-if="pending">
               lädt…
@@ -27,9 +27,9 @@
           </span>
         </div>
 
-        <div class="progress-track mt-2">
+        <div class="w-full overflow-hidden h-1.5 rounded-full bg-ds-surface-container-high mt-2">
           <div
-            class="progress-fill"
+            class="h-full rounded-full bg-ds-primary-fixed-dim transition-[width] duration-300"
             :style="{ width: `${usedPercent}%` }"
           />
         </div>

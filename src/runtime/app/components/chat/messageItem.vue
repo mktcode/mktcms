@@ -16,8 +16,8 @@ function agentLabel(agent?: AdminChatMessage['agent']) {
     :class="props.message.role === 'user' ? 'flex-row-reverse' : ''"
   >
     <div
-      class="chat-avatar shrink-0"
-      :class="props.message.role === 'user' ? 'chat-avatar-user' : 'chat-avatar-assistant'"
+      class="size-8 rounded-full flex items-center justify-center shrink-0 md:size-10"
+      :class="props.message.role === 'user' ? 'bg-ds-surface-container-high text-ds-on-surface-variant' : 'bg-linear-to-br from-ds-primary to-ds-secondary text-ds-on-primary'"
     >
       <svg
         v-if="props.message.role === 'assistant'"
@@ -66,10 +66,10 @@ function agentLabel(agent?: AdminChatMessage['agent']) {
       class="flex max-w-[min(100%,42rem)] flex-col"
       :class="props.message.role === 'user' ? 'items-end ml-auto' : ''"
     >
-      <div :class="props.message.role === 'user' ? 'chat-bubble-user' : 'chat-bubble-assistant'">
+      <div :class="props.message.role === 'user' ? 'max-w-3xl px-8 py-6 bg-linear-to-br from-ds-primary to-ds-secondary rounded-[1.25rem] rounded-tr-none text-ds-on-primary' : 'max-w-3xl px-8 py-6 bg-ds-surface-container-lowest rounded-[1.25rem] rounded-tl-none shadow-ambient text-ds-on-surface'">
         <pre class="whitespace-pre-wrap font-body leading-normal">{{ props.message.content }}</pre>
       </div>
-      <div class="chat-meta mt-2">
+      <div class="text-xs font-medium uppercase tracking-[0.12em] text-ds-on-surface-variant mt-2">
         {{ props.message.role === 'user' ? 'USER' : 'ASSISTANT' }}
         <span
           v-if="props.message.role === 'assistant' && props.message.agent"

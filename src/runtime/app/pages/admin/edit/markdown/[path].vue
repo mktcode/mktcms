@@ -10,7 +10,7 @@ const { isMarkdown } = usePathParam()
 <template>
   <Admin>
     <AdminWorkspace>
-      <div class="workspace-panel workspace-panel--fluid">
+      <div class="workspace-panel--fluid flex flex-1 flex-col min-h-0 p-4 md:px-6 pb-3">
         <Markdown v-if="isMarkdown" />
         <div v-else>
           Unbekannter Dateityp.

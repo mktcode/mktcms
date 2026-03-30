@@ -30,11 +30,11 @@ watch(() => [props.messages.length, props.isSending], async () => {
 <template>
   <div
     ref="transcript"
-    class="admin-main-content chat-transcript"
+    class="flex-1 flex flex-col overflow-y-auto px-4 pb-4 md:px-6 min-h-0"
   >
     <div
       v-if="props.isLoading && props.messages.length === 0"
-      class="chat-empty-state"
+      class="flex-1 flex flex-col items-center justify-center gap-4 text-center min-h-64 pt-12 pb-8 lg:min-h-80 lg:py-12"
     >
       <p
         class="text-sm max-w-xl"
@@ -46,7 +46,7 @@ watch(() => [props.messages.length, props.isSending], async () => {
 
     <div
       v-else-if="props.messages.length === 0"
-      class="chat-empty-state"
+      class="flex-1 flex flex-col items-center justify-center gap-4 text-center min-h-64 pt-12 pb-8 lg:min-h-80 lg:py-12"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -85,7 +85,7 @@ watch(() => [props.messages.length, props.isSending], async () => {
         v-if="props.isSending"
         class="flex gap-3"
       >
-        <div class="chat-avatar chat-avatar-assistant shrink-0">
+        <div class="size-8 rounded-full flex items-center justify-center shrink-0 md:size-10 bg-linear-to-br from-ds-primary to-ds-secondary text-ds-on-primary">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -101,7 +101,7 @@ watch(() => [props.messages.length, props.isSending], async () => {
             />
           </svg>
         </div>
-        <div class="chat-bubble-assistant">
+        <div class="max-w-3xl px-8 py-6 bg-ds-surface-container-lowest rounded-[1.25rem] rounded-tl-none shadow-ambient text-ds-on-surface">
           <span
             class="text-sm"
             style="color: var(--color-ds-on-surface-variant);"

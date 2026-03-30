@@ -90,9 +90,9 @@ async function saveMarkdown() {
       :is-open="showFrontmatterModal"
       @close="showFrontmatterModal = false"
     />
-    <div class="flex-1 min-h-0 md-editor-shell">
-      <div class="md-editor-grid">
-        <div class="md-editor-pane">
+    <div class="flex-1 min-h-0 overflow-visible">
+      <div class="grid gap-3 h-full min-h-0 min-w-160 grid-cols-[minmax(18rem,1fr)_minmax(18rem,1fr)] md:gap-4">
+        <div class="min-h-0 h-full rounded-xl shadow-ambient overflow-hidden">
           <ClientOnly>
             <MonacoEditor
               v-model="markdown"
@@ -119,7 +119,7 @@ async function saveMarkdown() {
         </div>
 
         <div
-          class="md-editor-pane md-editor-preview"
+          class="min-h-0 h-full rounded-xl overflow-auto bg-white shadow-[inset_0_0_0_1px_rgba(169,180,185,0.15)]"
         >
           <MDC
             :value="debouncedMarkdown"

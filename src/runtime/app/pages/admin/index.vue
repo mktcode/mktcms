@@ -80,24 +80,24 @@ function applyPromptTemplate(prompt: string) {
         v-if="errorMessage"
         class="px-4 pb-2 md:px-6"
       >
-        <div class="alert-error">
+        <div class="flex gap-3 items-center px-4 py-3 rounded-2xl text-sm bg-ds-error-container text-ds-error">
           {{ errorMessage }}
         </div>
       </div>
 
       <div class="px-4 pb-3 md:px-6">
-        <div class="chat-prompt-templates">
+        <div class="grid gap-3 grid-cols-[repeat(auto-fit,minmax(12.5rem,1fr))] max-md:grid-cols-1">
           <button
             v-for="template in promptTemplates"
             :key="template.label"
             type="button"
-            class="chat-prompt-template"
+            class="flex flex-col items-start gap-[0.4rem] p-4 bg-ds-surface-container-lowest border-none rounded-2xl shadow-ambient cursor-pointer text-left transition-transform duration-150 hover:-translate-y-px disabled:cursor-not-allowed disabled:opacity-55 disabled:translate-y-0"
             :disabled="isSending"
             @click="applyPromptTemplate(template.prompt)"
           >
-            <span class="chat-prompt-template-kicker">Prompt</span>
-            <span class="chat-prompt-template-label">{{ template.label }}</span>
-            <span class="chat-prompt-template-copy">{{ template.description }}</span>
+            <span class="text-[0.7rem] font-bold tracking-[0.14em] uppercase text-ds-on-surface-variant">Prompt</span>
+            <span class="font-display text-base font-semibold text-ds-on-surface">{{ template.label }}</span>
+            <span class="text-[0.8125rem] leading-relaxed text-ds-on-surface-variant">{{ template.description }}</span>
           </button>
         </div>
       </div>

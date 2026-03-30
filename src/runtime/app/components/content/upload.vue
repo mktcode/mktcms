@@ -55,7 +55,7 @@ onMounted(() => {
       Datei hochladen
     </h1>
 
-    <div class="alert-info">
+    <div class="flex gap-4 items-center p-4 rounded-2xl text-sm bg-ds-surface-container-low text-ds-on-surface">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

@@ -220,7 +220,7 @@ async function runUpdate() {
       @click.self="closeHistoryModal"
     >
       <div
-        class="w-full max-w-140 rounded-2xl p-6 flex flex-col gap-4 max-h-[calc(100vh-2rem)] my-auto glass-overlay ghost-border"
+        class="w-full max-w-140 rounded-2xl p-6 flex flex-col gap-4 max-h-[calc(100vh-2rem)] my-auto bg-[rgba(247,249,251,0.8)] backdrop-blur-[20px] outline-1 outline-[rgba(169,180,185,0.15)]"
         style="box-shadow: var(--shadow-float);"
         role="dialog"
         aria-modal="true"

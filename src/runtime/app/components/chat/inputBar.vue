@@ -21,10 +21,10 @@ function onInput(event: Event) {
 </script>
 
 <template>
-  <div class="chat-input-bar">
+  <div class="flex items-center gap-2 py-2.5 px-3 mx-3 mb-3 bg-white rounded-2xl sticky bottom-3 shadow-ambient md:mx-4 md:mb-4 md:bottom-4">
     <button
       type="button"
-      class="chat-input-icon"
+      class="flex items-center justify-center size-9 rounded-full bg-transparent border-none cursor-pointer text-ds-on-surface-variant shrink-0 transition-colors hover:bg-ds-surface-container-high disabled:cursor-not-allowed disabled:opacity-50"
       tabindex="-1"
       :disabled="props.disabled"
     >
@@ -47,7 +47,7 @@ function onInput(event: Event) {
     <textarea
       :value="props.modelValue"
       rows="1"
-      class="chat-input-textarea"
+      class="flex-1 bg-transparent! border-none! shadow-none! resize-none py-1.5! px-0! min-h-6 text-sm leading-relaxed text-ds-on-surface outline-none! max-h-40 focus:bg-transparent! focus:shadow-none!"
       :placeholder="props.placeholder"
       :disabled="props.disabled"
       @input="onInput"
@@ -56,7 +56,7 @@ function onInput(event: Event) {
 
     <button
       type="button"
-      class="chat-send-button"
+      class="flex items-center justify-center size-10 rounded-full bg-linear-to-br from-ds-primary to-ds-secondary text-ds-on-primary border-none cursor-pointer shrink-0 transition-opacity hover:opacity-85 disabled:opacity-35 disabled:cursor-not-allowed"
       :disabled="!props.canSend"
       @click="emit('send')"
     >

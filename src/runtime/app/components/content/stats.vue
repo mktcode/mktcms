@@ -59,7 +59,7 @@ function shortDate(isoDate: string): string {
 
     <div v-else>
       <div class="flex items-center justify-between mb-2">
-        <span class="stat-label">Traffic</span>
+        <span class="text-xs font-semibold uppercase tracking-widest font-display text-ds-on-surface-variant">Traffic</span>
         <span
           v-if="totalVisits > 0"
           class="text-xs font-semibold"

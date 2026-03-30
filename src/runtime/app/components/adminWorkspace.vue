@@ -24,24 +24,24 @@ const isFilesSidebarExpanded = ref(true)
 </script>
 
 <template>
-  <div class="admin-layout">
-    <aside class="admin-sidebar">
-      <div class="admin-sidebar-brand">
+  <div class="flex min-h-screen flex-col lg:flex-row">
+    <aside class="flex flex-col w-full shrink-0 px-4 pb-6 pt-2 gap-5 order-2 bg-ds-surface lg:w-96 lg:p-5 lg:gap-6 lg:order-0">
+      <div class="font-display font-bold text-lg tracking-[-0.01em] text-ds-on-surface">
         MKTCMS
       </div>
 
-      <div class="admin-sidebar-sections">
+      <div class="flex flex-col gap-3 min-h-0 lg:flex-1 lg:overflow-y-auto">
         <section
           v-if="hasSidebarPrimary"
-          class="admin-sidebar-section"
+          class="bg-ds-surface-container-lowest rounded-[1.25rem]"
         >
           <button
             type="button"
-            class="admin-sidebar-section-toggle"
+            class="flex items-center justify-between w-full gap-3 py-[0.95rem] px-4 bg-transparent border-none cursor-pointer text-left"
             :aria-expanded="isPrimarySidebarExpanded"
             @click="isPrimarySidebarExpanded = !isPrimarySidebarExpanded"
           >
-            <span class="admin-sidebar-section-label">
+            <span class="text-xs font-semibold uppercase tracking-widest text-ds-on-surface-variant">
               {{ props.primarySidebarLabel }}
             </span>
 
@@ -51,8 +51,8 @@ const isFilesSidebarExpanded = ref(true)
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="admin-sidebar-toggle-icon"
-              :class="{ 'is-collapsed': !isPrimarySidebarExpanded }"
+              class="size-4 shrink-0 text-ds-on-surface-variant transition-transform duration-200"
+              :class="{ '-rotate-90': !isPrimarySidebarExpanded }"
             >
               <path
                 stroke-linecap="round"
@@ -64,21 +64,21 @@ const isFilesSidebarExpanded = ref(true)
 
           <div
             v-show="isPrimarySidebarExpanded"
-            class="admin-sidebar-section-body"
+            class="min-h-0 px-4 pb-4"
           >
             <slot name="sidebarPrimary" />
           </div>
         </section>
 
-        <section class="admin-sidebar-section admin-sidebar-files">
-          <div class="admin-sidebar-section-header">
+        <section class="bg-ds-surface-container-lowest rounded-[1.25rem] min-h-0">
+          <div class="flex items-center justify-between gap-3 pr-2">
             <button
               type="button"
-              class="admin-sidebar-section-toggle"
+              class="flex items-center justify-between w-full gap-3 py-[0.95rem] px-4 bg-transparent border-none cursor-pointer text-left"
               :aria-expanded="isFilesSidebarExpanded"
               @click="isFilesSidebarExpanded = !isFilesSidebarExpanded"
             >
-              <span class="admin-sidebar-section-label">
+              <span class="text-xs font-semibold uppercase tracking-widest text-ds-on-surface-variant">
                 {{ props.sectionLabel }}
               </span>
 
@@ -90,8 +90,8 @@ const isFilesSidebarExpanded = ref(true)
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="admin-sidebar-toggle-icon"
-                :class="{ 'is-collapsed': !isFilesSidebarExpanded }"
+                class="size-4 shrink-0 text-ds-on-surface-variant transition-transform duration-200"
+                :class="{ '-rotate-90': !isFilesSidebarExpanded }"
               >
                 <path
                   stroke-linecap="round"
@@ -104,25 +104,25 @@ const isFilesSidebarExpanded = ref(true)
 
           <div
             v-show="isFilesSidebarExpanded"
-            class="admin-sidebar-section-body"
+            class="min-h-0 px-4 pb-4"
           >
             <Content />
           </div>
         </section>
       </div>
 
-      <div class="admin-sidebar-footer">
+      <div class="flex flex-col gap-4 lg:mt-auto">
         <Usage />
         <Stats />
       </div>
     </aside>
 
-    <div class="admin-main">
-      <div class="admin-topbar">
+    <div class="admin-main flex flex-1 flex-col min-w-0 min-h-dvh order-1 lg:min-h-screen lg:order-0">
+      <div class="flex flex-wrap items-center gap-3 px-4 py-4 md:px-6 bg-white">
         <Header />
       </div>
 
-      <div class="admin-view-slot">
+      <div class="admin-view-slot flex flex-1 flex-col min-h-0 max-w-5xl mx-auto w-full">
         <slot />
       </div>
     </div>

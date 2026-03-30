@@ -7,7 +7,7 @@ import ContentUpload from '../../components/content/upload.vue'
 <template>
   <Admin>
     <AdminWorkspace>
-      <div class="workspace-panel workspace-panel--scroll">
+      <div class="flex flex-1 flex-col min-h-0 p-4 md:px-6 overflow-y-auto">
         <ContentUpload />
       </div>
     </AdminWorkspace>

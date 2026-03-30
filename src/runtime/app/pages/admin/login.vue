@@ -76,7 +76,7 @@ async function login() {
 
 <template>
   <Admin>
-    <div class="boxed">
+    <div class="p-6 md:p-8 w-full max-w-3xl mx-auto md:my-8 flex flex-col bg-ds-surface-container-lowest rounded-2xl shadow-ambient">
       <h1>
         Anmelden
       </h1>
@@ -125,7 +125,7 @@ async function login() {
 
         <div
           v-if="loginError"
-          class="mt-3 alert-error"
+          class="mt-3 flex gap-3 items-center px-4 py-3 rounded-2xl text-sm bg-ds-error-container text-ds-error"
           role="alert"
           aria-live="polite"
         >

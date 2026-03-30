@@ -7,7 +7,7 @@ import Delete from '../../../components/content/delete.vue'
 <template>
   <Admin>
     <AdminWorkspace>
-      <div class="workspace-panel workspace-panel--scroll workspace-panel--compact">
+      <div class="flex flex-1 flex-col min-h-0 p-4 md:px-6 overflow-y-auto max-w-[64rem]">
         <Delete />
       </div>
     </AdminWorkspace>

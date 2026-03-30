@@ -90,7 +90,7 @@ watch(isActiveBranch, async (active) => {
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        class="tree-chevron"
+        class="tree-chevron size-3.5 shrink-0 transition-transform duration-300 text-ds-on-surface-variant"
         :class="{ 'rotate-90': isExpanded }"
       >
         <path
@@ -102,19 +102,19 @@ watch(isActiveBranch, async (active) => {
     </button>
 
     <div
-      class="tree-collapse"
+      class="grid transition-[grid-template-rows] duration-300 ease-in-out"
       :class="isExpanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
     >
       <div class="overflow-hidden">
         <div
           v-if="isLoading"
-          class="tree-loading"
+          class="py-2 text-xs text-ds-on-surface-variant"
         >
           Laden...
         </div>
         <div
           v-else
-          class="tree-children"
+          class="flex flex-col gap-0.5 ml-5 pl-2.5 py-1 border-l-3 border-black/5"
         >
           <NuxtLink
             v-for="file in files"

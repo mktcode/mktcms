@@ -10,7 +10,7 @@ const { public: { mktcms: { siteUrl } } } = useRuntimeConfig()
     <div class="hidden min-w-0 md:block">
       <Breadcrumb />
     </div>
-    <div class="admin-topbar-actions">
+    <div class="flex items-center gap-2 ml-auto">
       <NuxtLink
         :to="siteUrl"
         class="button small secondary"

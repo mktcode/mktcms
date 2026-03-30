@@ -28,16 +28,16 @@ function onChange(event: Event) {
 </script>
 
 <template>
-  <div class="chat-session-bar">
-    <div class="chat-session-copy">
-      <span class="chat-session-label">Aktive Sitzung</span>
-      <span class="chat-session-preview">{{ props.activeSession?.label || 'Neue Sitzung' }}</span>
-      <span class="chat-session-meta">{{ props.activeSession?.preview || 'Noch keine Nachrichten' }}</span>
+  <div class="flex flex-col items-stretch gap-3.5 pt-1">
+    <div class="flex flex-col min-w-0 gap-1">
+      <span class="text-[0.7rem] tracking-[0.14em] uppercase text-ds-on-surface-variant">Aktive Sitzung</span>
+      <span class="font-display text-base font-semibold text-ds-on-surface truncate">{{ props.activeSession?.label || 'Neue Sitzung' }}</span>
+      <span class="text-[0.8125rem] leading-relaxed text-ds-on-surface-variant">{{ props.activeSession?.preview || 'Noch keine Nachrichten' }}</span>
     </div>
 
-    <div class="chat-session-actions">
+    <div class="flex flex-col items-stretch gap-2.5 min-w-0 justify-start">
       <select
-        class="chat-session-select"
+        class="min-w-0 h-11 px-3.5 border-none rounded-[0.875rem] bg-ds-surface-container-low text-ds-on-surface shadow-[0_0_0_1px_rgba(169,180,185,0.15)] focus:outline-2 focus:outline-[rgba(80,97,105,0.4)] focus:outline-offset-1"
         :value="props.activeSessionId || ''"
         :disabled="props.disabled || props.isLoading || props.sessions.length === 0"
         @change="onChange"
@@ -53,7 +53,7 @@ function onChange(event: Event) {
 
       <button
         type="button"
-        class="chat-session-new"
+        class="h-11 px-4 border-none rounded-[0.875rem] bg-ds-surface-container-highest text-ds-on-surface font-semibold whitespace-nowrap cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
         :disabled="props.disabled || props.isCreating"
         @click="emit('create')"
       >
