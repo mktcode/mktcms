@@ -1,12 +1,12 @@
 import z from 'zod'
 
-export const adminChatMessageSchema = z.object({
-  role: z.enum(['user', 'assistant']),
-  content: z.string().trim().min(1).max(4000),
-})
+export const adminChatSessionIdSchema = z.uuid()
 
-export const adminChatRequestSchema = z.object({
-  messages: z.array(adminChatMessageSchema).min(1).max(30),
+export const adminChatPromptSchema = z.string().trim().min(1).max(4000)
+
+export const adminChatPromptRequestSchema = z.object({
+  sessionId: adminChatSessionIdSchema,
+  prompt: adminChatPromptSchema,
 })
 
 const routingDecisionSchema = z.object({
@@ -14,8 +14,32 @@ const routingDecisionSchema = z.object({
   reason: z.string().trim().min(1).max(280).optional(),
 })
 
-export type AdminChatMessage = z.infer<typeof adminChatMessageSchema>
 export type AdminChatAgent = z.infer<typeof routingDecisionSchema>['agent']
+export type AdminChatMessage = {
+  role: 'user' | 'assistant'
+  content: string
+  agent?: AdminChatAgent
+}
+
+export type AdminChatSessionSummary = {
+  id: string
+  name: string | null
+  label: string
+  preview: string | null
+  createdAt: string
+  updatedAt: string
+  messageCount: number
+}
+
+export type AdminChatSessionDetail = {
+  session: AdminChatSessionSummary
+  messages: AdminChatMessage[]
+}
+
+export type AdminChatPromptResponse = AdminChatSessionDetail & {
+  agent: AdminChatAgent
+  reason?: string
+}
 
 type RoutingDecision = z.infer<typeof routingDecisionSchema>
 

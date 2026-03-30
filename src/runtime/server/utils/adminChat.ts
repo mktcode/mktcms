@@ -1,6 +1,7 @@
 import { createError } from 'h3'
 import { useRuntimeConfig } from 'nitropack/runtime'
-import { parseRoutingDecision, type AdminChatMessage } from './adminChatShared'
+import { appendAdminChatTurnMetadata, getAdminChatSessionDetail, maybeNameAdminChatSession, openAdminChatSessionManager } from './adminChatSessions'
+import { parseRoutingDecision, type AdminChatMessage, type AdminChatPromptResponse } from './adminChatShared'
 import { runPiPrompt } from './piAgentRunner'
 
 type AdminChatRuntimeConfig = ReturnType<typeof useRuntimeConfig> & {
@@ -40,22 +41,22 @@ function buildTranscript(messages: AdminChatMessage[]) {
     .join('\n\n')
 }
 
-function getLatestUserMessage(messages: AdminChatMessage[]) {
-  return [...messages].reverse().find(message => message.role === 'user')?.content.trim() || ''
-}
-
-export async function runAdminChat(messages: AdminChatMessage[]) {
-  const latestUserMessage = getLatestUserMessage(messages)
+export async function promptAdminChatSession(sessionId: string, prompt: string): Promise<AdminChatPromptResponse> {
+  const latestUserMessage = prompt.trim()
 
   if (!latestUserMessage) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Chat history must include a user message',
+      statusMessage: 'Prompt must not be empty',
     })
   }
 
   const { mktcms: { openaiModel, openaiApiKey } } = useRuntimeConfig() as AdminChatRuntimeConfig
-  const transcript = buildTranscript(messages)
+  const detail = await getAdminChatSessionDetail(sessionId)
+  const transcript = buildTranscript([...detail.messages, {
+    role: 'user',
+    content: latestUserMessage,
+  }])
 
   const cwd = process.cwd()
   const provider = 'openai'
@@ -72,14 +73,20 @@ export async function runAdminChat(messages: AdminChatMessage[]) {
 
   const routingDecision = parseRoutingDecision(routingText, latestUserMessage)
 
+  const sessionManager = await openAdminChatSessionManager(sessionId)
   const message = await runPiPrompt({
     cwd,
     provider,
     modelId: openaiModel,
     apiKey: openaiApiKey,
     systemPrompt: routingDecision.agent === 'coding' ? CODING_INSTRUCTIONS : CONVERSATION_INSTRUCTIONS,
-    prompt: transcript,
+    prompt: latestUserMessage,
     tools: routingDecision.agent === 'coding' ? 'coding' : 'none',
+    sessionManager,
+    onComplete: (session) => {
+      appendAdminChatTurnMetadata(session.sessionManager, routingDecision.agent)
+      maybeNameAdminChatSession(session.sessionManager, latestUserMessage)
+    },
   })
 
   if (!message.trim()) {
@@ -89,9 +96,11 @@ export async function runAdminChat(messages: AdminChatMessage[]) {
     })
   }
 
+  const updatedDetail = await getAdminChatSessionDetail(sessionId)
+
   return {
+    ...updatedDetail,
     agent: routingDecision.agent,
     reason: routingDecision.reason,
-    message: message.trim(),
   }
 }

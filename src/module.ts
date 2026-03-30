@@ -118,6 +118,19 @@ export default defineNuxtModule({
       method: 'post',
       handler: resolver.resolve('./runtime/server/api/admin/chat.post'),
     })
+    addServerHandler({
+      route: '/api/admin/chat/sessions',
+      handler: resolver.resolve('./runtime/server/api/admin/chat/sessions.get'),
+    })
+    addServerHandler({
+      route: '/api/admin/chat/sessions',
+      method: 'post',
+      handler: resolver.resolve('./runtime/server/api/admin/chat/sessions.post'),
+    })
+    addServerHandler({
+      route: '/api/admin/chat/sessions/:id',
+      handler: resolver.resolve('./runtime/server/api/admin/chat/sessions/[id].get'),
+    })
 
     // List
     addServerHandler({

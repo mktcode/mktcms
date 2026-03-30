@@ -238,6 +238,82 @@
     box-shadow: var(--shadow-ambient);
   }
 
+  .chat-session-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.875rem;
+    padding: 0.875rem 1rem;
+    margin: 0 0.75rem 0.75rem;
+    background-color: var(--color-ds-surface-container-low);
+    border-radius: 1rem;
+  }
+
+  .chat-session-copy {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    gap: 0.2rem;
+  }
+
+  .chat-session-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-ds-on-surface-variant);
+  }
+
+  .chat-session-preview {
+    font-size: 0.875rem;
+    color: var(--color-ds-on-surface);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .chat-session-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    min-width: min(100%, 27rem);
+    justify-content: flex-end;
+  }
+
+  .chat-session-select {
+    flex: 1;
+    min-width: 0;
+    height: 2.75rem;
+    padding: 0 0.875rem;
+    border: none;
+    border-radius: 0.875rem;
+    background-color: white;
+    color: var(--color-ds-on-surface);
+    box-shadow: 0 0 0 1px rgba(169, 180, 185, 0.15);
+  }
+
+  .chat-session-select:focus {
+    outline: 2px solid rgba(80, 97, 105, 0.4);
+    outline-offset: 1px;
+  }
+
+  .chat-session-new {
+    height: 2.75rem;
+    padding: 0 1rem;
+    border: none;
+    border-radius: 0.875rem;
+    background-color: var(--color-ds-surface-container-highest);
+    color: var(--color-ds-on-surface);
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  .chat-session-new:disabled,
+  .chat-input-icon:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
   .chat-input-icon {
     display: flex;
     align-items: center;
@@ -339,6 +415,24 @@
       height: 2.5rem;
     }
 
+
+  @media (max-width: 767px) {
+    .chat-session-bar {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .chat-session-actions {
+      min-width: 0;
+      width: 100%;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .chat-session-new {
+      width: 100%;
+    }
+  }
     .chat-input-bar {
       margin: 0 1rem 1rem;
       bottom: 1rem;

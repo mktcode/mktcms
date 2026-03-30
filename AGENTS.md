@@ -5,10 +5,11 @@ These notes are for this repository only. The main working directory is `src/`.
 ## Project-specific architecture
 
 - This module mounts Nitro storage namespace `content` to `./.storage` (filesystem driver). Content APIs and admin flows depend on this mount.
+- Admin chat persists project-local pi session files under `./.pi/admin-chat/sessions` and treats the server as the source of truth for chat history.
 - Internal content paths are **storage keys**, not filesystem paths. Nested segments are colon-delimited (for example `Articles:Post.md`).
 - Public/admin route contracts are fixed and coupled to UI + middleware:
   - Admin UI: `/admin`, `/admin/login`, `/admin/new`, `/admin/edit/file/:path`, `/admin/edit/markdown/:path`, `/admin/delete/:path`
-  - Admin API: `/api/admin/*`
+  - Admin API: `/api/admin/*`, including chat endpoints `/api/admin/chat`, `/api/admin/chat/sessions`, and `/api/admin/chat/sessions/:id`
   - Public content API: `/api/content/list`, `/api/content/:path`
 - Admin content views now render inside a shared workspace shell with the file explorer/sidebar intact; avoid reintroducing standalone boxed/fullscreen page wrappers for `/admin/new` or `/admin/edit/*`.
 
@@ -24,6 +25,7 @@ These notes are for this repository only. The main working directory is `src/`.
 - Middleware allows only login routes unauthenticated; all other `/admin` and `/api/admin` paths require cookie `mktcms_admin_auth_key` matching `runtimeConfig.mktcms.adminAuthKey`.
 - API auth failures return `401`; UI failures redirect to `/admin/login`.
 - Login rate limiting is in-memory and IP-based (`runtime/server/utils/loginRateLimit.ts`). Preserve this behavior unless intentionally redesigning deployment semantics.
+- Admin chat sessions are shared across authenticated admin browsers because auth is currently a single shared admin identity, not a per-user account model.
 
 ## Content API contracts
 
@@ -50,6 +52,7 @@ These notes are for this repository only. The main working directory is `src/`.
 
 - Frontend path params for nested content use `:` separators (see `usePathParam.ts` and admin pages).
 - `useFileType` + extension helpers are the source of truth for editor/file treatment.
+- Admin chat UI stores only lightweight client preferences such as the last selected session id; persisted transcript continuity belongs to the server-side pi session files.
 
 ## UI/Design
 

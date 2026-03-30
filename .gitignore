@@ -27,6 +27,9 @@ dist
 # Env
 .env
 
+# Admin chat runtime sessions
+.pi/admin-chat/
+
 # Testing
 reports
 coverage

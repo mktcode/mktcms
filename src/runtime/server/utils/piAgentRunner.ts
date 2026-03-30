@@ -1,6 +1,7 @@
 import { createError } from 'h3'
 import {
   AuthStorage,
+  type AgentSession,
   createAgentSession,
   createCodingTools,
   DefaultResourceLoader,
@@ -20,6 +21,8 @@ type PiPromptOptions = {
   prompt: string
   maxChars?: number
   tools?: 'none' | 'readOnly' | 'coding'
+  sessionManager?: SessionManager
+  onComplete?: (session: AgentSession) => Promise<void> | void
 }
 
 function extractLastAssistantText(messages: any[]) {
@@ -55,6 +58,8 @@ export async function runPiPrompt(options: PiPromptOptions) {
     prompt,
     maxChars = 20000,
     tools = 'none',
+    sessionManager,
+    onComplete,
   } = options
 
   if (!apiKey) {
@@ -103,7 +108,7 @@ export async function runPiPrompt(options: PiPromptOptions) {
     thinkingLevel: 'off',
     tools: toolList,
     resourceLoader,
-    sessionManager: SessionManager.inMemory(),
+    sessionManager: sessionManager || SessionManager.inMemory(),
     settingsManager,
   })
 
@@ -116,6 +121,10 @@ export async function runPiPrompt(options: PiPromptOptions) {
 
   try {
     await session.prompt(prompt)
+
+    if (onComplete) {
+      await onComplete(session)
+    }
 
     const text = (collected || extractLastAssistantText(session.messages as any[])).trim()
     return text.length > maxChars ? text.slice(0, maxChars) : text

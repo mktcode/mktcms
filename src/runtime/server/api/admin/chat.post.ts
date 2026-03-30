@@ -1,12 +1,12 @@
 import { createError, defineEventHandler, readValidatedBody } from 'h3'
-import { runAdminChat } from '../../utils/adminChat'
-import { adminChatRequestSchema } from '../../utils/adminChatShared'
+import { promptAdminChatSession } from '../../utils/adminChat'
+import { adminChatPromptRequestSchema } from '../../utils/adminChatShared'
 
 export default defineEventHandler(async (event) => {
-  const { messages } = await readValidatedBody(event, body => adminChatRequestSchema.parse(body))
+  const { sessionId, prompt } = await readValidatedBody(event, body => adminChatPromptRequestSchema.parse(body))
 
   try {
-    return await runAdminChat(messages)
+    return await promptAdminChatSession(sessionId, prompt)
   }
   catch (error) {
     if (error && typeof error === 'object' && 'statusCode' in error) {
