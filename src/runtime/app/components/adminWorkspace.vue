@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, useSlots, computed } from 'vue'
-import { useRuntimeConfig } from '#imports'
 import Header from './header.vue'
 import Content from './content/index.vue'
 import Stats from './content/stats.vue'
