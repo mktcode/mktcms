@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.3.18
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.3.17...v0.3.18)
+
+### 🚀 Enhancements
+
+- Add module defaults and new dependencies ([dbe5145](https://github.com/mktcode/mktcms/commit/dbe5145))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.3.17
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.3.16...v0.3.17)
