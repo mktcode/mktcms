@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import TurndownService from 'turndown'
 import type * as Monaco from 'monaco-editor'
 
 import 'monaco-editor/min/vs/editor/editor.main.css'
@@ -27,6 +28,53 @@ const rootEl = ref<HTMLElement | null>(null)
 let editor: Monaco.editor.IStandaloneCodeEditor | undefined
 let resizeObserver: ResizeObserver | undefined
 let suppressModelEmit = false
+
+const turndownService = new TurndownService({
+  headingStyle: 'atx',
+  codeBlockStyle: 'fenced',
+  bulletListMarker: '-',
+})
+
+// Office/LibreOffice clipboard HTML often contains document CSS like
+// `@page { ... } p { ... }` inside <style> tags. Turndown would otherwise
+// turn that CSS text into Markdown, so drop non-content tags before converting.
+turndownService.remove(['style', 'script', 'meta', 'link'])
+
+function insertMarkdown(markdown: string) {
+  if (!editor)
+    return
+
+  const selections = editor.getSelections()
+  if (!selections?.length)
+    return
+
+  editor.pushUndoStop()
+  editor.executeEdits('paste-html-as-markdown', selections.map(selection => ({
+    range: selection,
+    text: markdown,
+    forceMoveMarkers: true,
+  })))
+  editor.pushUndoStop()
+  editor.focus()
+}
+
+function handlePaste(event: ClipboardEvent) {
+  if (!editor?.hasTextFocus())
+    return
+
+  const html = event.clipboardData?.getData('text/html')
+  if (!html)
+    return
+
+  const markdown = turndownService.turndown(html).trim()
+  if (!markdown)
+    return
+
+  event.preventDefault()
+  event.stopPropagation()
+
+  insertMarkdown(markdown)
+}
 
 function ensureMonacoWorkers() {
   const globalAny = globalThis as any
@@ -64,6 +112,11 @@ onMounted(() => {
     emit('update:modelValue', editor.getValue())
   })
 
+  // Monaco handles paste on an internal textarea, which might not dispatch
+  // through the component root. Listen at document capture phase so we see the
+  // raw ClipboardEvent before Monaco consumes it.
+  document.addEventListener('paste', handlePaste, true)
+
   resizeObserver = new ResizeObserver(() => {
     editor?.layout()
   })
@@ -90,6 +143,8 @@ watch(() => props.modelValue, (nextValue) => {
 onBeforeUnmount(() => {
   resizeObserver?.disconnect()
   resizeObserver = undefined
+
+  document.removeEventListener('paste', handlePaste, true)
 
   editor?.dispose()
   editor = undefined
