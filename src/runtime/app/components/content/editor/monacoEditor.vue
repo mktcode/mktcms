@@ -29,16 +29,163 @@ let editor: Monaco.editor.IStandaloneCodeEditor | undefined
 let resizeObserver: ResizeObserver | undefined
 let suppressModelEmit = false
 
+const allowedPasteElementNames = new Set([
+  'a',
+  'b',
+  'blockquote',
+  'br',
+  'em',
+  'h1',
+  'h2',
+  'h3',
+  'h4',
+  'h5',
+  'h6',
+  'i',
+  'li',
+  'ol',
+  'p',
+  'strong',
+  'ul',
+])
+
+const removablePasteElementNames = new Set([
+  'applet',
+  'area',
+  'audio',
+  'button',
+  'canvas',
+  'caption',
+  'col',
+  'colgroup',
+  'embed',
+  'figcaption',
+  'figure',
+  'form',
+  'hr',
+  'iframe',
+  'img',
+  'input',
+  'link',
+  'map',
+  'math',
+  'meta',
+  'noscript',
+  'object',
+  'option',
+  'picture',
+  'script',
+  'select',
+  'source',
+  'style',
+  'svg',
+  'table',
+  'tbody',
+  'td',
+  'textarea',
+  'tfoot',
+  'th',
+  'thead',
+  'title',
+  'tr',
+  'track',
+  'video',
+])
+
 const turndownService = new TurndownService({
   headingStyle: 'atx',
   codeBlockStyle: 'fenced',
   bulletListMarker: '-',
 })
 
-// Office/LibreOffice clipboard HTML often contains document CSS like
-// `@page { ... } p { ... }` inside <style> tags. Turndown would otherwise
-// turn that CSS text into Markdown, so drop non-content tags before converting.
-turndownService.remove(['style', 'script', 'meta', 'link'])
+// Some unwanted tags have built-in Turndown rules, e.g. <img> -> ![](src).
+// Add a higher-priority removal rule as a safety net in addition to sanitizing
+// the pasted HTML before conversion.
+turndownService.addRule('removeUnsupportedPasteElements', {
+  filter: node => removablePasteElementNames.has(node.nodeName.toLowerCase()) || node.nodeName.includes(':'),
+  replacement: () => '',
+})
+
+function unwrapElement(element: Element) {
+  const parent = element.parentNode
+  if (!parent)
+    return
+
+  while (element.firstChild)
+    parent.insertBefore(element.firstChild, element)
+
+  parent.removeChild(element)
+}
+
+function isSafeHref(href: string) {
+  if (!href.trim())
+    return false
+
+  try {
+    const url = new URL(href, window.location.origin)
+
+    return ['http:', 'https:', 'mailto:', 'tel:'].includes(url.protocol)
+  }
+  catch {
+    return false
+  }
+}
+
+function sanitizePastedHtml(html: string) {
+  const clipboardDocument = new DOMParser().parseFromString(html, 'text/html')
+
+  const comments = clipboardDocument.createTreeWalker(clipboardDocument.body, NodeFilter.SHOW_COMMENT)
+  const commentsToRemove: Comment[] = []
+  while (comments.nextNode())
+    commentsToRemove.push(comments.currentNode as Comment)
+
+  for (const comment of commentsToRemove)
+    comment.remove()
+
+  const elements = Array.from(clipboardDocument.body.querySelectorAll('*'))
+  for (const element of elements) {
+    if (!element.isConnected)
+      continue
+
+    const tagName = element.tagName.toLowerCase()
+    const inlineStyle = element.getAttribute('style') ?? ''
+
+    if (/display\s*:\s*none/i.test(inlineStyle) || /mso-hide\s*:\s*all/i.test(inlineStyle)) {
+      element.remove()
+      continue
+    }
+
+    if (tagName.includes(':') || removablePasteElementNames.has(tagName)) {
+      element.remove()
+      continue
+    }
+
+    if (tagName === 'a') {
+      const href = element.getAttribute('href') ?? ''
+      if (!isSafeHref(href)) {
+        unwrapElement(element)
+        continue
+      }
+
+      for (const attribute of Array.from(element.attributes)) {
+        if (attribute.name !== 'href')
+          element.removeAttribute(attribute.name)
+      }
+
+      continue
+    }
+
+    if (!allowedPasteElementNames.has(tagName)) {
+      unwrapElement(element)
+      continue
+    }
+
+    for (const attribute of Array.from(element.attributes))
+      element.removeAttribute(attribute.name)
+  }
+
+  return clipboardDocument.body
+}
 
 function insertMarkdown(markdown: string) {
   if (!editor)
@@ -66,7 +213,7 @@ function handlePaste(event: ClipboardEvent) {
   if (!html)
     return
 
-  const markdown = turndownService.turndown(html).trim()
+  const markdown = turndownService.turndown(sanitizePastedHtml(html)).trim()
   if (!markdown)
     return
 
