@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.3.19
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.3.18...v0.3.19)
+
+### 🚀 Enhancements
+
+- Extend uiHint to include 'media' and update related logic ([e7742b7](https://github.com/mktcode/mktcms/commit/e7742b7))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.3.18
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.3.17...v0.3.18)
