@@ -224,9 +224,26 @@ function toContentUrl(path: string) {
   return `/api/content/${encodeURIComponent(path)}`
 }
 
-function toMarkdownFileReference(path: string) {
-  const label = escapeMarkdownLabel(filenameWithoutExtension(path))
-  const url = toContentUrl(path)
+function selectedText(selection: Monaco.Selection) {
+  return editor?.getModel()?.getValueInRange(selection) ?? ''
+}
+
+function linkLabelFromSelection(selection: Monaco.Selection | undefined) {
+  if (!selection || selection.isEmpty())
+    return undefined
+
+  const text = selectedText(selection).replace(/\s+/g, ' ').trim()
+
+  return text || undefined
+}
+
+function toMarkdownLinkDestination(url: string) {
+  return `<${url.replaceAll('>', '%3E')}>`
+}
+
+function toMarkdownFileReference(path: string, customLabel?: string) {
+  const label = escapeMarkdownLabel(customLabel ?? filenameWithoutExtension(path))
+  const url = toMarkdownLinkDestination(toContentUrl(path))
 
   if (isImagePath(path))
     return `![${label}](${url})`
@@ -244,8 +261,113 @@ function openFilePicker() {
 }
 
 function insertSelectedFile(path: string) {
-  insertMarkdown(toMarkdownFileReference(path), pendingFileInsertionSelection ? [pendingFileInsertionSelection] : undefined)
+  const label = linkLabelFromSelection(pendingFileInsertionSelection)
+  insertMarkdown(toMarkdownFileReference(path, label), pendingFileInsertionSelection ? [pendingFileInsertionSelection] : undefined)
   pendingFileInsertionSelection = undefined
+}
+
+function isSafeMarkdownHref(href: string) {
+  if (!href.trim())
+    return false
+
+  try {
+    const url = new URL(href, window.location.origin)
+
+    return ['http:', 'https:', 'mailto:', 'tel:'].includes(url.protocol)
+  }
+  catch {
+    return false
+  }
+}
+
+function contextSelection() {
+  return pendingFileInsertionSelection ?? editor?.getSelection() ?? undefined
+}
+
+function contextSelectionText(placeholder: string) {
+  const selection = contextSelection()
+  if (!selection || selection.isEmpty())
+    return placeholder
+
+  return selectedText(selection) || placeholder
+}
+
+function insertAtContextSelection(markdown: string) {
+  const selection = contextSelection()
+  insertMarkdown(markdown, selection ? [selection] : undefined)
+  pendingFileInsertionSelection = undefined
+}
+
+function addLinkToSelection() {
+  const label = linkLabelFromSelection(contextSelection()) ?? 'Linktext'
+
+  closeContextMenu()
+
+  const href = window.prompt('Link eingeben')?.trim()
+  if (!href)
+    return
+
+  if (!isSafeMarkdownHref(href)) {
+    window.alert('Bitte einen gültigen Link eingeben.')
+    return
+  }
+
+  insertAtContextSelection(`[${escapeMarkdownLabel(label)}](${toMarkdownLinkDestination(href)})`)
+}
+
+function addHeadingToSelection() {
+  const text = contextSelectionText('Überschrift')
+  const markdown = text
+    .split(/\r?\n/)
+    .map((line) => {
+      const headingText = line.replace(/^\s*#{1,6}\s*/, '').trim()
+
+      return headingText ? `## ${headingText}` : line
+    })
+    .join('\n')
+
+  closeContextMenu()
+  insertAtContextSelection(markdown)
+}
+
+function addBoldToSelection() {
+  closeContextMenu()
+  insertAtContextSelection(`**${contextSelectionText('Text')}**`)
+}
+
+function addItalicToSelection() {
+  closeContextMenu()
+  insertAtContextSelection(`*${contextSelectionText('Text')}*`)
+}
+
+function addListToSelection() {
+  const text = contextSelectionText('Listenpunkt')
+  const markdown = text
+    .split(/\r?\n/)
+    .map((line) => {
+      const listItemText = line.replace(/^\s*(?:[-*+]|\d+\.)\s+/, '').trim()
+
+      return listItemText ? `- ${listItemText}` : line
+    })
+    .join('\n')
+
+  closeContextMenu()
+  insertAtContextSelection(markdown)
+}
+
+function addNumberedListToSelection() {
+  const text = contextSelectionText('Listenpunkt')
+  const markdown = text
+    .split(/\r?\n/)
+    .map((line, index) => {
+      const listItemText = line.replace(/^\s*(?:[-*+]|\d+\.)\s+/, '').trim()
+
+      return listItemText ? `${index + 1}. ${listItemText}` : line
+    })
+    .join('\n')
+
+  closeContextMenu()
+  insertAtContextSelection(markdown)
 }
 
 function getMouseTargetPosition(event: MouseEvent) {
@@ -265,7 +387,16 @@ function handleContextMenu(event: MouseEvent) {
   event.stopPropagation()
 
   const position = getMouseTargetPosition(event)
-  if (position) {
+  const currentSelection = editor.getSelection() ?? undefined
+  const shouldKeepSelection = !!position
+    && !!currentSelection
+    && !currentSelection.isEmpty()
+    && monaco.Range.containsPosition(currentSelection, position)
+
+  if (shouldKeepSelection) {
+    pendingFileInsertionSelection = currentSelection
+  }
+  else if (position) {
     pendingFileInsertionSelection = new monaco.Selection(
       position.lineNumber,
       position.column,
@@ -275,7 +406,7 @@ function handleContextMenu(event: MouseEvent) {
     editor.setPosition(position)
   }
   else {
-    pendingFileInsertionSelection = editor.getSelection() ?? undefined
+    pendingFileInsertionSelection = currentSelection
   }
 
   contextMenuPosition.value = {
@@ -411,7 +542,7 @@ onBeforeUnmount(() => {
     <div
       v-if="isContextMenuOpen"
       data-monaco-custom-context-menu
-      class="fixed z-9999 min-w-48 rounded-md border border-black/10 bg-white p-1 shadow-[0_8px_24px_rgba(0,0,0,0.18)]"
+      class="fixed z-9999 min-w-64 rounded-xl border border-black/10 bg-white p-2 shadow-[0_12px_32px_rgba(0,0,0,0.22)] ring-1 ring-black/5"
       :style="{
         left: `${contextMenuPosition.x}px`,
         top: `${contextMenuPosition.y}px`,
@@ -420,11 +551,74 @@ onBeforeUnmount(() => {
     >
       <button
         type="button"
-        class="w-full rounded px-3 py-2 text-left text-sm hover:bg-gray-100"
+        class="group flex w-full items-center gap-2 rounded-lg px-2 py-2 text-left text-sm transition-colors hover:bg-gray-100"
+        role="menuitem"
+        @click="addLinkToSelection"
+      >
+        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-gray-500 group-hover:bg-white">↗</span>
+        <span>Link hinzufügen</span>
+      </button>
+
+      <button
+        type="button"
+        class="group flex w-full items-center gap-2 rounded-lg px-2 py-2 text-left text-sm transition-colors hover:bg-gray-100"
+        role="menuitem"
+        @click="addHeadingToSelection"
+      >
+        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-xs font-bold text-gray-500 group-hover:bg-white">H2</span>
+        <span>Überschrift</span>
+      </button>
+
+      <button
+        type="button"
+        class="group flex w-full items-center gap-2 rounded-lg px-2 py-2 text-left text-sm transition-colors hover:bg-gray-100"
+        role="menuitem"
+        @click="addBoldToSelection"
+      >
+        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 font-bold text-gray-500 group-hover:bg-white">B</span>
+        <span>Fett</span>
+      </button>
+
+      <button
+        type="button"
+        class="group flex w-full items-center gap-2 rounded-lg px-2 py-2 text-left text-sm transition-colors hover:bg-gray-100"
+        role="menuitem"
+        @click="addItalicToSelection"
+      >
+        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 italic text-gray-500 group-hover:bg-white">I</span>
+        <span>Kursiv</span>
+      </button>
+
+      <button
+        type="button"
+        class="group flex w-full items-center gap-2 rounded-lg px-2 py-2 text-left text-sm transition-colors hover:bg-gray-100"
+        role="menuitem"
+        @click="addListToSelection"
+      >
+        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-gray-500 group-hover:bg-white">•</span>
+        <span>Aufzählung</span>
+      </button>
+
+      <button
+        type="button"
+        class="group flex w-full items-center gap-2 rounded-lg px-2 py-2 text-left text-sm transition-colors hover:bg-gray-100"
+        role="menuitem"
+        @click="addNumberedListToSelection"
+      >
+        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-xs font-medium text-gray-500 group-hover:bg-white">1.</span>
+        <span>Nummerierte Liste</span>
+      </button>
+
+      <div class="my-2 border-t border-gray-100" />
+
+      <button
+        type="button"
+        class="group flex w-full items-center gap-2 rounded-lg px-2 py-2 text-left text-sm transition-colors hover:bg-gray-100"
         role="menuitem"
         @click="openFilePicker"
       >
-        Datei auswählen
+        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-gray-500 group-hover:bg-white">📎</span>
+        <span>Datei auswählen</span>
       </button>
     </div>
 
