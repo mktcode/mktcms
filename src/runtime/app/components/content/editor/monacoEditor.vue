@@ -2,6 +2,8 @@
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import TurndownService from 'turndown'
 import type * as Monaco from 'monaco-editor'
+import FilePickerModal from './frontmatter/filePicker/modal.vue'
+import { isImagePath } from '../../../../shared/contentFiles'
 
 import 'monaco-editor/min/vs/editor/editor.main.css'
 import 'monaco-editor/esm/vs/basic-languages/markdown/markdown.contribution.js'
@@ -24,8 +26,12 @@ const emit = defineEmits<{
 }>()
 
 const rootEl = ref<HTMLElement | null>(null)
+const isFilePickerOpen = ref(false)
+const isContextMenuOpen = ref(false)
+const contextMenuPosition = ref({ x: 0, y: 0 })
 
 let editor: Monaco.editor.IStandaloneCodeEditor | undefined
+let pendingFileInsertionSelection: Monaco.Selection | undefined
 let resizeObserver: ResizeObserver | undefined
 let suppressModelEmit = false
 
@@ -187,22 +193,112 @@ function sanitizePastedHtml(html: string) {
   return clipboardDocument.body
 }
 
-function insertMarkdown(markdown: string) {
-  if (!editor)
-    return
-
-  const selections = editor.getSelections()
-  if (!selections?.length)
+function insertMarkdown(markdown: string, selections = editor?.getSelections()) {
+  if (!editor || !selections?.length)
     return
 
   editor.pushUndoStop()
-  editor.executeEdits('paste-html-as-markdown', selections.map(selection => ({
+  editor.executeEdits('insert-markdown', selections.map(selection => ({
     range: selection,
     text: markdown,
     forceMoveMarkers: true,
   })))
   editor.pushUndoStop()
   editor.focus()
+}
+
+function escapeMarkdownLabel(label: string) {
+  return label
+    .replaceAll('\\', '\\\\')
+    .replaceAll('[', '\\[')
+    .replaceAll(']', '\\]')
+}
+
+function filenameWithoutExtension(path: string) {
+  const filename = path.split(':').at(-1) ?? path
+
+  return filename.replace(/\.[^/.]+$/, '')
+}
+
+function toContentUrl(path: string) {
+  return `/api/content/${encodeURIComponent(path)}`
+}
+
+function toMarkdownFileReference(path: string) {
+  const label = escapeMarkdownLabel(filenameWithoutExtension(path))
+  const url = toContentUrl(path)
+
+  if (isImagePath(path))
+    return `![${label}](${url})`
+
+  return `[${label}](${url})`
+}
+
+function closeContextMenu() {
+  isContextMenuOpen.value = false
+}
+
+function openFilePicker() {
+  closeContextMenu()
+  isFilePickerOpen.value = true
+}
+
+function insertSelectedFile(path: string) {
+  insertMarkdown(toMarkdownFileReference(path), pendingFileInsertionSelection ? [pendingFileInsertionSelection] : undefined)
+  pendingFileInsertionSelection = undefined
+}
+
+function getMouseTargetPosition(event: MouseEvent) {
+  const target = editor?.getTargetAtClientPoint(event.clientX, event.clientY)
+
+  if (target && 'position' in target && target.position)
+    return target.position
+
+  return undefined
+}
+
+function handleContextMenu(event: MouseEvent) {
+  if (!editor || !rootEl.value?.contains(event.target as Node))
+    return
+
+  event.preventDefault()
+  event.stopPropagation()
+
+  const position = getMouseTargetPosition(event)
+  if (position) {
+    pendingFileInsertionSelection = new monaco.Selection(
+      position.lineNumber,
+      position.column,
+      position.lineNumber,
+      position.column,
+    )
+    editor.setPosition(position)
+  }
+  else {
+    pendingFileInsertionSelection = editor.getSelection() ?? undefined
+  }
+
+  contextMenuPosition.value = {
+    x: event.clientX,
+    y: event.clientY,
+  }
+  isContextMenuOpen.value = true
+}
+
+function handleDocumentClick(event: MouseEvent) {
+  if (!isContextMenuOpen.value)
+    return
+
+  const target = event.target as HTMLElement
+  if (target.closest('[data-monaco-custom-context-menu]'))
+    return
+
+  closeContextMenu()
+}
+
+function handleDocumentKeydown(event: KeyboardEvent) {
+  if (event.key === 'Escape')
+    closeContextMenu()
 }
 
 function handlePaste(event: ClipboardEvent) {
@@ -250,6 +346,7 @@ onMounted(() => {
     scrollBeyondLastLine: false,
     wordWrap: 'on',
     automaticLayout: true,
+    contextmenu: false,
   })
 
   editor.onDidChangeModelContent(() => {
@@ -263,6 +360,9 @@ onMounted(() => {
   // through the component root. Listen at document capture phase so we see the
   // raw ClipboardEvent before Monaco consumes it.
   document.addEventListener('paste', handlePaste, true)
+  document.addEventListener('contextmenu', handleContextMenu, true)
+  document.addEventListener('click', handleDocumentClick, true)
+  document.addEventListener('keydown', handleDocumentKeydown, true)
 
   resizeObserver = new ResizeObserver(() => {
     editor?.layout()
@@ -292,6 +392,9 @@ onBeforeUnmount(() => {
   resizeObserver = undefined
 
   document.removeEventListener('paste', handlePaste, true)
+  document.removeEventListener('contextmenu', handleContextMenu, true)
+  document.removeEventListener('click', handleDocumentClick, true)
+  document.removeEventListener('keydown', handleDocumentKeydown, true)
 
   editor?.dispose()
   editor = undefined
@@ -299,8 +402,37 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div
-    ref="rootEl"
-    class="w-full"
-  />
+  <div class="relative w-full h-full">
+    <div
+      ref="rootEl"
+      class="w-full h-full"
+    />
+
+    <div
+      v-if="isContextMenuOpen"
+      data-monaco-custom-context-menu
+      class="fixed z-9999 min-w-48 rounded-md border border-black/10 bg-white p-1 shadow-[0_8px_24px_rgba(0,0,0,0.18)]"
+      :style="{
+        left: `${contextMenuPosition.x}px`,
+        top: `${contextMenuPosition.y}px`,
+      }"
+      role="menu"
+    >
+      <button
+        type="button"
+        class="w-full rounded px-3 py-2 text-left text-sm hover:bg-gray-100"
+        role="menuitem"
+        @click="openFilePicker"
+      >
+        Datei auswählen
+      </button>
+    </div>
+
+    <FilePickerModal
+      :is-open="isFilePickerOpen"
+      ui-hint="media"
+      @close="isFilePickerOpen = false"
+      @select="insertSelectedFile"
+    />
+  </div>
 </template>

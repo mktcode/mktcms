@@ -10,7 +10,7 @@ const props = defineProps<{
   path: string
   name: string
   level: number
-  uiHint: 'image' | 'pdf' | 'file'
+  uiHint: 'image' | 'pdf' | 'file' | 'media'
 }>()
 
 const emit = defineEmits<{

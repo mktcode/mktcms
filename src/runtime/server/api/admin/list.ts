@@ -10,7 +10,7 @@ function alphaSort(a: string, b: string) {
 
 const querySchema = z.object({
   path: z.string().optional(),
-  type: z.enum(['image', 'pdf', 'file']).optional(),
+  type: z.enum(['image', 'pdf', 'file', 'media']).optional(),
 })
 
 export default defineEventHandler(async (event) => {
@@ -28,6 +28,10 @@ export default defineEventHandler(async (event) => {
 
     if (type === 'pdf') {
       return isPdfPath(key)
+    }
+
+    if (type === 'media') {
+      return isImagePath(key) || isPdfPath(key)
     }
 
     return true

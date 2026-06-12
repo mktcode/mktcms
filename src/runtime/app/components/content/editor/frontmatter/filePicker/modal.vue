@@ -6,7 +6,7 @@ import PickerNode from './node.vue'
 
 const props = defineProps<{
   isOpen: boolean
-  uiHint: 'image' | 'pdf' | 'file'
+  uiHint: 'image' | 'pdf' | 'file' | 'media'
 }>()
 
 const emit = defineEmits<{
