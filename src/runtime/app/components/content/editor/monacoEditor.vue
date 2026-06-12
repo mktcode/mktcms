@@ -542,7 +542,7 @@ onBeforeUnmount(() => {
     <div
       v-if="isContextMenuOpen"
       data-monaco-custom-context-menu
-      class="fixed z-9999 min-w-64 rounded-xl border border-black/10 bg-white p-2 shadow-[0_12px_32px_rgba(0,0,0,0.22)] ring-1 ring-black/5"
+      class="mktcms-editor-context-menu fixed z-9999"
       :style="{
         left: `${contextMenuPosition.x}px`,
         top: `${contextMenuPosition.y}px`,
@@ -551,73 +551,73 @@ onBeforeUnmount(() => {
     >
       <button
         type="button"
-        class="group flex w-full items-center gap-2 rounded-lg px-2 py-2 text-left text-sm transition-colors hover:bg-gray-100"
+        class="mktcms-editor-context-menu-button"
         role="menuitem"
         @click="addLinkToSelection"
       >
-        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-gray-500 group-hover:bg-white">↗</span>
+        <span class="mktcms-editor-context-menu-icon">↗</span>
         <span>Link hinzufügen</span>
       </button>
 
       <button
         type="button"
-        class="group flex w-full items-center gap-2 rounded-lg px-2 py-2 text-left text-sm transition-colors hover:bg-gray-100"
+        class="mktcms-editor-context-menu-button"
         role="menuitem"
         @click="addHeadingToSelection"
       >
-        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-xs font-bold text-gray-500 group-hover:bg-white">H2</span>
+        <span class="mktcms-editor-context-menu-icon text-xs font-bold">H2</span>
         <span>Überschrift</span>
       </button>
 
       <button
         type="button"
-        class="group flex w-full items-center gap-2 rounded-lg px-2 py-2 text-left text-sm transition-colors hover:bg-gray-100"
+        class="mktcms-editor-context-menu-button"
         role="menuitem"
         @click="addBoldToSelection"
       >
-        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 font-bold text-gray-500 group-hover:bg-white">B</span>
+        <span class="mktcms-editor-context-menu-icon font-bold">B</span>
         <span>Fett</span>
       </button>
 
       <button
         type="button"
-        class="group flex w-full items-center gap-2 rounded-lg px-2 py-2 text-left text-sm transition-colors hover:bg-gray-100"
+        class="mktcms-editor-context-menu-button"
         role="menuitem"
         @click="addItalicToSelection"
       >
-        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 italic text-gray-500 group-hover:bg-white">I</span>
+        <span class="mktcms-editor-context-menu-icon italic">I</span>
         <span>Kursiv</span>
       </button>
 
       <button
         type="button"
-        class="group flex w-full items-center gap-2 rounded-lg px-2 py-2 text-left text-sm transition-colors hover:bg-gray-100"
+        class="mktcms-editor-context-menu-button"
         role="menuitem"
         @click="addListToSelection"
       >
-        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-gray-500 group-hover:bg-white">•</span>
+        <span class="mktcms-editor-context-menu-icon">•</span>
         <span>Aufzählung</span>
       </button>
 
       <button
         type="button"
-        class="group flex w-full items-center gap-2 rounded-lg px-2 py-2 text-left text-sm transition-colors hover:bg-gray-100"
+        class="mktcms-editor-context-menu-button"
         role="menuitem"
         @click="addNumberedListToSelection"
       >
-        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-xs font-medium text-gray-500 group-hover:bg-white">1.</span>
+        <span class="mktcms-editor-context-menu-icon text-xs font-medium">1.</span>
         <span>Nummerierte Liste</span>
       </button>
 
-      <div class="my-2 border-t border-gray-100" />
+      <div class="mktcms-editor-context-menu-divider" />
 
       <button
         type="button"
-        class="group flex w-full items-center gap-2 rounded-lg px-2 py-2 text-left text-sm transition-colors hover:bg-gray-100"
+        class="mktcms-editor-context-menu-button"
         role="menuitem"
         @click="openFilePicker"
       >
-        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-gray-500 group-hover:bg-white">📎</span>
+        <span class="mktcms-editor-context-menu-icon">📎</span>
         <span>Datei auswählen</span>
       </button>
     </div>
@@ -630,3 +630,55 @@ onBeforeUnmount(() => {
     />
   </div>
 </template>
+
+<style scoped>
+.mktcms-editor-context-menu {
+  min-width: 16rem;
+  padding: 0.5rem;
+  background: #fff;
+  border: 1px solid rgb(0 0 0 / 10%);
+  border-radius: 0.75rem;
+  box-shadow: 0 12px 32px rgb(0 0 0 / 22%);
+}
+
+.mktcms-editor-context-menu-button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  text-align: left;
+  border-radius: 0.5rem;
+  transition: background-color 0.15s ease;
+}
+
+.mktcms-editor-context-menu-button:hover {
+  background: #f3f4f6;
+}
+
+.mktcms-editor-context-menu-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 1.75rem;
+  width: 1.75rem;
+  min-width: 1.75rem;
+  max-width: 1.75rem;
+  height: 1.75rem;
+  color: #6b7280;
+  background: #f3f4f6;
+  border-radius: 0.375rem;
+  font-family: var(--font-sans);
+}
+
+.mktcms-editor-context-menu-button:hover .mktcms-editor-context-menu-icon {
+  background: #fff;
+}
+
+.mktcms-editor-context-menu-divider {
+  margin: 0.5rem 0;
+  border-top: 1px solid #f3f4f6;
+}
+</style>
