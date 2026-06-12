@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.3.20
+
+[compare changes](https://github.com/mktcode/mktcms/compare/v0.3.19...v0.3.20)
+
+### 🚀 Enhancements
+
+- Enhance markdown editor with context menu options for links, headings, and formatting ([787491f](https://github.com/mktcode/mktcms/commit/787491f))
+
+### ❤️ Contributors
+
+- Mktcode <kontakt@markus-kottlaender.de>
+
 ## v0.3.19
 
 [compare changes](https://github.com/mktcode/mktcms/compare/v0.3.18...v0.3.19)
